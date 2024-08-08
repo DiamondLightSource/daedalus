@@ -3,6 +3,7 @@ import Typography from '@mui/material/Typography';
 import MacrosModal from './MacrosModal';
 import { Alert, AlertTitle, Button, Container, Stack, TextField } from '@mui/material';
 import { useState } from 'react';
+import useWindowWidth from '../utils/helper';
 
 const ALERT_MESSAGES: { [key: string]: string } = {
     success: "File was loaded successfully.",
@@ -13,6 +14,8 @@ const ALERT_MESSAGES: { [key: string]: string } = {
 export default function FileNavigationBar() {
     const [filePath, setFilePath] = useState("");
     const [alert, setAlert] = useState<any>(undefined);
+
+    const width = useWindowWidth();
 
     function handleTextChange(e: any) {
         setFilePath(e.target.value);
@@ -40,11 +43,11 @@ export default function FileNavigationBar() {
         }, 5000);
     }
     return (
-        <Container component="form" maxWidth={false} disableGutters sx={{ flexGrow: 1, width: "100%" }} noValidate autoComplete="off">
-            {alert ? <Alert severity={alert} sx={{ position: "absolute", top: 0, left: 0, zIndex: 1300, width: "100%", height: 65, textAlign: "center", justifyContent: "center", display: "flex" }}><AlertTitle>{alert.toUpperCase()}</AlertTitle>{ALERT_MESSAGES[alert]}</Alert> : <></>}
+        <Container component="form" maxWidth={false} disableGutters sx={{ display: "flex", position: "relative", justifyContent: "center", flexGrow: 1, width: width * 0.95 }} noValidate autoComplete="off">
+            {alert ? <Alert severity={alert} sx={{ position: "relative", top: 0, left: 0, zIndex: 1300, width: "100%", height: 65, textAlign: "center", justifyContent: "center", display: "flex" }}><AlertTitle>{alert.toUpperCase()}</AlertTitle>{ALERT_MESSAGES[alert]}</Alert> : <></>}
             <Stack spacing={2} direction="row" sx={{ top: 20, left: 0 }}>
-                <Typography sx={{ textAlign: "center", display: "flex", justifyContent: "center" }}>Provide a URL for the file to load:</Typography>
-                <TextField id="outlined-basic" label="File URL" variant="outlined" onChange={handleTextChange} />
+                <Typography sx={{ display: "flex", alignItems: "center", height: 50 }}>File to load:</Typography>
+                <TextField id="outlined-basic" label="URL" variant="outlined" onChange={handleTextChange} />
                 <MacrosModal></MacrosModal>
                 <Button sx={{ height: 40 }} variant="contained" onClick={handleSubmitButtonClick}>Submit</Button>
             </Stack>
