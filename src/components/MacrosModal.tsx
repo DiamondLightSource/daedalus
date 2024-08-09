@@ -6,11 +6,32 @@ import Typography from '@mui/material/Typography';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { Box, Button, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
 import useWindowWidth from '../utils/helper';
+import { useState } from 'react';
 
+interface MacroMap {
+    [key: string]: string;
+}
 
 export default function MacrosModal() {
-
+    const [nameText, setNameText] = useState("");
+    const [valueText, setValueText] = useState("");
+    const [macros, setMacros] = useState<MacroMap>({});
     const width = useWindowWidth();
+
+    function handleOnAddMacroButtonClick() {
+        if (nameText !== "" && valueText !== "") setMacros({ ...macros, [nameText]: valueText });
+        setValueText("");
+        setNameText("");
+    }
+
+    function handleNameTextChange(e: any) {
+        setNameText(e.target.value)
+    }
+
+    function handleValueTextChange(e: any) {
+        setValueText(e.target.value)
+    }
+
     return (
         <div>
             <Accordion sx={{ width: width * 0.2 }}>
@@ -32,11 +53,11 @@ export default function MacrosModal() {
                             autoComplete="off"
                         >
                             <Stack spacing={2} direction="row" sx={{ width: "100%" }}>
-                                <TextField id="outlined-basic" label="Name" variant="outlined" />
-                                <TextField id="outlined-basic" label="Value" variant="outlined" />
+                                <TextField id="outlined-basic" value={nameText} label="Name" variant="outlined" onChange={handleNameTextChange} />
+                                <TextField id="outlined-basic" value={valueText} label="Value" variant="outlined" onChange={handleValueTextChange} />
                             </Stack>
 
-                            <Button variant="contained">Add Macro</Button>
+                            <Button variant="contained" onClick={handleOnAddMacroButtonClick}>Add Macro</Button>
                         </Box>
                         <TableContainer component={Paper}>
                             <Table sx={{ fontSize: "10px" }} aria-label="simple table">
@@ -47,14 +68,16 @@ export default function MacrosModal() {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    <TableRow>
-                                        <TableCell align="left">
-                                            WAH
-                                        </TableCell>
-                                        <TableCell align="left">
-                                            HI
-                                        </TableCell>
-                                    </TableRow>
+                                    {Object.entries(macros).map(macro => {
+                                        return (<TableRow key={macro[0]}>
+                                            <TableCell align="left">
+                                                {macro[0]}
+                                            </TableCell>
+                                            <TableCell align="left">
+                                                {macro[1]}
+                                            </TableCell>
+                                        </TableRow>)
+                                    })}
                                 </TableBody>
                             </Table>
                         </TableContainer>
