@@ -73,7 +73,7 @@ export const initialState: FileState = { nextFile: {} };
 export function reducer(state: FileState, action: Action) {
     switch (action.type) {
         case LOAD_NEXT_FILE: {
-            // Take the macros 
+            // Load temporary file info into state
             return { ...state, nextFile: action.payload.file };
         }
         case ADD_FILE: {
@@ -86,8 +86,6 @@ export function reducer(state: FileState, action: Action) {
             return newState;
         }
         case ADD_MACROS: {
-            console.log("Inside add macros")
-            console.log(state)
             const file = { ...state.nextFile }
             if (file.macros === undefined) file.macros = { [action.payload.name]: action.payload.value }
             file.macros[action.payload.name] = action.payload.value;
