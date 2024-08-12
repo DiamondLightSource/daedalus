@@ -1,11 +1,10 @@
-import { useState } from 'react'
 import './App.css'
 import FileDisplay from './components/FileDisplay'
 import FileNavigationBar from './components/FileNavigationBar'
 import { Box, AppBar, Typography, Toolbar, Stack } from '@mui/material'
 
-function App() {
 
+function App() {
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>

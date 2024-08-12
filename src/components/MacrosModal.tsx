@@ -6,22 +6,24 @@ import Typography from '@mui/material/Typography';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { Box, Button, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
 import useWindowWidth from '../utils/helper';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { ADD_MACROS } from '../store';
+import { FileStateContext } from './FileNavigationBar';
 
-interface MacroMap {
-    [key: string]: string;
-}
 
 export default function MacrosModal() {
+    const { state, dispatch } = useContext(FileStateContext);
     const [nameText, setNameText] = useState("");
     const [valueText, setValueText] = useState("");
-    const [macros, setMacros] = useState<MacroMap>({});
     const width = useWindowWidth();
+    const disabled = state.nextFile ? false : true;
 
     function handleOnAddMacroButtonClick() {
-        if (nameText !== "" && valueText !== "") setMacros({ ...macros, [nameText]: valueText });
-        setValueText("");
-        setNameText("");
+        if (nameText !== "" && valueText !== "") {
+            dispatch({ type: ADD_MACROS, payload: { name: nameText, value: valueText } });
+            setValueText("");
+            setNameText("");
+        }
     }
 
     function handleNameTextChange(e: any) {
@@ -53,8 +55,8 @@ export default function MacrosModal() {
                             autoComplete="off"
                         >
                             <Stack spacing={2} direction="row" sx={{ width: "100%" }}>
-                                <TextField id="outlined-basic" value={nameText} label="Name" variant="outlined" onChange={handleNameTextChange} />
-                                <TextField id="outlined-basic" value={valueText} label="Value" variant="outlined" onChange={handleValueTextChange} />
+                                <TextField id="outlined-basic" value={nameText} disabled={disabled} label="Name" variant="outlined" onChange={handleNameTextChange} sx={{ backgroundColor: disabled ? "#dedede" : "white" }} />
+                                <TextField id="outlined-basic" value={valueText} disabled={disabled} label="Value" variant="outlined" onChange={handleValueTextChange} sx={{ backgroundColor: disabled ? "#dedede" : "white" }} />
                             </Stack>
 
                             <Button variant="contained" onClick={handleOnAddMacroButtonClick}>Add Macro</Button>
@@ -68,7 +70,7 @@ export default function MacrosModal() {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {Object.entries(macros).map(macro => {
+                                    {state.nextFile.macros ? Object.entries(state.nextFile.macros!).map(macro => {
                                         return (<TableRow key={macro[0]}>
                                             <TableCell align="left">
                                                 {macro[0]}
@@ -77,7 +79,7 @@ export default function MacrosModal() {
                                                 {macro[1]}
                                             </TableCell>
                                         </TableRow>)
-                                    })}
+                                    }) : <></>}
                                 </TableBody>
                             </Table>
                         </TableContainer>

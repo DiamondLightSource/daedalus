@@ -1,15 +1,24 @@
+import { MacroMap } from "./components/FileNavigationBar";
 
-const ADD_FILE = "addFile";
-const REMOVE_FILE = "removeFile";
-const ADD_MACROS = "addMacros";
-const REMOVE_MACROS = "removeMacros";
+export const LOAD_NEXT_FILE = "loadNextFile";
+export const ADD_FILE = "addFile";
+export const REMOVE_FILE = "removeFile";
+export const ADD_MACROS = "addMacros";
+export const REMOVE_MACROS = "removeMacros";
 
 // An interface for our actions
+interface LoadNextFile {
+    type: typeof LOAD_NEXT_FILE;
+    payload: {
+        file: FileInfo
+    };
+}
+
 interface AddFile {
     type: typeof ADD_FILE;
     payload: {
         name: string,
-        file: FileInfo
+        display: HTMLElement
     };
 }
 
@@ -23,7 +32,6 @@ interface RemoveFile {
 interface AddMacros {
     type: typeof ADD_MACROS;
     payload: {
-        fileName: string,
         name: string,
         value: string
     }
@@ -32,31 +40,45 @@ interface AddMacros {
 interface RemoveMacros {
     type: typeof REMOVE_MACROS;
     payload: {
-        fileName: string,
         name: string;
     };
 }
 
 type Action =
+    | LoadNextFile
     | AddFile
     | RemoveFile
     | AddMacros
     | RemoveMacros
 
+// This is the basic file information
 type FileInfo = {
-    file?: string,
-    fileIndex?: number,
-    macros?: { [key: string]: string }
+    path?: string,
+    macros?: MacroMap
 }
 
-type FileState = { [key: string]: FileInfo }
+type LoadedFile = {
+    fileIndex: number,
+    display: HTMLElement,
+    macros?: MacroMap
+}
 
-export const initialState: FileState = {};
+export type FileState = {
+    nextFile: FileInfo,
+    [key: string]: LoadedFile | FileInfo
+}
+
+export const initialState: FileState = { nextFile: {} };
 
 export function reducer(state: FileState, action: Action) {
     switch (action.type) {
+        case LOAD_NEXT_FILE: {
+            // Take the macros 
+            return { ...state, nextFile: action.payload.file };
+        }
         case ADD_FILE: {
-            return { ...state, [action.payload.name]: action.payload.file };
+            // Create the Embedded Display json that we want
+            return { ...state, [action.payload.name]: action.payload.display };
         }
         case REMOVE_FILE: {
             const newState = { ...state };
@@ -64,15 +86,17 @@ export function reducer(state: FileState, action: Action) {
             return newState;
         }
         case ADD_MACROS: {
-            const file = { ...state[action.payload.fileName] }
+            console.log("Inside add macros")
+            console.log(state)
+            const file = { ...state.nextFile }
             if (file.macros === undefined) file.macros = { [action.payload.name]: action.payload.value }
             file.macros[action.payload.name] = action.payload.value;
-            return { ...state, [action.payload.fileName]: file };
+            return { ...state, nextFile: file };
         }
         case REMOVE_MACROS: {
-            const file = { ...state[action.payload.fileName] }
+            const file = { ...state.nextFile }
             if (file.macros !== undefined) delete file.macros[action.payload.name];
-            return { ...state, [action.payload.fileName]: file };
+            return { ...state, nextFile: file };
         }
     }
 }
