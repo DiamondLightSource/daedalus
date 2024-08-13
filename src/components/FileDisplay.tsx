@@ -3,9 +3,10 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import FileDisplayTabPanel from './FileDisplayTabPanel';
-import { Paper, Typography } from '@mui/material';
+import { IconButton, Paper, Typography } from '@mui/material';
 import { FileStateContext } from '../App';
 import { useContext, useEffect, useState } from 'react';
+import { Close } from '@mui/icons-material';
 
 export default function FileDisplay() {
     const { state, dispatch } = useContext(FileStateContext);
@@ -35,7 +36,14 @@ export default function FileDisplay() {
         if (state.files.length > 0) {
             state.files.forEach(file => {
                 const fileName = file.name.split("/").pop()
-                tabsArray.push(<Tab sx={{ textTransform: "none" }} {...allyProps(file.index)} label={fileName} key={file.name} />)
+                tabsArray.push(<Tab sx={{ textTransform: "none" }} {...allyProps(file.index)} key={file.name} label={
+                    <span>
+                        {fileName}
+                        <IconButton size="small" component="span">
+                            <Close />
+                        </IconButton>
+                    </span>
+                } />)
             })
             return tabsArray;
         }
