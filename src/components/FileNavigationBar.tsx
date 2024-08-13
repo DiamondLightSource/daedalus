@@ -65,8 +65,6 @@ export default function FileNavigationBar() {
         }
     }
 
-    console.log(state);
-
     return (
         <Container component="form" maxWidth={false} disableGutters sx={{ display: "flex", position: "relative", justifyContent: "center", width: "95%", height: "10%" }} noValidate autoComplete="off">
             {alert ? <Alert severity={alert} sx={{ position: "relative", top: 0, left: 0, zIndex: 1300, width: "100%", height: 65, textAlign: "center", justifyContent: "center", display: "flex" }}><AlertTitle>{alert.toUpperCase()}</AlertTitle>{ALERT_MESSAGES[alert]}</Alert> : <></>}
