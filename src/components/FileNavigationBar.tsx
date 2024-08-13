@@ -56,8 +56,8 @@ export default function FileNavigationBar() {
                     file={
                         {
                             path: state.nextFile.path,
-                            defaultProtocol: "pva",
-                            macros: { ...state.nextFile.macros }
+                            macros: { ...state.nextFile.macros },
+                            defaultProtocol: "ca"
                         }
                     }
                     scroll={true}
