@@ -5,15 +5,30 @@ import Box from '@mui/material/Box';
 import FileDisplayTabPanel from './FileDisplayTabPanel';
 import { Paper, Typography } from '@mui/material';
 import { FileStateContext } from '../App';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 export default function FileDisplay() {
     const { state, dispatch } = useContext(FileStateContext);
-    const [value, setValue] = React.useState(0);
+    const [value, setValue] = useState(0);
+    // Number of open tabs, used to help move focus when tabs deleted
+    const [tabNumber, setTabNumber] = useState(0);
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
     };
+
+    useEffect(() => {
+        if (state.files.length > tabNumber) {
+            // New tab has opened, move focus there
+            setValue(state.files.length - 1)
+            setTabNumber(state.files.length)
+        } else if (state.files.length < tabNumber) {
+            // TO DO
+            // Tab has been removed. If ahead of our tab, do nothing
+            // If before our tab, shift focus to stay on our tab
+            // If our tab, shift as well
+        }
+    }, [state.files])
 
     function renderFileTabs() {
         const tabsArray: any[] = [];
