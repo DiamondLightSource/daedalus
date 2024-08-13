@@ -35,7 +35,7 @@ export default function FileDisplay() {
         if (state.files.length > 0) {
             state.files.forEach(file => {
                 const fileName = file.name.split("/").pop()
-                tabsArray.push(<Tab sx={{ textTransform: "none" }} {...allyProps(file.index)} label={fileName} />)
+                tabsArray.push(<Tab sx={{ textTransform: "none" }} {...allyProps(file.index)} label={fileName} key={file.name} />)
             })
             return tabsArray;
         }
@@ -45,7 +45,7 @@ export default function FileDisplay() {
         const panelArray: any[] = [];
         if (state.files.length > 0) {
             state.files.forEach(file => {
-                panelArray.push(<FileDisplayTabPanel value={value} display={file.display} index={file.index}></FileDisplayTabPanel>)
+                panelArray.push(<FileDisplayTabPanel value={value} display={file.display} index={file.index} key={file.name}></FileDisplayTabPanel>)
             })
             return panelArray;
         }
