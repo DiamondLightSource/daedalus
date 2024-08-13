@@ -34,7 +34,8 @@ export default function FileDisplay() {
         const tabsArray: any[] = [];
         if (state.files.length > 0) {
             state.files.forEach(file => {
-                tabsArray.push(<Tab sx={{ textTransform: "none" }} {...allyProps(file.index)} label={file.name} />)
+                const fileName = file.name.split("/").pop()
+                tabsArray.push(<Tab sx={{ textTransform: "none" }} {...allyProps(file.index)} label={fileName} />)
             })
             return tabsArray;
         }
