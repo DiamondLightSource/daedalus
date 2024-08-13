@@ -3,7 +3,6 @@ import Typography from '@mui/material/Typography';
 import MacrosModal from './MacrosModal';
 import { Alert, AlertTitle, Button, Container, Stack, TextField } from '@mui/material';
 import { useContext, useState } from 'react';
-import useWindowWidth from '../utils/helper';
 import { ADD_FILE, LOAD_NEXT_FILE } from '../store';
 import { EmbeddedDisplay, RelativePosition } from '@dls-controls/cs-web-lib';
 import { FileStateContext } from '../App';
@@ -19,8 +18,6 @@ export default function FileNavigationBar() {
     const [filePath, setFilePath] = useState("");
     const [fileIndex, setFileIndex] = useState(0);
     const [alert, setAlert] = useState<any>(undefined);
-
-    const width = useWindowWidth();
 
     function handleTextChange(e: any) {
         setFilePath(e.target.value);
@@ -71,7 +68,7 @@ export default function FileNavigationBar() {
     console.log(state);
 
     return (
-        <Container component="form" maxWidth={false} disableGutters sx={{ display: "flex", position: "relative", justifyContent: "center", flexGrow: 1, width: width * 0.95 }} noValidate autoComplete="off">
+        <Container component="form" maxWidth={false} disableGutters sx={{ display: "flex", position: "relative", justifyContent: "center", width: "95%", height: "10%" }} noValidate autoComplete="off">
             {alert ? <Alert severity={alert} sx={{ position: "relative", top: 0, left: 0, zIndex: 1300, width: "100%", height: 65, textAlign: "center", justifyContent: "center", display: "flex" }}><AlertTitle>{alert.toUpperCase()}</AlertTitle>{ALERT_MESSAGES[alert]}</Alert> : <></>}
             <Stack spacing={2} direction="row" sx={{ top: 20, left: 0 }}>
                 <Typography sx={{ display: "flex", alignItems: "center", height: 50 }}>File to load:</Typography>

@@ -6,6 +6,7 @@ import { Box, AppBar, Typography, Toolbar, Stack } from '@mui/material'
 import { Provider } from "react-redux";
 import { createContext, useReducer } from 'react';
 import { FileState, initialState, reducer } from './store';
+import { useWindowWidth, useWindowHeight } from './utils/helper';
 
 
 export interface MacroMap {
@@ -19,6 +20,8 @@ export const FileStateContext = createContext<{
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const width = useWindowWidth();
+  const height = useWindowHeight();
 
   return (
     <>
@@ -32,7 +35,7 @@ function App() {
             </Toolbar>
           </AppBar>
           <FileStateContext.Provider value={{ state, dispatch }}>
-            <Stack sx={{ alignItems: "center", position: "absolute", top: 70 }} spacing={2}>
+            <Stack sx={{ alignItems: "center", position: "absolute", top: 80, width: width, height: height - 80 }} spacing={2}>
               <FileNavigationBar />
               <FileDisplay />
             </Stack>

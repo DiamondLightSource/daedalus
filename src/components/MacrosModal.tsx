@@ -5,7 +5,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { Box, Button, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
-import useWindowWidth from '../utils/helper';
+import { useWindowWidth } from '../utils/helper';
 import { useContext, useState } from 'react';
 import { ADD_MACROS } from '../store';
 import { FileStateContext } from '../App';

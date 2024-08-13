@@ -3,15 +3,13 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import FileDisplayTabPanel from './FileDisplayTabPanel';
-import { Paper } from '@mui/material';
-import useWindowWidth from '../utils/helper';
+import { Paper, Typography } from '@mui/material';
 import { FileStateContext } from '../App';
 import { useContext } from 'react';
 
 export default function FileDisplay() {
     const { state, dispatch } = useContext(FileStateContext);
     const [value, setValue] = React.useState(0);
-    const width = useWindowWidth();
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
@@ -38,7 +36,8 @@ export default function FileDisplay() {
     }
 
     return (
-        <Paper elevation={1} sx={{ width: width * 0.95, position: "relative" }}>
+        <Paper elevation={1} sx={{ width: "95%", height: "80%", position: "relative" }}>
+            {state.files.length === 0 ? <Typography sx={{ justifyContent: "center", display: "flex" }}>No files currently displayed.</Typography> : <></>}
             <Box sx={{ width: '100%' }}>
                 <Tabs
                     value={value}
