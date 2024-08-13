@@ -2,10 +2,11 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App.tsx'
 import './index.css'
+import { OutlineProvider } from '@dls-controls/cs-web-lib'
 
 ReactDOM.render(
-  <React.StrictMode>
+  <OutlineProvider>
     <App />
-  </React.StrictMode>,
+  </OutlineProvider>,
   document.getElementById('root')
 )
