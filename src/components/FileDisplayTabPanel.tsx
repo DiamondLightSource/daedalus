@@ -5,10 +5,11 @@ import Typography from '@mui/material/Typography';
 interface FileDisplayTabPanelProps {
     index: number;
     value: number;
+    display: JSX.Element;
 }
 
 export default function FileDisplayTabPanel(props: FileDisplayTabPanelProps) {
-    const { value, index } = props;
+    const { index, value, display } = props;
     // Here is where we load our files
     return (
         <div
@@ -19,6 +20,7 @@ export default function FileDisplayTabPanel(props: FileDisplayTabPanelProps) {
         >
             {value === index && (<Box sx={{ flexGrow: 1 }}>
                 <Typography>Load .bob file here {value}</Typography>
+                {display}
             </Box>)}
         </div>
     );

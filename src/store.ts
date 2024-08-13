@@ -1,4 +1,4 @@
-import { MacroMap } from "./components/FileNavigationBar";
+import { MacroMap } from "./App";
 
 export const LOAD_NEXT_FILE = "loadNextFile";
 export const ADD_FILE = "addFile";
@@ -18,7 +18,8 @@ interface AddFile {
     type: typeof ADD_FILE;
     payload: {
         name: string,
-        display: HTMLElement
+        display: JSX.Element,
+        index: number
     };
 }
 
@@ -58,17 +59,17 @@ type FileInfo = {
 }
 
 type LoadedFile = {
-    fileIndex: number,
-    display: HTMLElement,
-    macros?: MacroMap
+    name: string
+    index: number,
+    display: JSX.Element,
 }
 
 export type FileState = {
     nextFile: FileInfo,
-    [key: string]: LoadedFile | FileInfo
+    files: LoadedFile[]
 }
 
-export const initialState: FileState = { nextFile: {} };
+export const initialState: FileState = { nextFile: {}, files: [] };
 
 export function reducer(state: FileState, action: Action) {
     switch (action.type) {
@@ -77,13 +78,19 @@ export function reducer(state: FileState, action: Action) {
             return { ...state, nextFile: action.payload.file };
         }
         case ADD_FILE: {
+            // Empty nextFile
+            const newNextFile: FileInfo = {};
+            const newFiles = [...state.files];
+            const newFile: LoadedFile = { name: action.payload.name, index: action.payload.index, display: action.payload.display };
+            newFiles.push(newFile);
             // Create the Embedded Display json that we want
-            return { ...state, [action.payload.name]: action.payload.display };
+            return {
+                ...state, nextFile: newNextFile, files: newFiles
+            }
         }
         case REMOVE_FILE: {
-            const newState = { ...state };
-            delete newState[action.payload.name]
-            return newState;
+            const newFiles = state.files.filter(function (file) { return file.name !== action.payload.name })
+            return { ...state, newFiles };
         }
         case ADD_MACROS: {
             const file = { ...state.nextFile }

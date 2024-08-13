@@ -2,9 +2,11 @@ import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import MacrosModal from './MacrosModal';
 import { Alert, AlertTitle, Button, Container, Stack, TextField } from '@mui/material';
-import { createContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import useWindowWidth from '../utils/helper';
-import { reducer, initialState, FileState, ADD_FILE, LOAD_NEXT_FILE } from '../store';
+import { ADD_FILE, LOAD_NEXT_FILE } from '../store';
+import { EmbeddedDisplay, RelativePosition } from '@dls-controls/cs-web-lib';
+import { FileStateContext } from '../App';
 
 const ALERT_MESSAGES: { [key: string]: string } = {
     success: "File was loaded successfully.",
@@ -12,17 +14,8 @@ const ALERT_MESSAGES: { [key: string]: string } = {
     warning: "No file was provided."
 }
 
-export interface MacroMap {
-    [key: string]: string;
-}
-
-export const FileStateContext = createContext<{
-    state: FileState;
-    dispatch: React.Dispatch<any>;
-}>({ state: initialState, dispatch: () => null });
-
 export default function FileNavigationBar() {
-    const [state, dispatch] = React.useReducer(reducer, initialState);
+    const { state, dispatch } = useContext(FileStateContext);
     const [filePath, setFilePath] = useState("");
     const [fileIndex, setFileIndex] = useState(0);
     const [alert, setAlert] = useState<any>(undefined);
@@ -47,7 +40,6 @@ export default function FileNavigationBar() {
         } else {
             setAlert("success");
             dispatch({ type: LOAD_NEXT_FILE, payload: { file: { path: filePath, macros: {} } } });
-            setFileIndex(fileIndex + 1);
         }
         setTimeout(() => {
             setAlert(undefined);
@@ -57,12 +49,26 @@ export default function FileNavigationBar() {
     function handleSubmitButtonClick(e: any) {
         // Fetch the last loaded file info, and submit it
         // First fetch last loaded file
-        if (state.nextFile) {
-            // We have prepared a file reading for loading
-            //dispatch({ type: ADD_FILE, payload: { name: lastLoaded, display: <h1></h1> }});
+        if (state.nextFile.path) {
+            const display = (
+                <EmbeddedDisplay
+                    position={new RelativePosition()}
+                    file={
+                        {
+                            path: state.nextFile.path,
+                            defaultProtocol: "pva",
+                            macros: { ...state.nextFile.macros }
+                        }
+                    }
+                    scroll={true}
+                />)
+            dispatch({ type: ADD_FILE, payload: { name: state.nextFile.path, index: fileIndex, display: display } });
+            setFileIndex(fileIndex + 1);
             // Update macros
         }
     }
+
+    console.log(state);
 
     return (
         <Container component="form" maxWidth={false} disableGutters sx={{ display: "flex", position: "relative", justifyContent: "center", flexGrow: 1, width: width * 0.95 }} noValidate autoComplete="off">
@@ -71,10 +77,7 @@ export default function FileNavigationBar() {
                 <Typography sx={{ display: "flex", alignItems: "center", height: 50 }}>File to load:</Typography>
                 <TextField id="outlined-basic" label="URL" variant="outlined" onChange={handleTextChange} />
                 <Button sx={{ height: 40 }} variant="contained" onClick={handleLoadButtonClick}>Load</Button>
-                <FileStateContext.Provider value={{ state, dispatch }}>
-                    <MacrosModal></MacrosModal>
-                </FileStateContext.Provider>
-
+                <MacrosModal></MacrosModal>
                 <Button sx={{ height: 40 }} variant="contained" onClick={handleSubmitButtonClick}>Submit</Button>
             </Stack>
         </Container>
