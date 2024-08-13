@@ -19,7 +19,6 @@ export default function FileDisplayTabPanel(props: FileDisplayTabPanelProps) {
             aria-labelledby={`simple-tab-${index}`}
         >
             {value === index && (<Box sx={{ flexGrow: 1 }}>
-                <Typography>Load .bob file here {value}</Typography>
                 {display}
             </Box>)}
         </div>
