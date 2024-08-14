@@ -16,7 +16,6 @@ const ALERT_MESSAGES: { [key: string]: string } = {
 export default function FileNavigationBar() {
     const { state, dispatch } = useContext(FileStateContext);
     const [filePath, setFilePath] = useState("");
-    const [fileIndex, setFileIndex] = useState(0);
     const [alert, setAlert] = useState<any>(undefined);
 
     function handleTextChange(e: any) {
@@ -59,8 +58,7 @@ export default function FileNavigationBar() {
                     }
                     scroll={true}
                 />)
-            dispatch({ type: ADD_FILE, payload: { name: state.nextFile.path, index: fileIndex, display: display } });
-            setFileIndex(fileIndex + 1);
+            dispatch({ type: ADD_FILE, payload: { name: state.nextFile.path, display: display } });
             // Update macros
         }
     }

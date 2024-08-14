@@ -19,7 +19,6 @@ interface AddFile {
     payload: {
         name: string,
         display: JSX.Element,
-        index: number
     };
 }
 
@@ -60,7 +59,6 @@ type FileInfo = {
 
 type LoadedFile = {
     name: string
-    index: number,
     display: JSX.Element,
 }
 
@@ -81,7 +79,7 @@ export function reducer(state: FileState, action: Action) {
             // Empty nextFile
             const newNextFile: FileInfo = {};
             const newFiles = [...state.files];
-            const newFile: LoadedFile = { name: action.payload.name, index: action.payload.index, display: action.payload.display };
+            const newFile: LoadedFile = { name: action.payload.name, display: action.payload.display };
             newFiles.push(newFile);
             // Create the Embedded Display json that we want
             return {
@@ -90,7 +88,7 @@ export function reducer(state: FileState, action: Action) {
         }
         case REMOVE_FILE: {
             const newFiles = state.files.filter(function (file) { return file.name !== action.payload.name })
-            return { ...state, newFiles };
+            return { ...state, files: newFiles };
         }
         case ADD_MACROS: {
             const file = { ...state.nextFile }
