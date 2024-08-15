@@ -1,7 +1,5 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-
 interface FileDisplayTabPanelProps {
     index: number;
     value: number;
@@ -17,8 +15,9 @@ export default function FileDisplayTabPanel(props: FileDisplayTabPanelProps) {
             hidden={value !== index}
             id={`simple-tabpanel-${index}`}
             aria-labelledby={`simple-tab-${index}`}
+            style={{ height: "100%", overflowY: "scroll" }}
         >
-            {value === index && (<Box sx={{ flexGrow: 1 }}>
+            {value === index && (<Box>
                 {display}
             </Box>)}
         </div>
