@@ -36,7 +36,7 @@ export default function MacrosModal() {
 
     return (
         <div>
-            <Accordion sx={{ width: width * 0.2 }}>
+            <Accordion sx={{ width: width * 0.2, height: 50 }}>
                 <AccordionSummary
                     expandIcon={<ArrowDropDownIcon />}
                     aria-controls="panel1-content"
