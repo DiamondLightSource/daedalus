@@ -45,7 +45,7 @@ export default function FileDisplay() {
     return (
         <Paper elevation={1} sx={{ width: "95%", height: "80%", position: "relative" }}>
             {state.files.length === 0 ? <Typography sx={{ justifyContent: "center", display: "flex" }}>No files currently displayed.</Typography> : <></>}
-            <Box sx={{ width: '100%' }}>
+            <Box sx={{ width: "100%", height: "100%" }}>
                 <Tabs
                     value={value}
                     onChange={handleChange}
