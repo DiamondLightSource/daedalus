@@ -7,6 +7,8 @@ import { Provider } from "react-redux";
 import { createContext, useReducer } from 'react';
 import { FileState, initialState, reducer } from './store';
 import { useWindowWidth, useWindowHeight } from './utils/helper';
+import { ThemeProvider } from '@mui/material/styles';
+import { diamondTheme } from './theme';
 
 
 export interface MacroMap {
@@ -26,21 +28,23 @@ function App() {
   return (
     <>
       <Provider store={store}>
-        <Box sx={{ flexGrow: 1 }}>
-          <AppBar sx={{ position: "absolute" }}>
-            <Toolbar>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: "center" }}>
-                Daedalus Demo
-              </Typography>
-            </Toolbar>
-          </AppBar>
-          <FileStateContext.Provider value={{ state, dispatch }}>
-            <Stack sx={{ alignItems: "center", position: "absolute", top: 80, width: width, height: height - 80 }} spacing={2}>
-              <FileNavigationBar />
-              <FileDisplay />
-            </Stack>
-          </FileStateContext.Provider>
-        </Box>
+        <ThemeProvider theme={diamondTheme}>
+          <Box sx={{ flexGrow: 1 }}>
+            <AppBar sx={{ position: "absolute" }}>
+              <Toolbar>
+                <Typography variant="h1" component="div" sx={{ flexGrow: 1, textAlign: "center" }}>
+                  Daedalus Demo
+                </Typography>
+              </Toolbar>
+            </AppBar>
+            <FileStateContext.Provider value={{ state, dispatch }}>
+              <Stack sx={{ alignItems: "center", position: "absolute", top: 80, width: width, height: height - 80 }} spacing={2}>
+                <FileNavigationBar />
+                <FileDisplay />
+              </Stack>
+            </FileStateContext.Provider>
+          </Box>
+        </ThemeProvider>
       </Provider>
     </>
   )
