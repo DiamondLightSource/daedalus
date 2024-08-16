@@ -1,4 +1,4 @@
-import { store } from '@dls-controls/cs-web-lib';
+import { store } from '@diamondlightsource/cs-web-lib';
 import './App.css'
 import FileDisplay from './components/FileDisplay'
 import FileNavigationBar from './components/FileNavigationBar'

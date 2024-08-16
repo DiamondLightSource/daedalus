@@ -4,7 +4,7 @@ import MacrosModal from './MacrosModal';
 import { Alert, AlertTitle, Button, Container, Stack, TextField } from '@mui/material';
 import { useContext, useState } from 'react';
 import { ADD_FILE, LOAD_NEXT_FILE } from '../store';
-import { EmbeddedDisplay, RelativePosition } from '@dls-controls/cs-web-lib';
+import { EmbeddedDisplay, RelativePosition } from '@diamondlightsource/cs-web-lib';
 import { FileStateContext } from '../App';
 import { isValidHttpUrl } from '../utils/helper';
 
