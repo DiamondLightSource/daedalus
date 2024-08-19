@@ -16,7 +16,6 @@ export default function MacrosModal() {
     const [nameText, setNameText] = useState("");
     const [valueText, setValueText] = useState("");
     const width = useWindowWidth();
-    const disabled = state.nextFile ? false : true;
 
     function handleOnAddMacroButtonClick() {
         if (nameText !== "" && valueText !== "") {
@@ -36,30 +35,25 @@ export default function MacrosModal() {
 
     return (
         <div>
-            <Accordion sx={{ width: width * 0.2, height: 50, zIndex: 1300 }}>
+            <Accordion sx={{ width: width * 0.2, height: 50 }}>
                 <AccordionSummary
                     expandIcon={<ArrowDropDownIcon />}
                     aria-controls="panel1-content"
                     id="panel1-header"
-                    sx={{ zIndex: 1300 }}
                 >
                     <Typography>Macros</Typography>
                 </AccordionSummary>
-                <AccordionDetails sx={{ zIndex: 1300 }}>
+                <AccordionDetails>
                     <Stack spacing={4}>
                         <Box
-                            component="form"
                             sx={{
                                 '& > :not(style)': { m: 1, width: '25ch' },
                             }}
-                            noValidate
-                            autoComplete="off"
                         >
                             <Stack spacing={2} direction="row" sx={{ width: "100%" }}>
-                                <TextField id="outlined-basic" value={nameText} disabled={disabled} label="Name" variant="outlined" onChange={handleNameTextChange} sx={{ backgroundColor: disabled ? "#dedede" : "white" }} />
-                                <TextField id="outlined-basic" value={valueText} disabled={disabled} label="Value" variant="outlined" onChange={handleValueTextChange} sx={{ backgroundColor: disabled ? "#dedede" : "white" }} />
+                                <TextField id="outlined-basic" value={nameText} label="Name" variant="outlined" onChange={handleNameTextChange} />
+                                <TextField id="outlined-basic" value={valueText} label="Value" variant="outlined" onChange={handleValueTextChange} />
                             </Stack>
-
                             <Button variant="contained" onClick={handleOnAddMacroButtonClick}>Add Macro</Button>
                         </Box>
                         <TableContainer component={Paper}>
