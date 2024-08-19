@@ -59,6 +59,7 @@ export default function FileNavigationBar() {
             <Stack spacing={2} direction="row" sx={{ top: 20, left: 0, zIndex: 1299, width: "90%" }}>
                 <FileInput></FileInput>
                 <MacrosModal></MacrosModal>
+                <ProtocolButton></ProtocolButton>
                 <Button sx={{ height: 50 }} variant="contained" onClick={handleSubmitButtonClick}>Submit</Button>
             </Stack>
         </Container>

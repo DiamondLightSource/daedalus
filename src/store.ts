@@ -5,6 +5,7 @@ export const ADD_FILE = "addFile";
 export const REMOVE_FILE = "removeFile";
 export const ADD_MACROS = "addMacros";
 export const REMOVE_MACROS = "removeMacros";
+export const CHANGE_PROTOCOL = "changeProtocol"
 
 // An interface for our actions
 interface LoadNextFile {
@@ -44,17 +45,27 @@ interface RemoveMacros {
     };
 }
 
+interface ChangeProtocol {
+    type: typeof CHANGE_PROTOCOL;
+    payload: {
+        value: string;
+    };
+}
+
 type Action =
     | LoadNextFile
     | AddFile
     | RemoveFile
     | AddMacros
     | RemoveMacros
+    | ChangeProtocol
 
 // This is the basic file information
 type FileInfo = {
+    protocol: string
     path?: string,
-    macros?: MacroMap
+    macros?: MacroMap,
+
 }
 
 type LoadedFile = {
@@ -67,17 +78,18 @@ export type FileState = {
     files: LoadedFile[]
 }
 
-export const initialState: FileState = { nextFile: {}, files: [] };
+export const initialState: FileState = { nextFile: { protocol: "ca" }, files: [] };
 
 export function reducer(state: FileState, action: Action) {
     switch (action.type) {
         case LOAD_NEXT_FILE: {
             // Load temporary file info into state
-            return { ...state, nextFile: action.payload.file };
+            const file = { ...state.nextFile, ...action.payload.file }
+            return { ...state, nextFile: file };
         }
         case ADD_FILE: {
             // Empty nextFile
-            const newNextFile: FileInfo = {};
+            const newNextFile: FileInfo = { protocol: "ca" };
             const newFiles = [...state.files];
             const newFile: LoadedFile = { name: action.payload.name, display: action.payload.display };
             newFiles.push(newFile);
@@ -99,6 +111,11 @@ export function reducer(state: FileState, action: Action) {
         case REMOVE_MACROS: {
             const file = { ...state.nextFile }
             if (file.macros !== undefined) delete file.macros[action.payload.name];
+            return { ...state, nextFile: file };
+        }
+        case CHANGE_PROTOCOL: {
+            const file = { ...state.nextFile };
+            file.protocol = action.payload.value;
             return { ...state, nextFile: file };
         }
     }
