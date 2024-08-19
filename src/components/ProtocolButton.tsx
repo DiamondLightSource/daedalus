@@ -24,6 +24,7 @@ export default function ProtocolButton() {
                 name="row-radio-buttons-group"
                 value={value}
                 onChange={handleChange}
+                sx={{ height: 50 }}
             >
                 <FormControlLabel value="ca" control={<Radio size="small" />} label="CA" />
                 <FormControlLabel value="pva" control={<Radio size="small" />} label="PVA" />

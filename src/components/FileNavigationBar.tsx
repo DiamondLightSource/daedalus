@@ -56,7 +56,7 @@ export default function FileNavigationBar() {
     return (
         <Container component="form" maxWidth={false} disableGutters sx={{ display: "flex", position: "relative", justifyContent: "center", width: "95%", height: "10%" }} noValidate autoComplete="off">
             {alert ? <Alert severity={alert} sx={{ position: "absolute", top: -80, zIndex: 1300, width: "100%", height: 65, textAlign: "center", justifyContent: "center", display: "flex" }}><AlertTitle>{alert.toUpperCase()}</AlertTitle>{ALERT_MESSAGES[alert]}</Alert> : <></>}
-            <Stack spacing={2} direction="row" sx={{ top: 20, left: 0, zIndex: 1299, width: "90%" }}>
+            <Stack spacing={2} direction="row" sx={{ top: 20, left: 0, zIndex: 1299, width: "100%", justifyContent: "center", }}>
                 <FileInput></FileInput>
                 <MacrosModal></MacrosModal>
                 <ProtocolButton></ProtocolButton>

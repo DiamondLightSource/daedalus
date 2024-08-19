@@ -55,7 +55,7 @@ export default function FileInput() {
     }
 
     return (
-        <Stack spacing={2} direction="row" sx={{ top: 20, left: 0, zIndex: 1299, width: "100%" }}>
+        <Stack spacing={2} direction="row" sx={{ top: 20, left: 0, zIndex: 1299, width: "60%" }}>
             <Typography sx={{ display: "flex", alignItems: "center", height: 50 }}>File to load:</Typography>
             <TextField id="outlined-basic" value={filePath} label="URL" variant="outlined" onChange={handleTextChange} sx={{ height: 50, width: "100%" }} error={!validFile} helperText={helperText} />
             <Button sx={{ height: 50 }} variant="contained" onClick={handleLoadButtonClick}>Load</Button>
