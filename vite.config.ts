@@ -7,10 +7,6 @@ export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   return {
     plugins: [react(), nodePolyfills()],
-    define: {
-      "process.env.REACT_APP_CONIQL_SOCKET": JSON.stringify(env.REACT_APP_CONIQL_SOCKET),
-      "process.env.REACT_APP_CONIQL_SSL": JSON.stringify(env.REACT_APP_CONIQL_SSL)
-    }
   }
 
 })
