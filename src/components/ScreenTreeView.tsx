@@ -6,6 +6,8 @@ interface ScreenListProps {
     tree?: TreeViewBaseItem[]
 }
 
+// ID here should be the path of the file in whatever
+// filesystem we end up using
 const testScreen: TreeViewBaseItem[] = [{
     id: "TopLevel",
     label: "TopLevel",
@@ -45,18 +47,17 @@ const testScreen: TreeViewBaseItem[] = [{
 ]
 
 export default function ScreenTreeView({ open, tree = testScreen }: ScreenListProps) {
-    // const [open, setOpen] = React.useState(true);
 
-    // const handleClick = (itemName: string) => {
-    //     setOpen((o) => ({ ...initialState, [itemName]: !o[itemName] }));
-    // };
+    const handleClick = (itemId: string) => {
+        console.log(itemId);
+    };
 
-    //
+
 
 
     return (
         <>
-            {open ? <RichTreeView items={tree} /> : <></>}
+            {open ? <RichTreeView items={tree} onItemClick={(event, itemId) => handleClick(itemId)} /> : <></>}
         </>
     );
 }
