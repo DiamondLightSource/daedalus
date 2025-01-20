@@ -4,8 +4,8 @@ import './App.css'
 import { Provider } from "react-redux";
 import { ThemeProvider } from '@mui/material/styles';
 import { diamondTheme } from './theme';
-import { DemoPage } from './components/DemoPage';
-import { MainPage } from './components/MainPage';
+import { DemoPage } from './routes/DemoPage';
+import { MainPage } from './routes/MainPage';
 import { createContext } from 'react';
 import { FileState, initialState } from './store';
 

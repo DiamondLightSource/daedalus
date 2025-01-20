@@ -2,8 +2,8 @@ import { Box, AppBar, Toolbar, Typography, Stack } from '@mui/material';
 import * as React from 'react';
 import { reducer, initialState } from '../store';
 import { useWindowWidth, useWindowHeight } from '../utils/helper';
-import FileDisplay from './FileDisplay';
-import FileNavigationBar from './FileNavigationBar';
+import FileDisplay from '../components/FileDisplay';
+import FileNavigationBar from '../components/FileNavigationBar';
 import { FileStateContext } from '../App';
 
 export function DemoPage() {
