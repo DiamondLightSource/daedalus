@@ -1,49 +1,41 @@
 import { store } from '@diamondlightsource/cs-web-lib';
+import { Route, BrowserRouter as Router } from 'react-router-dom'
 import './App.css'
-import FileDisplay from './components/FileDisplay'
-import FileNavigationBar from './components/FileNavigationBar'
-import { Box, AppBar, Typography, Toolbar, Stack } from '@mui/material'
 import { Provider } from "react-redux";
-import { createContext, useReducer } from 'react';
-import { FileState, initialState, reducer } from './store';
-import { useWindowWidth, useWindowHeight } from './utils/helper';
 import { ThemeProvider } from '@mui/material/styles';
 import { diamondTheme } from './theme';
-
-
-export interface MacroMap {
-  [key: string]: string;
-}
+import { DemoPage } from './components/DemoPage';
+import { MainPage } from './components/MainPage';
+import { createContext } from 'react';
+import { FileState, initialState } from './store';
 
 export const FileStateContext = createContext<{
   state: FileState;
   dispatch: React.Dispatch<any>;
 }>({ state: initialState, dispatch: () => null });
 
-function App() {
-  const [state, dispatch] = useReducer(reducer, initialState);
-  const width = useWindowWidth();
-  const height = useWindowHeight();
 
+export interface MacroMap {
+  [key: string]: string;
+}
+
+// const router = createBrowserRouter(
+//   createRoutesFromElements(
+//     [<Route path="/demo" element={<DemoPage />} />,
+//     <Route path="/" element={<MainPage />} />,
+//     ]
+//   )
+// );
+
+function App({ }) {
   return (
     <>
       <Provider store={store}>
         <ThemeProvider theme={diamondTheme}>
-          <Box sx={{ flexGrow: 1 }}>
-            <AppBar sx={{ position: "absolute" }}>
-              <Toolbar>
-                <Typography variant="h1" component="div" sx={{ flexGrow: 1, textAlign: "center" }}>
-                  Daedalus Demo
-                </Typography>
-              </Toolbar>
-            </AppBar>
-            <FileStateContext.Provider value={{ state, dispatch }}>
-              <Stack sx={{ alignItems: "center", position: "absolute", top: 80, width: width, height: height - 80 }} spacing={2}>
-                <FileNavigationBar />
-                <FileDisplay />
-              </Stack>
-            </FileStateContext.Provider>
-          </Box>
+          <Router>
+            <Route path="/demo" component={DemoPage} />
+            <Route path="/" component={MainPage} />
+          </Router>
         </ThemeProvider>
       </Provider>
     </>
