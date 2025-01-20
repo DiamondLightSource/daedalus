@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useContext, useState } from 'react';
 import { FileStateContext } from '../App';
 import { Stack, Typography, TextField, Button } from '@mui/material';
