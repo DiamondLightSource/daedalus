@@ -3,7 +3,7 @@ import { Alert, AlertTitle, Button, Container, Stack } from '@mui/material';
 import { useContext, useState } from 'react';
 import { ADD_FILE } from '../store';
 import { EmbeddedDisplay, RelativePosition } from '@diamondlightsource/cs-web-lib';
-import { FileStateContext } from '../App';
+import FileStateContext from "../routes/DemoPage";
 import ProtocolButton from './ProtocolButton';
 import FileInput from './FileInput';
 

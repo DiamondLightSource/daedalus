@@ -4,7 +4,7 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import FileDisplayTabPanel from './FileDisplayTabPanel';
 import { IconButton, Paper, Typography } from '@mui/material';
-import { FileStateContext } from '../App';
+import FileStateContext from '../routes/DemoPage';
 import { useContext, useEffect, useState } from 'react';
 import { Close } from '@mui/icons-material';
 import { REMOVE_FILE } from '../store';

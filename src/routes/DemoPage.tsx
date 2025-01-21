@@ -1,13 +1,18 @@
 import { Box, AppBar, Toolbar, Typography, Stack } from '@mui/material';
 import * as React from 'react';
-import { reducer, initialState } from '../store';
+import { demoReducer, demoInitialState, FileState } from '../store';
 import { useWindowWidth, useWindowHeight } from '../utils/helper';
 import FileDisplay from '../components/FileDisplay';
 import FileNavigationBar from '../components/FileNavigationBar';
-import { FileStateContext } from '../App';
+import { createContext } from 'react';
+
+const FileStateContext = createContext<{
+    state: FileState;
+    dispatch: React.Dispatch<any>;
+}>({ state: demoInitialState, dispatch: () => null });
 
 export function DemoPage() {
-    const [state, dispatch] = React.useReducer(reducer, initialState);
+    const [state, dispatch] = React.useReducer(demoReducer, demoInitialState);
     const width = useWindowWidth();
     const height = useWindowHeight();
 
@@ -31,3 +36,5 @@ export function DemoPage() {
         </>
     )
 }
+
+export default FileStateContext

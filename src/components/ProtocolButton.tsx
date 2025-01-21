@@ -4,7 +4,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import { useContext, useState } from 'react';
-import { FileStateContext } from '../App';
+import FileStateContext from '../routes/DemoPage';
 import { CHANGE_PROTOCOL } from '../store';
 
 export default function ProtocolButton() {

@@ -7,7 +7,7 @@ import { Box, Button, Paper, Stack, Table, TableBody, TableCell, TableContainer,
 import { useWindowWidth } from '../utils/helper';
 import { useContext, useState } from 'react';
 import { ADD_MACROS } from '../store';
-import { FileStateContext } from '../App';
+import FileStateContext from '../routes/DemoPage';
 
 
 export default function MacrosModal() {
