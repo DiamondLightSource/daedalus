@@ -1,15 +1,16 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { useContext } from 'react';
+import BeamlineTreeStateContext from '../routes/MainPage';
+import { CHANGE_BEAMLINE } from '../store';
 
 export default function BeamlineSelect() {
-    const [beamline, setBeamline] = React.useState('');
+    const { state, dispatch } = useContext(BeamlineTreeStateContext);
 
     const handleChange = (event: SelectChangeEvent) => {
-        setBeamline(event.target.value as string);
+        dispatch({ type: CHANGE_BEAMLINE, payload: { beamline: event.target.value as string } });
     };
 
     return (
@@ -18,12 +19,13 @@ export default function BeamlineSelect() {
             <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={beamline}
+                value={state.currentBeamline}
                 label="Beamline"
                 onChange={handleChange}
             >
-                <MenuItem value="BL09I">BL09I</MenuItem>
-                <MenuItem value="BL16I">BL16I</MenuItem>
+                {state.beamlines.map((item) => {
+                    return <MenuItem key={item.beamline} value={item.beamline}>{item.beamline}</MenuItem>
+                })}
             </Select>
         </FormControl>
     );
