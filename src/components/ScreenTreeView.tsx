@@ -1,63 +1,23 @@
 import { RichTreeView } from '@mui/x-tree-view/RichTreeView';
-import { TreeViewBaseItem } from '@mui/x-tree-view/models';
+import { useContext } from 'react';
+import BeamlineTreeStateContext from '../routes/MainPage';
+import { CHANGE_SCREEN } from '../store';
 
 interface ScreenListProps {
     open: boolean
-    tree?: TreeViewBaseItem[]
 }
 
-// ID here should be the path of the file in whatever
-// filesystem we end up using
-const testScreen: TreeViewBaseItem[] = [{
-    id: "TopLevel",
-    label: "TopLevel",
-    children: [
-        {
-            id: "DCM",
-            label: "DCM",
-            children: [{
-                id: "FILTER 1",
-                label: "FILTER 1",
-            }]
-        },
-        {
-            id: "MOTOR",
-            label: "MOTOR",
-        }
-    ]
-},
-{
-    id: "NextTopLevel",
-    label: "nextTopLevel",
-    children: [
-        {
-            id: "DCM2",
-            label: "DCM2",
-            children: [{
-                id: "MYFILTER 1",
-                label: "FMYILTER 1",
-            }]
-        },
-        {
-            id: "MOTOR2",
-            label: "MOTOR2",
-        }
-    ]
-}
-]
-
-export default function ScreenTreeView({ open, tree = testScreen }: ScreenListProps) {
+export default function ScreenTreeView({ open }: ScreenListProps) {
+    const { state, dispatch } = useContext(BeamlineTreeStateContext);
 
     const handleClick = (itemId: string) => {
-        console.log(itemId);
+        dispatch({ type: CHANGE_SCREEN, payload: { screenId: itemId } });
+        console.log(state.currentScreenId);
     };
-
-
-
 
     return (
         <>
-            {open ? <RichTreeView items={tree} onItemClick={(event, itemId) => handleClick(itemId)} /> : <></>}
+            {open ? <RichTreeView items={state.beamlines[0].screenTree} onItemClick={(event, itemId) => handleClick(itemId)} /> : <></>}
         </>
     );
 }
