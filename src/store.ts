@@ -127,6 +127,7 @@ export function demoReducer(state: FileState, action: Action) {
 // WIREFRAMING DEMO STORE
 export const CHANGE_BEAMLINE = "changeBeamline";
 export const CHANGE_SCREEN = "changeScreen";
+export const OPEN_MENU_BAR = "openMenuBar";
 
 // An interface for our actions
 interface ChangeBeamline {
@@ -143,9 +144,17 @@ interface ChangeScreen {
     };
 }
 
+interface OpenMenuBar {
+    type: typeof OPEN_MENU_BAR;
+    payload: {
+        open: boolean,
+    };
+}
+
 type BeamlineAction =
     | ChangeBeamline
     | ChangeScreen
+    | OpenMenuBar
 
 type BeamlineState = {
     beamline: string,
@@ -153,6 +162,7 @@ type BeamlineState = {
 }
 
 export type BeamlineTreeState = {
+    menuBarOpen: boolean,
     currentBeamline: string,
     currentScreenId: string,
     beamlines: BeamlineState[]
@@ -161,6 +171,7 @@ export type BeamlineTreeState = {
 // ID here should be the path of the file in whatever
 // filesystem we end up using
 export const initialState: BeamlineTreeState = {
+    menuBarOpen: true,
     currentBeamline: "",
     currentScreenId: "",
     beamlines: [
@@ -235,6 +246,9 @@ export function reducer(state: BeamlineTreeState, action: BeamlineAction) {
         }
         case CHANGE_SCREEN: {
             return { ...state, currentScreenId: action.payload.screenId }
+        }
+        case OPEN_MENU_BAR: {
+            return { ...state, menuBarOpen: action.payload.open }
         }
     }
 }
