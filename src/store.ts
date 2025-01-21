@@ -1,11 +1,14 @@
-import { MacroMap } from "./App";
-
+import { TreeViewBaseItem } from "@mui/x-tree-view/models";
 export const LOAD_NEXT_FILE = "loadNextFile";
 export const ADD_FILE = "addFile";
 export const REMOVE_FILE = "removeFile";
 export const ADD_MACROS = "addMacros";
 export const REMOVE_MACROS = "removeMacros";
 export const CHANGE_PROTOCOL = "changeProtocol"
+
+export interface MacroMap {
+    [key: string]: string;
+}
 
 // An interface for our actions
 interface LoadNextFile {
@@ -78,9 +81,9 @@ export type FileState = {
     files: LoadedFile[]
 }
 
-export const initialState: FileState = { nextFile: { protocol: "ca" }, files: [] };
+export const demoInitialState: FileState = { nextFile: { protocol: "ca" }, files: [] };
 
-export function reducer(state: FileState, action: Action) {
+export function demoReducer(state: FileState, action: Action) {
     switch (action.type) {
         case LOAD_NEXT_FILE: {
             // Load temporary file info into state
@@ -117,6 +120,121 @@ export function reducer(state: FileState, action: Action) {
             const file = { ...state.nextFile };
             file.protocol = action.payload.value;
             return { ...state, nextFile: file };
+        }
+    }
+}
+
+// WIREFRAMING DEMO STORE
+export const CHANGE_BEAMLINE = "changeBeamline";
+export const CHANGE_SCREEN = "changeScreen";
+
+// An interface for our actions
+interface ChangeBeamline {
+    type: typeof CHANGE_BEAMLINE;
+    payload: {
+        beamline: string
+    };
+}
+
+interface ChangeScreen {
+    type: typeof CHANGE_SCREEN;
+    payload: {
+        screenId: string,
+    };
+}
+
+type BeamlineAction =
+    | ChangeBeamline
+    | ChangeScreen
+
+type BeamlineState = {
+    beamline: string,
+    screenTree: TreeViewBaseItem[]
+}
+
+export type BeamlineTreeState = {
+    currentBeamline: string,
+    currentScreenId: string,
+    beamlines: BeamlineState[]
+}
+
+// ID here should be the path of the file in whatever
+// filesystem we end up using
+export const initialState: BeamlineTreeState = {
+    currentBeamline: "",
+    currentScreenId: "",
+    beamlines: [
+        {
+            beamline: "BL09I",
+            screenTree:
+                [{
+                    id: "Synoptic",
+                    label: "Synoptic",
+                    children: [
+                        {
+                            id: "Vacuum",
+                            label: "vacuum",
+                            children: [{
+                                id: "Valve",
+                                label: "Valve",
+                            }]
+                        },
+                    ]
+                }
+                ]
+        },
+        {
+            beamline: "BL16I",
+            screenTree:
+                [{
+                    id: "TopLevel",
+                    label: "TopLevel",
+                    children: [
+                        {
+                            id: "DCM",
+                            label: "DCM",
+                            children: [{
+                                id: "FILTER 1",
+                                label: "FILTER 1",
+                            }]
+                        },
+                        {
+                            id: "MOTOR",
+                            label: "MOTOR",
+                        }
+                    ]
+                },
+                {
+                    id: "NextTopLevel",
+                    label: "nextTopLevel",
+                    children: [
+                        {
+                            id: "DCM2",
+                            label: "DCM2",
+                            children: [{
+                                id: "MYFILTER 1",
+                                label: "FMYILTER 1",
+                            }]
+                        },
+                        {
+                            id: "MOTOR2",
+                            label: "MOTOR2",
+                        }
+                    ]
+                }
+                ]
+        }
+    ]
+}
+
+export function reducer(state: BeamlineTreeState, action: BeamlineAction) {
+    switch (action.type) {
+        case CHANGE_BEAMLINE: {
+            // Reset current screen to undefined as well
+            return { ...state, currentBeamline: action.payload.beamline, currentScreenId: "" };
+        }
+        case CHANGE_SCREEN: {
+            return { ...state, currentScreenId: action.payload.screenId }
         }
     }
 }
