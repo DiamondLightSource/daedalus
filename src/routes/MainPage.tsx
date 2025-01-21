@@ -2,6 +2,7 @@ import { Box, CssBaseline, Typography } from '@mui/material';
 import MiniMenuBar from '../components/MenuBar';
 import { createContext, useReducer } from 'react';
 import { BeamlineTreeState, initialState, reducer } from '../store';
+import DLSAppBar from '../components/AppBar';
 
 const BeamlineTreeStateContext = createContext<{
     state: BeamlineTreeState;
@@ -16,9 +17,9 @@ export function MainPage() {
         <>
             <Box sx={{ display: 'flex' }}>
                 <BeamlineTreeStateContext.Provider value={{ state, dispatch }}>
-                    <CssBaseline />
                     <MiniMenuBar />
-                    <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+                    <DLSAppBar />
+                    <Box component="main" sx={{ p: 3, marginTop: "60px" }}>
                         <Typography sx={{ marginBottom: 2 }}>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                             tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non
