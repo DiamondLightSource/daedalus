@@ -104,7 +104,7 @@ export default function MiniMenuBar() {
                             <KeyboardDoubleArrowRight />
                         </IconButton>}
                 </MenuBarHeader>
-                <Divider />
+                {state.menuBarOpen ? <Divider /> : <></>}
                 <ScreenTreeView />
             </MenuBar>
 

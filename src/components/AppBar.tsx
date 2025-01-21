@@ -54,7 +54,7 @@ export default function DLSAppBar() {
     return (
         <>
             <CssBaseline />
-            <AppBar position="absolute" open={state.menuBarOpen} sx={{ height: "60px" }}>
+            <AppBar position="absolute" open={state.menuBarOpen} sx={{ height: "65px" }}>
                 <Toolbar>
                     <Typography variant="h1" component="div" sx={{ flexGrow: 1, textAlign: "center" }}>
                         Wireframe Demo
