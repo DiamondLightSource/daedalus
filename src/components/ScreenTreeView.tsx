@@ -3,13 +3,15 @@ import { useContext } from 'react';
 import BeamlineTreeStateContext from '../routes/MainPage';
 import { CHANGE_SCREEN } from '../store';
 import { TreeViewBaseItem } from '@mui/x-tree-view';
+import { useHistory } from 'react-router-dom';
 
 
 export default function ScreenTreeView() {
+    const history = useHistory();
     const { state, dispatch } = useContext(BeamlineTreeStateContext);
 
     const handleClick = (itemId: string) => {
-        dispatch({ type: CHANGE_SCREEN, payload: { screenId: itemId } });
+        history.push(`/${state.currentBeamline}/${itemId}`)
     };
 
     let currentScreenTree: TreeViewBaseItem[] = [];

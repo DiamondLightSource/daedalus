@@ -14,7 +14,9 @@ function App({ }) {
         <ThemeProvider theme={diamondTheme}>
           <Router>
             <Route path="/demo" component={DemoPage} />
-            <Route path="/" component={MainPage} />
+            <Route exact path="/:beamline" component={MainPage} />
+            <Route exact path="/:beamline/:screenId" component={MainPage} />
+            <Route exact path="/" component={MainPage} />
           </Router>
         </ThemeProvider>
       </Provider>

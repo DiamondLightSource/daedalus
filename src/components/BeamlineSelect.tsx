@@ -5,12 +5,14 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useContext } from 'react';
 import BeamlineTreeStateContext from '../routes/MainPage';
 import { CHANGE_BEAMLINE } from '../store';
+import { useHistory } from 'react-router-dom';
 
 export default function BeamlineSelect() {
     const { state, dispatch } = useContext(BeamlineTreeStateContext);
+    const history = useHistory();
 
     const handleChange = (event: SelectChangeEvent) => {
-        dispatch({ type: CHANGE_BEAMLINE, payload: { beamline: event.target.value as string } });
+        history.push(`/${event.target.value}`)
     };
 
     return (
