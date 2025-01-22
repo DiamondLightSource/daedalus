@@ -1,7 +1,6 @@
 import { RichTreeView } from '@mui/x-tree-view/RichTreeView';
 import { useContext } from 'react';
 import BeamlineTreeStateContext from '../routes/MainPage';
-import { CHANGE_SCREEN } from '../store';
 import { TreeViewBaseItem } from '@mui/x-tree-view';
 import { useHistory } from 'react-router-dom';
 

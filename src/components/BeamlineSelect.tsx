@@ -4,7 +4,6 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useContext } from 'react';
 import BeamlineTreeStateContext from '../routes/MainPage';
-import { CHANGE_BEAMLINE } from '../store';
 import { useHistory } from 'react-router-dom';
 
 export default function BeamlineSelect() {
