@@ -156,7 +156,7 @@ type BeamlineAction =
     | ChangeScreen
     | OpenMenuBar
 
-type BeamlineState = {
+export type BeamlineState = {
     beamline: string,
     screenTree: TreeViewBaseItem[]
 }
@@ -165,6 +165,7 @@ export type BeamlineTreeState = {
     menuBarOpen: boolean,
     currentBeamline: string,
     currentScreenId: string,
+    currentScreenLabel: string,
     beamlines: BeamlineState[]
 }
 
@@ -174,6 +175,7 @@ export const initialState: BeamlineTreeState = {
     menuBarOpen: true,
     currentBeamline: "",
     currentScreenId: "",
+    currentScreenLabel: "",
     beamlines: [
         {
             beamline: "BL09I",
@@ -183,10 +185,10 @@ export const initialState: BeamlineTreeState = {
                     label: "Synoptic",
                     children: [
                         {
-                            id: "Vacuum",
+                            id: "Synoptic-Vacuum",
                             label: "vacuum",
                             children: [{
-                                id: "Valve",
+                                id: "Synoptic-Vacuum-Valve",
                                 label: "Valve",
                             }]
                         },
@@ -202,33 +204,33 @@ export const initialState: BeamlineTreeState = {
                     label: "TopLevel",
                     children: [
                         {
-                            id: "DCM",
+                            id: "TopLevel-DCM",
                             label: "DCM",
                             children: [{
-                                id: "FILTER 1",
+                                id: "TopLevel-DCM-FILTER 1",
                                 label: "FILTER 1",
                             }]
                         },
                         {
-                            id: "MOTOR",
+                            id: "TopLevel-MOTOR",
                             label: "MOTOR",
                         }
                     ]
                 },
                 {
                     id: "NextTopLevel",
-                    label: "nextTopLevel",
+                    label: "NextTopLevel",
                     children: [
                         {
-                            id: "DCM2",
+                            id: "NextTopLevel-DCM2",
                             label: "DCM2",
                             children: [{
-                                id: "MYFILTER 1",
+                                id: "NextTopLevel-DCM2-MYFILTER 1",
                                 label: "FMYILTER 1",
                             }]
                         },
                         {
-                            id: "MOTOR2",
+                            id: "NextTopLevel-MOTOR2",
                             label: "MOTOR2",
                         }
                     ]
@@ -245,7 +247,9 @@ export function reducer(state: BeamlineTreeState, action: BeamlineAction) {
             return { ...state, currentBeamline: action.payload.beamline, currentScreenId: "" };
         }
         case CHANGE_SCREEN: {
-            return { ...state, currentScreenId: action.payload.screenId }
+            // Parse the label from the end of the ID. This is the specific screen name
+            const newLabel = action.payload.screenId.split("-").pop() || "";
+            return { ...state, currentScreenId: action.payload.screenId, currentScreenLabel: newLabel }
         }
         case OPEN_MENU_BAR: {
             return { ...state, menuBarOpen: action.payload.open }
