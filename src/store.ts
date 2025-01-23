@@ -214,24 +214,24 @@ export const initialState: BeamlineTreeState = {
                         {
                             id: "TopLevel-MOTOR",
                             label: "MOTOR",
-                        }
-                    ]
-                },
-                {
-                    id: "NextTopLevel",
-                    label: "NextTopLevel",
-                    children: [
-                        {
-                            id: "NextTopLevel-DCM2",
-                            label: "DCM2",
-                            children: [{
-                                id: "NextTopLevel-DCM2-MYFILTER 1",
-                                label: "FMYILTER 1",
-                            }]
                         },
                         {
-                            id: "NextTopLevel-MOTOR2",
-                            label: "MOTOR2",
+                            id: "NextTopLevel",
+                            label: "TopLevel-NextTopLevel",
+                            children: [
+                                {
+                                    id: "TopLevel-NextTopLevel-DCM2",
+                                    label: "DCM2",
+                                    children: [{
+                                        id: "TopLevel-NextTopLevel-DCM2-MYFILTER 1",
+                                        label: "FMYILTER 1",
+                                    }]
+                                },
+                                {
+                                    id: "TopLevel-NextTopLevel-MOTOR2",
+                                    label: "MOTOR2",
+                                }
+                            ]
                         }
                     ]
                 }
@@ -243,8 +243,10 @@ export const initialState: BeamlineTreeState = {
 export function reducer(state: BeamlineTreeState, action: BeamlineAction) {
     switch (action.type) {
         case CHANGE_BEAMLINE: {
-            // Reset current screen to undefined as well
-            return { ...state, currentBeamline: action.payload.beamline, currentScreenId: "" };
+            // Set current screen to top level screen of new beamline
+            const newBeamlineState = state.beamlines.filter(item => item.beamline === action.payload.beamline)[0]
+            // Fetch first child of new beamline and get id to pass to new state
+            return { ...state, currentBeamline: action.payload.beamline, currentScreenId: newBeamlineState.screenTree[0].id };
         }
         case CHANGE_SCREEN: {
             // Parse the label from the end of the ID. This is the specific screen name
