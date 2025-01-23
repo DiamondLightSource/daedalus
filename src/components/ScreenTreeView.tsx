@@ -1,13 +1,21 @@
 import { RichTreeView } from '@mui/x-tree-view/RichTreeView';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import BeamlineTreeStateContext from '../routes/MainPage';
-import { TreeViewBaseItem } from '@mui/x-tree-view';
+import { TreeViewBaseItem, TreeViewItemId } from '@mui/x-tree-view';
 import { useHistory } from 'react-router-dom';
 
 
 export default function ScreenTreeView() {
     const history = useHistory();
     const { state, dispatch } = useContext(BeamlineTreeStateContext);
+    const [expandedScreens, setExpandedScreens] = useState<string[]>([]);
+
+    const handleExpandedScreensChange = (
+        event: React.SyntheticEvent,
+        screenIds: string[],
+    ) => {
+        setExpandedScreens(screenIds);
+    };
 
     const handleClick = (itemId: string) => {
         history.push(`/${state.currentBeamline}/${itemId}`)
@@ -17,9 +25,28 @@ export default function ScreenTreeView() {
     const currentBeamline = state.beamlines.filter(item => item.beamline === state.currentBeamline)
     if (currentBeamline.length > 0) currentScreenTree = currentBeamline[0].screenTree;
 
+    // When beamline is updated, trigger refresh of expanded screens to fully expand all
+    useEffect(() => {
+        setExpandedScreens(getAllScreensWithChildrenItemIds(currentScreenTree))
+    }, [state.currentBeamline]);
+
     return (
         <>
-            {state.menuBarOpen ? <RichTreeView items={currentScreenTree} onItemClick={(event, itemId) => handleClick(itemId)} /> : <></>}
+            {state.menuBarOpen ? <RichTreeView items={currentScreenTree} expandedItems={expandedScreens} onExpandedItemsChange={handleExpandedScreensChange} onItemClick={(event, itemId) => handleClick(itemId)} /> : <></>}
         </>
     );
 }
+
+const getAllScreensWithChildrenItemIds = (screenTree: TreeViewBaseItem[]) => {
+    const screenIds: TreeViewItemId[] = []
+    const registerScreenId = (item: TreeViewBaseItem) => {
+        if (item.children?.length) {
+            screenIds.push(item.id);
+            item.children.forEach(registerScreenId);
+        }
+    };
+
+    screenTree.forEach(registerScreenId)
+
+    return screenIds;
+};
