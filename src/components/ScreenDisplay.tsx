@@ -11,31 +11,38 @@ export default function ScreenDisplay() {
 
     return (
         <Paper component="main" sx={{ margin: "70px 5px 5px 5px" }}>
-            <Breadcrumbs
-                separator={<NavigateNextIcon fontSize="small" />}
-                aria-label="breadcrumb"
-                sx={{ marginBottom: "10px", p: 2, paddingBottom: 0 }}
-            >
-                {breadcrumbs}
-            </Breadcrumbs>
-            <Divider variant="fullWidth" sx={{ width: "100%" }} />
-            <Box sx={{ marginTop: "10px", p: 2 }}>
-                <Typography sx={{ marginBottom: 2 }}>
-                    Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper
-                    eget nulla facilisi etiam dignissim diam. Pulvinar elementum integer enim
-                    neque volutpat ac tincidunt. Ornare suspendisse sed nisi lacus sed viverra
-                    tellus. Purus sit amet volutpat consequat mauris. Elementum eu facilisis
-                    sed odio morbi. Euismod lacinia at quis risus sed vulputate odio. Morbi
-                    tincidunt ornare massa eget egestas purus viverra accumsan in. In hendrerit
-                    gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem
-                    et tortor. Habitant morbi tristique senectus et. Adipiscing elit duis
-                    tristique sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-                    eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-                    posuere sollicitudin aliquam ultrices sagittis orci a.
-                </Typography>
+            <Box>
+                {breadcrumbs.length === 0 ?
+                    <Typography sx={{ marginBottom: 2 }}>
+                        Homepage! You have no file loaded
+                    </Typography>
+                    :
+                    <>
+                        <Breadcrumbs
+                            separator={<NavigateNextIcon fontSize="small" />}
+                            aria-label="breadcrumb"
+                            sx={{ marginBottom: "10px", p: 2, paddingBottom: 0 }}
+                        >
+                            {breadcrumbs}
+                        </Breadcrumbs>
+                        <Divider variant="fullWidth" sx={{ width: "100%" }} />
+                        <Typography sx={{ marginLeft: 2, marginBottom: 2 }}>
+                            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper
+                            eget nulla facilisi etiam dignissim diam. Pulvinar elementum integer enim
+                            neque volutpat ac tincidunt. Ornare suspendisse sed nisi lacus sed viverra
+                            tellus. Purus sit amet volutpat consequat mauris. Elementum eu facilisis
+                            sed odio morbi. Euismod lacinia at quis risus sed vulputate odio. Morbi
+                            tincidunt ornare massa eget egestas purus viverra accumsan in. In hendrerit
+                            gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem
+                            et tortor. Habitant morbi tristique senectus et. Adipiscing elit duis
+                            tristique sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
+                            eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
+                            posuere sollicitudin aliquam ultrices sagittis orci a.
+                        </Typography>
+                    </>
+                }
             </Box>
-
-        </Paper>
+        </Paper >
     );
 }
 
@@ -45,6 +52,8 @@ export default function ScreenDisplay() {
  */
 function createBreadcrumbs(screenId: string, beamline: string) {
     const breadcrumbs: any[] = [];
+    if (beamline === "") return [];
+
     const breadcrumbLabels = screenId.split("-")
     let linkUrl = `/${beamline}/`
     breadcrumbLabels.forEach((label, idx) => {
