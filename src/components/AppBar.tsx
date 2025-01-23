@@ -57,7 +57,7 @@ export default function DLSAppBar() {
             <AppBar position="absolute" open={state.menuBarOpen} sx={{ height: "65px" }}>
                 <Toolbar>
                     <Typography variant="h1" component="div" sx={{ flexGrow: 1, textAlign: "center" }}>
-                        Wireframe Demo
+                        Daedalus Demo
                     </Typography>
                     <IconButton
                         color="inherit"
