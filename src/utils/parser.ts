@@ -29,7 +29,6 @@ async function parseChildren(
     // Check file is a valid .bob, otherwise abort
     const fileExt = filepath.split(".").at(-1);
     if (fileExt !== "bob") return screen;
-    console.log(filepath);
 
     const fullFilepath = `${parentDir}/${filepath}`;
     // Otherwise fetch file
@@ -77,7 +76,6 @@ export async function parseScreenTree(filepath: string) {
     let parentScreen: TreeViewBaseItem = { id: filepath, label: filepath.split(".bob")[0], children: [] };
     const parentDir = filepath.substr(0, filepath.lastIndexOf("/"));
     const parentFile = filepath.substr(filepath.lastIndexOf("/") + 1);
-
-    const screenTree = await parseChildren(parentFile, parentScreen.children!, parentDir)
-    return screenTree
+    parentScreen.children = await parseChildren(parentFile, parentScreen.children!, parentDir)
+    return parentScreen;
 }
