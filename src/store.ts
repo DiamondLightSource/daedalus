@@ -128,6 +128,7 @@ export function demoReducer(state: FileState, action: Action) {
 export const CHANGE_BEAMLINE = "changeBeamline";
 export const CHANGE_SCREEN = "changeScreen";
 export const OPEN_MENU_BAR = "openMenuBar";
+export const LOAD_SCREEN_TREES = "loadScreenTrees";
 
 // An interface for our actions
 interface ChangeBeamline {
@@ -151,13 +152,22 @@ interface OpenMenuBar {
     };
 }
 
+interface LoadScreenTrees {
+    type: typeof LOAD_SCREEN_TREES;
+    payload: {
+        beamlines: BeamlineState[]
+    };
+}
+
 type BeamlineAction =
     | ChangeBeamline
     | ChangeScreen
     | OpenMenuBar
+    | LoadScreenTrees
 
 export type BeamlineState = {
     beamline: string,
+    entryPoint: string,
     screenTree: TreeViewBaseItem[]
 }
 
@@ -178,64 +188,9 @@ export const initialState: BeamlineTreeState = {
     currentScreenLabel: "",
     beamlines: [
         {
-            beamline: "BL09I",
-            screenTree:
-                [{
-                    id: "Synoptic",
-                    label: "Synoptic",
-                    children: [
-                        {
-                            id: "Synoptic-Vacuum",
-                            label: "vacuum",
-                            children: [{
-                                id: "Synoptic-Vacuum-Valve",
-                                label: "Valve",
-                            }]
-                        },
-                    ]
-                }
-                ]
-        },
-        {
-            beamline: "BL16I",
-            screenTree:
-                [{
-                    id: "TopLevel",
-                    label: "TopLevel",
-                    children: [
-                        {
-                            id: "TopLevel-DCM",
-                            label: "DCM",
-                            children: [{
-                                id: "TopLevel-DCM-FILTER 1",
-                                label: "FILTER 1",
-                            }]
-                        },
-                        {
-                            id: "TopLevel-MOTOR",
-                            label: "MOTOR",
-                        },
-                        {
-                            id: "NextTopLevel",
-                            label: "TopLevel-NextTopLevel",
-                            children: [
-                                {
-                                    id: "TopLevel-NextTopLevel-DCM2",
-                                    label: "DCM2",
-                                    children: [{
-                                        id: "TopLevel-NextTopLevel-DCM2-MYFILTER 1",
-                                        label: "FMYILTER 1",
-                                    }]
-                                },
-                                {
-                                    id: "TopLevel-NextTopLevel-MOTOR2",
-                                    label: "MOTOR2",
-                                }
-                            ]
-                        }
-                    ]
-                }
-                ]
+            beamline: "BLTEST",
+            entryPoint: "/BOBs/TopLevel.bob",
+            screenTree: []
         }
     ]
 }
@@ -255,6 +210,9 @@ export function reducer(state: BeamlineTreeState, action: BeamlineAction) {
         }
         case OPEN_MENU_BAR: {
             return { ...state, menuBarOpen: action.payload.open }
+        }
+        case LOAD_SCREEN_TREES: {
+            return { ...state, beamlines: action.payload.beamlines }
         }
     }
 }

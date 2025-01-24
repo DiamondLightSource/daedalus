@@ -77,5 +77,5 @@ export async function parseScreenTree(filepath: string) {
     const parentDir = filepath.substr(0, filepath.lastIndexOf("/"));
     const parentFile = filepath.substr(filepath.lastIndexOf("/") + 1);
     parentScreen.children = await parseChildren(parentFile, parentScreen.children!, parentDir)
-    return parentScreen;
+    return [parentScreen];
 }

@@ -1,10 +1,11 @@
 import { Box } from '@mui/material';
 import MiniMenuBar from '../components/MenuBar';
-import { createContext, useEffect, useReducer } from 'react';
+import { createContext, useCallback, useEffect, useReducer } from 'react';
 import { BeamlineTreeState, CHANGE_BEAMLINE, CHANGE_SCREEN, initialState, reducer } from '../store';
 import DLSAppBar from '../components/AppBar';
 import ScreenDisplay from '../components/ScreenDisplay';
 import { useParams } from 'react-router-dom';
+import { parseScreenTree } from '../utils/parser';
 
 const BeamlineTreeStateContext = createContext<{
     state: BeamlineTreeState;
@@ -20,6 +21,23 @@ export function MainPage() {
         if (params.beamline && params.beamline !== state.currentBeamline) dispatch({ type: CHANGE_BEAMLINE, payload: { beamline: params.beamline } });
         if (params.screenId && params.screenId !== state.currentScreenId) dispatch({ type: CHANGE_SCREEN, payload: { screenId: params.screenId } });
     })
+
+    // Only run once on mount
+    useEffect(() => {
+        console.log("how many times called")
+        loadScreenTrees()
+    }, [])
+
+    const loadScreenTrees = useCallback(async () => {
+        const newBeamlines = [...state.beamlines];
+        newBeamlines.forEach(async (item) => {
+            item.screenTree = await parseScreenTree(item.entryPoint);
+        })
+        dispatch({
+            type: "loadScreenTrees",
+            payload: { beamlines: newBeamlines }
+        });
+    }, []);
 
 
     return (
