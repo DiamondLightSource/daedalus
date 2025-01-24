@@ -73,7 +73,7 @@ async function parseChildren(
  * @param filepath toplevel screen that links others together
  */
 export async function parseScreenTree(filepath: string) {
-    let parentScreen: TreeViewBaseItem = { id: filepath, label: filepath.split(".bob")[0], children: [] };
+    let parentScreen: TreeViewBaseItem = { id: filepath.split("/").pop()!, label: (filepath.split(".bob")[0]).split("/").pop()!, children: [] };
     const parentDir = filepath.substr(0, filepath.lastIndexOf("/"));
     const parentFile = filepath.substr(filepath.lastIndexOf("/") + 1);
     parentScreen.children = await parseChildren(parentFile, parentScreen.children!, parentDir)
