@@ -172,7 +172,7 @@ export type FileIDs = {
 export type BeamlineStateProperties = {
     entryPoint: string,
     screenTree: TreeViewBaseItem[],
-    filePathIds: FileIDs[]
+    filePathIds: FileIDs
 }
 
 export type BeamlineState = {
@@ -198,7 +198,7 @@ export const initialState: BeamlineTreeState = {
         "BLTEST": {
             entryPoint: "/BOBs/TopLevel.bob",
             screenTree: [],
-            filePathIds: []
+            filePathIds: {}
         }
     }
 }
