@@ -24,9 +24,10 @@ export default function BeamlineSelect() {
                 label="Beamline"
                 onChange={handleChange}
             >
-                {state.beamlines.map((item) => {
-                    return <MenuItem key={item.beamline} value={item.beamline}>{item.beamline}</MenuItem>
-                })}
+                {Object.keys(state.beamlines).map(function (beamline) {
+                    return (<MenuItem key={beamline} value={beamline}>{beamline}</MenuItem>)
+                }
+                )}
             </Select>
         </FormControl>
     );

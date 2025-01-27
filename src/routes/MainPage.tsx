@@ -28,8 +28,8 @@ export function MainPage() {
     }, [])
 
     const loadScreenTrees = useCallback(async () => {
-        const newBeamlines = [...state.beamlines];
-        newBeamlines.forEach(async (item) => {
+        const newBeamlines = { ...state.beamlines };
+        Object.values(newBeamlines).forEach(async (item) => {
             const [tree, fileIDs] = await parseScreenTree(item.entryPoint);
             item.screenTree = tree;
             item.filePathIds = fileIDs

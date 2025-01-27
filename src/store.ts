@@ -155,7 +155,7 @@ interface OpenMenuBar {
 interface LoadScreenTrees {
     type: typeof LOAD_SCREEN_TREES;
     payload: {
-        beamlines: BeamlineState[]
+        beamlines: BeamlineState
     };
 }
 
@@ -169,11 +169,14 @@ export type FileIDs = {
     [id: string]: string
 }
 
-export type BeamlineState = {
-    beamline: string,
+export type BeamlineStateProperties = {
     entryPoint: string,
     screenTree: TreeViewBaseItem[],
     filePathIds: FileIDs[]
+}
+
+export type BeamlineState = {
+    [key: string]: BeamlineStateProperties
 }
 
 export type BeamlineTreeState = {
@@ -181,7 +184,7 @@ export type BeamlineTreeState = {
     currentBeamline: string,
     currentScreenId: string,
     currentScreenLabel: string,
-    beamlines: BeamlineState[]
+    beamlines: BeamlineState
 }
 
 // ID here should be the path of the file in whatever
@@ -191,21 +194,20 @@ export const initialState: BeamlineTreeState = {
     currentBeamline: "",
     currentScreenId: "",
     currentScreenLabel: "",
-    beamlines: [
-        {
-            beamline: "BLTEST",
+    beamlines: {
+        "BLTEST": {
             entryPoint: "/BOBs/TopLevel.bob",
             screenTree: [],
             filePathIds: []
         }
-    ]
+    }
 }
 
 export function reducer(state: BeamlineTreeState, action: BeamlineAction) {
     switch (action.type) {
         case CHANGE_BEAMLINE: {
             // Set current screen to top level screen of new beamline
-            const newBeamlineState = state.beamlines.filter(item => item.beamline === action.payload.beamline)[0]
+            const newBeamlineState = state.beamlines[action.payload.beamline]
             // Fetch first child of new beamline and get id to pass to new state
             return { ...state, currentBeamline: action.payload.beamline, currentScreenId: newBeamlineState.screenTree[0].id };
         }

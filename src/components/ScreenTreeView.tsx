@@ -22,8 +22,8 @@ export default function ScreenTreeView() {
     };
 
     let currentScreenTree: TreeViewBaseItem[] = [];
-    const currentBeamline = state.beamlines.filter(item => item.beamline === state.currentBeamline)
-    if (currentBeamline.length > 0) currentScreenTree = currentBeamline[0].screenTree;
+    const currentBeamline = state.beamlines[state.currentBeamline]
+    if (currentBeamline) currentScreenTree = currentBeamline.screenTree;
 
     // When beamline is updated, trigger refresh of expanded screens to fully expand all
     useEffect(() => {
