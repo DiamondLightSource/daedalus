@@ -184,6 +184,7 @@ export type BeamlineTreeState = {
     currentBeamline: string,
     currentScreenId: string,
     currentScreenLabel: string,
+    currentScreenFilepath: string,
     beamlines: BeamlineState
 }
 
@@ -194,6 +195,7 @@ export const initialState: BeamlineTreeState = {
     currentBeamline: "",
     currentScreenId: "",
     currentScreenLabel: "",
+    currentScreenFilepath: "",
     beamlines: {
         "BLTEST": {
             entryPoint: "/BOBs/TopLevel.bob",
@@ -206,10 +208,21 @@ export const initialState: BeamlineTreeState = {
 export function reducer(state: BeamlineTreeState, action: BeamlineAction) {
     switch (action.type) {
         case CHANGE_BEAMLINE: {
+            let newID = state.currentScreenId
             // Set current screen to top level screen of new beamline
             const newBeamlineState = state.beamlines[action.payload.beamline]
-            // Fetch first child of new beamline and get id to pass to new state
-            return { ...state, currentBeamline: action.payload.beamline, currentScreenId: newBeamlineState.screenTree[0].id };
+            // Fetch top level screen
+            Object.entries(newBeamlineState.filePathIds).forEach(([key, value]) => {
+                if (value === newBeamlineState.entryPoint) newID = key;
+            });
+
+            return {
+                ...state,
+                currentBeamline: action.payload.beamline,
+                currentScreenId: newID,
+                currentScreenFilepath: newBeamlineState.entryPoint,
+                currentScreenLabel: newBeamlineState.entryPoint.split(".bob")[0]
+            };
         }
         case CHANGE_SCREEN: {
             // Parse the label from the end of the ID. This is the specific screen name

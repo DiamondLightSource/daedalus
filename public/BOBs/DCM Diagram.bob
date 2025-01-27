@@ -1,0 +1,2212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<display version="2.0.0">
+  <name>DCM Mock Diagram</name>
+  <y use_class="true">0</y>
+  <width>1000</width>
+  <height>520</height>
+  <background_color use_class="true">
+    <color name="Read_Background" red="240" green="240" blue="240">
+    </color>
+  </background_color>
+  <actions>
+  </actions>
+  <grid_step_x>5</grid_step_x>
+  <grid_step_y>5</grid_step_y>
+  <widget type="picture" version="2.0.0">
+    <name>Picture</name>
+    <file>../images/3DCM_diag_3.gif</file>
+    <x>263</x>
+    <y>81</y>
+    <width>500</width>
+    <height>340</height>
+    <actions>
+      <action type="open_display">
+        <file>../BOBs/MOTOR_static.bob</file>
+        <target>tab</target>
+        <description>Open Display</description>
+      </action>
+    </actions>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>Lateral Mode Selection</name>
+    <y>183</y>
+    <width>240</width>
+    <height>180</height>
+    <style use_class="true">0</style>
+    <font use_class="true">
+      <font family="Arial" style="REGULAR" size="15.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color red="29" green="41" blue="69">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color name="Read_Background" red="240" green="240" blue="240">
+      </color>
+    </background_color>
+    <widget type="textupdate" version="2.0.0">
+      <name>TextUpdate_32</name>
+      <pv_name>sim://const("Beam Operation Mode")</pv_name>
+      <width>200</width>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="184" green="195" blue="223">
+        </color>
+      </background_color>
+      <horizontal_alignment use_class="true">1</horizontal_alignment>
+      <vertical_alignment use_class="true">1</vertical_alignment>
+      <border_color use_class="true">
+        <color red="196" green="196" blue="196">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>OpenDisplay_25</name>
+      <actions>
+        <action type="open_display">
+          <file>SubScreenFile</file>
+          <target>tab</target>
+          <description>Open Display</description>
+        </action>
+      </actions>
+      <text>Beam Operation</text>
+      <y>125</y>
+      <width>200</width>
+      <height>20</height>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="29" green="41" blue="69">
+        </color>
+      </background_color>
+      <tooltip>$(actions)</tooltip>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_1</name>
+      <class>Label</class>
+      <text>Maintenance Mode</text>
+      <y>25</y>
+      <width>175</width>
+      <font>
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color>
+        <color red="29" green="41" blue="69">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="Transparent" red="255" green="255" blue="255" alpha="0">
+        </color>
+      </background_color>
+      <horizontal_alignment>2</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+      <tooltip>$(text)</tooltip>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_2</name>
+      <class>Label</class>
+      <text>Maintenance Mode Switch</text>
+      <y>50</y>
+      <width>175</width>
+      <font>
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color>
+        <color red="29" green="41" blue="69">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="Transparent" red="255" green="255" blue="255" alpha="0">
+        </color>
+      </background_color>
+      <horizontal_alignment>2</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+      <tooltip>$(text)</tooltip>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_3</name>
+      <class>Label</class>
+      <text>Maint. Mode Lower Limit</text>
+      <y>75</y>
+      <width>175</width>
+      <font>
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color>
+        <color red="29" green="41" blue="69">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="Transparent" red="255" green="255" blue="255" alpha="0">
+        </color>
+      </background_color>
+      <horizontal_alignment>2</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+      <tooltip>$(text)</tooltip>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_4</name>
+      <class>Label</class>
+      <text>Beam Op. Lower Limit</text>
+      <y>100</y>
+      <width>175</width>
+      <font>
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color>
+        <color red="29" green="41" blue="69">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="Transparent" red="255" green="255" blue="255" alpha="0">
+        </color>
+      </background_color>
+      <horizontal_alignment>2</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+      <tooltip>$(text)</tooltip>
+    </widget>
+    <widget type="rectangle" version="2.0.0">
+      <name>Rectangle_30</name>
+      <y>24</y>
+      <width>200</width>
+      <height>1</height>
+      <line_width>1</line_width>
+      <line_color>
+        <color red="184" green="195" blue="223">
+        </color>
+      </line_color>
+      <background_color>
+        <color red="184" green="195" blue="223">
+        </color>
+      </background_color>
+    </widget>
+    <widget type="rectangle" version="2.0.0">
+      <name>Rectangle_31</name>
+      <y>48</y>
+      <width>200</width>
+      <height>1</height>
+      <line_width>1</line_width>
+      <line_color>
+        <color red="184" green="195" blue="223">
+        </color>
+      </line_color>
+      <background_color>
+        <color red="184" green="195" blue="223">
+        </color>
+      </background_color>
+    </widget>
+    <widget type="rectangle" version="2.0.0">
+      <name>Rectangle_32</name>
+      <x>1</x>
+      <y>73</y>
+      <width>200</width>
+      <height>1</height>
+      <line_width>1</line_width>
+      <line_color>
+        <color red="184" green="195" blue="223">
+        </color>
+      </line_color>
+      <background_color>
+        <color red="184" green="195" blue="223">
+        </color>
+      </background_color>
+    </widget>
+    <widget type="rectangle" version="2.0.0">
+      <name>Rectangle_33</name>
+      <x>1</x>
+      <y>98</y>
+      <width>200</width>
+      <height>1</height>
+      <line_width>1</line_width>
+      <line_color>
+        <color red="184" green="195" blue="223">
+        </color>
+      </line_color>
+      <background_color>
+        <color red="184" green="195" blue="223">
+        </color>
+      </background_color>
+    </widget>
+    <widget type="rectangle" version="2.0.0">
+      <name>Rectangle_34</name>
+      <y>121</y>
+      <width>200</width>
+      <height>1</height>
+      <line_width>1</line_width>
+      <line_color>
+        <color red="184" green="195" blue="223">
+        </color>
+      </line_color>
+      <background_color>
+        <color red="184" green="195" blue="223">
+        </color>
+      </background_color>
+    </widget>
+    <widget type="byte_monitor" version="2.0.0">
+      <name>BitField_21</name>
+      <pv_name>sim://const(1)</pv_name>
+      <x>180</x>
+      <y>100</y>
+      <width>20</width>
+      <numBits>1</numBits>
+      <off_color use_class="true">
+        <color red="237" green="237" blue="237">
+        </color>
+      </off_color>
+      <on_color use_class="true">
+        <color name="Write_Background" red="128" green="255" blue="255">
+        </color>
+      </on_color>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <font use_class="true">
+        <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+        </font>
+      </font>
+    </widget>
+    <widget type="byte_monitor" version="2.0.0">
+      <name>BitField_22</name>
+      <pv_name>sim://const(0)</pv_name>
+      <x>180</x>
+      <y>76</y>
+      <width>20</width>
+      <numBits>1</numBits>
+      <off_color use_class="true">
+        <color red="237" green="237" blue="237">
+        </color>
+      </off_color>
+      <on_color use_class="true">
+        <color name="Write_Background" red="128" green="255" blue="255">
+        </color>
+      </on_color>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <font use_class="true">
+        <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+        </font>
+      </font>
+    </widget>
+    <widget type="byte_monitor" version="2.0.0">
+      <name>BitField_23</name>
+      <pv_name>sim://const(0)</pv_name>
+      <x>180</x>
+      <y>51</y>
+      <width>20</width>
+      <numBits>1</numBits>
+      <off_color use_class="true">
+        <color red="237" green="237" blue="237">
+        </color>
+      </off_color>
+      <on_color use_class="true">
+        <color name="Write_Background" red="128" green="255" blue="255">
+        </color>
+      </on_color>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <font use_class="true">
+        <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+        </font>
+      </font>
+    </widget>
+    <widget type="byte_monitor" version="2.0.0">
+      <name>BitField_24</name>
+      <pv_name>sim://const(0)</pv_name>
+      <x>180</x>
+      <y>26</y>
+      <width>20</width>
+      <numBits>1</numBits>
+      <off_color use_class="true">
+        <color red="237" green="237" blue="237">
+        </color>
+      </off_color>
+      <on_color use_class="true">
+        <color name="Write_Background" red="128" green="255" blue="255">
+        </color>
+      </on_color>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <font use_class="true">
+        <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+        </font>
+      </font>
+    </widget>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>1st Crystal Roll</name>
+    <x>263</x>
+    <width>205</width>
+    <height>120</height>
+    <style use_class="true">0</style>
+    <font use_class="true">
+      <font family="Arial" style="REGULAR" size="15.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color red="29" green="41" blue="69">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color name="Read_Background" red="240" green="240" blue="240">
+      </color>
+    </background_color>
+    <widget type="action_button" version="3.0.0">
+      <name>WritePV_5</name>
+      <class>DEFAULT_PV</class>
+      <actions>
+        <action type="write_pv">
+          <pv_name>$(pv_name)</pv_name>
+          <value>value</value>
+          <description>$(name)</description>
+        </action>
+      </actions>
+      <pv_name>sim://const(1)</pv_name>
+      <text>-</text>
+      <y>10</y>
+      <width>30</width>
+      <height>20</height>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color red="29" green="41" blue="69">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <tooltip>$(tooltip)</tooltip>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>WritePV_6</name>
+      <class>DEFAULT_PV</class>
+      <actions>
+        <action type="write_pv">
+          <pv_name>$(pv_name)</pv_name>
+          <value>value</value>
+          <description>$(name)</description>
+        </action>
+      </actions>
+      <pv_name>sim://const(1)</pv_name>
+      <text>+</text>
+      <x>140</x>
+      <y>10</y>
+      <width>30</width>
+      <height>20</height>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color red="29" green="41" blue="69">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <tooltip>$(tooltip)</tooltip>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>OpenDisplay_4</name>
+      <actions>
+        <action type="open_display">
+          <file>../BOBs/MOTOR_static.bob</file>
+          <target>tab</target>
+          <description>Open Display</description>
+        </action>
+      </actions>
+      <text>More</text>
+      <y>60</y>
+      <width>40</width>
+      <height>20</height>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="29" green="41" blue="69">
+        </color>
+      </background_color>
+      <tooltip>$(actions)</tooltip>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>WritePV_7</name>
+      <class>DEFAULT_PV</class>
+      <actions>
+        <action type="write_pv">
+          <pv_name>$(pv_name)</pv_name>
+          <value>value</value>
+          <description>$(name)</description>
+        </action>
+      </actions>
+      <pv_name>sim://const(1)</pv_name>
+      <text>STOP</text>
+      <x>130</x>
+      <y>60</y>
+      <width>40</width>
+      <height>20</height>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color red="29" green="41" blue="69">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <tooltip>$(tooltip)</tooltip>
+    </widget>
+    <widget type="textentry" version="3.0.0">
+      <name>TextEntry_37</name>
+      <pv_name>sim://const(0.1000)</pv_name>
+      <x>45</x>
+      <y>60</y>
+      <width>80</width>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <precision use_class="true">-1</precision>
+      <show_units use_class="true">true</show_units>
+      <horizontal_alignment use_class="true">1</horizontal_alignment>
+      <vertical_alignment use_class="true">1</vertical_alignment>
+      <enabled use_class="true">true</enabled>
+      <border_width use_class="true">1</border_width>
+      <border_color use_class="true">
+        <color red="184" green="195" blue="223">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="byte_monitor" version="2.0.0">
+      <name>BitField_3</name>
+      <pv_name>sim://const(1)</pv_name>
+      <x>150</x>
+      <y>35</y>
+      <width>20</width>
+      <numBits>1</numBits>
+      <off_color use_class="true">
+        <color red="237" green="237" blue="237">
+        </color>
+      </off_color>
+      <on_color use_class="true">
+        <color name="Write_Background" red="128" green="255" blue="255">
+        </color>
+      </on_color>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <font use_class="true">
+        <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+        </font>
+      </font>
+    </widget>
+    <widget type="byte_monitor" version="2.0.0">
+      <name>BitField_4</name>
+      <pv_name>sim://const(0)</pv_name>
+      <y>35</y>
+      <width>20</width>
+      <numBits>1</numBits>
+      <off_color use_class="true">
+        <color red="237" green="237" blue="237">
+        </color>
+      </off_color>
+      <on_color use_class="true">
+        <color name="Write_Background" red="128" green="255" blue="255">
+        </color>
+      </on_color>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <font use_class="true">
+        <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+        </font>
+      </font>
+    </widget>
+    <widget type="textentry" version="3.0.0">
+      <name>TextEntry_44</name>
+      <pv_name>sim://const(12.9687)</pv_name>
+      <x>35</x>
+      <y>10</y>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <precision use_class="true">-1</precision>
+      <show_units use_class="true">true</show_units>
+      <horizontal_alignment use_class="true">1</horizontal_alignment>
+      <vertical_alignment use_class="true">1</vertical_alignment>
+      <enabled use_class="true">true</enabled>
+      <border_width use_class="true">1</border_width>
+      <border_color use_class="true">
+        <color red="184" green="195" blue="223">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>TextUpdate_41</name>
+      <pv_name>sim://const(10.4456)</pv_name>
+      <x>25</x>
+      <y>35</y>
+      <width>120</width>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="184" green="195" blue="223">
+        </color>
+      </background_color>
+      <horizontal_alignment use_class="true">1</horizontal_alignment>
+      <vertical_alignment use_class="true">1</vertical_alignment>
+      <border_color use_class="true">
+        <color red="196" green="196" blue="196">
+        </color>
+      </border_color>
+    </widget>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>Perpendicular Translation</name>
+    <x>537</x>
+    <width>205</width>
+    <height>120</height>
+    <style use_class="true">0</style>
+    <font use_class="true">
+      <font family="Arial" style="REGULAR" size="15.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color red="29" green="41" blue="69">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color name="Read_Background" red="240" green="240" blue="240">
+      </color>
+    </background_color>
+    <widget type="action_button" version="3.0.0">
+      <name>WritePV_8</name>
+      <class>DEFAULT_PV</class>
+      <actions>
+        <action type="write_pv">
+          <pv_name>$(pv_name)</pv_name>
+          <value>value</value>
+          <description>$(name)</description>
+        </action>
+      </actions>
+      <pv_name>sim://const(1)</pv_name>
+      <text>-</text>
+      <y>10</y>
+      <width>30</width>
+      <height>20</height>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color red="29" green="41" blue="69">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <tooltip>$(tooltip)</tooltip>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>WritePV_9</name>
+      <class>DEFAULT_PV</class>
+      <actions>
+        <action type="write_pv">
+          <pv_name>$(pv_name)</pv_name>
+          <value>value</value>
+          <description>$(name)</description>
+        </action>
+      </actions>
+      <pv_name>sim://const(1)</pv_name>
+      <text>+</text>
+      <x>140</x>
+      <y>10</y>
+      <width>30</width>
+      <height>20</height>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color red="29" green="41" blue="69">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <tooltip>$(tooltip)</tooltip>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>OpenDisplay_5</name>
+      <actions>
+        <action type="open_display">
+          <file>../BOBs/MOTOR_static.bob</file>
+          <target>tab</target>
+          <description>Open Display</description>
+        </action>
+      </actions>
+      <text>More</text>
+      <y>60</y>
+      <width>40</width>
+      <height>20</height>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="29" green="41" blue="69">
+        </color>
+      </background_color>
+      <tooltip>$(actions)</tooltip>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>WritePV_10</name>
+      <class>DEFAULT_PV</class>
+      <actions>
+        <action type="write_pv">
+          <pv_name>$(pv_name)</pv_name>
+          <value>value</value>
+          <description>$(name)</description>
+        </action>
+      </actions>
+      <pv_name>sim://const(1)</pv_name>
+      <text>STOP</text>
+      <x>130</x>
+      <y>60</y>
+      <width>40</width>
+      <height>20</height>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color red="29" green="41" blue="69">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <tooltip>$(tooltip)</tooltip>
+    </widget>
+    <widget type="textentry" version="3.0.0">
+      <name>TextEntry_45</name>
+      <pv_name>sim://const(0.1000)</pv_name>
+      <x>45</x>
+      <y>60</y>
+      <width>80</width>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <precision use_class="true">-1</precision>
+      <show_units use_class="true">true</show_units>
+      <horizontal_alignment use_class="true">1</horizontal_alignment>
+      <vertical_alignment use_class="true">1</vertical_alignment>
+      <enabled use_class="true">true</enabled>
+      <border_width use_class="true">1</border_width>
+      <border_color use_class="true">
+        <color red="184" green="195" blue="223">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="byte_monitor" version="2.0.0">
+      <name>BitField_5</name>
+      <pv_name>sim://const(1)</pv_name>
+      <x>150</x>
+      <y>35</y>
+      <width>20</width>
+      <numBits>1</numBits>
+      <off_color use_class="true">
+        <color red="237" green="237" blue="237">
+        </color>
+      </off_color>
+      <on_color use_class="true">
+        <color name="Write_Background" red="128" green="255" blue="255">
+        </color>
+      </on_color>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <font use_class="true">
+        <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+        </font>
+      </font>
+    </widget>
+    <widget type="byte_monitor" version="2.0.0">
+      <name>BitField_6</name>
+      <pv_name>sim://const(0)</pv_name>
+      <y>35</y>
+      <width>20</width>
+      <numBits>1</numBits>
+      <off_color use_class="true">
+        <color red="237" green="237" blue="237">
+        </color>
+      </off_color>
+      <on_color use_class="true">
+        <color name="Write_Background" red="128" green="255" blue="255">
+        </color>
+      </on_color>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <font use_class="true">
+        <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+        </font>
+      </font>
+    </widget>
+    <widget type="textentry" version="3.0.0">
+      <name>TextEntry_46</name>
+      <pv_name>sim://const(12.9687)</pv_name>
+      <x>35</x>
+      <y>10</y>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <precision use_class="true">-1</precision>
+      <show_units use_class="true">true</show_units>
+      <horizontal_alignment use_class="true">1</horizontal_alignment>
+      <vertical_alignment use_class="true">1</vertical_alignment>
+      <enabled use_class="true">true</enabled>
+      <border_width use_class="true">1</border_width>
+      <border_color use_class="true">
+        <color red="184" green="195" blue="223">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>TextUpdate_42</name>
+      <pv_name>sim://const(10.4456)</pv_name>
+      <x>25</x>
+      <y>35</y>
+      <width>120</width>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="184" green="195" blue="223">
+        </color>
+      </background_color>
+      <horizontal_alignment use_class="true">1</horizontal_alignment>
+      <vertical_alignment use_class="true">1</vertical_alignment>
+      <border_color use_class="true">
+        <color red="196" green="196" blue="196">
+        </color>
+      </border_color>
+    </widget>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>2nd Crystal Roll</name>
+    <x>797</x>
+    <width>205</width>
+    <height>120</height>
+    <style use_class="true">0</style>
+    <font use_class="true">
+      <font family="Arial" style="REGULAR" size="15.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color red="29" green="41" blue="69">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color name="Read_Background" red="240" green="240" blue="240">
+      </color>
+    </background_color>
+    <widget type="action_button" version="3.0.0">
+      <name>WritePV_11</name>
+      <class>DEFAULT_PV</class>
+      <actions>
+        <action type="write_pv">
+          <pv_name>$(pv_name)</pv_name>
+          <value>value</value>
+          <description>$(name)</description>
+        </action>
+      </actions>
+      <pv_name>sim://const(1)</pv_name>
+      <text>-</text>
+      <y>10</y>
+      <width>30</width>
+      <height>20</height>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color red="29" green="41" blue="69">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <tooltip>$(tooltip)</tooltip>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>WritePV_12</name>
+      <class>DEFAULT_PV</class>
+      <actions>
+        <action type="write_pv">
+          <pv_name>$(pv_name)</pv_name>
+          <value>value</value>
+          <description>$(name)</description>
+        </action>
+      </actions>
+      <pv_name>sim://const(1)</pv_name>
+      <text>+</text>
+      <x>140</x>
+      <y>10</y>
+      <width>30</width>
+      <height>20</height>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color red="29" green="41" blue="69">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <tooltip>$(tooltip)</tooltip>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>OpenDisplay_6</name>
+      <actions>
+        <action type="open_display">
+          <file>../BOBs/MOTOR_static.bob</file>
+          <target>tab</target>
+          <description>Open Display</description>
+        </action>
+      </actions>
+      <text>More</text>
+      <y>60</y>
+      <width>40</width>
+      <height>20</height>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="29" green="41" blue="69">
+        </color>
+      </background_color>
+      <tooltip>$(actions)</tooltip>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>WritePV_13</name>
+      <class>DEFAULT_PV</class>
+      <actions>
+        <action type="write_pv">
+          <pv_name>$(pv_name)</pv_name>
+          <value>value</value>
+          <description>$(name)</description>
+        </action>
+      </actions>
+      <pv_name>sim://const(1)</pv_name>
+      <text>STOP</text>
+      <x>130</x>
+      <y>60</y>
+      <width>40</width>
+      <height>20</height>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color red="29" green="41" blue="69">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <tooltip>$(tooltip)</tooltip>
+    </widget>
+    <widget type="textentry" version="3.0.0">
+      <name>TextEntry_47</name>
+      <pv_name>sim://const(0.1000)</pv_name>
+      <x>45</x>
+      <y>60</y>
+      <width>80</width>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <precision use_class="true">-1</precision>
+      <show_units use_class="true">true</show_units>
+      <horizontal_alignment use_class="true">1</horizontal_alignment>
+      <vertical_alignment use_class="true">1</vertical_alignment>
+      <enabled use_class="true">true</enabled>
+      <border_width use_class="true">1</border_width>
+      <border_color use_class="true">
+        <color red="184" green="195" blue="223">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="byte_monitor" version="2.0.0">
+      <name>BitField_7</name>
+      <pv_name>sim://const(1)</pv_name>
+      <x>150</x>
+      <y>35</y>
+      <width>20</width>
+      <numBits>1</numBits>
+      <off_color use_class="true">
+        <color red="237" green="237" blue="237">
+        </color>
+      </off_color>
+      <on_color use_class="true">
+        <color name="Write_Background" red="128" green="255" blue="255">
+        </color>
+      </on_color>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <font use_class="true">
+        <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+        </font>
+      </font>
+    </widget>
+    <widget type="byte_monitor" version="2.0.0">
+      <name>BitField_8</name>
+      <pv_name>sim://const(0)</pv_name>
+      <y>35</y>
+      <width>20</width>
+      <numBits>1</numBits>
+      <off_color use_class="true">
+        <color red="237" green="237" blue="237">
+        </color>
+      </off_color>
+      <on_color use_class="true">
+        <color name="Write_Background" red="128" green="255" blue="255">
+        </color>
+      </on_color>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <font use_class="true">
+        <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+        </font>
+      </font>
+    </widget>
+    <widget type="textentry" version="3.0.0">
+      <name>TextEntry_48</name>
+      <pv_name>sim://const(12.9687)</pv_name>
+      <x>35</x>
+      <y>10</y>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <precision use_class="true">-1</precision>
+      <show_units use_class="true">true</show_units>
+      <horizontal_alignment use_class="true">1</horizontal_alignment>
+      <vertical_alignment use_class="true">1</vertical_alignment>
+      <enabled use_class="true">true</enabled>
+      <border_width use_class="true">1</border_width>
+      <border_color use_class="true">
+        <color red="184" green="195" blue="223">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>TextUpdate_43</name>
+      <pv_name>sim://const(10.4456)</pv_name>
+      <x>25</x>
+      <y>35</y>
+      <width>120</width>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="184" green="195" blue="223">
+        </color>
+      </background_color>
+      <horizontal_alignment use_class="true">1</horizontal_alignment>
+      <vertical_alignment use_class="true">1</vertical_alignment>
+      <border_color use_class="true">
+        <color red="196" green="196" blue="196">
+        </color>
+      </border_color>
+    </widget>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>2nd Crystal Fine Roll</name>
+    <x>797</x>
+    <y>183</y>
+    <width>205</width>
+    <height>120</height>
+    <style use_class="true">0</style>
+    <font use_class="true">
+      <font family="Arial" style="REGULAR" size="15.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color red="29" green="41" blue="69">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color name="Read_Background" red="240" green="240" blue="240">
+      </color>
+    </background_color>
+    <widget type="action_button" version="3.0.0">
+      <name>WritePV_14</name>
+      <class>DEFAULT_PV</class>
+      <actions>
+        <action type="write_pv">
+          <pv_name>$(pv_name)</pv_name>
+          <value>value</value>
+          <description>$(name)</description>
+        </action>
+      </actions>
+      <pv_name>sim://const(1)</pv_name>
+      <text>-</text>
+      <y>10</y>
+      <width>30</width>
+      <height>20</height>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color red="29" green="41" blue="69">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <tooltip>$(tooltip)</tooltip>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>WritePV_15</name>
+      <class>DEFAULT_PV</class>
+      <actions>
+        <action type="write_pv">
+          <pv_name>$(pv_name)</pv_name>
+          <value>value</value>
+          <description>$(name)</description>
+        </action>
+      </actions>
+      <pv_name>sim://const(1)</pv_name>
+      <text>+</text>
+      <x>140</x>
+      <y>10</y>
+      <width>30</width>
+      <height>20</height>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color red="29" green="41" blue="69">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <tooltip>$(tooltip)</tooltip>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>OpenDisplay_7</name>
+      <actions>
+        <action type="open_display">
+          <file>../BOBs/MOTOR_static.bob</file>
+          <target>tab</target>
+          <description>Open Display</description>
+        </action>
+      </actions>
+      <text>More</text>
+      <y>60</y>
+      <width>40</width>
+      <height>20</height>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="29" green="41" blue="69">
+        </color>
+      </background_color>
+      <tooltip>$(actions)</tooltip>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>WritePV_16</name>
+      <class>DEFAULT_PV</class>
+      <actions>
+        <action type="write_pv">
+          <pv_name>$(pv_name)</pv_name>
+          <value>value</value>
+          <description>$(name)</description>
+        </action>
+      </actions>
+      <pv_name>sim://const(1)</pv_name>
+      <text>STOP</text>
+      <x>130</x>
+      <y>60</y>
+      <width>40</width>
+      <height>20</height>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color red="29" green="41" blue="69">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <tooltip>$(tooltip)</tooltip>
+    </widget>
+    <widget type="textentry" version="3.0.0">
+      <name>TextEntry_49</name>
+      <pv_name>sim://const(0.1000)</pv_name>
+      <x>45</x>
+      <y>60</y>
+      <width>80</width>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <precision use_class="true">-1</precision>
+      <show_units use_class="true">true</show_units>
+      <horizontal_alignment use_class="true">1</horizontal_alignment>
+      <vertical_alignment use_class="true">1</vertical_alignment>
+      <enabled use_class="true">true</enabled>
+      <border_width use_class="true">1</border_width>
+      <border_color use_class="true">
+        <color red="184" green="195" blue="223">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="byte_monitor" version="2.0.0">
+      <name>BitField_9</name>
+      <pv_name>sim://const(1)</pv_name>
+      <x>150</x>
+      <y>35</y>
+      <width>20</width>
+      <numBits>1</numBits>
+      <off_color use_class="true">
+        <color red="237" green="237" blue="237">
+        </color>
+      </off_color>
+      <on_color use_class="true">
+        <color name="Write_Background" red="128" green="255" blue="255">
+        </color>
+      </on_color>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <font use_class="true">
+        <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+        </font>
+      </font>
+    </widget>
+    <widget type="byte_monitor" version="2.0.0">
+      <name>BitField_10</name>
+      <pv_name>sim://const(0)</pv_name>
+      <y>35</y>
+      <width>20</width>
+      <numBits>1</numBits>
+      <off_color use_class="true">
+        <color red="237" green="237" blue="237">
+        </color>
+      </off_color>
+      <on_color use_class="true">
+        <color name="Write_Background" red="128" green="255" blue="255">
+        </color>
+      </on_color>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <font use_class="true">
+        <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+        </font>
+      </font>
+    </widget>
+    <widget type="textentry" version="3.0.0">
+      <name>TextEntry_50</name>
+      <pv_name>sim://const(12.9687)</pv_name>
+      <x>35</x>
+      <y>10</y>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <precision use_class="true">-1</precision>
+      <show_units use_class="true">true</show_units>
+      <horizontal_alignment use_class="true">1</horizontal_alignment>
+      <vertical_alignment use_class="true">1</vertical_alignment>
+      <enabled use_class="true">true</enabled>
+      <border_width use_class="true">1</border_width>
+      <border_color use_class="true">
+        <color red="184" green="195" blue="223">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>TextUpdate_44</name>
+      <pv_name>sim://const(10.4456)</pv_name>
+      <x>25</x>
+      <y>35</y>
+      <width>120</width>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="184" green="195" blue="223">
+        </color>
+      </background_color>
+      <horizontal_alignment use_class="true">1</horizontal_alignment>
+      <vertical_alignment use_class="true">1</vertical_alignment>
+      <border_color use_class="true">
+        <color red="196" green="196" blue="196">
+        </color>
+      </border_color>
+    </widget>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>2nd Crystal Fine Pitch</name>
+    <x>797</x>
+    <y>390</y>
+    <width>205</width>
+    <height>120</height>
+    <style use_class="true">0</style>
+    <font use_class="true">
+      <font family="Arial" style="REGULAR" size="15.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color red="29" green="41" blue="69">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color name="Read_Background" red="240" green="240" blue="240">
+      </color>
+    </background_color>
+    <widget type="action_button" version="3.0.0">
+      <name>WritePV_17</name>
+      <class>DEFAULT_PV</class>
+      <actions>
+        <action type="write_pv">
+          <pv_name>$(pv_name)</pv_name>
+          <value>value</value>
+          <description>$(name)</description>
+        </action>
+      </actions>
+      <pv_name>sim://const(1)</pv_name>
+      <text>-</text>
+      <y>10</y>
+      <width>30</width>
+      <height>20</height>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color red="29" green="41" blue="69">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <tooltip>$(tooltip)</tooltip>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>WritePV_18</name>
+      <class>DEFAULT_PV</class>
+      <actions>
+        <action type="write_pv">
+          <pv_name>$(pv_name)</pv_name>
+          <value>value</value>
+          <description>$(name)</description>
+        </action>
+      </actions>
+      <pv_name>sim://const(1)</pv_name>
+      <text>+</text>
+      <x>140</x>
+      <y>10</y>
+      <width>30</width>
+      <height>20</height>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color red="29" green="41" blue="69">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <tooltip>$(tooltip)</tooltip>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>OpenDisplay_8</name>
+      <actions>
+        <action type="open_display">
+          <file>../BOBs/MOTOR_static.bob</file>
+          <target>tab</target>
+          <description>Open Display</description>
+        </action>
+      </actions>
+      <text>More</text>
+      <y>60</y>
+      <width>40</width>
+      <height>20</height>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="29" green="41" blue="69">
+        </color>
+      </background_color>
+      <tooltip>$(actions)</tooltip>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>WritePV_19</name>
+      <class>DEFAULT_PV</class>
+      <actions>
+        <action type="write_pv">
+          <pv_name>$(pv_name)</pv_name>
+          <value>value</value>
+          <description>$(name)</description>
+        </action>
+      </actions>
+      <pv_name>sim://const(1)</pv_name>
+      <text>STOP</text>
+      <x>130</x>
+      <y>60</y>
+      <width>40</width>
+      <height>20</height>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color red="29" green="41" blue="69">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <tooltip>$(tooltip)</tooltip>
+    </widget>
+    <widget type="textentry" version="3.0.0">
+      <name>TextEntry_51</name>
+      <pv_name>sim://const(0.1000)</pv_name>
+      <x>45</x>
+      <y>60</y>
+      <width>80</width>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <precision use_class="true">-1</precision>
+      <show_units use_class="true">true</show_units>
+      <horizontal_alignment use_class="true">1</horizontal_alignment>
+      <vertical_alignment use_class="true">1</vertical_alignment>
+      <enabled use_class="true">true</enabled>
+      <border_width use_class="true">1</border_width>
+      <border_color use_class="true">
+        <color red="184" green="195" blue="223">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="byte_monitor" version="2.0.0">
+      <name>BitField_11</name>
+      <pv_name>sim://const(1)</pv_name>
+      <x>150</x>
+      <y>35</y>
+      <width>20</width>
+      <numBits>1</numBits>
+      <off_color use_class="true">
+        <color red="237" green="237" blue="237">
+        </color>
+      </off_color>
+      <on_color use_class="true">
+        <color name="Write_Background" red="128" green="255" blue="255">
+        </color>
+      </on_color>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <font use_class="true">
+        <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+        </font>
+      </font>
+    </widget>
+    <widget type="byte_monitor" version="2.0.0">
+      <name>BitField_12</name>
+      <pv_name>sim://const(0)</pv_name>
+      <y>35</y>
+      <width>20</width>
+      <numBits>1</numBits>
+      <off_color use_class="true">
+        <color red="237" green="237" blue="237">
+        </color>
+      </off_color>
+      <on_color use_class="true">
+        <color name="Write_Background" red="128" green="255" blue="255">
+        </color>
+      </on_color>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <font use_class="true">
+        <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+        </font>
+      </font>
+    </widget>
+    <widget type="textentry" version="3.0.0">
+      <name>TextEntry_52</name>
+      <pv_name>sim://const(12.9687)</pv_name>
+      <x>35</x>
+      <y>10</y>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <precision use_class="true">-1</precision>
+      <show_units use_class="true">true</show_units>
+      <horizontal_alignment use_class="true">1</horizontal_alignment>
+      <vertical_alignment use_class="true">1</vertical_alignment>
+      <enabled use_class="true">true</enabled>
+      <border_width use_class="true">1</border_width>
+      <border_color use_class="true">
+        <color red="184" green="195" blue="223">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>TextUpdate_45</name>
+      <pv_name>sim://const(10.4456)</pv_name>
+      <x>25</x>
+      <y>35</y>
+      <width>120</width>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="184" green="195" blue="223">
+        </color>
+      </background_color>
+      <horizontal_alignment use_class="true">1</horizontal_alignment>
+      <vertical_alignment use_class="true">1</vertical_alignment>
+      <border_color use_class="true">
+        <color red="196" green="196" blue="196">
+        </color>
+      </border_color>
+    </widget>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>2nd Crystal Pitch</name>
+    <x>537</x>
+    <y>390</y>
+    <width>205</width>
+    <height>120</height>
+    <style use_class="true">0</style>
+    <font use_class="true">
+      <font family="Arial" style="REGULAR" size="15.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color red="29" green="41" blue="69">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color name="Read_Background" red="240" green="240" blue="240">
+      </color>
+    </background_color>
+    <widget type="action_button" version="3.0.0">
+      <name>WritePV_20</name>
+      <class>DEFAULT_PV</class>
+      <actions>
+        <action type="write_pv">
+          <pv_name>$(pv_name)</pv_name>
+          <value>value</value>
+          <description>$(name)</description>
+        </action>
+      </actions>
+      <pv_name>sim://const(1)</pv_name>
+      <text>-</text>
+      <y>10</y>
+      <width>30</width>
+      <height>20</height>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color red="29" green="41" blue="69">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <tooltip>$(tooltip)</tooltip>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>WritePV_21</name>
+      <class>DEFAULT_PV</class>
+      <actions>
+        <action type="write_pv">
+          <pv_name>$(pv_name)</pv_name>
+          <value>value</value>
+          <description>$(name)</description>
+        </action>
+      </actions>
+      <pv_name>sim://const(1)</pv_name>
+      <text>+</text>
+      <x>140</x>
+      <y>10</y>
+      <width>30</width>
+      <height>20</height>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color red="29" green="41" blue="69">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <tooltip>$(tooltip)</tooltip>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>OpenDisplay_9</name>
+      <actions>
+        <action type="open_display">
+          <file>../BOBs/MOTOR_static.bob</file>
+          <target>tab</target>
+          <description>Open Display</description>
+        </action>
+      </actions>
+      <text>More</text>
+      <y>60</y>
+      <width>40</width>
+      <height>20</height>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="29" green="41" blue="69">
+        </color>
+      </background_color>
+      <tooltip>$(actions)</tooltip>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>WritePV_22</name>
+      <class>DEFAULT_PV</class>
+      <actions>
+        <action type="write_pv">
+          <pv_name>$(pv_name)</pv_name>
+          <value>value</value>
+          <description>$(name)</description>
+        </action>
+      </actions>
+      <pv_name>sim://const(1)</pv_name>
+      <text>STOP</text>
+      <x>130</x>
+      <y>60</y>
+      <width>40</width>
+      <height>20</height>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color red="29" green="41" blue="69">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <tooltip>$(tooltip)</tooltip>
+    </widget>
+    <widget type="textentry" version="3.0.0">
+      <name>TextEntry_53</name>
+      <pv_name>sim://const(0.1000)</pv_name>
+      <x>45</x>
+      <y>60</y>
+      <width>80</width>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <precision use_class="true">-1</precision>
+      <show_units use_class="true">true</show_units>
+      <horizontal_alignment use_class="true">1</horizontal_alignment>
+      <vertical_alignment use_class="true">1</vertical_alignment>
+      <enabled use_class="true">true</enabled>
+      <border_width use_class="true">1</border_width>
+      <border_color use_class="true">
+        <color red="184" green="195" blue="223">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="byte_monitor" version="2.0.0">
+      <name>BitField_13</name>
+      <pv_name>sim://const(1)</pv_name>
+      <x>150</x>
+      <y>35</y>
+      <width>20</width>
+      <numBits>1</numBits>
+      <off_color use_class="true">
+        <color red="237" green="237" blue="237">
+        </color>
+      </off_color>
+      <on_color use_class="true">
+        <color name="Write_Background" red="128" green="255" blue="255">
+        </color>
+      </on_color>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <font use_class="true">
+        <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+        </font>
+      </font>
+    </widget>
+    <widget type="byte_monitor" version="2.0.0">
+      <name>BitField_14</name>
+      <pv_name>sim://const(0)</pv_name>
+      <y>35</y>
+      <width>20</width>
+      <numBits>1</numBits>
+      <off_color use_class="true">
+        <color red="237" green="237" blue="237">
+        </color>
+      </off_color>
+      <on_color use_class="true">
+        <color name="Write_Background" red="128" green="255" blue="255">
+        </color>
+      </on_color>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <font use_class="true">
+        <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+        </font>
+      </font>
+    </widget>
+    <widget type="textentry" version="3.0.0">
+      <name>TextEntry_54</name>
+      <pv_name>sim://const(12.9687)</pv_name>
+      <x>35</x>
+      <y>10</y>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <precision use_class="true">-1</precision>
+      <show_units use_class="true">true</show_units>
+      <horizontal_alignment use_class="true">1</horizontal_alignment>
+      <vertical_alignment use_class="true">1</vertical_alignment>
+      <enabled use_class="true">true</enabled>
+      <border_width use_class="true">1</border_width>
+      <border_color use_class="true">
+        <color red="184" green="195" blue="223">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>TextUpdate_46</name>
+      <pv_name>sim://const(10.4456)</pv_name>
+      <x>25</x>
+      <y>35</y>
+      <width>120</width>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="184" green="195" blue="223">
+        </color>
+      </background_color>
+      <horizontal_alignment use_class="true">1</horizontal_alignment>
+      <vertical_alignment use_class="true">1</vertical_alignment>
+      <border_color use_class="true">
+        <color red="196" green="196" blue="196">
+        </color>
+      </border_color>
+    </widget>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>Bragg Angle</name>
+    <x>263</x>
+    <y>390</y>
+    <width>205</width>
+    <height>120</height>
+    <style use_class="true">0</style>
+    <font use_class="true">
+      <font family="Arial" style="REGULAR" size="15.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color red="29" green="41" blue="69">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color name="Read_Background" red="240" green="240" blue="240">
+      </color>
+    </background_color>
+    <widget type="action_button" version="3.0.0">
+      <name>WritePV_23</name>
+      <class>DEFAULT_PV</class>
+      <actions>
+        <action type="write_pv">
+          <pv_name>$(pv_name)</pv_name>
+          <value>value</value>
+          <description>$(name)</description>
+        </action>
+      </actions>
+      <pv_name>sim://const(1)</pv_name>
+      <text>-</text>
+      <y>10</y>
+      <width>30</width>
+      <height>20</height>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color red="29" green="41" blue="69">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <tooltip>$(tooltip)</tooltip>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>WritePV_24</name>
+      <class>DEFAULT_PV</class>
+      <actions>
+        <action type="write_pv">
+          <pv_name>$(pv_name)</pv_name>
+          <value>value</value>
+          <description>$(name)</description>
+        </action>
+      </actions>
+      <pv_name>sim://const(1)</pv_name>
+      <text>+</text>
+      <x>140</x>
+      <y>10</y>
+      <width>30</width>
+      <height>20</height>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color red="29" green="41" blue="69">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <tooltip>$(tooltip)</tooltip>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>OpenDisplay_10</name>
+      <actions>
+        <action type="open_display">
+          <file>../BOBs/MOTOR_static.bob</file>
+          <target>tab</target>
+          <description>Open Display</description>
+        </action>
+      </actions>
+      <text>More</text>
+      <y>60</y>
+      <width>40</width>
+      <height>20</height>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="29" green="41" blue="69">
+        </color>
+      </background_color>
+      <tooltip>$(actions)</tooltip>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>WritePV_25</name>
+      <class>DEFAULT_PV</class>
+      <actions>
+        <action type="write_pv">
+          <pv_name>$(pv_name)</pv_name>
+          <value>value</value>
+          <description>$(name)</description>
+        </action>
+      </actions>
+      <pv_name>sim://const(1)</pv_name>
+      <text>STOP</text>
+      <x>130</x>
+      <y>60</y>
+      <width>40</width>
+      <height>20</height>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color red="29" green="41" blue="69">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <tooltip>$(tooltip)</tooltip>
+    </widget>
+    <widget type="textentry" version="3.0.0">
+      <name>TextEntry_55</name>
+      <pv_name>sim://const(0.1000)</pv_name>
+      <x>45</x>
+      <y>60</y>
+      <width>80</width>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <precision use_class="true">-1</precision>
+      <show_units use_class="true">true</show_units>
+      <horizontal_alignment use_class="true">1</horizontal_alignment>
+      <vertical_alignment use_class="true">1</vertical_alignment>
+      <enabled use_class="true">true</enabled>
+      <border_width use_class="true">1</border_width>
+      <border_color use_class="true">
+        <color red="184" green="195" blue="223">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="byte_monitor" version="2.0.0">
+      <name>BitField_15</name>
+      <pv_name>sim://const(1)</pv_name>
+      <x>150</x>
+      <y>35</y>
+      <width>20</width>
+      <numBits>1</numBits>
+      <off_color use_class="true">
+        <color red="237" green="237" blue="237">
+        </color>
+      </off_color>
+      <on_color use_class="true">
+        <color name="Write_Background" red="128" green="255" blue="255">
+        </color>
+      </on_color>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <font use_class="true">
+        <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+        </font>
+      </font>
+    </widget>
+    <widget type="byte_monitor" version="2.0.0">
+      <name>BitField_16</name>
+      <pv_name>sim://const(0)</pv_name>
+      <y>35</y>
+      <width>20</width>
+      <numBits>1</numBits>
+      <off_color use_class="true">
+        <color red="237" green="237" blue="237">
+        </color>
+      </off_color>
+      <on_color use_class="true">
+        <color name="Write_Background" red="128" green="255" blue="255">
+        </color>
+      </on_color>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <font use_class="true">
+        <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+        </font>
+      </font>
+    </widget>
+    <widget type="textentry" version="3.0.0">
+      <name>TextEntry_56</name>
+      <pv_name>sim://const(12.9687)</pv_name>
+      <x>35</x>
+      <y>10</y>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <precision use_class="true">-1</precision>
+      <show_units use_class="true">true</show_units>
+      <horizontal_alignment use_class="true">1</horizontal_alignment>
+      <vertical_alignment use_class="true">1</vertical_alignment>
+      <enabled use_class="true">true</enabled>
+      <border_width use_class="true">1</border_width>
+      <border_color use_class="true">
+        <color red="184" green="195" blue="223">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>TextUpdate_47</name>
+      <pv_name>sim://const(10.4456)</pv_name>
+      <x>25</x>
+      <y>35</y>
+      <width>120</width>
+      <font use_class="true">
+        <font family="Arial" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color red="184" green="195" blue="223">
+        </color>
+      </background_color>
+      <horizontal_alignment use_class="true">1</horizontal_alignment>
+      <vertical_alignment use_class="true">1</vertical_alignment>
+      <border_color use_class="true">
+        <color red="196" green="196" blue="196">
+        </color>
+      </border_color>
+    </widget>
+  </widget>
+</display>

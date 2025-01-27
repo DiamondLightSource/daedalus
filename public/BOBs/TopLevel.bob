@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<display version="2.0.0">
+  <name>BL47P Rig Mock</name>
+  <y use_class="true">0</y>
+  <width>700</width>
+  <height>360</height>
+  <background_color use_class="true">
+    <color name="Read_Background" red="240" green="240" blue="240">
+    </color>
+  </background_color>
+  <actions>
+  </actions>
+  <grid_step_x>5</grid_step_x>
+  <grid_step_y>5</grid_step_y>
+  <widget type="action_button" version="3.0.0">
+    <name>OpenDisplay_26</name>
+    <actions>
+      <action type="open_display">
+        <file>DCM Diagram.bob</file>
+        <target>tab</target>
+        <description>Open Display</description>
+      </action>
+    </actions>
+    <text>DCM ⧉</text>
+    <x>294</x>
+    <y>207</y>
+    <width>120</width>
+    <height>20</height>
+    <font use_class="true">
+      <font family="Arial" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color red="255" green="255" blue="255">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color red="29" green="41" blue="69">
+      </color>
+    </background_color>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>OpenDisplay_29</name>
+    <actions>
+      <action type="open_display">
+        <file>SEQ1.bob</file>
+        <target>tab</target>
+        <description>Open Display</description>
+      </action>
+    </actions>
+    <text>PANDA ⧉</text>
+    <x>30</x>
+    <y>271</y>
+    <width>120</width>
+    <height>20</height>
+    <font use_class="true">
+      <font family="Arial" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color red="255" green="255" blue="255">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color red="29" green="41" blue="69">
+      </color>
+    </background_color>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>OpenDisplay_30</name>
+    <actions>
+      <action type="open_display">
+        <file>Camera Static.bob</file>
+        <target>tab</target>
+        <description>Open Display</description>
+      </action>
+    </actions>
+    <text>DET ⧉</text>
+    <x>530</x>
+    <y>200</y>
+    <width>120</width>
+    <height>20</height>
+    <font use_class="true">
+      <font family="Arial" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color red="255" green="255" blue="255">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color red="29" green="41" blue="69">
+      </color>
+    </background_color>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>OpenDisplay_31</name>
+    <actions>
+      <action type="open_display">
+        <file>SubScreenFile</file>
+        <target>tab</target>
+        <description>Open Display</description>
+      </action>
+    </actions>
+    <text>procServ ⧉</text>
+    <x>530</x>
+    <y>56</y>
+    <width>120</width>
+    <height>20</height>
+    <font use_class="true">
+      <font family="Arial" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color red="255" green="255" blue="255">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color red="29" green="41" blue="69">
+      </color>
+    </background_color>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>OpenDisplay_33</name>
+    <actions>
+      <action type="open_display">
+        <file>SubScreenFile</file>
+        <target>tab</target>
+        <description>Open Display</description>
+      </action>
+    </actions>
+    <text>procServ ⧉</text>
+    <x>530</x>
+    <y>31</y>
+    <width>120</width>
+    <height>20</height>
+    <font use_class="true">
+      <font family="Arial" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color red="255" green="255" blue="255">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color red="29" green="41" blue="69">
+      </color>
+    </background_color>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>OpenDisplay_34</name>
+    <actions>
+      <action type="open_display">
+        <file>SubScreenFile</file>
+        <target>tab</target>
+        <description>Open Display</description>
+      </action>
+    </actions>
+    <text>Status ⧉</text>
+    <x>280</x>
+    <y>56</y>
+    <width>120</width>
+    <height>20</height>
+    <font use_class="true">
+      <font family="Arial" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color red="255" green="255" blue="255">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color red="29" green="41" blue="69">
+      </color>
+    </background_color>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>OpenDisplay_35</name>
+    <actions>
+      <action type="open_display">
+        <file>SubScreenFile</file>
+        <target>tab</target>
+        <description>Open Display</description>
+      </action>
+    </actions>
+    <text>Status ⧉</text>
+    <x>280</x>
+    <y>31</y>
+    <width>120</width>
+    <height>20</height>
+    <font use_class="true">
+      <font family="Arial" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color red="255" green="255" blue="255">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color red="29" green="41" blue="69">
+      </color>
+    </background_color>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>OpenDisplay_36</name>
+    <actions>
+      <action type="open_display">
+        <file>SubScreenFile</file>
+        <target>tab</target>
+        <description>Open Display</description>
+      </action>
+    </actions>
+    <text>Terminal ⧉</text>
+    <x>405</x>
+    <y>31</y>
+    <width>95</width>
+    <height>20</height>
+    <font use_class="true">
+      <font family="Arial" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color red="255" green="255" blue="255">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color red="29" green="41" blue="69">
+      </color>
+    </background_color>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>OpenDisplay_37</name>
+    <actions>
+      <action type="open_display">
+        <file>SubScreenFile</file>
+        <target>tab</target>
+        <description>Open Display</description>
+      </action>
+    </actions>
+    <text>Terminal ⧉</text>
+    <x>405</x>
+    <y>56</y>
+    <width>95</width>
+    <height>20</height>
+    <font use_class="true">
+      <font family="Arial" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color red="255" green="255" blue="255">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color red="29" green="41" blue="69">
+      </color>
+    </background_color>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>OpenDisplay_38</name>
+    <actions>
+      <action type="open_display">
+        <file>SubScreenFile</file>
+        <target>tab</target>
+        <description>Open Display</description>
+      </action>
+    </actions>
+    <text>DET 2 ⧉</text>
+    <x>30</x>
+    <y>81</y>
+    <width>120</width>
+    <height>20</height>
+    <font use_class="true">
+      <font family="Arial" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color red="255" green="255" blue="255">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color red="29" green="41" blue="69">
+      </color>
+    </background_color>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_2</name>
+    <class>Label</class>
+    <text>IOC:</text>
+    <x>155</x>
+    <y>31</y>
+    <width>120</width>
+    <font>
+      <font family="Arial" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="29" green="41" blue="69">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Transparent" red="255" green="255" blue="255" alpha="0">
+      </color>
+    </background_color>
+    <horizontal_alignment>2</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <tooltip>$(text)</tooltip>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_3</name>
+    <class>Label</class>
+    <text>Malcolm:</text>
+    <x>155</x>
+    <y>56</y>
+    <width>120</width>
+    <font>
+      <font family="Arial" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="29" green="41" blue="69">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Transparent" red="255" green="255" blue="255" alpha="0">
+      </color>
+    </background_color>
+    <horizontal_alignment>2</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <tooltip>$(text)</tooltip>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_4</name>
+    <class>Label</class>
+    <text>Beam</text>
+    <x>30</x>
+    <y>120</y>
+    <width>120</width>
+    <font>
+      <font family="Arial" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="29" green="41" blue="69">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Transparent" red="255" green="255" blue="255" alpha="0">
+      </color>
+    </background_color>
+    <vertical_alignment>1</vertical_alignment>
+    <tooltip>$(text)</tooltip>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LED_12</name>
+    <pv_name>sim://flipflop(1)</pv_name>
+    <x>505</x>
+    <y>31</y>
+    <off_color use_class="true">
+      <color red="237" green="237" blue="237">
+      </color>
+    </off_color>
+    <on_color use_class="true">
+      <color name="Write_Background" red="128" green="255" blue="255">
+      </color>
+    </on_color>
+    <font use_class="true">
+      <font family="Arial" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="OK" red="0" green="255" blue="0">
+      </color>
+    </foreground_color>
+    <line_color>
+      <color red="58" green="65" blue="87">
+      </color>
+    </line_color>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LED_13</name>
+    <pv_name>sim://flipflop(1)</pv_name>
+    <x>505</x>
+    <y>56</y>
+    <off_color use_class="true">
+      <color red="237" green="237" blue="237">
+      </color>
+    </off_color>
+    <on_color use_class="true">
+      <color name="Write_Background" red="128" green="255" blue="255">
+      </color>
+    </on_color>
+    <font use_class="true">
+      <font family="Arial" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="OK" red="0" green="255" blue="0">
+      </color>
+    </foreground_color>
+    <line_color>
+      <color red="58" green="65" blue="87">
+      </color>
+    </line_color>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>Rectangle</name>
+    <y>174</y>
+    <width>574</width>
+    <height>5</height>
+    <line_color>
+      <color name="Write_Background" red="128" green="255" blue="255">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="Write_Background" red="128" green="255" blue="255">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>Rectangle_1</name>
+    <y>191</y>
+    <width>10</width>
+    <height>170</height>
+    <line_color>
+      <color name="Grid" red="128" green="128" blue="128">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="Grid" red="128" green="128" blue="128">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>Rectangle_2</name>
+    <width>10</width>
+    <height>160</height>
+    <line_color>
+      <color name="Grid" red="128" green="128" blue="128">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="Grid" red="128" green="128" blue="128">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_5</name>
+    <class>Label</class>
+    <text>-----------&gt;</text>
+    <x>30</x>
+    <y>140</y>
+    <width>120</width>
+    <font>
+      <font family="Arial" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="29" green="41" blue="69">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Transparent" red="255" green="255" blue="255" alpha="0">
+      </color>
+    </background_color>
+    <vertical_alignment>1</vertical_alignment>
+    <tooltip>$(text)</tooltip>
+  </widget>
+  <widget type="picture" version="2.0.0">
+    <name>Picture</name>
+    <file>../images/camera</file>
+    <x>60</x>
+    <y>17</y>
+    <width>60</width>
+    <height>60</height>
+  </widget>
+  <widget type="picture" version="2.0.0">
+    <name>Picture_1</name>
+    <file>../images/camera</file>
+    <x>562</x>
+    <y>140</y>
+    <width>60</width>
+    <height>60</height>
+  </widget>
+  <widget type="picture" version="2.0.0">
+    <name>Picture_2</name>
+    <file>../images/Panda.jpg</file>
+    <x>60</x>
+    <y>215</y>
+    <width>60</width>
+    <height>60</height>
+  </widget>
+  <widget type="picture" version="2.0.0">
+    <name>Picture_3</name>
+    <file>../images/motors</file>
+    <x>308</x>
+    <y>136</y>
+    <width>89</width>
+    <height>71</height>
+  </widget>
+</display>

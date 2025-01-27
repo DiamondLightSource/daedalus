@@ -4,6 +4,7 @@ import { Box, Divider, Link, Paper, Typography } from '@mui/material';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { useHistory } from 'react-router-dom';
+import { EmbeddedDisplay, RelativePosition } from '@diamondlightsource/cs-web-lib';
 
 export default function ScreenDisplay() {
     const { state, dispatch } = useContext(BeamlineTreeStateContext);
@@ -34,19 +35,21 @@ export default function ScreenDisplay() {
                             {breadcrumbs}
                         </Breadcrumbs>
                         <Divider variant="fullWidth" sx={{ width: "100%" }} />
-                        <Typography sx={{ marginLeft: 2, marginBottom: 2 }}>
-                            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper
-                            eget nulla facilisi etiam dignissim diam. Pulvinar elementum integer enim
-                            neque volutpat ac tincidunt. Ornare suspendisse sed nisi lacus sed viverra
-                            tellus. Purus sit amet volutpat consequat mauris. Elementum eu facilisis
-                            sed odio morbi. Euismod lacinia at quis risus sed vulputate odio. Morbi
-                            tincidunt ornare massa eget egestas purus viverra accumsan in. In hendrerit
-                            gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem
-                            et tortor. Habitant morbi tristique senectus et. Adipiscing elit duis
-                            tristique sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-                            eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-                            posuere sollicitudin aliquam ultrices sagittis orci a.
-                        </Typography>
+                        <Box>
+                            {state.currentBeamline && state.currentScreenId ? <EmbeddedDisplay
+                                height={800}
+                                position={new RelativePosition()}
+                                scroll={true}
+                                resize={0}
+                                file={
+                                    {
+                                        path: state.beamlines[state.currentBeamline].filePathIds[state.currentScreenId],
+                                        macros: {},
+                                        defaultProtocol: "ca"
+                                    }
+                                }
+                            /> : <></>}
+                        </Box>
                     </>
                 }
             </Box>
