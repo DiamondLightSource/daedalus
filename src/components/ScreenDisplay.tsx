@@ -3,11 +3,18 @@ import BeamlineTreeStateContext from '../routes/MainPage';
 import { Box, Divider, Link, Paper, Typography } from '@mui/material';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import { useHistory } from 'react-router-dom';
 
 export default function ScreenDisplay() {
     const { state, dispatch } = useContext(BeamlineTreeStateContext);
+    const history = useHistory();
 
     const breadcrumbs = createBreadcrumbs(state.currentScreenId, state.currentBeamline)
+
+    function handleClick(event: any) {
+        event.preventDefault();
+        history.push(event.target.pathname)
+    }
 
     return (
         <Paper component="main" sx={{ margin: "70px 5px 5px 5px" }}>
@@ -19,6 +26,7 @@ export default function ScreenDisplay() {
                     :
                     <>
                         <Breadcrumbs
+                            onClick={handleClick}
                             separator={<NavigateNextIcon fontSize="small" />}
                             aria-label="breadcrumb"
                             sx={{ marginBottom: "10px", p: 2, paddingBottom: 0 }}
@@ -51,6 +59,7 @@ export default function ScreenDisplay() {
  * breadcrumb trail
  */
 function createBreadcrumbs(screenId: string, beamline: string) {
+
     const breadcrumbs: any[] = [];
     if (beamline === "") return [];
 
