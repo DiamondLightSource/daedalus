@@ -92,11 +92,11 @@ function checkDuplicateFilePath(idArray: FileIDs[], filepath: string) {
  * mui TreeViewBaseItem
  * @param filepath toplevel screen that links others together
  */
-export async function parseScreenTree(filepath: string) {
+export async function parseScreenTree(filepath: string): Promise<[TreeViewBaseItem[], FileIDs[]]> {
     let parentScreen: TreeViewBaseItem = { id: filepath.split("/").pop()!, label: (filepath.split(".bob")[0]).split("/").pop()!, children: [] };
     const parentDir = filepath.substr(0, filepath.lastIndexOf("/"));
     const parentFile = filepath.substr(filepath.lastIndexOf("/") + 1);
     const [children, ids] = await parseChildren(parentFile, parentScreen.children!, parentDir, [], "")
     parentScreen.children = children;
-    return [parentScreen];
+    return [[parentScreen], ids];
 }

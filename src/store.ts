@@ -172,7 +172,8 @@ export type FileIDs = {
 export type BeamlineState = {
     beamline: string,
     entryPoint: string,
-    screenTree: TreeViewBaseItem[]
+    screenTree: TreeViewBaseItem[],
+    filePathIds: FileIDs[]
 }
 
 export type BeamlineTreeState = {
@@ -194,7 +195,8 @@ export const initialState: BeamlineTreeState = {
         {
             beamline: "BLTEST",
             entryPoint: "/BOBs/TopLevel.bob",
-            screenTree: []
+            screenTree: [],
+            filePathIds: []
         }
     ]
 }
@@ -216,6 +218,7 @@ export function reducer(state: BeamlineTreeState, action: BeamlineAction) {
             return { ...state, menuBarOpen: action.payload.open }
         }
         case LOAD_SCREEN_TREES: {
+            // Load the tree and the array of filepaths associated with IDs
             return { ...state, beamlines: action.payload.beamlines }
         }
     }

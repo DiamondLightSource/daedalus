@@ -24,14 +24,15 @@ export function MainPage() {
 
     // Only run once on mount
     useEffect(() => {
-        console.log("how many times called")
         loadScreenTrees()
     }, [])
 
     const loadScreenTrees = useCallback(async () => {
         const newBeamlines = [...state.beamlines];
         newBeamlines.forEach(async (item) => {
-            item.screenTree = await parseScreenTree(item.entryPoint);
+            const [tree, fileIDs] = await parseScreenTree(item.entryPoint);
+            item.screenTree = tree;
+            item.filePathIds = fileIDs
         })
         dispatch({
             type: "loadScreenTrees",
