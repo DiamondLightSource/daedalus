@@ -1,5 +1,6 @@
 import { TreeViewBaseItem } from "@mui/x-tree-view/models";
 import { xml2js } from "xml-js";
+import { FileIDs } from "../store";
 
 export interface XmlDescription {
     _attributes: { [key: string]: string };
@@ -24,13 +25,18 @@ export interface XmlDescription {
 async function parseChildren(
     filepath: string,
     screen: TreeViewBaseItem[],
-    parentDir: string
-): Promise<TreeViewBaseItem[]> {
+    parentDir: string,
+    idArray: FileIDs[],
+    parentId: string
+): Promise<[TreeViewBaseItem[], FileIDs[]]> {
     // Check file is a valid .bob, otherwise abort
     const fileExt = filepath.split(".").at(-1);
-    if (fileExt !== "bob") return screen;
+    if (fileExt !== "bob") return [screen, idArray];
 
     const fullFilepath = `${parentDir}/${filepath}`;
+    const id = `${parentId}${parentId === "" ? "" : "-"}${(filepath.split(".bob")[0]).split("/").pop()!}`;
+    idArray.push({ [id]: fullFilepath })
+
     // Otherwise fetch file
     try {
         const filePromise = await fetch(fullFilepath);
@@ -58,13 +64,27 @@ async function parseChildren(
                 // Parse child file recursively
                 const fileName: string = actions.action.file._text;
                 const fileLabel: string = (fileName.split(".bob")[0]).split("/").pop()!;
-                screen.push({ id: fileName, label: fileLabel, children: await parseChildren(fileName, [], parentDir) })
+                const fileId = `${id}-${fileLabel}`;
+                const [children, ids] = await parseChildren(fileName, [], parentDir, idArray, id)
+                idArray = ids;
+                const isUnique = checkDuplicateFilePath(idArray, `${parentDir}/${fileName}`);
+                if (isUnique) screen.push({ id: fileId, label: fileLabel, children: children })
             }
         });
     } catch (error) {
         console.error(`Failed to load file ${fullFilepath}: ${error}`)
     }
-    return screen;
+    return [screen, idArray];
+}
+
+/**
+ * Check if a given filepath already corresponds to a unique id
+ */
+function checkDuplicateFilePath(idArray: FileIDs[], filepath: string) {
+    let isFilepathUnique: boolean
+    const uniqueFilepaths = idArray.map((item) => { return Object.values(item)[0] })
+    isFilepathUnique = uniqueFilepaths.includes(filepath) ? true : false;
+    return isFilepathUnique;
 }
 
 /**
@@ -76,6 +96,7 @@ export async function parseScreenTree(filepath: string) {
     let parentScreen: TreeViewBaseItem = { id: filepath.split("/").pop()!, label: (filepath.split(".bob")[0]).split("/").pop()!, children: [] };
     const parentDir = filepath.substr(0, filepath.lastIndexOf("/"));
     const parentFile = filepath.substr(filepath.lastIndexOf("/") + 1);
-    parentScreen.children = await parseChildren(parentFile, parentScreen.children!, parentDir)
+    const [children, ids] = await parseChildren(parentFile, parentScreen.children!, parentDir, [], "")
+    parentScreen.children = children;
     return [parentScreen];
 }

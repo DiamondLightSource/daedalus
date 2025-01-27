@@ -165,6 +165,10 @@ type BeamlineAction =
     | OpenMenuBar
     | LoadScreenTrees
 
+export type FileIDs = {
+    [id: string]: string
+}
+
 export type BeamlineState = {
     beamline: string,
     entryPoint: string,
