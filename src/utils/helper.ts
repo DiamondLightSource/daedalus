@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 
+export const DRAWER_WIDTH = 240;
+export const APP_BAR_HEIGHT = 65;
+
 function getWindowWidth() {
     const { innerWidth: width } = window;
     return width;

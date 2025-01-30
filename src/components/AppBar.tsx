@@ -7,8 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useContext } from 'react';
 import BeamlineTreeStateContext from '../routes/MainPage';
-
-const drawerWidth = 240;
+import { APP_BAR_HEIGHT, DRAWER_WIDTH } from '../utils/helper';
 
 interface AppBarProps extends MuiAppBarProps {
     open?: boolean;
@@ -26,8 +25,8 @@ const AppBar = styled(MuiAppBar, {
         {
             props: ({ open }) => open,
             style: {
-                marginLeft: drawerWidth,
-                width: `calc(100% - ${drawerWidth}px)`,
+                marginLeft: DRAWER_WIDTH,
+                width: `calc(100% - ${DRAWER_WIDTH}px)`,
                 transition: theme.transitions.create(['width', 'margin'], {
                     easing: theme.transitions.easing.sharp,
                     duration: theme.transitions.duration.enteringScreen,
@@ -54,7 +53,7 @@ export default function DLSAppBar() {
     return (
         <>
             <CssBaseline />
-            <AppBar position="absolute" open={state.menuBarOpen} sx={{ height: "65px" }}>
+            <AppBar position="absolute" open={state.menuBarOpen} sx={{ height: APP_BAR_HEIGHT }}>
                 <Toolbar>
                     <Typography variant="h1" component="div" sx={{ flexGrow: 1, textAlign: "center" }}>
                         Daedalus Demo
