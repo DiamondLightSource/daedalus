@@ -1,0 +1,6 @@
+{
+  "type": "flexcontainer",
+  "position": "relative",
+  "backgroundColor": "white",
+  "flexFlow": "row"
+}

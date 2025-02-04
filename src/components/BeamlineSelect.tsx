@@ -4,14 +4,28 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useContext } from 'react';
 import BeamlineTreeStateContext from '../routes/MainPage';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
+import { FileContext, executeAction } from '@diamondlightsource/cs-web-lib';
 
 export default function BeamlineSelect() {
     const { state, dispatch } = useContext(BeamlineTreeStateContext);
-    const history = useHistory();
+    const fileContext = useContext(FileContext)
 
     const handleChange = (event: SelectChangeEvent) => {
-        history.push(`/${event.target.value}`)
+        // Load the entrypoint for the beamline on click
+        executeAction({
+            type: 'OPEN_PAGE',
+            dynamicInfo: {
+                name: state.beamlines[event.target.value].entryPoint,
+                location: "main",
+                description: undefined,
+                file: {
+                    path: state.beamlines[event.target.value].entryPoint,
+                    macros: {},
+                    defaultProtocol: "ca"
+                }
+            }
+        }, fileContext, undefined, {}, `/${event.target.value}`)
     };
 
     return (

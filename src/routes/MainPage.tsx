@@ -6,6 +6,15 @@ import DLSAppBar from '../components/AppBar';
 import ScreenDisplay from '../components/ScreenDisplay';
 import { useParams } from 'react-router-dom';
 import { parseScreenTree } from '../utils/parser';
+import { FileProvider } from '@diamondlightsource/cs-web-lib';
+
+const INITIAL_SCREEN_STATE = {
+    main: {
+        path: "/json/start.json",
+        macros: {},
+        defaultProtocol: "ca"
+    }
+}
 
 const BeamlineTreeStateContext = createContext<{
     state: BeamlineTreeState;
@@ -44,11 +53,13 @@ export function MainPage() {
     return (
         <>
             <Box sx={{ display: 'flex' }}>
-                <BeamlineTreeStateContext.Provider value={{ state, dispatch }}>
-                    <MiniMenuBar />
-                    <DLSAppBar />
-                    <ScreenDisplay />
-                </BeamlineTreeStateContext.Provider>
+                <FileProvider initialPageState={INITIAL_SCREEN_STATE}>
+                    <BeamlineTreeStateContext.Provider value={{ state, dispatch }}>
+                        <DLSAppBar />
+                        <MiniMenuBar />
+                        <ScreenDisplay />
+                    </BeamlineTreeStateContext.Provider>
+                </FileProvider>
             </Box>
         </>
     )
