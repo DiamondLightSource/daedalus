@@ -86,7 +86,7 @@ export default function DLSAppBar() {
                         onClick={handleClick}
                         separator={<NavigateNextIcon fontSize="small" />}
                         aria-label="breadcrumb"
-                        sx={{ marginBottom: "10px", p: 2, paddingBottom: 0, textAlign: "left", color: "white" }}
+                        sx={{ marginBottom: "10px", p: 2, paddingBottom: 0, textAlign: "left", color: "white", display: "flex", flexGrow: 1 }}
                     >
                         {breadcrumbs}
                     </Breadcrumbs>
@@ -94,7 +94,6 @@ export default function DLSAppBar() {
                         color="inherit"
                         aria-label="open drawer"
                         onClick={handleOpenSettings}
-                        edge="start"
                     >
                         <MenuIcon />
                     </IconButton>
