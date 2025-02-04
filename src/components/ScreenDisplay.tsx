@@ -34,7 +34,7 @@ const Paper = styled(MuiPaper, {
 }));
 
 export default function ScreenDisplay() {
-    const { state, dispatch } = useContext(BeamlineTreeStateContext);
+    const { state } = useContext(BeamlineTreeStateContext);
     const fileContext = useContext(FileContext)
     const history = useHistory();
     const location = useLocation();

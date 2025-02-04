@@ -4,11 +4,10 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useContext } from 'react';
 import BeamlineTreeStateContext from '../routes/MainPage';
-import { useHistory, useLocation } from 'react-router-dom';
 import { FileContext, executeAction } from '@diamondlightsource/cs-web-lib';
 
 export default function BeamlineSelect() {
-    const { state, dispatch } = useContext(BeamlineTreeStateContext);
+    const { state } = useContext(BeamlineTreeStateContext);
     const fileContext = useContext(FileContext)
 
     const handleChange = (event: SelectChangeEvent) => {

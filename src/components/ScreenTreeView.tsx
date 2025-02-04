@@ -2,13 +2,11 @@ import { RichTreeView } from '@mui/x-tree-view/RichTreeView';
 import { useContext, useEffect, useState } from 'react';
 import BeamlineTreeStateContext from '../routes/MainPage';
 import { TreeViewBaseItem, TreeViewItemId } from '@mui/x-tree-view';
-import { useHistory } from 'react-router-dom';
 import { executeAction, FileContext } from '@diamondlightsource/cs-web-lib';
 
 
 export default function ScreenTreeView() {
-    const history = useHistory();
-    const { state, dispatch } = useContext(BeamlineTreeStateContext);
+    const { state } = useContext(BeamlineTreeStateContext);
     const fileContext = useContext(FileContext)
     const [expandedScreens, setExpandedScreens] = useState<string[]>([]);
 
