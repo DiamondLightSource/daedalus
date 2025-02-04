@@ -21,8 +21,8 @@
     <height>340</height>
     <actions>
       <action type="open_display">
-        <file>../BOBs/MOTOR_static.bob</file>
-        <target>tab</target>
+        <file>MOTOR_static.bob</file>
+        <target>replace</target>
         <description>Open Display</description>
       </action>
     </actions>
@@ -438,8 +438,8 @@
       <name>OpenDisplay_4</name>
       <actions>
         <action type="open_display">
-          <file>../BOBs/MOTOR_static.bob</file>
-          <target>tab</target>
+          <file>MOTOR_static.bob</file>
+          <target>replace</target>
           <description>Open Display</description>
         </action>
       </actions>
@@ -702,8 +702,8 @@
       <name>OpenDisplay_5</name>
       <actions>
         <action type="open_display">
-          <file>../BOBs/MOTOR_static.bob</file>
-          <target>tab</target>
+          <file>MOTOR_static.bob</file>
+          <target>replace</target>
           <description>Open Display</description>
         </action>
       </actions>
@@ -966,8 +966,8 @@
       <name>OpenDisplay_6</name>
       <actions>
         <action type="open_display">
-          <file>../BOBs/MOTOR_static.bob</file>
-          <target>tab</target>
+          <file>MOTOR_static.bob</file>
+          <target>replace</target>
           <description>Open Display</description>
         </action>
       </actions>
@@ -1231,8 +1231,8 @@
       <name>OpenDisplay_7</name>
       <actions>
         <action type="open_display">
-          <file>../BOBs/MOTOR_static.bob</file>
-          <target>tab</target>
+          <file>MOTOR_static.bob</file>
+          <target>replace</target>
           <description>Open Display</description>
         </action>
       </actions>
@@ -1496,8 +1496,8 @@
       <name>OpenDisplay_8</name>
       <actions>
         <action type="open_display">
-          <file>../BOBs/MOTOR_static.bob</file>
-          <target>tab</target>
+          <file>MOTOR_static.bob</file>
+          <target>replace</target>
           <description>Open Display</description>
         </action>
       </actions>
@@ -1761,8 +1761,8 @@
       <name>OpenDisplay_9</name>
       <actions>
         <action type="open_display">
-          <file>../BOBs/MOTOR_static.bob</file>
-          <target>tab</target>
+          <file>MOTOR_static.bob</file>
+          <target>replace</target>
           <description>Open Display</description>
         </action>
       </actions>
@@ -2026,8 +2026,8 @@
       <name>OpenDisplay_10</name>
       <actions>
         <action type="open_display">
-          <file>../BOBs/MOTOR_static.bob</file>
-          <target>tab</target>
+          <file>MOTOR_static.bob</file>
+          <target>replace</target>
           <description>Open Display</description>
         </action>
       </actions>

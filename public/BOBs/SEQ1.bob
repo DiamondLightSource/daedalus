@@ -1711,7 +1711,7 @@
       <actions>
         <action type="open_display">
           <file>PandA_PositionsTable.bob</file>
-          <target>tab</target>
+          <target>replace</target>
           <description>Open Display</description>
         </action>
       </actions>

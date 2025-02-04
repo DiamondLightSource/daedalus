@@ -17,7 +17,7 @@
     <actions>
       <action type="open_display">
         <file>DCM Diagram.bob</file>
-        <target>tab</target>
+        <target>replace</target>
         <description>Open Display</description>
       </action>
     </actions>
@@ -45,7 +45,7 @@
     <actions>
       <action type="open_display">
         <file>SEQ1.bob</file>
-        <target>tab</target>
+        <target>replace</target>
         <description>Open Display</description>
       </action>
     </actions>
@@ -73,7 +73,7 @@
     <actions>
       <action type="open_display">
         <file>Camera Static.bob</file>
-        <target>tab</target>
+        <target>replace</target>
         <description>Open Display</description>
       </action>
     </actions>
@@ -101,7 +101,7 @@
     <actions>
       <action type="open_display">
         <file>SubScreenFile</file>
-        <target>tab</target>
+        <target>replace</target>
         <description>Open Display</description>
       </action>
     </actions>
