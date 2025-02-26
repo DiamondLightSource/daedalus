@@ -265,7 +265,6 @@ export function reducer(state: BeamlineTreeState, action: BeamlineAction) {
                     };
                 });
             }
-            console.log(newState)
             // Load the tree and the array of filepaths associated with IDs
             return newState
         }
