@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import MiniMenuBar from '../components/MenuBar';
 import { createContext, useCallback, useEffect, useReducer } from 'react';
-import { BeamlineTreeState, CHANGE_BEAMLINE, CHANGE_SCREEN, initialState, reducer } from '../store';
+import { BeamlineTreeState, CHANGE_BEAMLINE, CHANGE_SCREEN, initialState, LOAD_SCREENS, reducer } from '../store';
 import DLSAppBar from '../components/AppBar';
 import ScreenDisplay from '../components/ScreenDisplay';
 import { useParams } from 'react-router-dom';
@@ -24,28 +24,34 @@ const BeamlineTreeStateContext = createContext<{
 
 export function MainPage() {
     const [state, dispatch] = useReducer(reducer, initialState);
-    const params: { beamline?: string, screenId?: string } = useParams()
+    const params: { beamline?: string, screenId?: string } = useParams();
 
     useEffect(() => {
-        if (params.beamline && params.beamline !== state.currentBeamline) dispatch({ type: CHANGE_BEAMLINE, payload: { beamline: params.beamline } });
-        if (params.screenId && params.screenId !== state.currentScreenId) dispatch({ type: CHANGE_SCREEN, payload: { screenId: params.screenId } });
-    })
+        if (state.filesLoaded) {
+            if (params.beamline && params.beamline !== state.currentBeamline) dispatch({ type: CHANGE_BEAMLINE, payload: { beamline: params.beamline } });
+            if (params.screenId && params.screenId !== state.currentScreenId) dispatch({ type: CHANGE_SCREEN, payload: { screenId: params.screenId } });
+        }
+    }, [params.beamline, params.screenId])
 
     // Only run once on mount
     useEffect(() => {
-        loadScreenTrees()
+        loadScreens()
     }, [])
 
-    const loadScreenTrees = useCallback(async () => {
+    const loadScreens = useCallback(async () => {
         const newBeamlines = { ...state.beamlines };
-        Object.values(newBeamlines).forEach(async (item) => {
+        for (const item of Object.values(newBeamlines)) {
             const [tree, fileIDs] = await parseScreenTree(item.entryPoint);
             item.screenTree = tree;
             item.filePathIds = fileIDs
-        })
+        }
         dispatch({
-            type: "loadScreenTrees",
-            payload: { beamlines: newBeamlines }
+            type: LOAD_SCREENS,
+            payload: {
+                beamlines: newBeamlines,
+                loadBeamline: params.beamline,
+                loadScreen: params.screenId
+            }
         });
     }, []);
 
