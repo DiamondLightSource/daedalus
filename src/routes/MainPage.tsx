@@ -7,6 +7,7 @@ import ScreenDisplay from '../components/ScreenDisplay';
 import { useParams } from 'react-router-dom';
 import { parseScreenTree } from '../utils/parser';
 import { executeAction, FileContext } from '@diamondlightsource/cs-web-lib';
+import { RotatingLines } from 'react-loader-spinner';
 
 const BeamlineTreeStateContext = createContext<{
     state: BeamlineTreeState;
@@ -20,6 +21,7 @@ export function MainPage() {
     const fileContext = useContext(FileContext);
 
     useEffect(() => {
+        // Only trigger once
         if (state.filesLoaded) {
             if (params.beamline && params.beamline !== state.currentBeamline) dispatch({ type: CHANGE_BEAMLINE, payload: { beamline: params.beamline } });
             if (params.screenId && params.screenId !== state.currentScreenId) dispatch({ type: CHANGE_SCREEN, payload: { screenId: params.screenId } });
@@ -72,9 +74,23 @@ export function MainPage() {
         <>
             <Box sx={{ display: 'flex' }}>
                 <BeamlineTreeStateContext.Provider value={{ state, dispatch }}>
-                    <DLSAppBar />
-                    <MiniMenuBar />
-                    <ScreenDisplay />
+                    {
+                        state.filesLoaded ?
+                            <>
+                                <DLSAppBar />
+                                <MiniMenuBar />
+                                <ScreenDisplay />
+                            </> :
+                            <>
+                                <RotatingLines
+                                    strokeColor="grey"
+                                    strokeWidth="5"
+                                    animationDuration="0.75"
+                                    width="96"
+                                    visible={true}
+                                />
+                            </>
+                    }
                 </BeamlineTreeStateContext.Provider>
             </Box>
         </>
