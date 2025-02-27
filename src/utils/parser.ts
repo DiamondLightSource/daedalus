@@ -55,22 +55,23 @@ async function parseChildren(
 
         // Iterate over all widgets to find child files
         const widgets = compactJSON.display.widget;
-        widgets.forEach(async (widget: any) => {
+        for (const widget of widgets) {
             const actions = widget.actions;
             // If no action on widget, discard it
-            if (actions === undefined) return;
-            // Check if type is open_display
-            if (actions.action._attributes.type === "open_display") {
-                // Parse child file recursively
-                const fileName: string = actions.action.file._text;
-                const fileLabel: string = (fileName.split(".bob")[0]).split("/").pop()!;
-                const fileId = `${id}-${fileLabel}`;
-                const [children, ids] = await parseChildren(fileName, [], parentDir, screenIDs, id)
-                screenIDs = ids;
-                const isUnique = checkDuplicateFilePath(screenIDs, `${parentDir}/${fileName}`);
-                if (isUnique) screen.push({ id: fileId, label: fileLabel, children: children })
+            if (actions !== undefined) {
+                // Check if type is open_display
+                if (actions.action._attributes.type === "open_display") {
+                    // Parse child file recursively
+                    const fileName: string = actions.action.file._text;
+                    const fileLabel: string = (fileName.split(".bob")[0]).split("/").pop()!;
+                    const fileId = `${id}-${fileLabel}`;
+                    const [children, ids] = await parseChildren(fileName, [], parentDir, screenIDs, id)
+                    screenIDs = ids;
+                    const isUnique = checkDuplicateFilePath(screenIDs, `${parentDir}/${fileName}`);
+                    if (isUnique) screen.push({ id: fileId, label: fileLabel, children: children })
+                }
             }
-        });
+        };
     } catch (error) {
         console.error(`Failed to load file ${fullFilepath}: ${error}`)
     }
