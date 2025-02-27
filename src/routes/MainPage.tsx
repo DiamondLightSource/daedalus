@@ -1,20 +1,12 @@
 import { Box } from '@mui/material';
 import MiniMenuBar from '../components/MenuBar';
-import { createContext, useCallback, useEffect, useReducer } from 'react';
+import { createContext, useCallback, useContext, useEffect, useReducer } from 'react';
 import { BeamlineTreeState, CHANGE_BEAMLINE, CHANGE_SCREEN, initialState, LOAD_SCREENS, reducer } from '../store';
 import DLSAppBar from '../components/AppBar';
 import ScreenDisplay from '../components/ScreenDisplay';
 import { useParams } from 'react-router-dom';
 import { parseScreenTree } from '../utils/parser';
-import { FileProvider } from '@diamondlightsource/cs-web-lib';
-
-const INITIAL_SCREEN_STATE = {
-    main: {
-        path: "/json/start.json",
-        macros: {},
-        defaultProtocol: "ca"
-    }
-}
+import { executeAction, FileContext } from '@diamondlightsource/cs-web-lib';
 
 const BeamlineTreeStateContext = createContext<{
     state: BeamlineTreeState;
@@ -25,6 +17,7 @@ const BeamlineTreeStateContext = createContext<{
 export function MainPage() {
     const [state, dispatch] = useReducer(reducer, initialState);
     const params: { beamline?: string, screenId?: string } = useParams();
+    const fileContext = useContext(FileContext);
 
     useEffect(() => {
         if (state.filesLoaded) {
@@ -53,19 +46,36 @@ export function MainPage() {
                 loadScreen: params.screenId
             }
         });
+        if (params.beamline) {
+            // If we navigated directly to a beamline and/or screen, load in display
+            const newBeamlineState = newBeamlines[params.beamline];
+            const newScreen = params.screenId ? newBeamlineState.filePathIds[params.screenId] : newBeamlineState.entryPoint
+            executeAction({
+                type: 'OPEN_PAGE',
+                dynamicInfo: {
+                    name: newScreen,
+                    location: "main",
+                    description: undefined,
+                    file: {
+                        path: newScreen,
+                        macros: {},
+                        defaultProtocol: "ca"
+                    }
+                }
+            }, fileContext, undefined, {})
+        }
+
     }, []);
 
 
     return (
         <>
             <Box sx={{ display: 'flex' }}>
-                <FileProvider initialPageState={INITIAL_SCREEN_STATE}>
-                    <BeamlineTreeStateContext.Provider value={{ state, dispatch }}>
-                        <DLSAppBar />
-                        <MiniMenuBar />
-                        <ScreenDisplay />
-                    </BeamlineTreeStateContext.Provider>
-                </FileProvider>
+                <BeamlineTreeStateContext.Provider value={{ state, dispatch }}>
+                    <DLSAppBar />
+                    <MiniMenuBar />
+                    <ScreenDisplay />
+                </BeamlineTreeStateContext.Provider>
             </Box>
         </>
     )

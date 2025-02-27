@@ -60,7 +60,7 @@ export default function DLSAppBar() {
             event.preventDefault();
             const screenId = decodeURI(event.target.pathname).split("/").at(-1) as string;
             const newScreen = state.beamlines[state.currentBeamline].filePathIds[screenId];
-            dispatch({ type: CHANGE_SCREEN, payload: { screenId: newScreen } })
+            dispatch({ type: CHANGE_SCREEN, payload: { screenId: screenId } })
             executeAction({
                 type: 'OPEN_PAGE',
                 dynamicInfo: {
