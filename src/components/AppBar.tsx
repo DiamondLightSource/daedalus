@@ -11,7 +11,6 @@ import BeamlineTreeStateContext from '../routes/MainPage';
 import { APP_BAR_HEIGHT, DRAWER_WIDTH } from '../utils/helper';
 import { Breadcrumbs, Link } from '@mui/material';
 import { executeAction, FileContext } from '@diamondlightsource/cs-web-lib';
-import { CHANGE_SCREEN } from '../store';
 
 interface AppBarProps extends MuiAppBarProps {
     open?: boolean;
@@ -48,7 +47,7 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 export default function DLSAppBar() {
-    const { state, dispatch } = useContext(BeamlineTreeStateContext);
+    const { state } = useContext(BeamlineTreeStateContext);
     const fileContext = useContext(FileContext)
 
     const handleOpenSettings = () => {
@@ -60,7 +59,6 @@ export default function DLSAppBar() {
             event.preventDefault();
             const screenId = decodeURI(event.target.pathname).split("/").at(-1) as string;
             const newScreen = state.beamlines[state.currentBeamline].filePathIds[screenId];
-            dispatch({ type: CHANGE_SCREEN, payload: { screenId: screenId } })
             executeAction({
                 type: 'OPEN_PAGE',
                 dynamicInfo: {

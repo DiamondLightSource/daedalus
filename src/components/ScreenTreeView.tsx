@@ -3,11 +3,10 @@ import { useContext, useEffect, useState } from 'react';
 import BeamlineTreeStateContext from '../routes/MainPage';
 import { TreeViewBaseItem, TreeViewItemId } from '@mui/x-tree-view';
 import { executeAction, FileContext } from '@diamondlightsource/cs-web-lib';
-import { CHANGE_SCREEN } from '../store';
 
 
 export default function ScreenTreeView() {
-    const { state, dispatch } = useContext(BeamlineTreeStateContext);
+    const { state } = useContext(BeamlineTreeStateContext);
     const fileContext = useContext(FileContext)
     const [expandedScreens, setExpandedScreens] = useState<string[]>([]);
 
@@ -20,7 +19,6 @@ export default function ScreenTreeView() {
 
     const handleClick = (itemId: string) => {
         const newScreen = state.beamlines[state.currentBeamline].filePathIds[itemId];
-        dispatch({ type: CHANGE_SCREEN, payload: { screenId: itemId } })
         executeAction({
             type: 'OPEN_PAGE',
             dynamicInfo: {

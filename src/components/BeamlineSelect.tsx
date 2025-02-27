@@ -5,14 +5,12 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useContext } from 'react';
 import BeamlineTreeStateContext from '../routes/MainPage';
 import { FileContext, executeAction } from '@diamondlightsource/cs-web-lib';
-import { CHANGE_BEAMLINE } from '../store';
 
 export default function BeamlineSelect() {
-    const { state, dispatch } = useContext(BeamlineTreeStateContext);
+    const { state } = useContext(BeamlineTreeStateContext);
     const fileContext = useContext(FileContext)
 
     const handleChange = (event: SelectChangeEvent) => {
-        dispatch({ type: CHANGE_BEAMLINE, payload: { beamline: event.target.value } })
         // Load the entrypoint for the beamline on click
         executeAction({
             type: 'OPEN_PAGE',
