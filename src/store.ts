@@ -128,7 +128,7 @@ export function demoReducer(state: FileState, action: Action) {
 export const CHANGE_BEAMLINE = "changeBeamline";
 export const CHANGE_SCREEN = "changeScreen";
 export const OPEN_MENU_BAR = "openMenuBar";
-export const LOAD_SCREEN_TREES = "loadScreenTrees";
+export const LOAD_SCREENS = "loadScreens";
 
 // An interface for our actions
 interface ChangeBeamline {
@@ -152,10 +152,12 @@ interface OpenMenuBar {
     };
 }
 
-interface LoadScreenTrees {
-    type: typeof LOAD_SCREEN_TREES;
+interface LoadScreens {
+    type: typeof LOAD_SCREENS;
     payload: {
-        beamlines: BeamlineState
+        beamlines: BeamlineState,
+        loadBeamline?: string,
+        loadScreen?: string
     };
 }
 
@@ -163,7 +165,7 @@ type BeamlineAction =
     | ChangeBeamline
     | ChangeScreen
     | OpenMenuBar
-    | LoadScreenTrees
+    | LoadScreens
 
 export type FileIDs = {
     [id: string]: string
@@ -180,6 +182,7 @@ export type BeamlineState = {
 }
 
 export type BeamlineTreeState = {
+    filesLoaded: boolean,
     menuBarOpen: boolean,
     currentBeamline: string,
     currentScreenId: string,
@@ -191,6 +194,7 @@ export type BeamlineTreeState = {
 // ID here should be the path of the file in whatever
 // filesystem we end up using
 export const initialState: BeamlineTreeState = {
+    filesLoaded: true,
     menuBarOpen: true,
     currentBeamline: "",
     currentScreenId: "",
@@ -199,6 +203,11 @@ export const initialState: BeamlineTreeState = {
     beamlines: {
         "BLTEST": {
             entryPoint: "/BOBs/TopLevel.bob",
+            screenTree: [],
+            filePathIds: {}
+        },
+        "BLFAKE": {
+            entryPoint: "/BOBs/DCM Diagram Fake.bob",
             screenTree: [],
             filePathIds: {}
         }
@@ -232,9 +241,32 @@ export function reducer(state: BeamlineTreeState, action: BeamlineAction) {
         case OPEN_MENU_BAR: {
             return { ...state, menuBarOpen: action.payload.open }
         }
-        case LOAD_SCREEN_TREES: {
+        case LOAD_SCREENS: {
+            const newState = {
+                ...state,
+                filesLoaded: true,
+                beamlines: action.payload.beamlines
+            };
+
+            if (action.payload.loadBeamline) {
+                newState.currentBeamline = action.payload.loadBeamline;
+                const newBeamlineState = action.payload.beamlines[action.payload.loadBeamline]
+                Object.entries(newBeamlineState.filePathIds).forEach(([key, value]) => {
+                    // If the screen ID we've been passed matches
+                    if (action.payload.loadScreen === key) {
+                        newState.currentScreenFilepath = value;
+                        newState.currentScreenId = key;
+                        newState.currentScreenLabel = key.split("-").pop()!;
+                        // If no loadscreen match, use
+                    } else if (!action.payload.loadScreen && value === newBeamlineState.entryPoint) {
+                        newState.currentScreenFilepath = value;
+                        newState.currentScreenId = key;
+                        newState.currentScreenLabel = key.split("-").pop()!;
+                    };
+                });
+            }
             // Load the tree and the array of filepaths associated with IDs
-            return { ...state, beamlines: action.payload.beamlines }
+            return newState
         }
     }
 }
