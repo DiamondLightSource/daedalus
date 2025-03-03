@@ -41,8 +41,24 @@ export default function ScreenTreeView() {
 
     // When beamline is updated, trigger refresh of expanded screens to fully expand all
     useEffect(() => {
-        setExpandedScreens(getAllScreensWithChildrenItemIds(currentScreenTree))
-    }, [currentScreenTree]);
+        const getAllScreensWithChildrenItemIds = async (screenTree: TreeViewBaseItem[]) => {
+            const screenIds: TreeViewItemId[] = []
+
+            const registerScreenId = (item: TreeViewBaseItem) => {
+                if (item.children?.length) {
+                    screenIds.push(item.id);
+                    item.children.forEach(registerScreenId);
+                }
+            };
+
+            for (const screen of screenTree) {
+                await registerScreenId(screen)
+            }
+            setExpandedScreens(screenIds)
+        };
+
+        getAllScreensWithChildrenItemIds(currentScreenTree);
+    }, [state.currentBeamline, state.beamlines]);
 
     return (
         <>
@@ -51,16 +67,3 @@ export default function ScreenTreeView() {
     );
 }
 
-const getAllScreensWithChildrenItemIds = (screenTree: TreeViewBaseItem[]) => {
-    const screenIds: TreeViewItemId[] = []
-    const registerScreenId = (item: TreeViewBaseItem) => {
-        if (item.children?.length) {
-            screenIds.push(item.id);
-            item.children.forEach(registerScreenId);
-        }
-    };
-
-    screenTree.forEach(registerScreenId)
-
-    return screenIds;
-};
