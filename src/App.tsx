@@ -6,6 +6,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { diamondTheme } from './theme';
 import { DemoPage } from './routes/DemoPage';
 import { MainPage } from './routes/MainPage';
+import { EditorPage } from './routes/EditorPage';
 
 const INITIAL_SCREEN_STATE = {
   main: {
@@ -25,6 +26,7 @@ function App({ }) {
             <FileProvider initialPageState={INITIAL_SCREEN_STATE}>
               <Switch>
                 <Route exact path="/demo" component={DemoPage} />
+                <Route exact path="/editor" component={EditorPage} />
                 <Route exact path="/:beamline" component={MainPage} />
                 <Route exact path="/:beamline/:screenId" component={MainPage} />
                 <Route exact path="/" component={MainPage} />
