@@ -1,30 +1,40 @@
 import { useState } from 'react';
-import { AppBar, Box, ClickAwayListener, CssBaseline, Paper as MuiPaper, PaperProps as MuiPaperProps, styled, Toolbar } from '@mui/material';
+import { AppBar, Box, ClickAwayListener, CssBaseline, IconButton, Paper as MuiPaper, PaperProps as MuiPaperProps, styled, Toolbar } from '@mui/material';
 import { EmbeddedDisplay, RelativePosition } from '@diamondlightsource/cs-web-lib';
 import { useWindowWidth, APP_BAR_HEIGHT, useWindowHeight, PROPERTIES_MENU_WIDTH } from '../utils/helper';
+import UndoIcon from '@mui/icons-material/Undo';
+import RedoIcon from '@mui/icons-material/Redo';
+import FormatAlignCenterIcon from '@mui/icons-material/FormatAlignCenter';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import PropertiesSideBar from './PropertiesSideBar';
+import MenuIcon from '@mui/icons-material/Menu';
 
 
-interface PaperProps extends MuiPaperProps {
-    open?: boolean;
+export interface WidgetProps {
+    x: string,
+    y: string,
+    w: string,
+    h: string,
+    display?: {
+        [key: string]: string
+    }
 }
 
-const Paper = styled(MuiPaper)<PaperProps>(({ theme }) => ({
+const Paper = styled(MuiPaper)(({ theme }) => ({
     height: `calc(${useWindowHeight()}px - 30px - ${theme.spacing(7)})`,
     width: `calc(${useWindowWidth()}px - ${PROPERTIES_MENU_WIDTH}px - ${theme.spacing(7)})`,
     margin: `calc(${APP_BAR_HEIGHT}px + 10px) ${PROPERTIES_MENU_WIDTH}px 5px 5px`,
 }));
 
 export default function Editor() {
-    const [widgetProperties, setWidgetProperties] = useState({})
+    const [widgetProperties, setWidgetProperties] = useState({x: "", y: "", w: "", h: ""})
     const [selected, setSelected] = useState(false);
     const [displaySelected, setDisplaySelected] = useState(false);
-    const [selectedBorder, setSelectedBorder] = useState({x: null, y: null, w: null, h: null})
     
 
     function handleClick(event: any) {
         // Get coordinates and dimensions
         const target = event.target;
-        console.log(target.className);
         setDisplaySelected((target.className as string) === "display" ? true : false);
         getWidgetCoords(target);
         setSelected(true);
@@ -40,22 +50,53 @@ export default function Editor() {
         if (widget.tagName === "DIV" && (widget.className as string).includes("Widget")) {
             // This is our parent div
             const style = widget.style;
-            setSelectedBorder({x: style.left, y: style.top, w: style.width, h: style.height})
+            setWidgetProperties({x: style.left, y: style.top, w: style.width, h: style.height})
             return;
         } else {
             getWidgetCoords(widget.parentNode)
         }
     }
 
+    const handleOpenSettings = () => {
+        console.log("TO DO - create settings modal")
+    };
+
     return (
          <>
             <CssBaseline />
-            <AppBar position="absolute" sx={{ height: APP_BAR_HEIGHT, width: `calc(100% - ${PROPERTIES_MENU_WIDTH})`, marginRight: "15%" }}>
+            <AppBar position="absolute" sx={{ height: APP_BAR_HEIGHT, width: "100%", zIndex: (theme) => theme.zIndex.drawer + 1}}>
                 <Toolbar>
-                   
+                    <IconButton
+                        color="inherit"
+                    >
+                        <UndoIcon />
+                    </IconButton>
+                    <IconButton
+                        color="inherit"
+                    >
+                        <RedoIcon />
+                    </IconButton>
+                    <IconButton
+                        color="inherit"
+                    >
+                        <FormatAlignCenterIcon/>
+                    </IconButton>
+                     <IconButton
+                        color="inherit"
+                    >
+                        <PlayArrowIcon/>
+                    </IconButton>
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        onClick={handleOpenSettings}
+                        sx={{ justifyContent: "right" }}
+                    >
+                        <MenuIcon />
+                    </IconButton>
                 </Toolbar>
             </AppBar>
-            <Paper component="main">
+            <Paper >
                 <ClickAwayListener onClickAway={handleClickAway}>
                     <Box sx={{ position: "absolute" }} onClick={handleClick}>
                         {selected ? <Box
@@ -63,10 +104,10 @@ export default function Editor() {
                             sx={{
                                 position: "absolute",
                                 zIndex: displaySelected ? 0 : 1,
-                                top: selectedBorder.y,
-                                left: selectedBorder.x,
-                                height: selectedBorder.h,
-                                width: selectedBorder.w,
+                                top: widgetProperties.y,
+                                left: widgetProperties.x,
+                                height: widgetProperties.h,
+                                width: widgetProperties.w,
                                 outline: "2px dashed #6661fa"
                             }} /> : null}
                         <EmbeddedDisplay
@@ -80,6 +121,7 @@ export default function Editor() {
                     </Box>
                 </ClickAwayListener>
             </Paper> 
+            <PropertiesSideBar properties={widgetProperties}/>
         </>       
     );
 }

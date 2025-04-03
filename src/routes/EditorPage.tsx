@@ -1,15 +1,10 @@
 import { Box } from '@mui/material';
-import MiniMenuBar from '../components/MenuBar';
 import { createContext, useCallback, useContext, useEffect, useReducer } from 'react';
 import { BeamlineTreeState, CHANGE_BEAMLINE, CHANGE_SCREEN, initialState, LOAD_SCREENS, reducer } from '../store';
-import DLSAppBar from '../components/AppBar';
-import ScreenDisplay from '../components/ScreenDisplay';
 import { useParams } from 'react-router-dom';
 import { parseScreenTree } from '../utils/parser';
 import { executeAction, FileContext } from '@diamondlightsource/cs-web-lib';
-import { RotatingLines } from 'react-loader-spinner';
 import Editor from '../components/Editor';
-import PropertiesSideBar from '../components/PropertiesSideBar';
 
 const BeamlineTreeStateContext = createContext<{
     state: BeamlineTreeState;
@@ -81,7 +76,6 @@ export function EditorPage() {
         <>
             <Box sx={{ display: 'flex' }}>
                 <Editor />
-                <PropertiesSideBar />
             </Box>
         </>
     )
