@@ -27,7 +27,7 @@ const Paper = styled(MuiPaper)(({ theme }) => ({
 }));
 
 export default function Editor() {
-    const [widgetProperties, setWidgetProperties] = useState({x: "", y: "", w: "", h: ""})
+    const [widgetProperties, setWidgetProperties] = useState<WidgetProps>({x: "", y: "", w: "", h: ""})
     const [selected, setSelected] = useState(false);
     const [displaySelected, setDisplaySelected] = useState(false);
     
@@ -43,14 +43,19 @@ export default function Editor() {
     const handleClickAway = () => {
         setSelected(false);
         setDisplaySelected(false);
+        setWidgetProperties({x: "", y: "", w: "", h: ""})
     };
 
 
     function getWidgetCoords(widget: any) {
+        // This is our parent div
         if (widget.tagName === "DIV" && (widget.className as string).includes("Widget")) {
-            // This is our parent div
+            // Fetch type of widget, remove "Widget" and "Component" as part of names
+            let widgetType = (widget.className as string).split(" ").pop()
+            widgetType = (widget.className as string).replaceAll("Widget", "");
+            widgetType = widgetType.replace("Component", "")
             const style = widget.style;
-            setWidgetProperties({x: style.left, y: style.top, w: style.width, h: style.height})
+            setWidgetProperties({x: style.left, y: style.top, w: style.width, h: style.height, display: { type: widgetType}})
             return;
         } else {
             getWidgetCoords(widget.parentNode)

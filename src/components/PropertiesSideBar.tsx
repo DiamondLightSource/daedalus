@@ -34,6 +34,33 @@ export default function PropertiesSideBar(props: {properties: WidgetProps}) {
             value: properties.h
         }
     ];
+    const widgetPropList = [
+        {
+            label: "Type", 
+            value: properties.display?.type ?? ""
+        }, 
+        {
+            label: "Name", 
+            value: properties.y
+        }, 
+        {
+            label: "Class", 
+            value: "DEFAULT"
+        }, 
+        {
+            label: "Actions",
+            value: "None"
+        }, 
+        {
+            label: "PV Name", 
+            value: "TEST-TEST-01:HELLO"
+        }, 
+        {
+            label: "Text",
+            value: "Text on the widget"
+        }
+    ];
+
     return (
         <>
             <CssBaseline />
@@ -42,7 +69,7 @@ export default function PropertiesSideBar(props: {properties: WidgetProps}) {
                     <Typography variant="h2" sx={{alignContent: "Center"}}>Widget Properties</Typography>
                 </MenuBarHeader>
                 <Divider />
-                <PropertiesGrid positionProps={positionPropList}/>
+                <PropertiesGrid positionProps={positionPropList} widgetProps={widgetPropList} />
             </MuiDrawer>
         </>
     );
@@ -51,10 +78,31 @@ export default function PropertiesSideBar(props: {properties: WidgetProps}) {
 /**
  * Lists all properties of the component with editable values
  */
-function PropertiesGrid(props: {positionProps: any[]}) {
-    const { positionProps } = props;
-    const widgetPropList = ["Type", "Name", "Class", "Actions", "PV Name", "Text"];
-    const displayPropList = ["Visible", "Font", "Foreground Color", "Background Color", "Transparent"];
+function PropertiesGrid(props: {positionProps: any[], widgetProps: any[]}) {
+    const { positionProps, widgetProps } = props;
+
+    const displayPropList = [
+        {
+            label: "Visible", 
+            value: "True"
+        }, 
+        {
+            label: "Font", 
+            value: "Arial 14"
+        }, 
+        {
+            label: "Foreground Color", 
+            value: "RGB(100, 109, 199)"
+        }, 
+        {
+            label: "Background Color",
+            value: "RGB(100, 199, 199)"
+        }, 
+        {
+            label: "Transparent", 
+            value: "False"
+        }, 
+    ];
     // TO DO - pass in widget
     // get list of props expected
     return (
@@ -62,13 +110,13 @@ function PropertiesGrid(props: {positionProps: any[]}) {
             <Box sx={{ flexGrow: 1 }}>
             <Typography sx={{margin: "5px 0px 5px 0px", fontWeight: "bold", color: "black", backgroundColor: "#ffe4b5" }}>Widget</Typography>
             <Grid container spacing={2}>
-                {widgetPropList.map((prop) => (
+                {widgetProps.map((item) => (
                     <>
-                        <Grid key={prop} item xs={5}>
-                            {prop}
+                        <Grid key={item.label} item xs={5}>
+                            {item.label}
                         </Grid>
-                        <Grid key={prop + "Field"} item xs={7} sx={{justifyItems: "right"}}>
-                            <TextField sx={{ '& .MuiInputBase-input': {padding: "2px"},height: 20, lineHeight: "unset", padding: 0 }} variant="outlined" defaultValue="thing" />
+                        <Grid key={item.label + "Field"} item xs={7} sx={{justifyItems: "right"}}>
+                            <TextField sx={{ '& .MuiInputBase-input': {padding: "2px"},height: 20, lineHeight: "unset", padding: 0 }} variant="outlined" value={item.value} />
                         </Grid></>
                 ))}
             </Grid>
@@ -86,13 +134,13 @@ function PropertiesGrid(props: {positionProps: any[]}) {
             </Grid>
             <Typography sx={{margin: "5px 0px 5px 0px", fontWeight: "bold", color: "black", backgroundColor: "#ffe4b5" }}>Display</Typography>
             <Grid container spacing={2}>
-                {displayPropList.map((prop) => (
+                {displayPropList.map((item) => (
                     <>
-                        <Grid key={prop} item xs={5}>
-                            {prop}
+                        <Grid key={item.label} item xs={5}>
+                            {item.label}
                         </Grid>
-                        <Grid key={prop + "Field"} item xs={7} sx={{justifyItems: "right"}}>
-                            <TextField sx={{ '& .MuiInputBase-input': {padding: "2px"},height: 20, lineHeight: "unset", padding: 0 }} variant="outlined" defaultValue="thing" />
+                        <Grid key={item.label + "Field"} item xs={7} sx={{justifyItems: "right"}}>
+                            <TextField sx={{ '& .MuiInputBase-input': {padding: "2px"},height: 20, lineHeight: "unset", padding: 0 }} variant="outlined" value={item.value} />
                         </Grid></>
                 ))}
             </Grid>
