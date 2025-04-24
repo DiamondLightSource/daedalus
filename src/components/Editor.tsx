@@ -8,6 +8,8 @@ import FormatAlignCenterIcon from '@mui/icons-material/FormatAlignCenter';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PropertiesSideBar from './PropertiesSideBar';
 import MenuIcon from '@mui/icons-material/Menu';
+import ZoomInIcon from '@mui/icons-material/ZoomIn';
+import ZoomOutIcon from '@mui/icons-material/ZoomOut';
 
 
 export interface WidgetProps {
@@ -73,6 +75,7 @@ export default function Editor() {
                 <Toolbar>
                     <IconButton
                         color="inherit"
+                        
                     >
                         <UndoIcon />
                     </IconButton>
@@ -89,13 +92,24 @@ export default function Editor() {
                      <IconButton
                         color="inherit"
                     >
+                        <ZoomInIcon/>
+                    </IconButton>
+                    <IconButton
+                        color="inherit"
+                    >
+                        <ZoomOutIcon/>
+                    </IconButton>
+                     <IconButton
+                        color="inherit"
+                        sx={{position: "absolute", left: `calc(96% - ${PROPERTIES_MENU_WIDTH}px)`}}
+                    >
                         <PlayArrowIcon/>
                     </IconButton>
                     <IconButton
                         color="inherit"
                         aria-label="open drawer"
                         onClick={handleOpenSettings}
-                        sx={{ justifyContent: "right" }}
+                        sx={{ position: "absolute", left: "96%" }}
                     >
                         <MenuIcon />
                     </IconButton>
