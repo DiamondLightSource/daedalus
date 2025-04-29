@@ -1,10 +1,10 @@
 import { styled } from '@mui/material/styles';
 import Drawer from '@mui/material/Drawer';
-import { Box, Button, ClickAwayListener, CssBaseline, IconButton, TextField, Typography, useTheme } from '@mui/material';
+import { IconButton, Typography, useTheme } from '@mui/material';
 import Grid from "@mui/material/Grid";
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import PaletteIcon from '@mui/icons-material/Palette';
 import { useState } from 'react';
-import { ActionButton, Arc, BoolButton, ChoiceButton, Color, DropDown, Ellipse, Input, Label, Line, MenuButton, Polygon, Readback, RelativePosition, Shape } from '@diamondlightsource/cs-web-lib';
+import { ActionButton, Arc, BoolButton, ChoiceButton, Color, Ellipse, Input, Label, Line, MenuButton, Polygon, Readback, RelativePosition, Shape } from '@diamondlightsource/cs-web-lib';
 
 const MenuBarHeader = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -32,7 +32,7 @@ export default function EditorPalette(props: PaletteProps) {
                 sx={{zIndex: 10, top: "90%", left: "93%"}}
                 onClick={toggleDrawer(true)}
             >
-                <AddCircleOutlineIcon sx={{width: "36px", height: "36px", color: theme.palette.primary.main}}/>
+                <PaletteIcon sx={{width: "36px", height: "36px", color: theme.palette.primary.main}}/>
             </IconButton>
             <Drawer open={open} variant="temporary" anchor="bottom" onClose={toggleDrawer(false)} PaperProps={{ sx: { height: "300px", width: "100%"} } }>
                 <MenuBarHeader sx={{ textAlign: "left",  justifyContent: "left"}}>
@@ -58,7 +58,7 @@ function PaletteGrid(props: {togglePalette: any}) {
     const components = [
         {
             name: "Label",
-            components: (<Label position={new RelativePosition("120px", "20px")} text="Label Text" backgroundColor={Color.fromRgba(166, 166, 166)}/>)
+            component: (<Label position={new RelativePosition("120px", "20px")} text="Label Text" backgroundColor={Color.GREY} textAlignV="bottom" transparent={false}/>)
         },
         {
             name: "Text Entry",
@@ -78,11 +78,11 @@ function PaletteGrid(props: {togglePalette: any}) {
         },
         {
             name: "Boolean Button",
-            component: (<BoolButton position={new RelativePosition("120px", "20px")} />)
+            component: (<BoolButton position={new RelativePosition("120px", "20px")} height={20}/>)
         },
         {
             name: "Choice Button",
-            component: (<ChoiceButton position={new RelativePosition("120px", "20px")} />)
+            component: (<ChoiceButton position={new RelativePosition("120px", "20px")} height={20}/>)
         },
         {
             name: "Arc",
@@ -97,6 +97,7 @@ function PaletteGrid(props: {togglePalette: any}) {
             component: (
               <Polygon 
                 position={new RelativePosition("120px", "20px")} 
+                height={20}
                 points={{
                         values: [
                         { x: 0, y: 20 },
