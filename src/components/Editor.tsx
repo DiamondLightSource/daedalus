@@ -10,6 +10,7 @@ import PropertiesSideBar from './PropertiesSideBar';
 import MenuIcon from '@mui/icons-material/Menu';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import ZoomOutIcon from '@mui/icons-material/ZoomOut';
+import EditorPalette from './EditorPalette';
 
 
 export interface WidgetProps {
@@ -32,7 +33,6 @@ export default function Editor() {
     const [widgetProperties, setWidgetProperties] = useState<WidgetProps>({x: "", y: "", w: "", h: ""})
     const [selected, setSelected] = useState(false);
     const [displaySelected, setDisplaySelected] = useState(false);
-    
 
     function handleClick(event: any) {
         // Get coordinates and dimensions
@@ -139,8 +139,10 @@ export default function Editor() {
                             scroll={false} />
                     </Box>
                 </ClickAwayListener>
+                <EditorPalette/>
             </Paper> 
             <PropertiesSideBar properties={widgetProperties}/>
+            
         </>       
     );
 }
