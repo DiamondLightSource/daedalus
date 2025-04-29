@@ -35,8 +35,9 @@ export default function EditorPalette(props: PaletteProps) {
                 <PaletteIcon sx={{width: "36px", height: "36px", color: theme.palette.primary.main}}/>
             </IconButton>
             <Drawer open={open} variant="temporary" anchor="bottom" onClose={toggleDrawer(false)} PaperProps={{ sx: { height: "300px", width: "100%"} } }>
-                <MenuBarHeader sx={{ textAlign: "left",  justifyContent: "left"}}>
-                    <Typography variant="h2" sx={{alignContent: "Center"}}>Palette</Typography>
+                <MenuBarHeader sx={{ textAlign: "left",  justifyContent: "left", padding: "15px"}}>
+                    <Typography variant="h1" sx={{alignContent: "Center", color: theme.palette.primary.main}} paddingRight={"10px"} paddingLeft={"10px"}>Palette </Typography>
+                    <PaletteIcon sx={{width: "36px", height: "36px", color: theme.palette.primary.main}}/>
                 </MenuBarHeader>
                 <PaletteGrid togglePalette={setOpen}/>
             </Drawer>     
@@ -134,7 +135,7 @@ function PaletteGrid(props: {togglePalette: any}) {
 
     return (
         <>
-        <Grid container spacing={2} rowGap={5}>
+        <Grid container spacing={2} rowGap={3} padding={"15px"}>
                 {components.map((item) => (
                     <>
                         <Grid key={item.name} item xs={1}>
