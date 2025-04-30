@@ -24,9 +24,9 @@ export interface WidgetProps {
 }
 
 const Paper = styled(MuiPaper)(({ theme }) => ({
-    height: `calc(${useWindowHeight()}px - 30px - ${theme.spacing(7)})`,
+    height: `calc(${useWindowHeight()}px - 50px - ${theme.spacing(7)})`,
     width: `calc(${useWindowWidth()}px - ${PROPERTIES_MENU_WIDTH}px - ${theme.spacing(7)})`,
-    margin: `calc(${APP_BAR_HEIGHT}px + 10px) ${PROPERTIES_MENU_WIDTH}px 5px 5px`,
+    margin: `calc(${APP_BAR_HEIGHT}px + 20px) ${PROPERTIES_MENU_WIDTH}px 5px 5px`,
 }));
 
 export default function Editor() {
@@ -115,7 +115,7 @@ export default function Editor() {
                     </IconButton>
                 </Toolbar>
             </AppBar>
-            <Paper >
+            <Paper elevation={12}>
                 <ClickAwayListener onClickAway={handleClickAway}>
                     <Box sx={{ position: "absolute" }} onClick={handleClick}>
                         {selected ? <Box

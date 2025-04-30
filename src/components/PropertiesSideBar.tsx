@@ -1,6 +1,6 @@
 import { styled } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
-import { Box, CssBaseline, Divider, TextField, Typography } from '@mui/material';
+import { Box, Button, Checkbox, CssBaseline, TextField, Typography } from '@mui/material';
 import Grid from "@mui/material/Grid";
 import { APP_BAR_HEIGHT, PROPERTIES_MENU_WIDTH } from '../utils/helper';
 import { WidgetProps } from './Editor';
@@ -19,56 +19,51 @@ export default function PropertiesSideBar(props: {properties: WidgetProps}) {
     const positionPropList = [
         {
             label: "X Position", 
-            value: properties.x
+            component: (<TextField sx={{ '& .MuiInputBase-input': {padding: "2px"},height: 20, lineHeight: "unset", padding: 0 }} variant="outlined" value={properties.x} />)
         }, 
         {
             label: "Y Position", 
-            value: properties.y
+            component: (<TextField sx={{ '& .MuiInputBase-input': {padding: "2px"},height: 20, lineHeight: "unset", padding: 0 }} variant="outlined" value={properties.y} />)
         }, 
         {
             label: "Width", 
-            value: properties.w
+            component: (<TextField sx={{ '& .MuiInputBase-input': {padding: "2px"},height: 20, lineHeight: "unset", padding: 0 }} variant="outlined" value={properties.w} />)
         }, 
         {
             label: "Height",
-            value: properties.h
+            component: (<TextField sx={{ '& .MuiInputBase-input': {padding: "2px"},height: 20, lineHeight: "unset", padding: 0 }} variant="outlined" value={properties.h} />)
         }
     ];
     const widgetPropList = [
         {
             label: "Type", 
-            value: properties.display?.type ?? ""
+            component: (<Typography variant="body1">{properties.display?.type ?? ""}</Typography>)
         }, 
         {
             label: "Name", 
-            value: properties.y
+            component: (<TextField sx={{ '& .MuiInputBase-input': {padding: "2px"},height: 20, lineHeight: "unset", padding: 0 }} variant="outlined" value={"Widget name"} />)
         }, 
         {
             label: "Class", 
-            value: "DEFAULT"
-        }, 
-        {
-            label: "Actions",
-            value: "None"
+            component: (<Typography>DEFAULT</Typography>)
         }, 
         {
             label: "PV Name", 
-            value: "TEST-TEST-01:HELLO"
+            component: (<TextField sx={{ '& .MuiInputBase-input': {padding: "2px"},height: 20, lineHeight: "unset", padding: 0 }} variant="outlined" value={"TEST-TEST-01:HELLO"} />)
         }, 
         {
             label: "Text",
-            value: "Text on the widget"
+            component: (<TextField sx={{ '& .MuiInputBase-input': {padding: "2px"},height: 20, lineHeight: "unset", padding: 0 }} variant="outlined" value={"Text on the widget"} />)
         }
     ];
 
     return (
         <>
             <CssBaseline />
-            <MuiDrawer variant="permanent" open anchor="right" sx={{paddingTop: APP_BAR_HEIGHT}} PaperProps={{ sx: { width: PROPERTIES_MENU_WIDTH, height: "100%", paddingTop: `${APP_BAR_HEIGHT}px`} }}>
+            <MuiDrawer elevation={10} variant="permanent" open anchor="right" sx={{paddingTop: APP_BAR_HEIGHT}} PaperProps={{ sx: { width: PROPERTIES_MENU_WIDTH, height: "100%", paddingTop: `${APP_BAR_HEIGHT}px`} }}>
                 <MenuBarHeader sx={{ textAlign: "center",  justifyContent: "Center"}}>
-                    <Typography variant="h2" sx={{alignContent: "Center"}}>Widget Properties</Typography>
+                    <Typography variant="h1" sx={{alignContent: "Center"}}>Widget Properties</Typography>
                 </MenuBarHeader>
-                <Divider />
                 <PropertiesGrid positionProps={positionPropList} widgetProps={widgetPropList} />
             </MuiDrawer>
         </>
@@ -84,63 +79,105 @@ function PropertiesGrid(props: {positionProps: any[], widgetProps: any[]}) {
     const displayPropList = [
         {
             label: "Visible", 
-            value: "True"
+            component: (<Checkbox defaultChecked sx={{width: "20px", height: "20px", alignItems: "center"}}/>)
         }, 
         {
             label: "Font", 
-            value: "Arial 14"
+            component: (<TextField sx={{ '& .MuiInputBase-input': {padding: "2px"},height: 20, lineHeight: "unset", padding: 0 }} variant="outlined" value={"Arial 14"} />)
         }, 
         {
             label: "Foreground Color", 
-            value: "RGB(100, 109, 199)"
+            component: (<TextField sx={{ '& .MuiInputBase-input': {padding: "2px"},height: 20, lineHeight: "unset", padding: 0 }} variant="outlined" value={"RGB(100, 109, 199)"} />)
         }, 
         {
             label: "Background Color",
-            value: "RGB(100, 199, 199)"
+            component: (<TextField sx={{ '& .MuiInputBase-input': {padding: "2px"},height: 20, lineHeight: "unset", padding: 0 }} variant="outlined" value={"RGB(100, 199, 199)"} />)
         }, 
         {
             label: "Transparent", 
-            value: "False"
+            component: (<Checkbox sx={{width: "20px", height: "20px"}}/>)
+        },
+        {
+            label: "Precision", 
+            component: (<TextField sx={{ '& .MuiInputBase-input': {padding: "2px"},height: 20, lineHeight: "unset", padding: 0 }} variant="outlined" value={"-1"} />)
+        }, 
+        {
+            label: "Wrap Words", 
+            component: (<Checkbox sx={{width: "20px", height: "20px"}}/>)
         }, 
     ];
-    // TO DO - pass in widget
-    // get list of props expected
+
+    const behaviourPropList = [
+        {
+            label: "Actions", 
+            component: <Button variant="outlined" sx={{width: "100%", padding: 0}}>No actions</Button>
+        }, 
+        {
+            label: "Rules", 
+            component: <Button variant="outlined" sx={{width: "100%", padding: 0}}>No rules</Button>
+        }, 
+        {
+            label: "Tool tip",
+            component: (<TextField sx={{ '& .MuiInputBase-input': {padding: "2px"},height: 20, lineHeight: "unset", padding: 0 }} variant="outlined" value={'${pv_name}\n${pv_name}'} />)
+        }, 
+        {
+            label: "Alarm Border", 
+            component: (<Checkbox sx={{width: "20px", height: "20px"}}/>)
+        }, 
+        {
+            label: "Enabled", 
+            component: (<Checkbox sx={{width: "20px", height: "20px"}} defaultChecked />)
+        }, 
+    ];
+
     return (
         <>
             <Box sx={{ flexGrow: 1 }}>
-            <Typography sx={{margin: "5px 0px 5px 0px", fontWeight: "bold", color: "black", backgroundColor: "#ffe4b5" }}>Widget</Typography>
-            <Grid container spacing={2}>
+            <Typography variant="h3" sx={{margin: "10px 0px 10px 0px", color: "black", backgroundColor: "#ffe4b5", paddingLeft: "5px" }}>Widget</Typography>
+            <Grid container spacing={1} padding={"0px 5px 0px 5px"}>
                 {widgetProps.map((item) => (
                     <>
                         <Grid key={item.label} item xs={5}>
                             {item.label}
                         </Grid>
                         <Grid key={item.label + "Field"} item xs={7} sx={{justifyItems: "right"}}>
-                            <TextField sx={{ '& .MuiInputBase-input': {padding: "2px"},height: 20, lineHeight: "unset", padding: 0 }} variant="outlined" value={item.value} />
+                            {item.component}
                         </Grid></>
                 ))}
             </Grid>
-            <Typography sx={{margin: "5px 0px 5px 0px", fontWeight: "bold", color: "black", backgroundColor: "#ffe4b5" }}>Position</Typography>
-            <Grid container spacing={2}>
+            <Typography variant="h3" sx={{margin: "10px 0px 10px 0px", color: "black", backgroundColor: "#ffe4b5", paddingLeft: "5px" }}>Position</Typography>
+            <Grid container spacing={1} padding={"0px 5px 0px 5px"}>
                 {positionProps.map((item) => (
                     <>
                         <Grid key={item.label} item xs={5}>
                             {item.label}
                         </Grid>
                         <Grid key={item.label + "Field"} item xs={7} sx={{justifyItems: "right"}}>
-                            <TextField sx={{ '& .MuiInputBase-input': {padding: "2px"},height: 20, lineHeight: "unset", padding: 0 }} variant="outlined" value={(item.value as string).replace("px", "")} />
+                            {item.component}
                         </Grid></>
                 ))}
             </Grid>
-            <Typography sx={{margin: "5px 0px 5px 0px", fontWeight: "bold", color: "black", backgroundColor: "#ffe4b5" }}>Display</Typography>
-            <Grid container spacing={2}>
+            <Typography variant="h3" sx={{margin: "10px 0px 10px 0px", color: "black", backgroundColor: "#ffe4b5", paddingLeft: "5px" }}>Display</Typography>
+            <Grid container spacing={1} padding={"0px 5px 0px 5px"}>
                 {displayPropList.map((item) => (
                     <>
                         <Grid key={item.label} item xs={5}>
                             {item.label}
                         </Grid>
-                        <Grid key={item.label + "Field"} item xs={7} sx={{justifyItems: "right"}}>
-                            <TextField sx={{ '& .MuiInputBase-input': {padding: "2px"},height: 20, lineHeight: "unset", padding: 0 }} variant="outlined" value={item.value} />
+                        <Grid key={item.label + "Field"} item xs={7} justifyContent={"center"} sx={{display: "flex"}}>
+                            {item.component}
+                        </Grid></>
+                ))}
+            </Grid>
+             <Typography variant="h3" sx={{margin: "10px 0px 10px 0px", color: "black", backgroundColor: "#ffe4b5", paddingLeft: "5px" }}>Behaviour</Typography>
+            <Grid container spacing={1} padding={"0px 5px 0px 5px"}>
+                {behaviourPropList.map((item) => (
+                    <>
+                        <Grid key={item.label} item xs={5}>
+                            {item.label}
+                        </Grid>
+                        <Grid key={item.label + "Field"} item xs={7} justifyContent={"center"} sx={{display: "flex"}}>
+                            {item.component}
                         </Grid></>
                 ))}
             </Grid>
