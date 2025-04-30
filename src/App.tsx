@@ -1,12 +1,12 @@
-import { FileProvider, store } from '@diamondlightsource/cs-web-lib';
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
-import './App.css'
+import { FileProvider, store } from "@diamondlightsource/cs-web-lib";
+import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import "./App.css";
 import { Provider } from "react-redux";
-import { ThemeProvider } from '@mui/material/styles';
-import { diamondTheme } from './theme';
-import { DemoPage } from './routes/DemoPage';
-import { MainPage } from './routes/MainPage';
-import { EditorPage } from './routes/EditorPage';
+import { ThemeProvider } from "@mui/material/styles";
+import { diamondTheme } from "./theme";
+import { DemoPage } from "./routes/DemoPage";
+import { MainPage } from "./routes/MainPage";
+import { EditorPage } from "./routes/EditorPage";
 
 const INITIAL_SCREEN_STATE = {
   main: {
@@ -14,10 +14,9 @@ const INITIAL_SCREEN_STATE = {
     macros: {},
     defaultProtocol: "ca"
   }
-}
+};
 
-
-function App({ }) {
+function App({}) {
   return (
     <>
       <Provider store={store}>
@@ -36,7 +35,7 @@ function App({ }) {
         </ThemeProvider>
       </Provider>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

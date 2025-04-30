@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "prettier-check": "prettier --write 'src/**/*.{ts,tsx}'",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -21,6 +22,7 @@
     "react-loader-spinner": "^6.1.6",
     "react-redux": "^7.2.9",
     "react-router-dom": "^5.3.4",
+    
     "xml-js": "^1.6.11"
   },
   "devDependencies": {
@@ -32,10 +34,20 @@
     "@typescript-eslint/parser": "^7.2.0",
     "@vitejs/plugin-react": "^4.2.1",
     "eslint": "^8.57.0",
+    "eslint-config-prettier": "^10.1.2",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-prettier": "^5.2.6",
+    "eslint-plugin-unicorn": "^55.0.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
+    "vite-plugin-eslint": "^1.8.1",
+    "prettier": "^3.5.3",
     "typescript": "^5.2.2",
     "vite": "^5.2.0",
     "vite-plugin-node-polyfills": "^0.22.0"
+  },
+  "prettier": {
+    "trailingComma": "none",
+    "arrowParens": "avoid"
   }
 }

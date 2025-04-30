@@ -5,54 +5,53 @@ export const APP_BAR_HEIGHT = 65;
 export const PROPERTIES_MENU_WIDTH = 350;
 
 function getWindowWidth() {
-    const { innerWidth: width } = window;
-    return width;
+  const { innerWidth: width } = window;
+  return width;
 }
 
 function getWindowHeight() {
-    const { innerHeight: height } = window;
-    return height;
+  const { innerHeight: height } = window;
+  return height;
 }
 
 export function useWindowWidth() {
-    const [windowWidth, setWindowWidth] = useState(getWindowWidth());
+  const [windowWidth, setWindowWidth] = useState(getWindowWidth());
 
-    useEffect(() => {
-        function handleResize() {
-            setWindowWidth(getWindowWidth());
-        }
+  useEffect(() => {
+    function handleResize() {
+      setWindowWidth(getWindowWidth());
+    }
 
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-    }, []);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-    return windowWidth;
+  return windowWidth;
 }
 
-
 export function useWindowHeight() {
-    const [windowHeight, setWindowHeight] = useState(getWindowHeight());
+  const [windowHeight, setWindowHeight] = useState(getWindowHeight());
 
-    useEffect(() => {
-        function handleResize() {
-            setWindowHeight(getWindowHeight());
-        }
+  useEffect(() => {
+    function handleResize() {
+      setWindowHeight(getWindowHeight());
+    }
 
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-    }, []);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-    return windowHeight;
+  return windowHeight;
 }
 
 export function isValidHttpUrl(text: string) {
-    let url;
+  let url;
 
-    try {
-        url = new URL(text);
-    } catch (_) {
-        return false;
-    }
+  try {
+    url = new URL(text);
+  } catch (_) {
+    return false;
+  }
 
-    return url.protocol === "http:" || url.protocol === "https:";
+  return url.protocol === "http:" || url.protocol === "https:";
 }
