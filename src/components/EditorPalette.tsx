@@ -59,31 +59,31 @@ function PaletteGrid(props: {togglePalette: any}) {
     const components = [
         {
             name: "Label",
-            component: (<Label position={new RelativePosition("120px", "20px")} text="Label Text" backgroundColor={Color.GREY} textAlignV="bottom" transparent={false}/>)
+            component: (<Label position={new RelativePosition("100%", "100%")} text="Label Text" backgroundColor={Color.GREY} textAlignV="bottom" transparent={false}/>)
         },
         {
             name: "Text Entry",
-            component: (<Input position={new RelativePosition("120px", "20px")} />)
+            component: (<Input position={new RelativePosition("100%", "100%")} />)
         },
         {
             name: "Text Update",
-            component: (<Readback position={new RelativePosition("120px", "20px")} />)
+            component: (<Readback position={new RelativePosition("100%", "100%")} />)
         },
         {
             name: "ComboBox",
-            component: (<MenuButton position={new RelativePosition("120px", "20px")} />)
+            component: (<MenuButton position={new RelativePosition("100%", "100%")} />)
         },
         {
             name: "Action Button",
-            component: (<ActionButton position={new RelativePosition("120px", "20px")} text="Action Button"/>)
+            component: (<ActionButton position={new RelativePosition("100%", "100%")} text="Action Button"/>)
         },
         {
             name: "Boolean Button",
-            component: (<BoolButton position={new RelativePosition("120px", "20px")} height={20}/>)
+            component: (<BoolButton position={new RelativePosition("100%", "100%")} height={20}/>)
         },
         {
             name: "Choice Button",
-            component: (<ChoiceButton position={new RelativePosition("120px", "20px")} height={20}/>)
+            component: (<ChoiceButton position={new RelativePosition("100%", "100%")} height={20}/>)
         },
         {
             name: "Arc",
@@ -97,7 +97,7 @@ function PaletteGrid(props: {togglePalette: any}) {
             name: "Polygon",
             component: (
               <Polygon 
-                position={new RelativePosition("120px", "20px")} 
+                position={new RelativePosition("100%", "100%")} 
                 height={20}
                 points={{
                         values: [
@@ -113,7 +113,7 @@ function PaletteGrid(props: {togglePalette: any}) {
             name: "Polyline",
             component: (
               <Line 
-                position={new RelativePosition("120px", "20px")} 
+                position={new RelativePosition("100%", "100%")} 
                 height={20} 
                 width={70} 
                 points={{
@@ -129,7 +129,7 @@ function PaletteGrid(props: {togglePalette: any}) {
         },
         {
             name: "Rectangle",
-            component: (<Shape position={new RelativePosition("120px", "20px")} />)
+            component: (<Shape position={new RelativePosition("100%", "100%")} />)
         }
     ]
 
