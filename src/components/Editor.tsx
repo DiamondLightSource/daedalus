@@ -71,7 +71,7 @@ export default function Editor() {
     return (
          <>
             <CssBaseline />
-            <AppBar position="absolute" sx={{ height: APP_BAR_HEIGHT, width: "100%", zIndex: (theme) => theme.zIndex.drawer + 1}}>
+            <AppBar position="absolute" sx={{ height: APP_BAR_HEIGHT, width: "100%", zIndex: (theme) => theme.zIndex.drawer - 1}}>
                 <Toolbar>
                     <IconButton
                         color="inherit"
@@ -101,7 +101,7 @@ export default function Editor() {
                     </IconButton>
                      <IconButton
                         color="inherit"
-                        sx={{position: "absolute", left: `calc(96% - ${PROPERTIES_MENU_WIDTH}px)`}}
+                        sx={{position: "absolute", left: `calc(92% - ${PROPERTIES_MENU_WIDTH}px)`}}
                     >
                         <PlayArrowIcon/>
                     </IconButton>
@@ -109,7 +109,7 @@ export default function Editor() {
                         color="inherit"
                         aria-label="open drawer"
                         onClick={handleOpenSettings}
-                        sx={{ position: "absolute", left: "96%" }}
+                        sx={{ position: "absolute", left: `calc(96% - ${PROPERTIES_MENU_WIDTH}px)`}}
                     >
                         <MenuIcon />
                     </IconButton>

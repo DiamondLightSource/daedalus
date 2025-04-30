@@ -60,7 +60,7 @@ export default function PropertiesSideBar(props: {properties: WidgetProps}) {
     return (
         <>
             <CssBaseline />
-            <MuiDrawer variant="permanent" open anchor="right" sx={{paddingTop: APP_BAR_HEIGHT}} PaperProps={{ sx: { width: PROPERTIES_MENU_WIDTH, height: "100%", paddingTop: `${APP_BAR_HEIGHT}px`}, elevation: 8 }}>
+            <MuiDrawer variant="permanent" open anchor="right" PaperProps={{ sx: { width: PROPERTIES_MENU_WIDTH, height: "100%"}, elevation: 8 }}>
                 <MenuBarHeader sx={{ textAlign: "center",  justifyContent: "Center"}}>
                     <Typography variant="h1" sx={{alignContent: "Center"}}>Widget Properties</Typography>
                 </MenuBarHeader>
