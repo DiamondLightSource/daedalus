@@ -310,3 +310,47 @@ export function reducer(state: BeamlineTreeState, action: BeamlineAction) {
     }
   }
 }
+
+// Data browser state
+
+export const TOGGLE_TRACES_PANEL = "toggleTracesPanel";
+export const TOGGLE_ARCHIVER_MENU_BAR = "toggleArchiverMenuBar";
+
+// An interface for our actions
+interface ToggleTracesPanel {
+  type: typeof TOGGLE_TRACES_PANEL;
+  payload: {
+    open: boolean;
+  };
+}
+
+interface ToggleArchiverMenuBar {
+  type: typeof TOGGLE_ARCHIVER_MENU_BAR;
+  payload: {
+    open: boolean;
+  };
+}
+
+type DataBrowserAction = ToggleTracesPanel | ToggleArchiverMenuBar
+
+export type DataBrowserState = {
+  tracesPanelOpen: boolean,
+  archiverMenuBarOpen: boolean
+};
+
+export const initialDataBrowserState: DataBrowserState = {
+  tracesPanelOpen: false,
+  archiverMenuBarOpen: false
+};
+
+
+export function dataBrowserReducer(state: DataBrowserState, action: DataBrowserAction) {
+  switch (action.type) {
+    case TOGGLE_TRACES_PANEL: {
+      return { ...state, tracesPanelOpen: action.payload.open };
+    }
+    case TOGGLE_ARCHIVER_MENU_BAR: {
+      return { ...state, archiverMenuBarOpen: action.payload.open };
+    }
+  }
+}

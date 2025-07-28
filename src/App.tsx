@@ -8,6 +8,7 @@ import { DemoPage } from "./routes/DemoPage";
 import { MainPage } from "./routes/MainPage";
 import { EditorPage } from "./routes/EditorPage";
 import { LandingPage } from "./routes/LandingPage";
+import { DataBrowserPage } from "./routes/DataBrowserPage";
 
 const INITIAL_SCREEN_STATE = {
   main: {
@@ -26,6 +27,7 @@ function App({ config }: { config: CsWebLibConfig }) {
             <FileProvider initialPageState={INITIAL_SCREEN_STATE}>
               <Switch>
                 <Route exact path="/demo" component={DemoPage} />
+                <Route exact path="/data-browser" component={DataBrowserPage} />
                 <Route exact path="/editor" component={EditorPage} />
                 <Route exact path="/synoptic" component={MainPage} />
                 <Route exact path="/synoptic/:beamline" component={MainPage} />
