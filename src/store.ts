@@ -1,4 +1,4 @@
-import { TreeViewBaseItem } from "@mui/x-tree-view/models";
+import { ScreenTreeViewBaseItem } from "./utils/helper";
 export const LOAD_NEXT_FILE = "loadNextFile";
 export const ADD_FILE = "addFile";
 export const REMOVE_FILE = "removeFile";
@@ -179,7 +179,7 @@ export type FileIDs = {
 
 export type BeamlineStateProperties = {
   entryPoint: string;
-  screenTree: TreeViewBaseItem[];
+  screenTree: ScreenTreeViewBaseItem[];
   filePathIds: FileIDs;
 };
 
@@ -214,6 +214,11 @@ export const initialState: BeamlineTreeState = {
     },
     BLFAKE: {
       entryPoint: "/BOBs/DCM Diagram Fake.bob",
+      screenTree: [],
+      filePathIds: {}
+    },
+    B23: {
+      entryPoint: "/example-synoptic/b23-services/synoptic/data/json_map.json",
       screenTree: [],
       filePathIds: {}
     }
