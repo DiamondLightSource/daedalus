@@ -16,16 +16,16 @@ export default function BeamlineSelect() {
       type: CHANGE_BEAMLINE,
       payload: { beamline: event.target.value }
     });
-    // Load the entrypoint for the beamline on click
+    // Load the toplevel screen for the beamline on click
     executeAction(
       {
         type: "OPEN_PAGE",
         dynamicInfo: {
-          name: state.beamlines[event.target.value].entryPoint,
+          name: state.beamlines[event.target.value].topLevelScreen,
           location: "main",
           description: undefined,
           file: {
-            path: state.beamlines[event.target.value].entryPoint,
+            path: state.beamlines[event.target.value].host + state.beamlines[event.target.value].topLevelScreen,
             macros: {},
             defaultProtocol: "ca"
           }

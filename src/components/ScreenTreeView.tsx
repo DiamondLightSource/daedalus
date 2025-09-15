@@ -18,7 +18,7 @@ export default function ScreenTreeView() {
   };
 
   const handleClick = (itemId: string) => {
-    const newScreen =
+    const newScreen = (state.beamlines[state.currentBeamline].host) +
       state.beamlines[state.currentBeamline].filePathIds[itemId];
     executeAction(
       {

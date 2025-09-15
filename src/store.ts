@@ -179,8 +179,10 @@ export type FileIDs = {
 
 export type BeamlineStateProperties = {
   entryPoint: string;
+  topLevelScreen: string;
   screenTree: ScreenTreeViewBaseItem[];
   filePathIds: FileIDs;
+  host?: string;
 };
 
 export type BeamlineState = {
@@ -208,17 +210,21 @@ export const initialState: BeamlineTreeState = {
   currentScreenFilepath: "",
   beamlines: {
     BLTEST: {
-      entryPoint: "/BOBs/TopLevel.bob",
+      entryPoint: "/BOBs/BLTEST/json_map.json",
+      topLevelScreen: "",
       screenTree: [],
       filePathIds: {}
     },
     BLFAKE: {
-      entryPoint: "/BOBs/DCM Diagram Fake.bob",
+      entryPoint: "/BOBs/BLFAKE/json_map.json",
+      topLevelScreen: "",
       screenTree: [],
       filePathIds: {}
     },
     B23: {
-      entryPoint: "/example-synoptic/b23-services/synoptic/data/json_map.json",
+      host: "http://localhost:8000/",
+      entryPoint: "example-synoptic/b23-services/synoptic/data/json_map.json",
+      topLevelScreen: "",
       screenTree: [],
       filePathIds: {}
     }
@@ -233,20 +239,19 @@ export function reducer(state: BeamlineTreeState, action: BeamlineAction) {
       const newBeamlineState = state.beamlines[action.payload.beamline];
       // Fetch top level screen
       Object.entries(newBeamlineState.filePathIds).forEach(([key, value]) => {
-        if (value === newBeamlineState.entryPoint) newID = key;
+        if (value === newBeamlineState.topLevelScreen) newID = key;
       });
-
       return {
         ...state,
         currentBeamline: action.payload.beamline,
         currentScreenId: newID,
-        currentScreenFilepath: newBeamlineState.entryPoint,
-        currentScreenLabel: newBeamlineState.entryPoint.split(".bob")[0]
+        currentScreenFilepath: newBeamlineState.topLevelScreen,
+        currentScreenLabel: newBeamlineState.topLevelScreen.split(".bob")[0].split("/").pop()!
       };
     }
     case CHANGE_SCREEN: {
       // Parse the label from the end of the ID. This is the specific screen name
-      const newLabel = action.payload.screenId.split("-").pop() || "";
+      const newLabel = action.payload.screenId.split("+").pop() || "";
       return {
         ...state,
         currentScreenId: action.payload.screenId,
@@ -272,15 +277,15 @@ export function reducer(state: BeamlineTreeState, action: BeamlineAction) {
           if (action.payload.loadScreen === key) {
             newState.currentScreenFilepath = value;
             newState.currentScreenId = key;
-            newState.currentScreenLabel = key.split("-").pop()!;
+            newState.currentScreenLabel = key.split(".").pop()!;
             // If no loadscreen match, use
           } else if (
             !action.payload.loadScreen &&
-            value === newBeamlineState.entryPoint
+            value === newBeamlineState.topLevelScreen
           ) {
             newState.currentScreenFilepath = value;
             newState.currentScreenId = key;
-            newState.currentScreenLabel = key.split("-").pop()!;
+            newState.currentScreenLabel = key.split(".").pop()!;
           }
         });
       }

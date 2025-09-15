@@ -56,9 +56,10 @@ export function MainPage() {
   const loadScreens = useCallback(async () => {
     const newBeamlines = { ...state.beamlines };
     for (const item of Object.values(newBeamlines)) {
-      const [tree, fileIDs] = await parseScreenTree(item.entryPoint);
+      const [tree, fileIDs, firstFile] = await parseScreenTree(item.entryPoint);
       item.screenTree = tree;
       item.filePathIds = fileIDs;
+      item.topLevelScreen = firstFile;
     }
     dispatch({
       type: LOAD_SCREENS,
@@ -71,9 +72,9 @@ export function MainPage() {
     if (params.beamline) {
       // If we navigated directly to a beamline and/or screen, load in display
       const newBeamlineState = newBeamlines[params.beamline];
-      const newScreen = params.screenId
+      const newScreen = newBeamlineState.host + (params.screenId
         ? newBeamlineState.filePathIds[params.screenId]
-        : newBeamlineState.entryPoint;
+        : newBeamlineState.topLevelScreen);
       executeAction(
         {
           type: "OPEN_PAGE",
