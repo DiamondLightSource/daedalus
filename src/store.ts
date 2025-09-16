@@ -182,7 +182,7 @@ export type BeamlineStateProperties = {
   topLevelScreen: string;
   screenTree: ScreenTreeViewBaseItem[];
   filePathIds: FileIDs;
-  host?: string;
+  host: string;
 };
 
 export type BeamlineState = {
@@ -210,12 +210,14 @@ export const initialState: BeamlineTreeState = {
   currentScreenFilepath: "",
   beamlines: {
     BLTEST: {
+      host: "",
       entryPoint: "/BOBs/BLTEST/json_map.json",
       topLevelScreen: "",
       screenTree: [],
       filePathIds: {}
     },
     BLFAKE: {
+      host: "",
       entryPoint: "/BOBs/BLFAKE/json_map.json",
       topLevelScreen: "",
       screenTree: [],

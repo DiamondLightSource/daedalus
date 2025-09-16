@@ -56,7 +56,7 @@ export function MainPage() {
   const loadScreens = useCallback(async () => {
     const newBeamlines = { ...state.beamlines };
     for (const item of Object.values(newBeamlines)) {
-      const [tree, fileIDs, firstFile] = await parseScreenTree(item.entryPoint);
+      const [tree, fileIDs, firstFile] = await parseScreenTree(item.host + item.entryPoint);
       item.screenTree = tree;
       item.filePathIds = fileIDs;
       item.topLevelScreen = firstFile;
