@@ -7,8 +7,8 @@ export const APP_BAR_HEIGHT = 65;
 export const PROPERTIES_MENU_WIDTH = 350;
 
 export type ScreenTreeViewBaseItem = TreeViewBaseItem & {
-  children: ScreenTreeViewBaseItem[]
-  macros: {[key: string]: string}[]
+  children?: ScreenTreeViewBaseItem[]
+  macros?: {[key: string]: string}[]
 }
 
 function getWindowWidth() {

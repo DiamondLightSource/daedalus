@@ -16,14 +16,14 @@ export async function parseScreenTree(
   let parentScreen: ScreenTreeViewBaseItem = {
     id: topLevelScreen,
     label: topLevelScreen,
-    children: [],
-    macros: []
+    children: []
   };
+ if (json.macros) parentScreen.macros = [json.macros]
 
   const [children, ids] = await parseChildren(
     json.children, 
     json.file,
-    parentScreen.children,
+    [],
     "",
     {}
   );
@@ -55,32 +55,32 @@ async function parseChildren(
   for (const child of fileList) {
     const fileLabel: string = child.file.split(".bob")[0].split("/").pop()!;
     const fileId = `${id}+${fileLabel}`;
+    let newScreen: ScreenTreeViewBaseItem = {id: fileId, label: fileLabel};
     // Check if this has been parsed already
-    if (child.note && child.note.includes("Already visited (cycle detected)")) {
-      let duplicateId: string
+    if (child.duplicate) {
+      let duplicateId: string = "";
       // Screen has already been parsed, check for macros
       if (child.macros) {
-        for (const [key, value] of Object.entries(screenIDs)) {
-          if (value === filepath) duplicateId = key;
-        }
-        const idx = screen.findIndex(item => item.id === duplicateId)
-        // TO DO - add macros to existing ID
+        // TO DO - add macros to existing screen object
       }
-      break;
-    }
-    if (child.children) {
+    } else {
+      if (child.macros) newScreen.macros = [child.macros];
+      // If not a duplicate, check for children
+      if (child.children) {
       // If it has children, loop over recursively
       const [children, ids] = await parseChildren(
         child.children, 
         child.file, 
         [], 
         id, 
-        screenIDs)
+        screenIDs,
+      )
       screenIDs = ids;
-      screen.push({ id: fileId, label: fileLabel, children: children, macros: [] });
+      newScreen.children = children;
     } else {
       screenIDs[fileId] = child.file;
-      screen.push({ id: fileId, label: fileLabel, children: [], macros: [] });
+    }
+      screen.push(newScreen);
     }
   }
   return [screen, screenIDs]
