@@ -1,9 +1,8 @@
 import { RichTreeView } from "@mui/x-tree-view/RichTreeView";
 import { useContext, useEffect, useState } from "react";
 import BeamlineTreeStateContext from "../routes/MainPage";
-import { TreeViewItemId } from "@mui/x-tree-view";
+import { TreeViewBaseItem, TreeViewItemId } from "@mui/x-tree-view";
 import { executeAction, FileContext } from "@diamondlightsource/cs-web-lib";
-import { ScreenTreeViewBaseItem } from "../utils/helper";
 
 export default function ScreenTreeView() {
   const { state } = useContext(BeamlineTreeStateContext);
@@ -19,7 +18,7 @@ export default function ScreenTreeView() {
 
   const handleClick = (itemId: string) => {
     const newScreen = (state.beamlines[state.currentBeamline].host) +
-      state.beamlines[state.currentBeamline].filePathIds[itemId];
+      state.beamlines[state.currentBeamline].filePathIds[itemId].file;
     executeAction(
       {
         type: "OPEN_PAGE",
@@ -41,18 +40,18 @@ export default function ScreenTreeView() {
     );
   };
 
-  let currentScreenTree: ScreenTreeViewBaseItem[] = [];
+  let currentScreenTree: TreeViewBaseItem[] = [];
   const currentBeamline = state.beamlines[state.currentBeamline];
   if (currentBeamline) currentScreenTree = currentBeamline.screenTree;
 
   // When beamline is updated, trigger refresh of expanded screens to fully expand all
   useEffect(() => {
     const getAllScreensWithChildrenItemIds = async (
-      screenTree: ScreenTreeViewBaseItem[]
+      screenTree: TreeViewBaseItem[]
     ) => {
       const screenIds: TreeViewItemId[] = [];
 
-      const registerScreenId = (item: ScreenTreeViewBaseItem) => {
+      const registerScreenId = (item: TreeViewBaseItem) => {
         if (item.children?.length) {
           screenIds.push(item.id);
           item.children.forEach(registerScreenId);

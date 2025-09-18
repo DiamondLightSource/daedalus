@@ -1,4 +1,4 @@
-import { ScreenTreeViewBaseItem } from "./utils/helper";
+import { TreeViewBaseItem } from "@mui/x-tree-view";
 export const LOAD_NEXT_FILE = "loadNextFile";
 export const ADD_FILE = "addFile";
 export const REMOVE_FILE = "removeFile";
@@ -174,13 +174,20 @@ interface LoadScreens {
 type BeamlineAction = ChangeBeamline | ChangeScreen | OpenMenuBar | LoadScreens;
 
 export type FileIDs = {
-  [id: string]: string;
+  [id: string]: {
+    file: string,
+    macros?: [
+      {
+        [key: string]: string
+      }
+    ]
+  }
 };
 
 export type BeamlineStateProperties = {
   entryPoint: string;
   topLevelScreen: string;
-  screenTree: ScreenTreeViewBaseItem[];
+  screenTree: TreeViewBaseItem[];
   filePathIds: FileIDs;
   host: string;
 };
@@ -241,7 +248,7 @@ export function reducer(state: BeamlineTreeState, action: BeamlineAction) {
       const newBeamlineState = state.beamlines[action.payload.beamline];
       // Fetch top level screen
       Object.entries(newBeamlineState.filePathIds).forEach(([key, value]) => {
-        if (value === newBeamlineState.topLevelScreen) newID = key;
+        if (value.file === newBeamlineState.topLevelScreen) newID = key;
       });
       return {
         ...state,
@@ -277,15 +284,15 @@ export function reducer(state: BeamlineTreeState, action: BeamlineAction) {
         Object.entries(newBeamlineState.filePathIds).forEach(([key, value]) => {
           // If the screen ID we've been passed matches
           if (action.payload.loadScreen === key) {
-            newState.currentScreenFilepath = value;
+            newState.currentScreenFilepath = value.file;
             newState.currentScreenId = key;
             newState.currentScreenLabel = key.split(".").pop()!;
             // If no loadscreen match, use
           } else if (
             !action.payload.loadScreen &&
-            value === newBeamlineState.topLevelScreen
+            value.file === newBeamlineState.topLevelScreen
           ) {
-            newState.currentScreenFilepath = value;
+            newState.currentScreenFilepath = value.file;
             newState.currentScreenId = key;
             newState.currentScreenLabel = key.split(".").pop()!;
           }

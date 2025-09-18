@@ -73,7 +73,7 @@ export function MainPage() {
       // If we navigated directly to a beamline and/or screen, load in display
       const newBeamlineState = newBeamlines[params.beamline];
       const newScreen = newBeamlineState.host + (params.screenId
-        ? newBeamlineState.filePathIds[params.screenId]
+        ? newBeamlineState.filePathIds[params.screenId].file
         : newBeamlineState.topLevelScreen);
       executeAction(
         {

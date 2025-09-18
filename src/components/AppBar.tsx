@@ -61,7 +61,7 @@ export default function DLSAppBar() {
         .split("/")
         .at(-1) as string;
       const newScreen =
-        state.beamlines[state.currentBeamline].host + state.beamlines[state.currentBeamline].filePathIds[screenId];
+        state.beamlines[state.currentBeamline].host + state.beamlines[state.currentBeamline].filePathIds[screenId].file;
       executeAction(
         {
           type: "OPEN_PAGE",

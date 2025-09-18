@@ -62,7 +62,7 @@ export default function ScreenDisplay() {
       const displayedPath = fileContext.pageState.main.path.replace(state.beamlines[state.currentBeamline].host!, "")
       const allFiles = state.beamlines[state.currentBeamline].filePathIds;
       const currentPath = Object.keys(allFiles).find(
-        key => allFiles[key] === displayedPath
+        key => allFiles[key].file === displayedPath
       );
       if (currentPath !== pathname) {
         // URL and state are out of sync with file displayed, update accordingly
