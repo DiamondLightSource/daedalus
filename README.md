@@ -1,30 +1,50 @@
-# React + TypeScript + Vite
+# Daedalus
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Daedalus is a demo EPICS React application. It uses [cs-web-lib](https://github.com/DiamondLightSource/cs-web-lib) to display CSStudio and Phoebus .opi and .bob files.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Demos
 
-## Expanding the ESLint configuration
+There are several demos of different features included. These are:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- `/` - Various beamline synoptics. This includes a demo of the Phoebus .bob screens and a hierarchy tree, alongside breadcrumbs to navigate the screen hierarchy
+- `/demo` - This is a demo page that allows you to open any screen from a URL and see how it looks in Daedalus
+- `/editor` - A demo of a .bob screen editor, which mimics Phoebus in appearance.
 
-- Configure the top-level `parserOptions` property like this:
+## How to run
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+To run locally:
+
+```
+npm install
+npm run dev
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### B23 synoptic demo
+
+The B23 synoptic demo requires [techui-builder](https://github.com/DiamondLightSource/techui-builder) files to be served locally, including the JSON map. The steps to do this are:
+
+1. Clone https://github.com/DiamondLightSource/techui-builder 
+2. Follow the steps to generate the json-map.json file for B23 using the `create-gui.yaml` command.
+3. Use a local fileserver with CORS enabled to serve the techui-builder directory at `localhost:8000`. A fileserver can be created using a simple python script like:
+
+```
+import sys
+import socketserver
+from http import server
+
+class MyHTTPRequestHandler(server.SimpleHTTPRequestHandler):
+    def end_headers(self): 
+        self.send_my_headers()
+        # Include additional response headers here. CORS for example:           
+        server.SimpleHTTPRequestHandler.end_headers(self)
+
+    def send_my_headers(self):
+        self.send_header("Access-Control-Allow-Origin", "*")
+
+if __name__ == '__main__':
+    server.test(HandlerClass=MyHTTPRequestHandler)
+```
+To execute, run `python -m server` at the root of the directory.
+
+With this running, B23 should now appear in the beamline dropdown.
