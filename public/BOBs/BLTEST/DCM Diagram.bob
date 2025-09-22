@@ -16,9 +16,9 @@
     <name>Picture</name>
     <file>../images/3DCM_diag_3.gif</file>
     <x>263</x>
-    <y>81</y>
+    <y>135</y>
     <width>500</width>
-    <height>340</height>
+    <height>225</height>
     <actions>
       <action type="open_display">
         <file>MOTOR_static.bob</file>
@@ -47,7 +47,7 @@
     </background_color>
     <widget type="textupdate" version="2.0.0">
       <name>TextUpdate_32</name>
-      <pv_name>sim://const("Beam Operation Mode")</pv_name>
+      <pv_name>ca://CS-CS-MSTAT-01:TIME</pv_name>
       <width>200</width>
       <font use_class="true">
         <font family="Arial" style="REGULAR" size="14.0">

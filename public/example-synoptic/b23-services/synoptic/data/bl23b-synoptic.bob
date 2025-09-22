@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <display version="2.0.0">
   <name>Synoptic</name>
   <width>893</width>
@@ -226,7 +226,7 @@ $(pv_value)</tooltip>
   <widget type="rectangle" version="2.0.0">
     <name>Rectangle_6</name>
     <macros>
-      <pv_name/>
+      <pv_name></pv_name>
     </macros>
     <x>385</x>
     <y>375</y>
@@ -248,7 +248,7 @@ $(pv_value)</tooltip>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_8</name>
-    <text/>
+    <text></text>
     <x>435</x>
     <y>565</y>
     <width>30</width>
@@ -327,7 +327,7 @@ $(pv_value)</tooltip>
     <x>130</x>
     <y>195</y>
     <width>1</width>
-    <height>61</height>
+    <height>59</height>
     <resize>2</resize>
     <transparent>true</transparent>
     <actions>
@@ -340,7 +340,7 @@ $(pv_value)</tooltip>
   <widget type="polyline" version="2.0.0">
     <name>Polyline</name>
     <macros>
-      <pv_name/>
+      <pv_name></pv_name>
     </macros>
     <x>140</x>
     <y>285</y>
@@ -1090,8 +1090,8 @@ $(pv_value)</tooltip>
     <symbols>
       <symbol>../images/vfm-up.svg</symbol>
     </symbols>
-    <x>270</x>
-    <y>347</y>
+    <x>310</x>
+    <y>390</y>
     <width>30</width>
     <height>50</height>
     <background_color>
@@ -1225,7 +1225,7 @@ $(pv_value)</tooltip>
   <widget type="rectangle" version="2.0.0">
     <name>Rectangle_10</name>
     <macros>
-      <pv_name/>
+      <pv_name></pv_name>
     </macros>
     <x>350</x>
     <y>375</y>
@@ -1490,7 +1490,7 @@ $(pv_value)</tooltip>
     <x>450</x>
     <y>140</y>
     <width>1</width>
-    <height>59</height>
+    <height>57</height>
     <resize>2</resize>
     <transparent>true</transparent>
     <actions>
@@ -1503,7 +1503,7 @@ $(pv_value)</tooltip>
   <widget type="polyline" version="2.0.0">
     <name>Polyline_2</name>
     <macros>
-      <pv_name/>
+      <pv_name></pv_name>
     </macros>
     <x>460</x>
     <y>230</y>
@@ -1710,7 +1710,7 @@ $(pv_value)</tooltip>
     <x>410</x>
     <y>140</y>
     <width>1</width>
-    <height>57</height>
+    <height>55</height>
     <resize>2</resize>
     <transparent>true</transparent>
     <actions>
@@ -1723,7 +1723,7 @@ $(pv_value)</tooltip>
   <widget type="polyline" version="2.0.0">
     <name>Polyline_3</name>
     <macros>
-      <pv_name/>
+      <pv_name></pv_name>
     </macros>
     <x>420</x>
     <y>255</y>
@@ -1893,7 +1893,7 @@ $(pv_value)</tooltip>
     <x>330</x>
     <y>140</y>
     <width>1</width>
-    <height>55</height>
+    <height>53</height>
     <resize>2</resize>
     <transparent>true</transparent>
     <actions>
@@ -1906,7 +1906,7 @@ $(pv_value)</tooltip>
   <widget type="polyline" version="2.0.0">
     <name>Polyline_4</name>
     <macros>
-      <pv_name/>
+      <pv_name></pv_name>
     </macros>
     <x>340</x>
     <y>255</y>
@@ -2067,7 +2067,7 @@ $(pv_value)</tooltip>
   <widget type="polyline" version="2.0.0">
     <name>Polyline_5</name>
     <macros>
-      <pv_name/>
+      <pv_name></pv_name>
     </macros>
     <x>304</x>
     <y>305</y>
@@ -2136,7 +2136,7 @@ $(pv_value)</tooltip>
   <widget type="polyline" version="2.0.0">
     <name>Polyline_6</name>
     <macros>
-      <pv_name/>
+      <pv_name></pv_name>
     </macros>
     <x>280</x>
     <y>305</y>
@@ -2282,7 +2282,7 @@ $(pv_value)</tooltip>
   <widget type="polyline" version="2.0.0">
     <name>Polyline_7</name>
     <macros>
-      <pv_name/>
+      <pv_name></pv_name>
     </macros>
     <x>800</x>
     <y>145</y>
@@ -2452,7 +2452,7 @@ $(pv_value)</tooltip>
     <x>790</x>
     <y>40</y>
     <width>1</width>
-    <height>55</height>
+    <height>53</height>
     <resize>2</resize>
     <transparent>true</transparent>
     <actions>
@@ -2608,7 +2608,7 @@ $(pv_value)</tooltip>
   <widget type="polyline" version="2.0.0">
     <name>Polyline_8</name>
     <macros>
-      <pv_name/>
+      <pv_name></pv_name>
     </macros>
     <x>725</x>
     <y>256</y>
@@ -2846,7 +2846,7 @@ $(pv_value)</tooltip>
   <widget type="polyline" version="2.0.0">
     <name>Polyline_9</name>
     <macros>
-      <pv_name/>
+      <pv_name></pv_name>
     </macros>
     <x>800</x>
     <y>256</y>
@@ -3007,7 +3007,7 @@ $(pv_value)</tooltip>
   <widget type="rectangle" version="2.0.0">
     <name>Rectangle_14</name>
     <macros>
-      <pv_name/>
+      <pv_name></pv_name>
     </macros>
     <x>385</x>
     <y>125</y>
@@ -3030,7 +3030,7 @@ $(pv_value)</tooltip>
   <widget type="rectangle" version="2.0.0">
     <name>Rectangle_15</name>
     <macros>
-      <pv_name/>
+      <pv_name></pv_name>
     </macros>
     <x>350</x>
     <y>285</y>
@@ -3053,7 +3053,7 @@ $(pv_value)</tooltip>
   <widget type="rectangle" version="2.0.0">
     <name>Rectangle_16</name>
     <macros>
-      <pv_name/>
+      <pv_name></pv_name>
     </macros>
     <x>350</x>
     <y>275</y>

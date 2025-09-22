@@ -1599,6 +1599,7 @@
       </background_color>
       <horizontal_alignment>2</horizontal_alignment>
       <vertical_alignment>1</vertical_alignment>
+      <wrap_words>false</wrap_words>
       <tooltip>$(text)</tooltip>
     </widget>
     <widget type="textupdate" version="2.0.0">
