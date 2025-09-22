@@ -15,8 +15,8 @@ import {
 import DataBrowserStateContext from "../routes/DataBrowserPage";
 
 interface PaperProps extends MuiPaperProps {
-  propertiesOpen?: boolean;
-  tracesOpen?: boolean
+  propertiesopen?: number;
+  tracesopen?: number;
 }
 
 const Paper = styled(MuiPaper, {
@@ -25,25 +25,25 @@ const Paper = styled(MuiPaper, {
   margin: `calc(${APP_BAR_HEIGHT}px + 5px) 5px 5px 5px`,
   variants: [
     {
-      props: ({ propertiesOpen }) => propertiesOpen,
+      props: ({ propertiesopen }) => propertiesopen,
       style: {
-        width: `calc(${useWindowWidth()}px - 10px - ${DRAWER_WIDTH}px)`,
+        width: `calc(${useWindowWidth()}px - 10px - ${DRAWER_WIDTH}px)`
       }
     },
     {
-      props: ({ propertiesOpen }) => !propertiesOpen,
+      props: ({ propertiesopen }) => !propertiesopen,
       style: {
-        width: `calc(${useWindowWidth()}px - 10px - ${theme.spacing(7)} - 8px)`,
+        width: `calc(${useWindowWidth()}px - 10px - ${theme.spacing(7)} - 8px)`
       }
     },
     {
-      props: ({ tracesOpen }) => tracesOpen,
+      props: ({ tracesopen }) => tracesopen,
       style: {
         height: `calc(${useWindowHeight()}px - ${APP_BAR_HEIGHT}px - 10px - ${TRACES_PANEL_HEIGHT}px)`
       }
     },
     {
-      props: ({ tracesOpen }) => !tracesOpen,
+      props: ({ tracesopen }) => !tracesopen,
       style: {
         height: `calc(${useWindowHeight()}px - ${APP_BAR_HEIGHT}px - 10px )`
       }
@@ -55,10 +55,13 @@ export default function DataBrowserPlot() {
   const { state } = useContext(DataBrowserStateContext);
 
   return (
-    <Paper component="main" propertiesOpen={state.archiverMenuBarOpen} tracesOpen={state.tracesPanelOpen}>
+    <Paper
+      component="main"
+      propertiesopen={state.archiverMenuBarOpen ? 1 : 0}
+      tracesopen={state.tracesPanelOpen ? 1 : 0}
+    >
       <Box>
-        <Box>
-        </Box>
+        <Box></Box>
       </Box>
     </Paper>
   );
