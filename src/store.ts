@@ -175,13 +175,13 @@ type BeamlineAction = ChangeBeamline | ChangeScreen | OpenMenuBar | LoadScreens;
 
 export type FileIDs = {
   [id: string]: {
-    file: string,
+    file: string;
     macros?: [
       {
-        [key: string]: string
+        [key: string]: string;
       }
-    ]
-  }
+    ];
+  };
 };
 
 export type BeamlineStateProperties = {
@@ -259,7 +259,10 @@ export function reducer(state: BeamlineTreeState, action: BeamlineAction) {
         currentBeamline: action.payload.beamline,
         currentScreenId: newID,
         currentScreenFilepath: newBeamlineState.topLevelScreen,
-        currentScreenLabel: newBeamlineState.topLevelScreen.split(".bob")[0].split("/").pop()!
+        currentScreenLabel: newBeamlineState.topLevelScreen
+          .split(".bob")[0]
+          .split("/")
+          .pop()!
       };
     }
     case CHANGE_SCREEN: {

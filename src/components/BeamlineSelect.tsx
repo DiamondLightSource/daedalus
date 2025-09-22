@@ -1,5 +1,5 @@
 import InputLabel from "@mui/material/InputLabel";
-import {MenuItem as MuiMenuItem, styled} from "@mui/material";
+import { MenuItem as MuiMenuItem, styled } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useContext } from "react";
@@ -9,9 +9,9 @@ import { CHANGE_BEAMLINE } from "../store";
 import { Tooltip } from "@mui/material";
 
 const MenuItem = styled(MuiMenuItem)({
-    "&.Mui-disabled": {
-      pointerEvents: "auto"
-    }
+  "&.Mui-disabled": {
+    pointerEvents: "auto"
+  }
 });
 
 export default function BeamlineSelect() {
@@ -32,7 +32,9 @@ export default function BeamlineSelect() {
           location: "main",
           description: undefined,
           file: {
-            path: state.beamlines[event.target.value].host + state.beamlines[event.target.value].topLevelScreen,
+            path:
+              state.beamlines[event.target.value].host +
+              state.beamlines[event.target.value].topLevelScreen,
             macros: {},
             defaultProtocol: "ca"
           }
@@ -56,13 +58,23 @@ export default function BeamlineSelect() {
         onChange={handleChange}
       >
         {Object.keys(state.beamlines).map(function (beamline) {
-          console.log(state.beamlines[beamline].loaded)
           return (
-            <MenuItem disabled={!state.beamlines[beamline].loaded} key={beamline} value={beamline}>
-              <Tooltip key={beamline} title={state.beamlines[beamline].loaded ? "" : `Unable to load JSON map for ${beamline}. Check file is available at ${state.beamlines[beamline].host + state.beamlines[beamline].entryPoint} and reload.`}>
+            <MenuItem
+              disabled={!state.beamlines[beamline].loaded}
+              key={beamline}
+              value={beamline}
+            >
+              <Tooltip
+                key={beamline}
+                title={
+                  state.beamlines[beamline].loaded
+                    ? ""
+                    : `Unable to load JSON map for ${beamline}. Check file is available at ${state.beamlines[beamline].host + state.beamlines[beamline].entryPoint} and reload.`
+                }
+              >
                 <span>{beamline}</span>
               </Tooltip>
-            </MenuItem>  
+            </MenuItem>
           );
         })}
       </Select>

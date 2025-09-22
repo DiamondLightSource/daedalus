@@ -57,13 +57,17 @@ export function MainPage() {
     const newBeamlines = { ...state.beamlines };
     for (const [beamline, item] of Object.entries(newBeamlines)) {
       try {
-        const [tree, fileIDs, firstFile] = await parseScreenTree(item.host + item.entryPoint);
+        const [tree, fileIDs, firstFile] = await parseScreenTree(
+          item.host + item.entryPoint
+        );
         item.screenTree = tree;
         item.filePathIds = fileIDs;
         item.topLevelScreen = firstFile;
         item.loaded = true;
-      } catch(e) {
-        console.log(`Unable to load JSON map for ${beamline}. Check file is available at ${item.host + item.entryPoint} and reload.`)
+      } catch (e) {
+        console.error(
+          `Unable to load JSON map for ${beamline}. Check file is available at ${item.host + item.entryPoint} and reload.`
+        );
       }
     }
     dispatch({
@@ -77,9 +81,11 @@ export function MainPage() {
     if (params.beamline) {
       // If we navigated directly to a beamline and/or screen, load in display
       const newBeamlineState = newBeamlines[params.beamline];
-      const newScreen = newBeamlineState.host + (params.screenId
-        ? newBeamlineState.filePathIds[params.screenId].file
-        : newBeamlineState.topLevelScreen);
+      const newScreen =
+        newBeamlineState.host +
+        (params.screenId
+          ? newBeamlineState.filePathIds[params.screenId].file
+          : newBeamlineState.topLevelScreen);
       executeAction(
         {
           type: "OPEN_PAGE",

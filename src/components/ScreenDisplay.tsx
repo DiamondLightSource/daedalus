@@ -59,7 +59,10 @@ export default function ScreenDisplay() {
         ""
       );
       // Remove host from file name if necessary
-      const displayedPath = fileContext.pageState.main.path.replace(state.beamlines[state.currentBeamline].host!, "")
+      const displayedPath = fileContext.pageState.main.path.replace(
+        state.beamlines[state.currentBeamline].host!,
+        ""
+      );
       const allFiles = state.beamlines[state.currentBeamline].filePathIds;
       const currentPath = Object.keys(allFiles).find(
         key => allFiles[key].file === displayedPath
