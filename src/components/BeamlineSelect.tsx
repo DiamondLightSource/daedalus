@@ -1,11 +1,18 @@
 import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
+import {MenuItem as MuiMenuItem, styled} from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useContext } from "react";
 import BeamlineTreeStateContext from "../routes/MainPage";
 import { FileContext, executeAction } from "@diamondlightsource/cs-web-lib";
 import { CHANGE_BEAMLINE } from "../store";
+import { Tooltip } from "@mui/material";
+
+const MenuItem = styled(MuiMenuItem)({
+    "&.Mui-disabled": {
+      pointerEvents: "auto"
+    }
+});
 
 export default function BeamlineSelect() {
   const { state, dispatch } = useContext(BeamlineTreeStateContext);
@@ -49,10 +56,13 @@ export default function BeamlineSelect() {
         onChange={handleChange}
       >
         {Object.keys(state.beamlines).map(function (beamline) {
+          console.log(state.beamlines[beamline].loaded)
           return (
-            <MenuItem key={beamline} value={beamline}>
-              {beamline}
-            </MenuItem>
+            <MenuItem disabled={!state.beamlines[beamline].loaded} key={beamline} value={beamline}>
+              <Tooltip key={beamline} title={state.beamlines[beamline].loaded ? "" : `Unable to load JSON map for ${beamline}. Check file is available at ${state.beamlines[beamline].host + state.beamlines[beamline].entryPoint} and reload.`}>
+                <span>{beamline}</span>
+              </Tooltip>
+            </MenuItem>  
           );
         })}
       </Select>

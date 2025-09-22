@@ -190,6 +190,7 @@ export type BeamlineStateProperties = {
   screenTree: TreeViewBaseItem[];
   filePathIds: FileIDs;
   host: string;
+  loaded: boolean;
 };
 
 export type BeamlineState = {
@@ -221,21 +222,24 @@ export const initialState: BeamlineTreeState = {
       entryPoint: "/BOBs/BLTEST/json_map.json",
       topLevelScreen: "",
       screenTree: [],
-      filePathIds: {}
+      filePathIds: {},
+      loaded: false
     },
     BLFAKE: {
       host: "",
       entryPoint: "/BOBs/BLFAKE/json_map.json",
       topLevelScreen: "",
       screenTree: [],
-      filePathIds: {}
+      filePathIds: {},
+      loaded: false
     },
     B23: {
       host: "http://localhost:8000/",
       entryPoint: "example-synoptic/b23-services/synoptic/data/json_map.json",
       topLevelScreen: "",
       screenTree: [],
-      filePathIds: {}
+      filePathIds: {},
+      loaded: false
     }
   }
 };

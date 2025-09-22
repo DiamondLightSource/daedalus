@@ -55,11 +55,16 @@ export function MainPage() {
 
   const loadScreens = useCallback(async () => {
     const newBeamlines = { ...state.beamlines };
-    for (const item of Object.values(newBeamlines)) {
-      const [tree, fileIDs, firstFile] = await parseScreenTree(item.host + item.entryPoint);
-      item.screenTree = tree;
-      item.filePathIds = fileIDs;
-      item.topLevelScreen = firstFile;
+    for (const [beamline, item] of Object.entries(newBeamlines)) {
+      try {
+        const [tree, fileIDs, firstFile] = await parseScreenTree(item.host + item.entryPoint);
+        item.screenTree = tree;
+        item.filePathIds = fileIDs;
+        item.topLevelScreen = firstFile;
+        item.loaded = true;
+      } catch(e) {
+        console.log(`Unable to load JSON map for ${beamline}. Check file is available at ${item.host + item.entryPoint} and reload.`)
+      }
     }
     dispatch({
       type: LOAD_SCREENS,
