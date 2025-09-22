@@ -74,8 +74,8 @@ export function EditorPage() {
       // If we navigated directly to a beamline and/or screen, load in display
       const newBeamlineState = newBeamlines[params.beamline];
       const newScreen = params.screenId
-        ? newBeamlineState.filePathIds[params.screenId]
-        : newBeamlineState.entryPoint;
+        ? newBeamlineState.filePathIds[params.screenId].file
+        : newBeamlineState.host + newBeamlineState.topLevelScreen;
       executeAction(
         {
           type: "OPEN_PAGE",

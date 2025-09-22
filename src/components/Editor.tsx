@@ -167,7 +167,7 @@ export default function Editor() {
             ) : null}
             <EmbeddedDisplay
               file={{
-                path: "/BOBs/TopLevel.bob",
+                path: "/BOBs/BLTEST/TopLevel.bob",
                 defaultProtocol: "ca",
                 macros: {}
               }}
