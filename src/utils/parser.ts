@@ -54,17 +54,7 @@ async function parseChildren(
     let newScreen: TreeViewBaseItem = { id: fileId, label: fileLabel };
     // Check if this has been parsed already
     if (child.duplicate) {
-      if (child.macros) {
-        for (const value of Object.values(screenIDs)) {
-          if (value.file === json.file) {
-            if (value.macros) {
-              value.macros.push(child.macros);
-            } else {
-              value.macros = [child.macros];
-            }
-          }
-        }
-      }
+      screenIDs = handleDuplicate(child.macros, screenIDs, child.file)
     } else {
       // If not a duplicate, check for children
       if (child.children) {
@@ -86,4 +76,26 @@ async function parseChildren(
     }
   }
   return [screen, screenIDs];
+}
+
+/**
+ * Adds macros of a duplicate file to the existing file object in the tree
+ * @param macros macros of the file, if they exist
+ * @param screenIDs dictionary of all files with their ids and attached macros
+ * @param file string filepath
+ * @returns 
+ */
+function handleDuplicate(macros: any, screenIDs: FileIDs, file: string): FileIDs {
+  if (macros) {
+    for (const value of Object.values(screenIDs)) {
+      if (value.file === file) {
+        if (value.macros) {
+          value.macros.push(macros);
+        } else {
+          value.macros = [macros];
+        }
+      }
+    }
+  }
+  return screenIDs
 }
