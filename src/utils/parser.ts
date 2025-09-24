@@ -20,12 +20,10 @@ export async function parseScreenTree(
   };
 
   const [children, ids] = await parseChildren(
-    json.children,
-    json.file,
+    json,
     [],
     "",
-    {},
-    json.macros
+    {}
   );
   parentScreen.children = children;
   return [[parentScreen], ids, json.file];
@@ -34,26 +32,23 @@ export async function parseScreenTree(
 /**
  * Recursive synchronous function that parses JSON object to find all files and
  * return a TreeViewBaseItem of all screens
- * @param children array of objects depicting child files of current file
- * @param filepath current filepath as a string
+ * @param json the parsed json
  * @param screen TreeViewBaseItem holding the currently parsed tree items
  * @param parentId string ID of the parent file
  * @param screenIDs array of all file IDs and their filepaths and macros
  * @returns
  */
 async function parseChildren(
-  fileList: any[],
-  filepath: string,
+  json: any,
   screen: TreeViewBaseItem[],
   parentId: string,
   screenIDs: FileIDs,
-  macros: { [key: string]: string }
 ): Promise<[TreeViewBaseItem[], FileIDs]> {
-  const id = `${parentId}${parentId === "" ? "" : "+"}${filepath.split(".bob")[0].split("/").pop()!}`;
-  screenIDs[id] = { file: filepath };
-  if (macros) screenIDs[id].macros = [macros];
+  const id = `${parentId}${parentId === "" ? "" : "+"}${json.file.split(".bob")[0].split("/").pop()!}`;
+  screenIDs[id] = { file: json.file };
+  if (json.macros) screenIDs[id].macros = [json.macros];
 
-  for (const child of fileList) {
+  for (const child of json.children) {
     const fileLabel: string = child.file.split(".bob")[0].split("/").pop()!;
     const fileId = `${id}+${fileLabel}`;
     let newScreen: TreeViewBaseItem = { id: fileId, label: fileLabel };
@@ -61,7 +56,7 @@ async function parseChildren(
     if (child.duplicate) {
       if (child.macros) {
         for (const value of Object.values(screenIDs)) {
-          if (value.file === filepath) {
+          if (value.file === json.file) {
             if (value.macros) {
               value.macros.push(child.macros);
             } else {
@@ -75,12 +70,10 @@ async function parseChildren(
       if (child.children) {
         // If it has children, loop over recursively
         const [children, ids] = await parseChildren(
-          child.children,
-          child.file,
+          child,
           [],
           id,
-          screenIDs,
-          child.macros
+          screenIDs
         );
         screenIDs = ids;
         newScreen.children = children;
