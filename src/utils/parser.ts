@@ -19,12 +19,7 @@ export async function parseScreenTree(
     children: []
   };
 
-  const [children, ids] = await parseChildren(
-    json,
-    [],
-    "",
-    {}
-  );
+  const [children, ids] = await parseChildren(json, [], "", {});
   parentScreen.children = children;
   return [[parentScreen], ids, json.file];
 }
@@ -38,12 +33,13 @@ export async function parseScreenTree(
  * @param screenIDs array of all file IDs and their filepaths and macros
  * @returns
  */
-async function parseChildren(
+export async function parseChildren(
   json: any,
   screen: TreeViewBaseItem[],
   parentId: string,
-  screenIDs: FileIDs,
+  screenIDs: FileIDs
 ): Promise<[TreeViewBaseItem[], FileIDs]> {
+  // Construct ID of file using parents ID and + as separator
   const id = `${parentId}${parentId === "" ? "" : "+"}${json.file.split(".bob")[0].split("/").pop()!}`;
   screenIDs[id] = { file: json.file };
   if (json.macros) screenIDs[id].macros = [json.macros];
@@ -54,17 +50,12 @@ async function parseChildren(
     let newScreen: TreeViewBaseItem = { id: fileId, label: fileLabel };
     // Check if this has been parsed already
     if (child.duplicate) {
-      screenIDs = handleDuplicate(child.macros, screenIDs, child.file)
+      screenIDs = handleDuplicate(child.macros, screenIDs, child.file);
     } else {
       // If not a duplicate, check for children
       if (child.children) {
         // If it has children, loop over recursively
-        const [children, ids] = await parseChildren(
-          child,
-          [],
-          id,
-          screenIDs
-        );
+        const [children, ids] = await parseChildren(child, [], id, screenIDs);
         screenIDs = ids;
         newScreen.children = children;
       } else {
@@ -83,9 +74,13 @@ async function parseChildren(
  * @param macros macros of the file, if they exist
  * @param screenIDs dictionary of all files with their ids and attached macros
  * @param file string filepath
- * @returns 
+ * @returns
  */
-function handleDuplicate(macros: any, screenIDs: FileIDs, file: string): FileIDs {
+export function handleDuplicate(
+  macros: any,
+  screenIDs: FileIDs,
+  file: string
+): FileIDs {
   if (macros) {
     for (const value of Object.values(screenIDs)) {
       if (value.file === file) {
@@ -97,5 +92,5 @@ function handleDuplicate(macros: any, screenIDs: FileIDs, file: string): FileIDs
       }
     }
   }
-  return screenIDs
+  return screenIDs;
 }
