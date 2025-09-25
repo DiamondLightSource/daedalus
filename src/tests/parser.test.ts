@@ -81,7 +81,7 @@ describe("parseChildren()", (): void => {
           }
       ]
     }`);
-    const [children, ids] = await parseChildren(testJson, [], "", {});
+    const [children, ids] = await parseChildren(testJson, "");
     expect(children.length).toEqual(2);
     expect(ids).toHaveProperty("top+middle1+bottom");
   });
@@ -106,7 +106,7 @@ describe("parseChildren()", (): void => {
           }
       ]
     }`);
-    const [children, ids] = await parseChildren(testJson, [], "", {});
+    const [children, ids] = await parseChildren(testJson, "");
     expect(children.length).toEqual(1);
     expect(ids["top+middle1"].macros?.length).toEqual(2);
     expect(ids["top+middle1"].macros).toEqual([{ P: "hello" }, { P: "hi" }]);

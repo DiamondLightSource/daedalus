@@ -19,7 +19,7 @@ export async function parseScreenTree(
     children: []
   };
 
-  const [children, ids] = await parseChildren(json, [], "", {});
+  const [children, ids] = await parseChildren(json, "");
   parentScreen.children = children;
   return [[parentScreen], ids, json.file];
 }
@@ -30,15 +30,14 @@ export async function parseScreenTree(
  * @param json the parsed json
  * @param screen TreeViewBaseItem holding the currently parsed tree items
  * @param parentId string ID of the parent file
- * @param screenIDs array of all file IDs and their filepaths and macros
  * @returns
  */
 export async function parseChildren(
   json: any,
-  screen: TreeViewBaseItem[],
-  parentId: string,
-  screenIDs: FileIDs
+  parentId: string
 ): Promise<[TreeViewBaseItem[], FileIDs]> {
+  let screen: TreeViewBaseItem[] = [];
+  let screenIDs: FileIDs = {};
   // Construct ID of file using parents ID and + as separator
   const id = `${parentId}${parentId === "" ? "" : "+"}${json.file.split(".bob")[0].split("/").pop()!}`;
   screenIDs[id] = { file: json.file };
@@ -55,8 +54,8 @@ export async function parseChildren(
       // If not a duplicate, check for children
       if (child.children) {
         // If it has children, loop over recursively
-        const [children, ids] = await parseChildren(child, [], id, screenIDs);
-        screenIDs = ids;
+        const [children, ids] = await parseChildren(child, id);
+        screenIDs = { ...screenIDs, ...ids };
         newScreen.children = children;
       } else {
         // If it doesn't have children, add to the array
