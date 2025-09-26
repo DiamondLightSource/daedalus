@@ -1,0 +1,8 @@
+{
+    "file": "/BOBs/BLFAKE/DCM Diagram Fake.bob",
+    "children": [
+        {
+            "file": "/BOBs/BLFAKE/MOTOR_static Fake.bob"
+        }
+    ]
+}

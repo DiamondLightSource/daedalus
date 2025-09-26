@@ -18,7 +18,8 @@ export default function ScreenTreeView() {
 
   const handleClick = (itemId: string) => {
     const newScreen =
-      state.beamlines[state.currentBeamline].filePathIds[itemId];
+      state.beamlines[state.currentBeamline].host +
+      state.beamlines[state.currentBeamline].filePathIds[itemId].file;
     executeAction(
       {
         type: "OPEN_PAGE",
@@ -63,7 +64,6 @@ export default function ScreenTreeView() {
       }
       setExpandedScreens(screenIds);
     };
-
     getAllScreensWithChildrenItemIds(currentScreenTree);
   }, [state.currentBeamline, state.beamlines]);
 

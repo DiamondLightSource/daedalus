@@ -1,11 +1,18 @@
 import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
+import { MenuItem as MuiMenuItem, styled } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useContext } from "react";
 import BeamlineTreeStateContext from "../routes/MainPage";
 import { FileContext, executeAction } from "@diamondlightsource/cs-web-lib";
 import { CHANGE_BEAMLINE } from "../store";
+import { Tooltip } from "@mui/material";
+
+const MenuItem = styled(MuiMenuItem)({
+  "&.Mui-disabled": {
+    pointerEvents: "auto"
+  }
+});
 
 export default function BeamlineSelect() {
   const { state, dispatch } = useContext(BeamlineTreeStateContext);
@@ -16,16 +23,18 @@ export default function BeamlineSelect() {
       type: CHANGE_BEAMLINE,
       payload: { beamline: event.target.value }
     });
-    // Load the entrypoint for the beamline on click
+    // Load the toplevel screen for the beamline on click
     executeAction(
       {
         type: "OPEN_PAGE",
         dynamicInfo: {
-          name: state.beamlines[event.target.value].entryPoint,
+          name: state.beamlines[event.target.value].topLevelScreen,
           location: "main",
           description: undefined,
           file: {
-            path: state.beamlines[event.target.value].entryPoint,
+            path:
+              state.beamlines[event.target.value].host +
+              state.beamlines[event.target.value].topLevelScreen,
             macros: {},
             defaultProtocol: "ca"
           }
@@ -50,8 +59,21 @@ export default function BeamlineSelect() {
       >
         {Object.keys(state.beamlines).map(function (beamline) {
           return (
-            <MenuItem key={beamline} value={beamline}>
-              {beamline}
+            <MenuItem
+              disabled={!state.beamlines[beamline].loaded}
+              key={beamline}
+              value={beamline}
+            >
+              <Tooltip
+                key={beamline}
+                title={
+                  state.beamlines[beamline].loaded
+                    ? ""
+                    : `Unable to load JSON map for ${beamline}. Check file is available at ${state.beamlines[beamline].host + state.beamlines[beamline].entryPoint} and reload.`
+                }
+              >
+                <span>{beamline}</span>
+              </Tooltip>
             </MenuItem>
           );
         })}

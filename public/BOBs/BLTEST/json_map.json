@@ -1,0 +1,19 @@
+{
+    "file": "/BOBs/BLTEST/TopLevel.bob",
+    "children": [
+        {
+            "file": "/BOBs/BLTEST/DCM Diagram.bob",
+            "children": [
+                {
+                    "file": "/BOBs/BLTEST/MOTOR_static.bob"
+                }
+            ]
+        },
+        {
+            "file": "/BOBs/BLTEST/SEQ1.bob"
+        },
+        {
+            "file": "/BOBs/BLTEST/Camera Static.bob"
+        }
+    ]
+}

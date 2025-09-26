@@ -7,6 +7,11 @@ export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   return {
     plugins: [react(), nodePolyfills()],
+    test: {
+            environment: 'jsdom',
+            include: ['**/*.test.ts', '**/*.test.tsx'],
+            globals: true
+        },
   }
 
 })

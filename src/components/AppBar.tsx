@@ -61,7 +61,8 @@ export default function DLSAppBar() {
         .split("/")
         .at(-1) as string;
       const newScreen =
-        state.beamlines[state.currentBeamline].filePathIds[screenId];
+        state.beamlines[state.currentBeamline].host +
+        state.beamlines[state.currentBeamline].filePathIds[screenId].file;
       executeAction(
         {
           type: "OPEN_PAGE",
@@ -134,11 +135,10 @@ export default function DLSAppBar() {
 function createBreadcrumbs(screenId: string, beamline: string) {
   const breadcrumbs: any[] = [];
   if (beamline === "") return [];
-
-  const breadcrumbLabels = screenId.split("-");
+  const breadcrumbLabels = screenId.split("+");
   let linkUrl = `/${beamline}/`;
   breadcrumbLabels.forEach((label, idx) => {
-    if (idx !== 0) linkUrl += "-";
+    if (idx !== 0) linkUrl += "+";
     linkUrl += label;
     breadcrumbs.push(
       idx === breadcrumbLabels.length - 1 ? (

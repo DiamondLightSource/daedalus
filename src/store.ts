@@ -1,4 +1,4 @@
-import { TreeViewBaseItem } from "@mui/x-tree-view/models";
+import { TreeViewBaseItem } from "@mui/x-tree-view";
 export const LOAD_NEXT_FILE = "loadNextFile";
 export const ADD_FILE = "addFile";
 export const REMOVE_FILE = "removeFile";
@@ -174,13 +174,23 @@ interface LoadScreens {
 type BeamlineAction = ChangeBeamline | ChangeScreen | OpenMenuBar | LoadScreens;
 
 export type FileIDs = {
-  [id: string]: string;
+  [id: string]: {
+    file: string;
+    macros?: [
+      {
+        [key: string]: string;
+      }
+    ];
+  };
 };
 
 export type BeamlineStateProperties = {
   entryPoint: string;
+  topLevelScreen: string;
   screenTree: TreeViewBaseItem[];
   filePathIds: FileIDs;
+  host: string;
+  loaded: boolean;
 };
 
 export type BeamlineState = {
@@ -208,14 +218,28 @@ export const initialState: BeamlineTreeState = {
   currentScreenFilepath: "",
   beamlines: {
     BLTEST: {
-      entryPoint: "/BOBs/TopLevel.bob",
+      host: "",
+      entryPoint: "/BOBs/BLTEST/json_map.json",
+      topLevelScreen: "",
       screenTree: [],
-      filePathIds: {}
+      filePathIds: {},
+      loaded: false
     },
     BLFAKE: {
-      entryPoint: "/BOBs/DCM Diagram Fake.bob",
+      host: "",
+      entryPoint: "/BOBs/BLFAKE/json_map.json",
+      topLevelScreen: "",
       screenTree: [],
-      filePathIds: {}
+      filePathIds: {},
+      loaded: false
+    },
+    B23: {
+      host: "http://localhost:8000/",
+      entryPoint: "example-synoptic/b23-services/synoptic/data/json_map.json",
+      topLevelScreen: "",
+      screenTree: [],
+      filePathIds: {},
+      loaded: false
     }
   }
 };
@@ -228,20 +252,22 @@ export function reducer(state: BeamlineTreeState, action: BeamlineAction) {
       const newBeamlineState = state.beamlines[action.payload.beamline];
       // Fetch top level screen
       Object.entries(newBeamlineState.filePathIds).forEach(([key, value]) => {
-        if (value === newBeamlineState.entryPoint) newID = key;
+        if (value.file === newBeamlineState.topLevelScreen) newID = key;
       });
-
       return {
         ...state,
         currentBeamline: action.payload.beamline,
         currentScreenId: newID,
-        currentScreenFilepath: newBeamlineState.entryPoint,
-        currentScreenLabel: newBeamlineState.entryPoint.split(".bob")[0]
+        currentScreenFilepath: newBeamlineState.topLevelScreen,
+        currentScreenLabel: newBeamlineState.topLevelScreen
+          .split(".bob")[0]
+          .split("/")
+          .pop()!
       };
     }
     case CHANGE_SCREEN: {
       // Parse the label from the end of the ID. This is the specific screen name
-      const newLabel = action.payload.screenId.split("-").pop() || "";
+      const newLabel = action.payload.screenId.split("+").pop() || "";
       return {
         ...state,
         currentScreenId: action.payload.screenId,
@@ -265,17 +291,17 @@ export function reducer(state: BeamlineTreeState, action: BeamlineAction) {
         Object.entries(newBeamlineState.filePathIds).forEach(([key, value]) => {
           // If the screen ID we've been passed matches
           if (action.payload.loadScreen === key) {
-            newState.currentScreenFilepath = value;
+            newState.currentScreenFilepath = value.file;
             newState.currentScreenId = key;
-            newState.currentScreenLabel = key.split("-").pop()!;
+            newState.currentScreenLabel = key.split(".").pop()!;
             // If no loadscreen match, use
           } else if (
             !action.payload.loadScreen &&
-            value === newBeamlineState.entryPoint
+            value.file === newBeamlineState.topLevelScreen
           ) {
-            newState.currentScreenFilepath = value;
+            newState.currentScreenFilepath = value.file;
             newState.currentScreenId = key;
-            newState.currentScreenLabel = key.split("-").pop()!;
+            newState.currentScreenLabel = key.split(".").pop()!;
           }
         });
       }
