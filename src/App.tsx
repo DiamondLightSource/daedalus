@@ -7,6 +7,7 @@ import { diamondTheme } from "./theme";
 import { DemoPage } from "./routes/DemoPage";
 import { MainPage } from "./routes/MainPage";
 import { EditorPage } from "./routes/EditorPage";
+import { LandingPage } from "./routes/LandingPage";
 
 const INITIAL_SCREEN_STATE = {
   main: {
@@ -26,9 +27,14 @@ function App({}) {
               <Switch>
                 <Route exact path="/demo" component={DemoPage} />
                 <Route exact path="/editor" component={EditorPage} />
-                <Route exact path="/:beamline" component={MainPage} />
-                <Route exact path="/:beamline/:screenId" component={MainPage} />
-                <Route exact path="/" component={MainPage} />
+                <Route exact path="/synoptic" component={MainPage} />
+                <Route exact path="/synoptic/:beamline" component={MainPage} />
+                <Route
+                  exact
+                  path="/synoptic/:beamline/:screenId"
+                  component={MainPage}
+                />
+                <Route exact path="/" component={LandingPage} />
               </Switch>
             </FileProvider>
           </Router>
