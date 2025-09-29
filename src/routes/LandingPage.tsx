@@ -12,7 +12,7 @@ const CARD_INFO = [
   {
     name: "Synoptic View",
     route: "/synoptic",
-    text: "A demonstration of beamline synoptic views, allowing you to navigate the system of files via in-screen buttons, breadcrumbs or a generated map of the available files.\n\nSelect a beamline from the dropdown to begin navigation."
+    text: "A demonstration of beamline synoptic views, allowing you to navigate the system of files via in-screen buttons, breadcrumbs or a generated map of the available files.\n\nSelect a beamline from the dropdown to begin."
   },
   {
     name: "Editor View",
