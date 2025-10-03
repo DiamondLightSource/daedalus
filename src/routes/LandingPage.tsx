@@ -48,7 +48,7 @@ export function LandingPage() {
             Daedalus is a demo web application for EPICS, modelled on Phoebus
             .bob files.
             <br />
-            It comprimises multiple separate demos, including a beamline
+            It comprises multiple separate demos, including a beamline
             synoptic, an editor and a Data Browser.
             <br />
             You can explore the demos below.
