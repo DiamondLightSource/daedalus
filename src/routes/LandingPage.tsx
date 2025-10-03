@@ -40,7 +40,7 @@ export function LandingPage() {
         }}
       >
         <Stack sx={{ alignItems: "center" }}>
-          <Typography variant="h1" sx={{ margin: "10px" }}>
+          <Typography variant="h1" sx={{ margin: "10px", textAlign: "center" }}>
             Welcome to Daedalus!
           </Typography>
           <Typography variant="body1" sx={{ textAlign: "center" }}>
@@ -48,30 +48,26 @@ export function LandingPage() {
             Daedalus is a demo web application for EPICS, modelled on Phoebus
             .bob files.
             <br />
-            It comprises multiple separate demos, including a beamline
-            synoptic, an editor and a Data Browser.
+            It comprises multiple separate demos, including a beamline synoptic,
+            an editor and a Data Browser.
             <br />
             You can explore the demos below.
           </Typography>
-          <Box
-            sx={{
-              width: "45%",
-              minWidth: "350px",
-              display: "flex",
-              justifyContent: "center",
-              marginTop: "50px"
-            }}
-          >
-            <Grid container spacing={2}>
-              {CARD_INFO.map(card => {
-                return (
-                  <Grid key={card.name} item xs={6}>
-                    <LinkCard info={card} />
-                  </Grid>
-                );
-              })}
+          <Grid sx={{ marginTop: "3%", width: "85%" }} container>
+            <Grid item md={3} sm={0} />
+            <Grid item md={6} sm={12}>
+              <Grid container spacing={2}>
+                {CARD_INFO.map(card => {
+                  return (
+                    <Grid key={card.name} item xs={12} sm={6}>
+                      <LinkCard info={card} />
+                    </Grid>
+                  );
+                })}
+              </Grid>
             </Grid>
-          </Box>
+            <Grid item md={3} sm={0} />
+          </Grid>
         </Stack>
       </Box>
     </>

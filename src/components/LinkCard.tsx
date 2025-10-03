@@ -1,22 +1,12 @@
 import {
-  Button as MuiButton,
   Card,
-  CardActions,
   CardContent,
   CardProps,
-  styled,
-  Typography
+  Typography,
+  CardActionArea,
+  useTheme
 } from "@mui/material";
 import { useHistory } from "react-router-dom";
-
-const Button = styled(MuiButton)(({ theme }) => ({
-  backgroundColor: theme.palette.info.contrastText,
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.info.main
-}));
-
 interface LinkCardProps extends CardProps {
   info: {
     name: string;
@@ -26,32 +16,36 @@ interface LinkCardProps extends CardProps {
 }
 
 export default function LinkCard(props: LinkCardProps) {
+  const theme = useTheme();
   const history = useHistory();
   const { info } = props;
 
-  const handleLinkClick = (e: any) => {
-    history.push(e.target.value);
+  const handleCardClick = (route: string) => {
+    history.push(route);
   };
 
   return (
     <Card sx={{ height: "100%", width: "100%" }}>
-      <CardContent>
-        <Typography variant="h4" component="div">
-          {info.name}
-        </Typography>
-        <Typography sx={{ color: "text.secondary", fontSize: 14 }}>
-          {info.route}
-        </Typography>
-        <Typography variant="body1" sx={{ whiteSpace: "pre-wrap" }}>
-          <br />
-          {info.text}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="medium" value={info.route} onClick={handleLinkClick}>
-          VISIT
-        </Button>
-      </CardActions>
+      <CardActionArea onClick={() => handleCardClick(info.route)}>
+        <CardContent>
+          <Typography variant="h4" component="div">
+            {info.name}
+          </Typography>
+          <Typography sx={{ color: "text.secondary", fontSize: 14 }}>
+            {info.route}
+          </Typography>
+          <Typography variant="body1" sx={{ whiteSpace: "pre-wrap" }}>
+            <br />
+            {info.text}
+          </Typography>
+          <Typography
+            sx={{ textAlign: "center", color: theme.palette.info.main }}
+          >
+            <br />
+            VISIT
+          </Typography>
+        </CardContent>
+      </CardActionArea>
     </Card>
   );
 }

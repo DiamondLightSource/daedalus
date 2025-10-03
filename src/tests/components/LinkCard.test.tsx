@@ -16,7 +16,7 @@ vi.mock("react-router-dom", async importOriginal => {
 });
 
 describe("LinkCard", (): void => {
-  it("successfully navigates to route on button click", async (): Promise<void> => {
+  it("successfully navigates to route on card click", async (): Promise<void> => {
     const info = {
       name: "Testing",
       route: "/test",
@@ -27,9 +27,9 @@ describe("LinkCard", (): void => {
         <LinkCard info={info} />
       </BrowserRouter>
     );
-    expect(getByText("Testing")).toBeInTheDocument();
-    const button = await getByText("VISIT");
-    await fireEvent.click(button);
+    const card = getByText("Testing");
+    expect(card).toBeInTheDocument();
+    await fireEvent.click(card);
     expect(mockHistoryPush).toHaveBeenCalledExactlyOnceWith("/test");
   });
 });
