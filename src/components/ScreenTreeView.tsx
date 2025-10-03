@@ -37,7 +37,7 @@ export default function ScreenTreeView() {
       fileContext,
       undefined,
       {},
-      `/${state.currentBeamline}/${itemId}`
+      `/synoptic/${state.currentBeamline}/${itemId}`
     );
   };
 

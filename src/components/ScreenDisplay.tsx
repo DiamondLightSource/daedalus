@@ -70,7 +70,7 @@ export default function ScreenDisplay() {
       if (currentPath !== pathname) {
         // URL and state are out of sync with file displayed, update accordingly
         history.replace(
-          `/${state.currentBeamline}/${currentPath}`,
+          `/synoptic/${state.currentBeamline}/${currentPath}`,
           location.state
         );
       }

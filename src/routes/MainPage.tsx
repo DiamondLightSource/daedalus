@@ -113,7 +113,7 @@ export function MainPage() {
         <BeamlineTreeStateContext.Provider value={{ state, dispatch }}>
           {state.filesLoaded ? (
             <>
-              <DLSAppBar />
+              <DLSAppBar fullScreen={false} />
               <MiniMenuBar />
               <ScreenDisplay />
             </>
