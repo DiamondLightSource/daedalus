@@ -13,6 +13,7 @@ import { Breadcrumbs, Link } from "@mui/material";
 import { executeAction, FileContext } from "@diamondlightsource/cs-web-lib";
 
 interface AppBarProps extends MuiAppBarProps {
+  fullscreen: number;
   open?: boolean;
 }
 
@@ -24,9 +25,10 @@ const AppBar = styled(MuiAppBar, {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen
   }),
+  width: "100%",
   variants: [
     {
-      props: ({ open }) => open,
+      props: ({ open, fullscreen }) => open && !fullscreen,
       style: {
         marginLeft: DRAWER_WIDTH,
         width: `calc(100% - ${DRAWER_WIDTH}px)`,
@@ -37,7 +39,7 @@ const AppBar = styled(MuiAppBar, {
       }
     },
     {
-      props: ({ open }) => !open,
+      props: ({ open, fullscreen }) => !open && !fullscreen,
       style: {
         marginLeft: `calc(${theme.spacing(7)} + 1px)`,
         width: `calc(100% - ${theme.spacing(7)} - 8px)`
@@ -46,7 +48,8 @@ const AppBar = styled(MuiAppBar, {
   ]
 }));
 
-export default function DLSAppBar() {
+export default function DLSAppBar(props: { fullScreen: boolean }) {
+  const { fullScreen } = props;
   const { state } = useContext(BeamlineTreeStateContext);
   const fileContext = useContext(FileContext);
 
@@ -96,6 +99,7 @@ export default function DLSAppBar() {
       <AppBar
         position="absolute"
         open={state.menuBarOpen}
+        fullscreen={fullScreen ? 1 : 0}
         sx={{ height: APP_BAR_HEIGHT }}
       >
         <Toolbar>

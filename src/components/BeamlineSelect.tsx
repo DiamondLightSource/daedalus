@@ -43,7 +43,7 @@ export default function BeamlineSelect() {
       fileContext,
       undefined,
       {},
-      `/${event.target.value}`
+      `/synoptic/${event.target.value}`
     );
   };
 
