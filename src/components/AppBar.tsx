@@ -68,42 +68,38 @@ const DLSAppBar = (props: { fullScreen: boolean, children?: React.ReactNode}) =>
         sx={{ height: APP_BAR_HEIGHT }}
       >
         <Toolbar>
-          <Grid container>
-            <Grid item xs={1}>
-              <img src={DiamondLogo} />
-            </Grid>
-            <Grid item xs={11} sx={{pl: 1}}>
-              <Box sx={{ display: "flex", flexDirection: 'row' }}>
-                {props.children}
-                <Box sx={{ display: "flex", flexDirection: 'row', justifyContent: "flex-end", flexGrow: 1 }}>
-                  {PageRouteInfo.map(card => {
-                    return (
-                      <Tooltip title={card.name}>
-                        <IconButton
-                          color="inherit"
-                          aria-label={card.ariaLabel}
-                          size="small"
-                          onClick={() => history.push(card.route)}
-                        >
-                         { card.icon }
-                         </IconButton>
-                      </Tooltip>
-                    );
-                  })}
-                  <Tooltip title="Settings">
+          <Box sx={{ display: "flex", flexDirection: 'row', justifyContent: "flex-start", width: "110px"}}>
+            <img src={DiamondLogo} />
+          </Box>
+          <Box sx={{ pl: 1, display: "flex", flexDirection: 'row', flexGrow: 1 }}>
+            {props.children}
+            <Box sx={{ display: "flex", flexDirection: 'row', justifyContent: "flex-end", flexGrow: 1 }}>
+              {PageRouteInfo.map(card => {
+                return (
+                  <Tooltip title={card.name}>
                     <IconButton
                       color="inherit"
-                      aria-label="open settings"
+                      aria-label={card.ariaLabel}
                       size="small"
-                      onClick={handleOpenSettings}
+                      onClick={() => history.push(card.route)}
                     >
-                      <SettingsIcon />
-                    </IconButton>
+                     { card.icon }
+                     </IconButton>
                   </Tooltip>
-                </Box>
-              </Box>
-            </Grid>
-          </Grid>
+                );
+              })}
+              <Tooltip title="Settings">
+                <IconButton
+                  color="inherit"
+                  aria-label="open settings"
+                  size="small"
+                  onClick={handleOpenSettings}
+                >
+                  <SettingsIcon />
+                </IconButton>
+              </Tooltip>
+            </Box>
+          </Box>
         </Toolbar>
       </AppBar>
     </>
