@@ -18,7 +18,7 @@ interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
 }
 
-const AppBar = styled(MuiAppBar, {
+export const StyledAppBar = styled(MuiAppBar, {
   shouldForwardProp: prop => prop !== "open"
 })<AppBarProps>(({ theme }) => ({
   zIndex: theme.zIndex.drawer + 1,
@@ -61,7 +61,7 @@ const DLSAppBar = (props: { fullScreen: boolean, children?: React.ReactNode}) =>
   return (
     <>
       <CssBaseline />
-      <AppBar
+      <StyledAppBar
         position="absolute"
         open={state.menuBarOpen}
         fullscreen={fullScreen ? 1 : 0}
@@ -101,7 +101,7 @@ const DLSAppBar = (props: { fullScreen: boolean, children?: React.ReactNode}) =>
             </Box>
           </Box>
         </Toolbar>
-      </AppBar>
+      </StyledAppBar>
     </>
   );
 }

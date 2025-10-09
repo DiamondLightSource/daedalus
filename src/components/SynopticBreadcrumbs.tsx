@@ -70,9 +70,9 @@ export const SynopticBreadcrumbs = () => {
    * Navigates the screen Treeview to determine the correct
    * breadcrumb trail
    */
-  const createBreadcrumbs = (screenId: string, beamline: string): ReactNode[] => {
+  const createBreadcrumbs = (screenId: string, beamline: string): ReactNode => {
     const breadcrumbs: ReactNode[] = [];
-    if (beamline === "") return [];
+    if (beamline === "") return null;
     const breadcrumbLabels = screenId.split("+");
     let linkUrl = `/synoptic/${beamline}/`;
     breadcrumbLabels.forEach((label, idx) => {
