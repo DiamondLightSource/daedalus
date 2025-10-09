@@ -8,7 +8,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import { useContext } from "react";
 import BeamlineTreeStateContext from "../routes/MainPage";
 import { APP_BAR_HEIGHT, DRAWER_WIDTH } from "../utils/helper";
-import { Box, Grid, Tooltip } from "@mui/material";
+import { Box, Tooltip } from "@mui/material";
 import DiamondLogo from "../assets/DiamondLogoWhite.svg";
 import { useHistory } from "react-router-dom";
 import { PageRouteInfo } from "../routes/PageRouteInfo";
@@ -74,16 +74,16 @@ const DLSAppBar = (props: { fullScreen: boolean, children?: React.ReactNode}) =>
           <Box sx={{ pl: 1, display: "flex", flexDirection: 'row', flexGrow: 1 }}>
             {props.children}
             <Box sx={{ display: "flex", flexDirection: 'row', justifyContent: "flex-end", flexGrow: 1 }}>
-              {PageRouteInfo.map(card => {
+              {PageRouteInfo.map(page => {
                 return (
-                  <Tooltip title={card.name}>
+                  <Tooltip title={page.name}>
                     <IconButton
                       color="inherit"
-                      aria-label={card.ariaLabel}
+                      aria-label={page.ariaLabel}
                       size="small"
-                      onClick={() => history.push(card.route)}
+                      onClick={() => history.push(page.route)}
                     >
-                     { card.icon }
+                     { page.icon }
                      </IconButton>
                   </Tooltip>
                 );
