@@ -4,11 +4,6 @@ import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import CssBaseline from "@mui/material/CssBaseline";
 import IconButton from "@mui/material/IconButton";
-import HomeIcon from '@mui/icons-material/Home';
-import FlareIcon from '@mui/icons-material/Flare';
-import MonitorIcon from '@mui/icons-material/Monitor';
-import EditIcon from '@mui/icons-material/Edit';
-import ShowChartIcon from '@mui/icons-material/ShowChart';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { useContext } from "react";
 import BeamlineTreeStateContext from "../routes/MainPage";
@@ -16,6 +11,7 @@ import { APP_BAR_HEIGHT, DRAWER_WIDTH } from "../utils/helper";
 import { Box, Grid, Tooltip } from "@mui/material";
 import DiamondLogo from "../assets/DiamondLogoWhite.svg";
 import { useHistory } from "react-router-dom";
+import { PageRouteInfo } from "../routes/PageRouteInfo";
 
 interface AppBarProps extends MuiAppBarProps {
   fullscreen: number;
@@ -80,56 +76,20 @@ const DLSAppBar = (props: { fullScreen: boolean, children?: React.ReactNode}) =>
               <Box sx={{ display: "flex", flexDirection: 'row' }}>
                 {props.children}
                 <Box sx={{ display: "flex", flexDirection: 'row', justifyContent: "flex-end", flexGrow: 1 }}>
-                  <Tooltip title="Home">
-                    <IconButton
-                      color="inherit"
-                      aria-label="open home page"
-                      size="small"
-                      onClick={() => history.push("/")}
-                    >
-                      <HomeIcon />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title="Beamline synoptic screens">
-                    <IconButton
-                      color="inherit"
-                      aria-label="open the beamline synoptic screens"
-                      size="small"
-                      onClick={() => history.push("/synoptic")}
-                    >
-                      <FlareIcon />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title="Screen editor">
-                    <IconButton
-                      color="inherit"
-                      aria-label="open screen editor"
-                      size="small"
-                      onClick={() => history.push("/editor")}
-                    >
-                      <EditIcon />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title="Data Browser">
-                    <IconButton
-                      color="inherit"
-                      aria-label="open data browser"
-                      size="small"
-                      onClick={() => history.push("/data-browser")}
-                    >
-                      <ShowChartIcon />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title="Demo Screens">
-                    <IconButton
-                      color="inherit"
-                      aria-label="open demo screen page"
-                      size="small"
-                      onClick={() => history.push("/demo")}
-                    >
-                      <MonitorIcon />
-                    </IconButton>
-                  </Tooltip>
+                  {PageRouteInfo.map(card => {
+                    return (
+                      <Tooltip title={card.name}>
+                        <IconButton
+                          color="inherit"
+                          aria-label={card.ariaLabel}
+                          size="small"
+                          onClick={() => history.push(card.route)}
+                        >
+                         { card.icon }
+                         </IconButton>
+                      </Tooltip>
+                    );
+                  })}
                   <Tooltip title="Settings">
                     <IconButton
                       color="inherit"

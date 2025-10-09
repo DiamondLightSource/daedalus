@@ -1,13 +1,11 @@
 import { useState } from "react";
 import {
-  AppBar,
   Box,
   ClickAwayListener,
   CssBaseline,
   IconButton,
   Paper as MuiPaper,
   styled,
-  Toolbar
 } from "@mui/material";
 import {
   EmbeddedDisplay,
@@ -24,7 +22,6 @@ import RedoIcon from "@mui/icons-material/Redo";
 import FormatAlignCenterIcon from "@mui/icons-material/FormatAlignCenter";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PropertiesSideBar from "./PropertiesSideBar";
-import MenuIcon from "@mui/icons-material/Menu";
 import ZoomInIcon from "@mui/icons-material/ZoomIn";
 import ZoomOutIcon from "@mui/icons-material/ZoomOut";
 import EditorPalette from "./EditorPalette";
@@ -95,10 +92,6 @@ export default function Editor() {
       getWidgetCoords(widget.parentNode);
     }
   }
-
-  const handleOpenSettings = () => {
-    console.log("TO DO - create settings modal");
-  };
 
   return (
     <>

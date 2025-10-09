@@ -9,7 +9,7 @@ import {
   Typography
 } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import { PROPERTIES_MENU_WIDTH } from "../utils/helper";
+import { APP_BAR_HEIGHT, PROPERTIES_MENU_WIDTH } from "../utils/helper";
 import { WidgetProps } from "./Editor";
 
 const MenuBarHeader = styled("div")(({ theme }) => ({
@@ -153,7 +153,7 @@ export default function PropertiesSideBar(props: { properties: WidgetProps }) {
         open
         anchor="right"
         PaperProps={{
-          sx: { width: PROPERTIES_MENU_WIDTH, height: "100%" },
+          sx: { width: PROPERTIES_MENU_WIDTH, height: "100%", paddingTop: `${APP_BAR_HEIGHT}px` },
           elevation: 8
         }}
       >
