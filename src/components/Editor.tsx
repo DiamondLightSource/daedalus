@@ -28,6 +28,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ZoomInIcon from "@mui/icons-material/ZoomIn";
 import ZoomOutIcon from "@mui/icons-material/ZoomOut";
 import EditorPalette from "./EditorPalette";
+import DLSAppBar from "./AppBar";
 
 export interface WidgetProps {
   x: string;
@@ -102,15 +103,7 @@ export default function Editor() {
   return (
     <>
       <CssBaseline />
-      <AppBar
-        position="absolute"
-        sx={{
-          height: APP_BAR_HEIGHT,
-          width: "100%",
-          zIndex: theme => theme.zIndex.drawer - 1
-        }}
-      >
-        <Toolbar>
+      <DLSAppBar fullScreen={true}>
           <IconButton color="inherit">
             <UndoIcon />
           </IconButton>
@@ -135,19 +128,8 @@ export default function Editor() {
           >
             <PlayArrowIcon />
           </IconButton>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleOpenSettings}
-            sx={{
-              position: "absolute",
-              left: `calc(96% - ${PROPERTIES_MENU_WIDTH}px)`
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
+      </DLSAppBar>
+
       <Paper elevation={12}>
         <ClickAwayListener onClickAway={handleClickAway}>
           <Box sx={{ position: "absolute" }} onClick={handleClick}>

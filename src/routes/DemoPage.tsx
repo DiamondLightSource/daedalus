@@ -1,10 +1,11 @@
-import { Box, AppBar, Toolbar, Typography, Stack } from "@mui/material";
+import { Box, Typography, Stack } from "@mui/material";
 import * as React from "react";
 import { demoReducer, demoInitialState, FileState } from "../store";
 import { useWindowWidth, useWindowHeight } from "../utils/helper";
 import FileDisplay from "../components/FileDisplay";
 import FileNavigationBar from "../components/FileNavigationBar";
 import { createContext } from "react";
+import DLSAppBar from "../components/AppBar";
 
 const FileStateContext = createContext<{
   state: FileState;
@@ -19,8 +20,7 @@ export function DemoPage() {
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar sx={{ position: "absolute" }}>
-          <Toolbar>
+        <DLSAppBar fullScreen={true}>
             <Typography
               variant="h1"
               component="div"
@@ -28,8 +28,7 @@ export function DemoPage() {
             >
               Daedalus Demo
             </Typography>
-          </Toolbar>
-        </AppBar>
+        </DLSAppBar>
         <FileStateContext.Provider value={{ state, dispatch }}>
           <Stack
             sx={{

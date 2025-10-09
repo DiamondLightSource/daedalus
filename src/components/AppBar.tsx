@@ -1,16 +1,21 @@
+import React from "react";
 import { styled } from "@mui/material/styles";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import CssBaseline from "@mui/material/CssBaseline";
-import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import HomeIcon from '@mui/icons-material/Home';
+import FlareIcon from '@mui/icons-material/Flare';
+import MonitorIcon from '@mui/icons-material/Monitor';
+import EditIcon from '@mui/icons-material/Edit';
+import ShowChartIcon from '@mui/icons-material/ShowChart';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { useContext } from "react";
 import BeamlineTreeStateContext from "../routes/MainPage";
 import { APP_BAR_HEIGHT, DRAWER_WIDTH } from "../utils/helper";
-import { Breadcrumbs, Link } from "@mui/material";
-import { executeAction, FileContext } from "@diamondlightsource/cs-web-lib";
+import { Box, Grid, Tooltip } from "@mui/material";
+import DiamondLogo from "../assets/DiamondLogoWhite.svg";
+import { useHistory } from "react-router-dom";
 
 interface AppBarProps extends MuiAppBarProps {
   fullscreen: number;
@@ -48,50 +53,14 @@ const AppBar = styled(MuiAppBar, {
   ]
 }));
 
-export default function DLSAppBar(props: { fullScreen: boolean }) {
+const DLSAppBar = (props: { fullScreen: boolean, children?: React.ReactNode}) => {
+  const history = useHistory();
   const { fullScreen } = props;
   const { state } = useContext(BeamlineTreeStateContext);
-  const fileContext = useContext(FileContext);
 
   const handleOpenSettings = () => {
     console.log("TO DO - create settings modal");
   };
-
-  function handleClick(event: any) {
-    if (event.target.pathname) {
-      event.preventDefault();
-      const screenId = decodeURI(event.target.pathname)
-        .split("/")
-        .at(-1) as string;
-      const newScreen =
-        state.beamlines[state.currentBeamline].host +
-        state.beamlines[state.currentBeamline].filePathIds[screenId].file;
-      executeAction(
-        {
-          type: "OPEN_PAGE",
-          dynamicInfo: {
-            name: newScreen,
-            location: "main",
-            description: undefined,
-            file: {
-              path: newScreen,
-              macros: {},
-              defaultProtocol: "ca"
-            }
-          }
-        },
-        fileContext,
-        undefined,
-        {},
-        event.target.pathname
-      );
-    }
-  }
-
-  const breadcrumbs = createBreadcrumbs(
-    state.currentScreenId,
-    state.currentBeamline
-  );
 
   return (
     <>
@@ -103,58 +72,82 @@ export default function DLSAppBar(props: { fullScreen: boolean }) {
         sx={{ height: APP_BAR_HEIGHT }}
       >
         <Toolbar>
-          <Breadcrumbs
-            onClick={handleClick}
-            separator={<NavigateNextIcon fontSize="small" />}
-            aria-label="breadcrumb"
-            sx={{
-              marginBottom: "10px",
-              p: 2,
-              paddingBottom: 0,
-              textAlign: "left",
-              color: "white",
-              display: "flex",
-              flexGrow: 1
-            }}
-          >
-            {breadcrumbs}
-          </Breadcrumbs>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleOpenSettings}
-          >
-            <MenuIcon />
-          </IconButton>
+          <Grid container>
+            <Grid item xs={1}>
+              <img src={DiamondLogo} />
+            </Grid>
+            <Grid item xs={11} sx={{pl: 1}}>
+              <Box sx={{ display: "flex", flexDirection: 'row' }}>
+                {props.children}
+                <Box sx={{ display: "flex", flexDirection: 'row', justifyContent: "flex-end", flexGrow: 1 }}>
+                  <Tooltip title="Home">
+                    <IconButton
+                      color="inherit"
+                      aria-label="open home page"
+                      size="small"
+                      onClick={() => history.push("/")}
+                    >
+                      <HomeIcon />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Beamline synoptic screens">
+                    <IconButton
+                      color="inherit"
+                      aria-label="open the beamline synoptic screens"
+                      size="small"
+                      onClick={() => history.push("/synoptic")}
+                    >
+                      <FlareIcon />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Screen editor">
+                    <IconButton
+                      color="inherit"
+                      aria-label="open screen editor"
+                      size="small"
+                      onClick={() => history.push("/editor")}
+                    >
+                      <EditIcon />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Data Browser">
+                    <IconButton
+                      color="inherit"
+                      aria-label="open data browser"
+                      size="small"
+                      onClick={() => history.push("/data-browser")}
+                    >
+                      <ShowChartIcon />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Demo Screens">
+                    <IconButton
+                      color="inherit"
+                      aria-label="open demo screen page"
+                      size="small"
+                      onClick={() => history.push("/demo")}
+                    >
+                      <MonitorIcon />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Settings">
+                    <IconButton
+                      color="inherit"
+                      aria-label="open settings"
+                      size="small"
+                      onClick={handleOpenSettings}
+                    >
+                      <SettingsIcon />
+                    </IconButton>
+                  </Tooltip>
+                </Box>
+              </Box>
+            </Grid>
+          </Grid>
         </Toolbar>
       </AppBar>
     </>
   );
 }
 
-/**
- * Navigates the screen Treeview to determine the correct
- * breadcrumb trail
- */
-function createBreadcrumbs(screenId: string, beamline: string) {
-  const breadcrumbs: any[] = [];
-  if (beamline === "") return [];
-  const breadcrumbLabels = screenId.split("+");
-  let linkUrl = `/${beamline}/`;
-  breadcrumbLabels.forEach((label, idx) => {
-    if (idx !== 0) linkUrl += "+";
-    linkUrl += label;
-    breadcrumbs.push(
-      idx === breadcrumbLabels.length - 1 ? (
-        <Typography key="3" sx={{ color: "white" }}>
-          {label}
-        </Typography>
-      ) : (
-        <Link underline="hover" key={idx} color="white" href={linkUrl}>
-          {label}
-        </Link>
-      )
-    );
-  });
-  return breadcrumbs;
-}
+export default DLSAppBar;
