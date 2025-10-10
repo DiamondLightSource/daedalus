@@ -13,7 +13,7 @@ export async function parseScreenTree(
   const json = await response.json();
   const topLevelScreen = json.file.split(".bob")[0].split("/").pop()!;
 
-  let parentScreen: TreeViewBaseItem = {
+  const parentScreen: TreeViewBaseItem = {
     id: topLevelScreen,
     label: topLevelScreen,
     children: []
@@ -36,7 +36,7 @@ export async function parseChildren(
   json: any,
   parentId: string
 ): Promise<[TreeViewBaseItem[], FileIDs]> {
-  let screen: TreeViewBaseItem[] = [];
+  const screen: TreeViewBaseItem[] = [];
   let screenIDs: FileIDs = {};
   // Construct ID of file using parents ID and + as separator
   const id = `${parentId}${parentId === "" ? "" : "+"}${json.file.split(".bob")[0].split("/").pop()!}`;
@@ -46,7 +46,7 @@ export async function parseChildren(
   for (const child of json.children) {
     const fileLabel: string = child.file.split(".bob")[0].split("/").pop()!;
     const fileId = `${id}+${fileLabel}`;
-    let newScreen: TreeViewBaseItem = { id: fileId, label: fileLabel };
+    const newScreen: TreeViewBaseItem = { id: fileId, label: fileLabel };
     // Check if this has been parsed already
     if (child.duplicate) {
       screenIDs = handleDuplicate(child.macros, screenIDs, child.file);

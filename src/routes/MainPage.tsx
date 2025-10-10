@@ -21,6 +21,7 @@ import { useParams } from "react-router-dom";
 import { parseScreenTree } from "../utils/parser";
 import { executeAction, FileContext } from "@diamondlightsource/cs-web-lib";
 import { RotatingLines } from "react-loader-spinner";
+import { SynopticBreadcrumbs } from "../components/SynopticBreadcrumbs";
 
 const BeamlineTreeStateContext = createContext<{
   state: BeamlineTreeState;
@@ -113,7 +114,9 @@ export function MainPage() {
         <BeamlineTreeStateContext.Provider value={{ state, dispatch }}>
           {state.filesLoaded ? (
             <>
-              <DLSAppBar fullScreen={false} />
+              <DLSAppBar fullScreen={false}>
+                <SynopticBreadcrumbs />
+              </DLSAppBar>
               <MiniMenuBar />
               <ScreenDisplay />
             </>

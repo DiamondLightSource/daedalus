@@ -1,23 +1,24 @@
+import React from "react";
 import { styled } from "@mui/material/styles";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import CssBaseline from "@mui/material/CssBaseline";
-import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import SettingsIcon from '@mui/icons-material/Settings';
 import { useContext } from "react";
 import BeamlineTreeStateContext from "../routes/MainPage";
 import { APP_BAR_HEIGHT, DRAWER_WIDTH } from "../utils/helper";
-import { Breadcrumbs, Link } from "@mui/material";
-import { executeAction, FileContext } from "@diamondlightsource/cs-web-lib";
+import { Box, Tooltip } from "@mui/material";
+import DiamondLogo from "../assets/DiamondLogoWhite.svg";
+import { useHistory } from "react-router-dom";
+import { PageRouteInfo } from "../routes/PageRouteInfo";
 
 interface AppBarProps extends MuiAppBarProps {
   fullscreen: number;
   open?: boolean;
 }
 
-const AppBar = styled(MuiAppBar, {
+export const StyledAppBar = styled(MuiAppBar, {
   shouldForwardProp: prop => prop !== "open"
 })<AppBarProps>(({ theme }) => ({
   zIndex: theme.zIndex.drawer + 1,
@@ -48,113 +49,61 @@ const AppBar = styled(MuiAppBar, {
   ]
 }));
 
-export default function DLSAppBar(props: { fullScreen: boolean }) {
+const DLSAppBar = (props: { fullScreen: boolean, children?: React.ReactNode}) => {
+  const history = useHistory();
   const { fullScreen } = props;
   const { state } = useContext(BeamlineTreeStateContext);
-  const fileContext = useContext(FileContext);
 
   const handleOpenSettings = () => {
     console.log("TO DO - create settings modal");
   };
 
-  function handleClick(event: any) {
-    if (event.target.pathname) {
-      event.preventDefault();
-      const screenId = decodeURI(event.target.pathname)
-        .split("/")
-        .at(-1) as string;
-      const newScreen =
-        state.beamlines[state.currentBeamline].host +
-        state.beamlines[state.currentBeamline].filePathIds[screenId].file;
-      executeAction(
-        {
-          type: "OPEN_PAGE",
-          dynamicInfo: {
-            name: newScreen,
-            location: "main",
-            description: undefined,
-            file: {
-              path: newScreen,
-              macros: {},
-              defaultProtocol: "ca"
-            }
-          }
-        },
-        fileContext,
-        undefined,
-        {},
-        event.target.pathname
-      );
-    }
-  }
-
-  const breadcrumbs = createBreadcrumbs(
-    state.currentScreenId,
-    state.currentBeamline
-  );
-
   return (
     <>
       <CssBaseline />
-      <AppBar
+      <StyledAppBar
         position="absolute"
         open={state.menuBarOpen}
         fullscreen={fullScreen ? 1 : 0}
         sx={{ height: APP_BAR_HEIGHT }}
       >
         <Toolbar>
-          <Breadcrumbs
-            onClick={handleClick}
-            separator={<NavigateNextIcon fontSize="small" />}
-            aria-label="breadcrumb"
-            sx={{
-              marginBottom: "10px",
-              p: 2,
-              paddingBottom: 0,
-              textAlign: "left",
-              color: "white",
-              display: "flex",
-              flexGrow: 1
-            }}
-          >
-            {breadcrumbs}
-          </Breadcrumbs>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleOpenSettings}
-          >
-            <MenuIcon />
-          </IconButton>
+          <Box sx={{ display: "flex", flexDirection: 'row', justifyContent: "flex-start", width: "110px"}}>
+            <img src={DiamondLogo} />
+          </Box>
+          <Box sx={{ pl: 1, display: "flex", flexDirection: 'row', flexGrow: 1 }}>
+            {props.children}
+            <Box sx={{ display: "flex", flexDirection: 'row', justifyContent: "flex-end", flexGrow: 1 }}>
+              {PageRouteInfo.map(page => {
+                return (
+                  <Tooltip title={page.name}>
+                    <IconButton
+                      color="inherit"
+                      aria-label={page.ariaLabel}
+                      size="small"
+                      onClick={() => history.push(page.route)}
+                    >
+                     { page.icon }
+                     </IconButton>
+                  </Tooltip>
+                );
+              })}
+              <Tooltip title="Settings">
+                <IconButton
+                  color="inherit"
+                  aria-label="open settings"
+                  size="small"
+                  onClick={handleOpenSettings}
+                >
+                  <SettingsIcon />
+                </IconButton>
+              </Tooltip>
+            </Box>
+          </Box>
         </Toolbar>
-      </AppBar>
+      </StyledAppBar>
     </>
   );
 }
 
-/**
- * Navigates the screen Treeview to determine the correct
- * breadcrumb trail
- */
-function createBreadcrumbs(screenId: string, beamline: string) {
-  const breadcrumbs: any[] = [];
-  if (beamline === "") return [];
-  const breadcrumbLabels = screenId.split("+");
-  let linkUrl = `/${beamline}/`;
-  breadcrumbLabels.forEach((label, idx) => {
-    if (idx !== 0) linkUrl += "+";
-    linkUrl += label;
-    breadcrumbs.push(
-      idx === breadcrumbLabels.length - 1 ? (
-        <Typography key="3" sx={{ color: "white" }}>
-          {label}
-        </Typography>
-      ) : (
-        <Link underline="hover" key={idx} color="white" href={linkUrl}>
-          {label}
-        </Link>
-      )
-    );
-  });
-  return breadcrumbs;
-}
+export default DLSAppBar;
