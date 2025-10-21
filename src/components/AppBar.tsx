@@ -76,7 +76,7 @@ const DLSAppBar = (props: { fullScreen: boolean, children?: React.ReactNode}) =>
             <Box sx={{ display: "flex", flexDirection: 'row', justifyContent: "flex-end", flexGrow: 1 }}>
               {PageRouteInfo.map(page => {
                 return (
-                  <Tooltip title={page.name}>
+                  <Tooltip key={`PageNavButton_${page.name}`} title={page.name}>
                     <IconButton
                       color="inherit"
                       aria-label={page.ariaLabel}
