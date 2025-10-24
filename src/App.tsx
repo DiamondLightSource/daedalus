@@ -9,6 +9,8 @@ import { MainPage } from "./routes/MainPage";
 import { EditorPage } from "./routes/EditorPage";
 import { LandingPage } from "./routes/LandingPage";
 import { DataBrowserPage } from "./routes/DataBrowserPage";
+import { createContext, useReducer } from "react";
+import { BeamlineTreeState, initialState, reducer } from "./store";
 
 const INITIAL_SCREEN_STATE = {
   main: {
@@ -18,27 +20,35 @@ const INITIAL_SCREEN_STATE = {
   }
 };
 
-function App({ config }: { config: CsWebLibConfig }) {
+export const BeamlineTreeStateContext = createContext<{
+  state: BeamlineTreeState;
+  dispatch: React.Dispatch<any>;
+}>({ state: initialState, dispatch: () => null });
+
+function App({ config }: { config: CsWebLibConfig })  {
+  const [state, dispatch] = useReducer(reducer, initialState);
   return (
     <>
       <Provider store={store(config)}>
         <ThemeProvider theme={diamondTheme}>
           <Router>
-            <FileProvider initialPageState={INITIAL_SCREEN_STATE}>
-              <Switch>
-                <Route exact path="/demo" component={DemoPage} />
-                <Route exact path="/data-browser" component={DataBrowserPage} />
-                <Route exact path="/editor" component={EditorPage} />
-                <Route exact path="/synoptic" component={MainPage} />
-                <Route exact path="/synoptic/:beamline" component={MainPage} />
-                <Route
-                  exact
-                  path="/synoptic/:beamline/:screenId"
-                  component={MainPage}
-                />
-                <Route exact path="/" component={LandingPage} />
-              </Switch>
-            </FileProvider>
+            <BeamlineTreeStateContext.Provider value={{ state, dispatch }}>
+              <FileProvider initialPageState={INITIAL_SCREEN_STATE}>
+                <Switch>
+                  <Route exact path="/demo" component={DemoPage} />
+                  <Route exact path="/data-browser" component={DataBrowserPage} />
+                  <Route exact path="/editor" component={EditorPage} />
+                  <Route exact path="/synoptic" component={MainPage} />
+                  <Route exact path="/synoptic/:beamline" component={MainPage} />
+                  <Route
+                    exact
+                    path="/synoptic/:beamline/:screenId"
+                    component={MainPage}
+                  />
+                  <Route exact path="/" component={LandingPage} />
+                </Switch>
+              </FileProvider>
+            </BeamlineTreeStateContext.Provider>
           </Router>
         </ThemeProvider>
       </Provider>

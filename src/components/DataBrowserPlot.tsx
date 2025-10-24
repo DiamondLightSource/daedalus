@@ -12,7 +12,7 @@ import {
   APP_BAR_HEIGHT,
   TRACES_PANEL_HEIGHT
 } from "../utils/helper";
-import DataBrowserStateContext from "../routes/DataBrowserPage";
+import { BeamlineTreeStateContext } from "../App";
 
 interface PaperProps extends MuiPaperProps {
   propertiesopen?: number;
@@ -27,7 +27,7 @@ const Paper = styled(MuiPaper, {
     {
       props: ({ propertiesopen }) => propertiesopen,
       style: {
-        width: `calc(${useWindowWidth()}px - 10px - ${DRAWER_WIDTH}px)`
+        width: `calc(${useWindowWidth()}px- ${DRAWER_WIDTH}px)`
       }
     },
     {
@@ -52,13 +52,13 @@ const Paper = styled(MuiPaper, {
 }));
 
 export default function DataBrowserPlot() {
-  const { state } = useContext(DataBrowserStateContext);
+  const { state } = useContext(BeamlineTreeStateContext);
 
   return (
     <Paper
       component="main"
-      propertiesopen={state.archiverMenuBarOpen ? 1 : 0}
-      tracesopen={state.tracesPanelOpen ? 1 : 0}
+      propertiesopen={state.menuBarsOpen.archiver ? 1 : 0}
+      tracesopen={state.menuBarsOpen.traces ? 1 : 0}
     >
       <Box>
         <Box></Box>

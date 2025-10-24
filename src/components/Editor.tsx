@@ -96,7 +96,7 @@ export default function Editor() {
   return (
     <>
       <CssBaseline />
-      <DLSAppBar fullScreen={true}>
+      <DLSAppBar fullScreen={true} page="synoptic">
           <IconButton color="inherit">
             <UndoIcon />
           </IconButton>

@@ -3,10 +3,10 @@ import { MenuItem as MuiMenuItem, styled } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useContext } from "react";
-import BeamlineTreeStateContext from "../routes/MainPage";
 import { FileContext, executeAction } from "@diamondlightsource/cs-web-lib";
 import { CHANGE_BEAMLINE } from "../store";
 import { Tooltip } from "@mui/material";
+import { BeamlineTreeStateContext } from "../App";
 
 const MenuItem = styled(MuiMenuItem)({
   "&.Mui-disabled": {

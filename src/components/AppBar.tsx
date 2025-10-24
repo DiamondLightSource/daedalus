@@ -6,12 +6,12 @@ import CssBaseline from "@mui/material/CssBaseline";
 import IconButton from "@mui/material/IconButton";
 import SettingsIcon from '@mui/icons-material/Settings';
 import { useContext } from "react";
-import BeamlineTreeStateContext from "../routes/MainPage";
 import { APP_BAR_HEIGHT, DRAWER_WIDTH } from "../utils/helper";
 import { Box, Tooltip } from "@mui/material";
 import DiamondLogo from "../assets/DiamondLogoWhite.svg";
 import { useHistory } from "react-router-dom";
 import { PageRouteInfo } from "../routes/PageRouteInfo";
+import { BeamlineTreeStateContext } from "../App";
 
 interface AppBarProps extends MuiAppBarProps {
   fullscreen: number;
@@ -49,7 +49,7 @@ export const StyledAppBar = styled(MuiAppBar, {
   ]
 }));
 
-const DLSAppBar = (props: { fullScreen: boolean, children?: React.ReactNode}) => {
+const DLSAppBar = (props: { fullScreen: boolean, page: string, children?: React.ReactNode}) => {
   const history = useHistory();
   const { fullScreen } = props;
   const { state } = useContext(BeamlineTreeStateContext);
@@ -57,13 +57,14 @@ const DLSAppBar = (props: { fullScreen: boolean, children?: React.ReactNode}) =>
   const handleOpenSettings = () => {
     console.log("TO DO - create settings modal");
   };
+  const open = props.page === "synoptic" ? state.menuBarsOpen.synoptic : state.menuBarsOpen.archiver;
 
   return (
     <>
       <CssBaseline />
       <StyledAppBar
         position="absolute"
-        open={state.menuBarOpen}
+        open={open}
         fullscreen={fullScreen ? 1 : 0}
         sx={{ height: APP_BAR_HEIGHT }}
       >

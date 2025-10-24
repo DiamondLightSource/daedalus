@@ -1,8 +1,8 @@
 import { RichTreeView } from "@mui/x-tree-view/RichTreeView";
 import { useContext, useEffect, useState } from "react";
-import BeamlineTreeStateContext from "../routes/MainPage";
 import { TreeViewBaseItem, TreeViewItemId } from "@mui/x-tree-view";
 import { executeAction, FileContext } from "@diamondlightsource/cs-web-lib";
+import { BeamlineTreeStateContext } from "../App";
 
 export default function ScreenTreeView() {
   const { state } = useContext(BeamlineTreeStateContext);
@@ -69,7 +69,7 @@ export default function ScreenTreeView() {
 
   return (
     <>
-      {state.menuBarOpen ? (
+      {state.menuBarsOpen.synoptic ? (
         <RichTreeView
           items={currentScreenTree}
           expandedItems={expandedScreens}

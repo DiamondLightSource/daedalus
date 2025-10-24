@@ -1,5 +1,4 @@
 import { useContext, useEffect } from "react";
-import BeamlineTreeStateContext from "../routes/MainPage";
 import {
   Box,
   Paper as MuiPaper,
@@ -18,6 +17,7 @@ import {
   DRAWER_WIDTH,
   APP_BAR_HEIGHT
 } from "../utils/helper";
+import { BeamlineTreeStateContext } from "../App";
 
 interface PaperProps extends MuiPaperProps {
   open?: boolean;
@@ -78,7 +78,7 @@ export default function ScreenDisplay() {
   }, [fileContext.pageState.main]);
 
   return (
-    <Paper component="main" open={state.menuBarOpen}>
+    <Paper component="main" open={state.menuBarsOpen.synoptic}>
       <Box>
         <Box>
           {state.currentBeamline && state.currentScreenId ? (

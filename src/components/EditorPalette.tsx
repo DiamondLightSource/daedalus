@@ -30,7 +30,7 @@ const MenuBarHeader = styled("div")(({ theme }) => ({
 
 export interface PaletteProps {}
 
-export default function EditorPalette(props: PaletteProps) {
+export default function EditorPalette() {
   const [open, setOpen] = useState(false);
   const theme = useTheme();
 
@@ -167,8 +167,8 @@ function PaletteGrid(props: { togglePalette: any }) {
       name: "Polygon",
       component: (
         <Polygon
-          position={new RelativePosition("100%", "100%")}
-          height={20}
+          position={new RelativePosition("100%", "100%", undefined, "20px")}
+
           points={{
             values: [
               { x: 0, y: 20 },
@@ -184,9 +184,7 @@ function PaletteGrid(props: { togglePalette: any }) {
       name: "Polyline",
       component: (
         <Line
-          position={new RelativePosition("100%", "100%")}
-          height={20}
-          width={70}
+          position={new RelativePosition("100%", "100%", "70px", "20px")}
           points={{
             values: [
               { x: 0, y: 10 },

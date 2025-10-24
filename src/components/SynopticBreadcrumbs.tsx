@@ -1,10 +1,10 @@
 import Typography from "@mui/material/Typography";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { ReactNode, useContext } from "react";
-import BeamlineTreeStateContext from "../routes/MainPage";
 import { Breadcrumbs, Link } from "@mui/material";
 import { executeAction, FileContext } from "@diamondlightsource/cs-web-lib";
 import { BeamlineStateProperties } from "../store";
+import { BeamlineTreeStateContext } from "../App";
 
 export const SynopticBreadcrumbs = () => {
     const { state } = useContext(BeamlineTreeStateContext);

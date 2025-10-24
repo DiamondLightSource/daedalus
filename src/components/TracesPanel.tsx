@@ -18,11 +18,11 @@ import {
 } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import CloseIcon from "@mui/icons-material/Close";
-import { ARCHIVER_SEARCH_DRAWER_WIDTH } from "./ArchiverMenuBar";
 import { useContext } from "react";
-import DataBrowserStateContext from "../routes/DataBrowserPage";
-import { TOGGLE_TRACES_PANEL } from "../store";
+import { OPEN_MENU_BAR } from "../store";
 import { Color } from "@diamondlightsource/cs-web-lib";
+import { DRAWER_WIDTH } from "../utils/helper";
+import { BeamlineTreeStateContext } from "../App";
 
 interface DrawerProps extends MuiDrawerProps {
   archiverMenuOpen?: boolean;
@@ -33,10 +33,10 @@ const openedMixin = (theme: Theme, archiverMenuOpen?: boolean): CSSObject => ({
   overflowY: "hidden",
   [theme.breakpoints.up("sm")]: {
     width: archiverMenuOpen
-      ? `calc(100% - ${ARCHIVER_SEARCH_DRAWER_WIDTH}px - 6px)`
+      ? `calc(100% - ${DRAWER_WIDTH}px - 6px)`
       : `calc(100% - ${theme.spacing(8)} - 6px)`,
     marginLeft: archiverMenuOpen
-      ? `calc(${ARCHIVER_SEARCH_DRAWER_WIDTH}px + 5px)`
+      ? `calc(${DRAWER_WIDTH}px + 5px)`
       : `calc(${theme.spacing(8)} + 6px)`
   }
 });
@@ -63,7 +63,7 @@ const MenuBar = styled(Drawer, {
       props: ({ open }) => open,
       style: {
         width: archiverMenuOpen
-          ? `calc(100% - ${ARCHIVER_SEARCH_DRAWER_WIDTH}px - 5px)`
+          ? `calc(100% - ${DRAWER_WIDTH}px - 5px)`
           : `calc(100% - ${theme.spacing(8)} + 6px)`,
         ...openedMixin(theme, archiverMenuOpen),
         "& .MuiDrawer-paper": openedMixin(theme, archiverMenuOpen)
@@ -80,22 +80,21 @@ const MenuBar = styled(Drawer, {
   ]
 }));
 
-export interface TracesProps {}
 
-export default function TracesPanel(props: TracesProps) {
-  const { state, dispatch } = useContext(DataBrowserStateContext);
+export default function TracesPanel() {
+  const { state, dispatch } = useContext(BeamlineTreeStateContext);
 
   const closeTracesPanel = () => {
     dispatch({
-      type: TOGGLE_TRACES_PANEL,
-      payload: { open: false }
+      type: OPEN_MENU_BAR,
+      payload: { open: false, type: "traces" }
     });
   };
 
   return (
     <MenuBar
-      archiverMenuOpen={state.archiverMenuBarOpen}
-      open={state.tracesPanelOpen}
+      archiverMenuOpen={state.menuBarsOpen.archiver}
+      open={state.menuBarsOpen.traces}
       variant="permanent"
       anchor="bottom"
       sx={{ position: "absolute" }}

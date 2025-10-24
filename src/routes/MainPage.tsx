@@ -23,10 +23,6 @@ import { executeAction, FileContext } from "@diamondlightsource/cs-web-lib";
 import { RotatingLines } from "react-loader-spinner";
 import { SynopticBreadcrumbs } from "../components/SynopticBreadcrumbs";
 
-const BeamlineTreeStateContext = createContext<{
-  state: BeamlineTreeState;
-  dispatch: React.Dispatch<any>;
-}>({ state: initialState, dispatch: () => null });
 
 export function MainPage() {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -111,10 +107,9 @@ export function MainPage() {
   return (
     <>
       <Box sx={{ display: "flex" }}>
-        <BeamlineTreeStateContext.Provider value={{ state, dispatch }}>
           {state.filesLoaded ? (
             <>
-              <DLSAppBar fullScreen={false}>
+              <DLSAppBar fullScreen={false} page="synoptic">
                 <SynopticBreadcrumbs />
               </DLSAppBar>
               <MiniMenuBar />
@@ -131,10 +126,7 @@ export function MainPage() {
               />
             </>
           )}
-        </BeamlineTreeStateContext.Provider>
       </Box>
     </>
   );
 }
-
-export default BeamlineTreeStateContext;

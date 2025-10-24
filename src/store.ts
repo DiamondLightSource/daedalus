@@ -158,6 +158,7 @@ interface ChangeScreen {
 interface OpenMenuBar {
   type: typeof OPEN_MENU_BAR;
   payload: {
+    page: string;
     open: boolean;
   };
 }
@@ -199,7 +200,11 @@ export type BeamlineState = {
 
 export type BeamlineTreeState = {
   filesLoaded: boolean;
-  menuBarOpen: boolean;
+  menuBarsOpen: {
+    archiver: boolean;
+    synoptic: boolean;
+    traces: boolean;
+  }
   currentBeamline: string;
   currentScreenId: string;
   currentScreenLabel: string;
@@ -211,7 +216,11 @@ export type BeamlineTreeState = {
 // filesystem we end up using
 export const initialState: BeamlineTreeState = {
   filesLoaded: true,
-  menuBarOpen: true,
+  menuBarsOpen: {
+    archiver: false,
+    traces: false,
+    synoptic: true
+  },
   currentBeamline: "",
   currentScreenId: "",
   currentScreenLabel: "",
@@ -275,7 +284,11 @@ export function reducer(state: BeamlineTreeState, action: BeamlineAction) {
       };
     }
     case OPEN_MENU_BAR: {
-      return { ...state, menuBarOpen: action.payload.open };
+      const newMenuBarState = {
+        ...state.menuBarsOpen,
+        [action.payload.page]: action.payload.open
+      }
+      return { ...state, newMenuBarState };
     }
     case LOAD_SCREENS: {
       const newState = {

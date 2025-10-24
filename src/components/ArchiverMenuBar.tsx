@@ -6,7 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { KeyboardDoubleArrowRight } from "@mui/icons-material";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   Grid,
   MenuItem,
@@ -22,8 +22,8 @@ import {
   TextField,
   Typography
 } from "@mui/material";
-import DataBrowserStateContext from "../routes/DataBrowserPage";
-import { TOGGLE_ARCHIVER_MENU_BAR } from "../store";
+import { OPEN_MENU_BAR } from "../store";
+import { BeamlineTreeStateContext } from "../App";
 
 export const ARCHIVER_SEARCH_DRAWER_WIDTH = 300;
 
@@ -84,33 +84,30 @@ const MenuBar = styled(MuiDrawer, {
 
 export default function ArchiverMenuBar() {
   const theme = useTheme();
-  const { state, dispatch } = useContext(DataBrowserStateContext);
+  const { state, dispatch } = useContext(BeamlineTreeStateContext);
 
-  console.log(state);
   const handleDrawerOpen = () => {
-    dispatch({
-      type: TOGGLE_ARCHIVER_MENU_BAR,
-      payload: { open: true }
-    });
+    dispatch({ type: OPEN_MENU_BAR, payload: { open: true } });
   };
 
   const handleDrawerClose = () => {
-    dispatch({
-      type: TOGGLE_ARCHIVER_MENU_BAR,
-      payload: { open: false }
-    });
+    dispatch({ type: OPEN_MENU_BAR, payload: { open: false } });
   };
+
+  useEffect(() => {
+    dispatch({ type: OPEN_MENU_BAR, payload: { open: false } });
+  }, [])
 
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <MenuBar
         variant="permanent"
-        open={state.archiverMenuBarOpen}
+        open={state.menuBarsOpen.archiver}
         PaperProps={{ elevation: 8 }}
       >
         <MenuBarHeader>
-          {state.archiverMenuBarOpen ? (
+          {state.menuBarsOpen.archiver ? (
             <>
               <Typography variant="h1">Archive Search</Typography>
               <IconButton onClick={handleDrawerClose}>
@@ -132,7 +129,7 @@ export default function ArchiverMenuBar() {
             </IconButton>
           )}
         </MenuBarHeader>
-        {state.archiverMenuBarOpen ? <ArchiverSearchGrid /> : <></>}
+        {state.menuBarsOpen.archiver ? <ArchiverSearchGrid /> : <></>}
       </MenuBar>
     </Box>
   );
@@ -141,7 +138,7 @@ export default function ArchiverMenuBar() {
 /**
  * The archiver
  */
-function ArchiverSearchGrid(props: {}) {
+function ArchiverSearchGrid() {
   const [archiver, setArchiver] = useState("Primary");
   const [pvMatch, setPvMatch] = useState("");
 
