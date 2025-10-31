@@ -96,7 +96,7 @@ export default function ArchiverMenuBar() {
 
   useEffect(() => {
     dispatch({ type: OPEN_MENU_BAR, payload: { open: false } });
-  }, [])
+  }, []);
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -245,4 +245,3 @@ function ArchiverSearchGrid() {
     </>
   );
 }
-

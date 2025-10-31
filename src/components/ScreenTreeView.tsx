@@ -9,10 +9,7 @@ export default function ScreenTreeView() {
   const fileContext = useContext(FileContext);
   const [expandedScreens, setExpandedScreens] = useState<string[]>([]);
 
-  const handleExpandedScreensChange = (
-    event: React.SyntheticEvent,
-    screenIds: string[]
-  ) => {
+  const handleExpandedScreensChange = (screenIds: string[]) => {
     setExpandedScreens(screenIds);
   };
 
@@ -73,8 +70,8 @@ export default function ScreenTreeView() {
         <RichTreeView
           items={currentScreenTree}
           expandedItems={expandedScreens}
-          onExpandedItemsChange={handleExpandedScreensChange}
-          onItemClick={(event, itemId) => handleClick(itemId)}
+          onExpandedItemsChange={_event => handleExpandedScreensChange}
+          onItemClick={(_event, itemId) => handleClick(itemId)}
         />
       ) : (
         <></>

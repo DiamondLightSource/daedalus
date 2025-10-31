@@ -4,7 +4,7 @@ import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import CssBaseline from "@mui/material/CssBaseline";
 import IconButton from "@mui/material/IconButton";
-import SettingsIcon from '@mui/icons-material/Settings';
+import SettingsIcon from "@mui/icons-material/Settings";
 import { useContext } from "react";
 import { APP_BAR_HEIGHT, DRAWER_WIDTH } from "../utils/helper";
 import { Box, Tooltip } from "@mui/material";
@@ -49,7 +49,11 @@ export const StyledAppBar = styled(MuiAppBar, {
   ]
 }));
 
-const DLSAppBar = (props: { fullScreen: boolean, page: string, children?: React.ReactNode}) => {
+const DLSAppBar = (props: {
+  fullScreen: boolean;
+  page: string;
+  children?: React.ReactNode;
+}) => {
   const history = useHistory();
   const { fullScreen } = props;
   const { state } = useContext(BeamlineTreeStateContext);
@@ -57,7 +61,10 @@ const DLSAppBar = (props: { fullScreen: boolean, page: string, children?: React.
   const handleOpenSettings = () => {
     console.log("TO DO - create settings modal");
   };
-  const open = props.page === "synoptic" ? state.menuBarsOpen.synoptic : state.menuBarsOpen.archiver;
+  const open =
+    props.page === "synoptic"
+      ? state.menuBarsOpen.synoptic
+      : state.menuBarsOpen.archiver;
 
   return (
     <>
@@ -69,12 +76,28 @@ const DLSAppBar = (props: { fullScreen: boolean, page: string, children?: React.
         sx={{ height: APP_BAR_HEIGHT }}
       >
         <Toolbar>
-          <Box sx={{ display: "flex", flexDirection: 'row', justifyContent: "flex-start", width: "110px"}}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-start",
+              width: "110px"
+            }}
+          >
             <img src={DiamondLogo} />
           </Box>
-          <Box sx={{ pl: 1, display: "flex", flexDirection: 'row', flexGrow: 1 }}>
+          <Box
+            sx={{ pl: 1, display: "flex", flexDirection: "row", flexGrow: 1 }}
+          >
             {props.children}
-            <Box sx={{ display: "flex", flexDirection: 'row', justifyContent: "flex-end", flexGrow: 1 }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "flex-end",
+                flexGrow: 1
+              }}
+            >
               {PageRouteInfo.map(page => {
                 return (
                   <Tooltip key={`PageNavButton_${page.name}`} title={page.name}>
@@ -84,8 +107,8 @@ const DLSAppBar = (props: { fullScreen: boolean, page: string, children?: React.
                       size="small"
                       onClick={() => history.push(page.route)}
                     >
-                     { page.icon }
-                     </IconButton>
+                      {page.icon}
+                    </IconButton>
                   </Tooltip>
                 );
               })}
@@ -105,6 +128,6 @@ const DLSAppBar = (props: { fullScreen: boolean, page: string, children?: React.
       </StyledAppBar>
     </>
   );
-}
+};
 
 export default DLSAppBar;

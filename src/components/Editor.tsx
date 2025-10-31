@@ -5,7 +5,7 @@ import {
   CssBaseline,
   IconButton,
   Paper as MuiPaper,
-  styled,
+  styled
 } from "@mui/material";
 import {
   EmbeddedDisplay,
@@ -97,30 +97,30 @@ export default function Editor() {
     <>
       <CssBaseline />
       <DLSAppBar fullScreen={true} page="synoptic">
-          <IconButton color="inherit">
-            <UndoIcon />
-          </IconButton>
-          <IconButton color="inherit">
-            <RedoIcon />
-          </IconButton>
-          <IconButton color="inherit">
-            <FormatAlignCenterIcon />
-          </IconButton>
-          <IconButton color="inherit">
-            <ZoomInIcon />
-          </IconButton>
-          <IconButton color="inherit">
-            <ZoomOutIcon />
-          </IconButton>
-          <IconButton
-            color="inherit"
-            sx={{
-              position: "absolute",
-              left: `calc(92% - ${PROPERTIES_MENU_WIDTH}px)`
-            }}
-          >
-            <PlayArrowIcon />
-          </IconButton>
+        <IconButton color="inherit">
+          <UndoIcon />
+        </IconButton>
+        <IconButton color="inherit">
+          <RedoIcon />
+        </IconButton>
+        <IconButton color="inherit">
+          <FormatAlignCenterIcon />
+        </IconButton>
+        <IconButton color="inherit">
+          <ZoomInIcon />
+        </IconButton>
+        <IconButton color="inherit">
+          <ZoomOutIcon />
+        </IconButton>
+        <IconButton
+          color="inherit"
+          sx={{
+            position: "absolute",
+            left: `calc(92% - ${PROPERTIES_MENU_WIDTH}px)`
+          }}
+        >
+          <PlayArrowIcon />
+        </IconButton>
       </DLSAppBar>
 
       <Paper elevation={12}>

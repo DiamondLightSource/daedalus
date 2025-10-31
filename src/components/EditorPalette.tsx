@@ -28,8 +28,6 @@ const MenuBarHeader = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 1)
 }));
 
-export interface PaletteProps {}
-
 export default function EditorPalette() {
   const [open, setOpen] = useState(false);
   const theme = useTheme();
@@ -168,7 +166,6 @@ function PaletteGrid(props: { togglePalette: any }) {
       component: (
         <Polygon
           position={new RelativePosition("100%", "100%", undefined, "20px")}
-
           points={{
             values: [
               { x: 0, y: 20 },

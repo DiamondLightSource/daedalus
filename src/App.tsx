@@ -36,10 +36,18 @@ function App({ config }: { config: CsWebLibConfig })  {
               <FileProvider initialPageState={INITIAL_SCREEN_STATE}>
                 <Switch>
                   <Route exact path="/demo" component={DemoPage} />
-                  <Route exact path="/data-browser" component={DataBrowserPage} />
+                  <Route
+                    exact
+                    path="/data-browser"
+                    component={DataBrowserPage}
+                  />
                   <Route exact path="/editor" component={EditorPage} />
                   <Route exact path="/synoptic" component={MainPage} />
-                  <Route exact path="/synoptic/:beamline" component={MainPage} />
+                  <Route
+                    exact
+                    path="/synoptic/:beamline"
+                    component={MainPage}
+                  />
                   <Route
                     exact
                     path="/synoptic/:beamline/:screenId"

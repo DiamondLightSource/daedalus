@@ -24,7 +24,7 @@ export default function FileDisplay() {
     setValue(newValue);
   };
 
-  const handleCloseButtonClick = (event: any, fileName: string) => {
+  const handleCloseButtonClick = (fileName: string) => {
     dispatch({ type: REMOVE_FILE, payload: { name: fileName } });
   };
 
@@ -73,7 +73,7 @@ export default function FileDisplay() {
                   <IconButton
                     size="small"
                     component="span"
-                    onClick={event => handleCloseButtonClick(event, file.name)}
+                    onClick={_event => handleCloseButtonClick(file.name)}
                   >
                     <Close />
                   </IconButton>

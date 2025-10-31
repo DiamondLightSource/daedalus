@@ -80,7 +80,6 @@ const MenuBar = styled(Drawer, {
   ]
 }));
 
-
 export default function TracesPanel() {
   const { state, dispatch } = useContext(BeamlineTreeStateContext);
 

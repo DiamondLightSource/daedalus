@@ -1,14 +1,12 @@
 import { Box } from "@mui/material";
 import MiniMenuBar from "../components/MenuBar";
 import {
-  createContext,
   useCallback,
   useContext,
   useEffect,
   useReducer
 } from "react";
 import {
-  BeamlineTreeState,
   CHANGE_BEAMLINE,
   CHANGE_SCREEN,
   initialState,
@@ -22,7 +20,6 @@ import { parseScreenTree } from "../utils/parser";
 import { executeAction, FileContext } from "@diamondlightsource/cs-web-lib";
 import { RotatingLines } from "react-loader-spinner";
 import { SynopticBreadcrumbs } from "../components/SynopticBreadcrumbs";
-
 
 export function MainPage() {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -107,25 +104,25 @@ export function MainPage() {
   return (
     <>
       <Box sx={{ display: "flex" }}>
-          {state.filesLoaded ? (
-            <>
-              <DLSAppBar fullScreen={false} page="synoptic">
-                <SynopticBreadcrumbs />
-              </DLSAppBar>
-              <MiniMenuBar />
-              <ScreenDisplay />
-            </>
-          ) : (
-            <>
-              <RotatingLines
-                strokeColor="grey"
-                strokeWidth="5"
-                animationDuration="0.75"
-                width="96"
-                visible={true}
-              />
-            </>
-          )}
+        {state.filesLoaded ? (
+          <>
+            <DLSAppBar fullScreen={false} page="synoptic">
+              <SynopticBreadcrumbs />
+            </DLSAppBar>
+            <MiniMenuBar />
+            <ScreenDisplay />
+          </>
+        ) : (
+          <>
+            <RotatingLines
+              strokeColor="grey"
+              strokeWidth="5"
+              animationDuration="0.75"
+              width="96"
+              visible={true}
+            />
+          </>
+        )}
       </Box>
     </>
   );

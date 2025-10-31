@@ -10,8 +10,6 @@ import DLSAppBar from "../components/AppBar";
  * @returns
  */
 export function DataBrowserPage() {
-
-
   // const openTracesPanel = () => {
   //   dispatch({
   //     type: TOGGLE_TRACES_PANEL,
@@ -20,11 +18,11 @@ export function DataBrowserPage() {
   // };
 
   return (
-      <Box sx={{ display: "flex", width: "100%" }}>
-        <DLSAppBar fullScreen={false} page="archiver"/>
-        <ArchiverMenuBar />
-        <TracesPanel />
-        <DataBrowserPlot />
-      </Box>   
+    <Box sx={{ display: "flex", width: "100%" }}>
+      <DLSAppBar fullScreen={false} page="archiver" />
+      <ArchiverMenuBar />
+      <TracesPanel />
+      <DataBrowserPlot />
+    </Box>
   );
 }

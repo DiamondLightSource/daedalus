@@ -7,15 +7,15 @@ import { BeamlineStateProperties } from "../store";
 import { BeamlineTreeStateContext } from "../App";
 
 export const SynopticBreadcrumbs = () => {
-    const { state } = useContext(BeamlineTreeStateContext);
-    const fileContext = useContext(FileContext);
-  
-    const breadcrumbs = createBreadcrumbs(
-      state.currentScreenId,
-      state.currentBeamline
-    );
-  
-    return (
+  const { state } = useContext(BeamlineTreeStateContext);
+  const fileContext = useContext(FileContext);
+
+  const breadcrumbs = createBreadcrumbs(
+    state.currentScreenId,
+    state.currentBeamline
+  );
+
+  return (
     <Breadcrumbs
       onClick={handleClick(state.beamlines[state.currentBeamline], fileContext)}
       separator={<NavigateNextIcon fontSize="small" />}
@@ -32,10 +32,12 @@ export const SynopticBreadcrumbs = () => {
     >
       {breadcrumbs}
     </Breadcrumbs>
-    )
-  };
-  
-  const handleClick = (currentBeamlineState: BeamlineStateProperties, fileContext: any) =>  (event: any) => {
+  );
+};
+
+const handleClick =
+  (currentBeamlineState: BeamlineStateProperties, fileContext: any) =>
+  (event: any) => {
     if (event.target.pathname) {
       event.preventDefault();
       const screenId = decodeURI(event.target.pathname)
@@ -64,32 +66,31 @@ export const SynopticBreadcrumbs = () => {
         event.target.pathname
       );
     }
-  }
+  };
 
-  /**
-   * Navigates the screen Treeview to determine the correct
-   * breadcrumb trail
-   */
-  const createBreadcrumbs = (screenId: string, beamline: string): ReactNode => {
-    const breadcrumbs: ReactNode[] = [];
-    if (beamline === "") return null;
-    const breadcrumbLabels = screenId.split("+");
-    let linkUrl = `/synoptic/${beamline}/`;
-    breadcrumbLabels.forEach((label, idx) => {
-      if (idx !== 0) linkUrl += "+";
-      linkUrl += label;
-      breadcrumbs.push(
-        idx === breadcrumbLabels.length - 1 ? (
-          <Typography key="3" sx={{ color: "white" }}>
-            {label}
-          </Typography>
-        ) : (
-          <Link underline="hover" key={idx} color="white" href={linkUrl}>
-            {label}
-          </Link>
-        )
-      );
-    });
-    return breadcrumbs;
-  }
-  
+/**
+ * Navigates the screen Treeview to determine the correct
+ * breadcrumb trail
+ */
+const createBreadcrumbs = (screenId: string, beamline: string): ReactNode => {
+  const breadcrumbs: ReactNode[] = [];
+  if (beamline === "") return null;
+  const breadcrumbLabels = screenId.split("+");
+  let linkUrl = `/synoptic/${beamline}/`;
+  breadcrumbLabels.forEach((label, idx) => {
+    if (idx !== 0) linkUrl += "+";
+    linkUrl += label;
+    breadcrumbs.push(
+      idx === breadcrumbLabels.length - 1 ? (
+        <Typography key="3" sx={{ color: "white" }}>
+          {label}
+        </Typography>
+      ) : (
+        <Link underline="hover" key={idx} color="white" href={linkUrl}>
+          {label}
+        </Link>
+      )
+    );
+  });
+  return breadcrumbs;
+};

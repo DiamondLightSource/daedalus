@@ -204,7 +204,7 @@ export type BeamlineTreeState = {
     archiver: boolean;
     synoptic: boolean;
     traces: boolean;
-  }
+  };
   currentBeamline: string;
   currentScreenId: string;
   currentScreenLabel: string;
@@ -244,7 +244,7 @@ export const initialState: BeamlineTreeState = {
     },
     B23: {
       host: "http://localhost:8000/",
-      entryPoint: "example-synoptic/b23-services/synoptic/data/json_map.json",
+      entryPoint: "example-synoptic/b23-services/synoptic/opis/json_map.json",
       topLevelScreen: "",
       screenTree: [],
       filePathIds: {},
@@ -287,7 +287,7 @@ export function reducer(state: BeamlineTreeState, action: BeamlineAction) {
       const newMenuBarState = {
         ...state.menuBarsOpen,
         [action.payload.page]: action.payload.open
-      }
+      };
       return { ...state, newMenuBarState };
     }
     case LOAD_SCREENS: {
@@ -344,11 +344,11 @@ interface ToggleArchiverMenuBar {
   };
 }
 
-type DataBrowserAction = ToggleTracesPanel | ToggleArchiverMenuBar
+type DataBrowserAction = ToggleTracesPanel | ToggleArchiverMenuBar;
 
 export type DataBrowserState = {
-  tracesPanelOpen: boolean,
-  archiverMenuBarOpen: boolean
+  tracesPanelOpen: boolean;
+  archiverMenuBarOpen: boolean;
 };
 
 export const initialDataBrowserState: DataBrowserState = {
@@ -356,8 +356,10 @@ export const initialDataBrowserState: DataBrowserState = {
   archiverMenuBarOpen: false
 };
 
-
-export function dataBrowserReducer(state: DataBrowserState, action: DataBrowserAction) {
+export function dataBrowserReducer(
+  state: DataBrowserState,
+  action: DataBrowserAction
+) {
   switch (action.type) {
     case TOGGLE_TRACES_PANEL: {
       return { ...state, tracesPanelOpen: action.payload.open };

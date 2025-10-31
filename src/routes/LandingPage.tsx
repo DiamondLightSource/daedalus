@@ -2,13 +2,13 @@ import { Box, Grid, Stack, Typography } from "@mui/material";
 import DLSAppBar from "../components/AppBar";
 import { useWindowHeight, APP_BAR_HEIGHT } from "../utils/helper";
 import LinkCard from "../components/LinkCard";
-import {PageRouteInfo} from "./PageRouteInfo"
+import { PageRouteInfo } from "./PageRouteInfo";
 
 export function LandingPage() {
   // get width
   return (
     <>
-      <DLSAppBar fullScreen={true}/>
+      <DLSAppBar fullScreen={true} page={""}/>
       <Box
         sx={{
           display: "flex",

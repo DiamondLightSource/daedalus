@@ -14,7 +14,6 @@ import { OPEN_MENU_BAR } from "../store";
 import { DRAWER_WIDTH } from "../utils/helper";
 import { BeamlineTreeStateContext } from "../App";
 
-
 const openedMixin = (theme: Theme): CSSObject => ({
   width: DRAWER_WIDTH,
   transition: theme.transitions.create("width", {
