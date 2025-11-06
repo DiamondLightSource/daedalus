@@ -1,4 +1,4 @@
-import { FileProvider, store } from "@diamondlightsource/cs-web-lib";
+import { CsWebLibConfig, FileProvider, store } from "@diamondlightsource/cs-web-lib";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import "./App.css";
 import { Provider } from "react-redux";
@@ -17,10 +17,10 @@ const INITIAL_SCREEN_STATE = {
   }
 };
 
-function App({}) {
+function App({ config }: { config: CsWebLibConfig }) {
   return (
     <>
-      <Provider store={store}>
+      <Provider store={store(config)}>
         <ThemeProvider theme={diamondTheme}>
           <Router>
             <FileProvider initialPageState={INITIAL_SCREEN_STATE}>
