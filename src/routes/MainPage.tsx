@@ -1,11 +1,6 @@
 import { Box } from "@mui/material";
 import MiniMenuBar from "../components/MenuBar";
-import {
-  useCallback,
-  useContext,
-  useEffect,
-  useReducer
-} from "react";
+import { useCallback, useContext, useEffect, useReducer } from "react";
 import {
   CHANGE_BEAMLINE,
   CHANGE_SCREEN,

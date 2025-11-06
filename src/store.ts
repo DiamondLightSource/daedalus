@@ -288,7 +288,7 @@ export function reducer(state: BeamlineTreeState, action: BeamlineAction) {
         ...state.menuBarsOpen,
         [action.payload.page]: action.payload.open
       };
-      return { ...state, newMenuBarState };
+      return { ...state, menuBarsOpen: newMenuBarState };
     }
     case LOAD_SCREENS: {
       const newState = {

@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import {
-  Box,
   Paper as MuiPaper,
   PaperProps as MuiPaperProps,
   styled
@@ -13,6 +12,10 @@ import {
   TRACES_PANEL_HEIGHT
 } from "../utils/helper";
 import { BeamlineTreeStateContext } from "../App";
+import {
+  EmbeddedDisplay,
+  RelativePosition
+} from "@diamondlightsource/cs-web-lib";
 
 interface PaperProps extends MuiPaperProps {
   propertiesopen?: number;
@@ -27,7 +30,7 @@ const Paper = styled(MuiPaper, {
     {
       props: ({ propertiesopen }) => propertiesopen,
       style: {
-        width: `calc(${useWindowWidth()}px- ${DRAWER_WIDTH}px)`
+        width: `calc(${useWindowWidth()}px - ${DRAWER_WIDTH}px)`
       }
     },
     {
@@ -53,16 +56,22 @@ const Paper = styled(MuiPaper, {
 
 export default function DataBrowserPlot() {
   const { state } = useContext(BeamlineTreeStateContext);
-
   return (
     <Paper
       component="main"
       propertiesopen={state.menuBarsOpen.archiver ? 1 : 0}
       tracesopen={state.menuBarsOpen.traces ? 1 : 0}
     >
-      <Box>
-        <Box></Box>
-      </Box>
+      <EmbeddedDisplay
+        file={{
+          path: "/BOBs/databrowser/demo.bob",
+          defaultProtocol: "ca",
+          macros: {}
+        }}
+        position={new RelativePosition("0", "0", "100%", "100%")}
+        scroll={false}
+        resize={"scroll-content"}
+      />
     </Paper>
   );
 }

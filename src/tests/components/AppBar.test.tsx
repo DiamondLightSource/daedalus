@@ -45,7 +45,9 @@ describe("DLSAppBar Component", () => {
     return render(
       <Router history={history}>
         <BeamlineTreeStateContext.Provider value={contextValue}>
-          <DLSAppBar fullScreen={fullScreen} page={""}>{children}</DLSAppBar>
+          <DLSAppBar fullScreen={fullScreen} page={""}>
+            {children}
+          </DLSAppBar>
         </BeamlineTreeStateContext.Provider>
       </Router>
     );

@@ -74,11 +74,17 @@ export default function MiniMenuBar() {
   const { state, dispatch } = useContext(BeamlineTreeStateContext);
 
   const handleDrawerOpen = () => {
-    dispatch({ type: OPEN_MENU_BAR, payload: { open: true } });
+    dispatch({
+      type: OPEN_MENU_BAR,
+      payload: { open: true, page: "synoptic" }
+    });
   };
 
   const handleDrawerClose = () => {
-    dispatch({ type: OPEN_MENU_BAR, payload: { open: false } });
+    dispatch({
+      type: OPEN_MENU_BAR,
+      payload: { open: false, page: "synoptic" }
+    });
   };
 
   return (

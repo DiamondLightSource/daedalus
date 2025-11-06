@@ -1,7 +1,5 @@
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
-import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
-import CssBaseline from "@mui/material/CssBaseline";
 import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -24,6 +22,7 @@ import {
 } from "@mui/material";
 import { OPEN_MENU_BAR } from "../store";
 import { BeamlineTreeStateContext } from "../App";
+import SsidChartIcon from "@mui/icons-material/SsidChart";
 
 export const ARCHIVER_SEARCH_DRAWER_WIDTH = 300;
 
@@ -33,7 +32,8 @@ const openedMixin = (theme: Theme): CSSObject => ({
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen
   }),
-  overflowX: "hidden"
+  overflowX: "hidden",
+  height: "100%"
 });
 
 const closedMixin = (theme: Theme): CSSObject => ({
@@ -87,58 +87,89 @@ export default function ArchiverMenuBar() {
   const { state, dispatch } = useContext(BeamlineTreeStateContext);
 
   const handleDrawerOpen = () => {
-    dispatch({ type: OPEN_MENU_BAR, payload: { open: true } });
+    dispatch({
+      type: OPEN_MENU_BAR,
+      payload: { open: true, page: "archiver" }
+    });
   };
 
   const handleDrawerClose = () => {
-    dispatch({ type: OPEN_MENU_BAR, payload: { open: false } });
+    dispatch({
+      type: OPEN_MENU_BAR,
+      payload: { open: false, page: "archiver" }
+    });
   };
 
   useEffect(() => {
-    dispatch({ type: OPEN_MENU_BAR, payload: { open: false } });
+    dispatch({
+      type: OPEN_MENU_BAR,
+      payload: { open: false, page: "archiver" }
+    });
   }, []);
 
+  const openTracesPanel = () => {
+    dispatch({
+      type: OPEN_MENU_BAR,
+      payload: { open: true, page: "traces" }
+    });
+  };
+
   return (
-    <Box sx={{ display: "flex" }}>
-      <CssBaseline />
-      <MenuBar
-        variant="permanent"
-        open={state.menuBarsOpen.archiver}
-        PaperProps={{ elevation: 8 }}
-      >
-        <MenuBarHeader>
-          {state.menuBarsOpen.archiver ? (
-            <>
-              <Typography variant="h1">Archive Search</Typography>
-              <IconButton onClick={handleDrawerClose}>
-                {theme.direction === "rtl" ? (
-                  <ChevronRightIcon />
-                ) : (
-                  <ChevronLeftIcon />
-                )}
-              </IconButton>
-            </>
-          ) : (
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              onClick={handleDrawerOpen}
-              edge="start"
-            >
-              <KeyboardDoubleArrowRight />
+    <MenuBar
+      variant="permanent"
+      open={state.menuBarsOpen.archiver}
+      PaperProps={{ elevation: 8 }}
+    >
+      <MenuBarHeader>
+        {state.menuBarsOpen.archiver ? (
+          <>
+            <Typography variant="h1">Archive Search</Typography>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === "rtl" ? (
+                <ChevronRightIcon />
+              ) : (
+                <ChevronLeftIcon />
+              )}
             </IconButton>
-          )}
-        </MenuBarHeader>
-        {state.menuBarsOpen.archiver ? <ArchiverSearchGrid /> : <></>}
-      </MenuBar>
-    </Box>
+          </>
+        ) : (
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+          >
+            <KeyboardDoubleArrowRight />
+          </IconButton>
+        )}
+      </MenuBarHeader>
+      {state.menuBarsOpen.archiver ? (
+        <ArchiverSearchGrid>
+          <IconButton
+            color="inherit"
+            onClick={openTracesPanel}
+            sx={{ top: "50%", left: "80%" }}
+          >
+            <SsidChartIcon />
+          </IconButton>
+        </ArchiverSearchGrid>
+      ) : (
+        <IconButton
+          color="inherit"
+          onClick={openTracesPanel}
+          sx={{ top: "90%" }}
+        >
+          <SsidChartIcon />
+        </IconButton>
+      )}
+    </MenuBar>
   );
 }
 
 /**
  * The archiver
  */
-function ArchiverSearchGrid() {
+function ArchiverSearchGrid(props: { children: React.ReactNode }) {
   const [archiver, setArchiver] = useState("Primary");
   const [pvMatch, setPvMatch] = useState("");
 
@@ -178,7 +209,7 @@ function ArchiverSearchGrid() {
   });
 
   return (
-    <>
+    <div style={{ height: "100%" }}>
       <Grid container spacing={1} rowSpacing={1} padding={"5px"}>
         <Grid item xs={6}>
           <Select
@@ -242,6 +273,7 @@ function ArchiverSearchGrid() {
           </TableContainer>
         </Grid>
       </Grid>
-    </>
+      {props.children}
+    </div>
   );
 }

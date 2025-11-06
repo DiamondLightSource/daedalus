@@ -86,7 +86,7 @@ export default function TracesPanel() {
   const closeTracesPanel = () => {
     dispatch({
       type: OPEN_MENU_BAR,
-      payload: { open: false, type: "traces" }
+      payload: { open: false, page: "traces" }
     });
   };
 
@@ -113,7 +113,7 @@ export default function TracesPanel() {
       <Typography variant="h1" sx={{ marginLeft: 2 }}>
         Traces
       </Typography>
-      <TracesGrid togglePalette={false} />
+      <TracesGrid />
     </MenuBar>
   );
 }
@@ -121,8 +121,7 @@ export default function TracesPanel() {
 /**
  * A grid of all components
  */
-function TracesGrid(props: { togglePalette: any }) {
-  const { togglePalette } = props;
+function TracesGrid() {
   // This includes a label for each, and then a basic implementation of it
   function createData(pv: string, show: boolean, colour: Color, type: string) {
     return { pv, show, colour, type };
@@ -145,20 +144,23 @@ function TracesGrid(props: { togglePalette: any }) {
         marginLeft={"10px"}
       >
         <Grid item xs={6}>
-          <TableContainer component={Paper} sx={{ height: "100%" }}>
+          <TableContainer
+            component={Paper}
+            sx={{ height: "100%", textAlign: "center" }}
+          >
             <Table aria-label="pv-table">
               <TableHead>
                 <TableRow>
-                  <TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>
                     <b>PV</b>
                   </TableCell>
-                  <TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>
                     <b>Show</b>
                   </TableCell>
-                  <TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>
                     <b>Colour</b>
                   </TableCell>
-                  <TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>
                     <b>Trace Type</b>
                   </TableCell>
                 </TableRow>
@@ -175,16 +177,24 @@ function TracesGrid(props: { togglePalette: any }) {
                       }
                     }}
                   >
-                    <TableCell component="th" scope="row">
+                    <TableCell
+                      component="th"
+                      scope="row"
+                      sx={{ textAlign: "center" }}
+                    >
                       {row.pv}
                     </TableCell>
-                    <TableCell>
+                    <TableCell sx={{ textAlign: "center" }}>
                       <Checkbox checked={row.show} />
                     </TableCell>
-                    <TableCell component="th" scope="row">
+                    <TableCell
+                      component="th"
+                      scope="row"
+                      sx={{ textAlign: "center" }}
+                    >
                       {row.colour.toString()}
                     </TableCell>
-                    <TableCell>
+                    <TableCell sx={{ textAlign: "center" }}>
                       <Select value={row.type} sx={{ margin: "2px" }}>
                         <MenuItem value={"Line"}>Line</MenuItem>
                         <MenuItem value={"Area"}>Area</MenuItem>
