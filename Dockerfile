@@ -2,24 +2,30 @@
 FROM node:22.19-slim as build
 
 WORKDIR /app
+RUN adduser --disabled-password --gecos "" appuser && chown -R appuser /app
+USER appuser
+
+COPY package*.json ./
+RUN npm ci
 
 COPY . .
-RUN rm .env
+RUN rm -rf .env
 
+# These are currently set at build time.
+# we're going to need to switch to runtime configuration
 ARG VITE_PVWS_SOCKET=pvws.diamond.ac.uk:443
-ENV VITE_PVWS_SSL=true
-ENV VITE_PROFILER_ENABLED=false
-ENV VITE_THROTTLE_PERIOD=100
-ENV VITE_LOG_LEVEL=info
+ARG VITE_PVWS_SSL=true
+ARG VITE_PROFILER_ENABLED=false
+ARG VITE_THROTTLE_PERIOD=100
+ARG VITE_LOG_LEVEL=info
 
-RUN npm install
 RUN npm run build:nolint
 
-FROM nginx:latest as deployment
+FROM nginxinc/nginx-unprivileged:stable as deployment
 
-COPY --from=build /app/dist /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/nginx.conf
+ARG DOCROOT=/usr/share/nginx/html
+COPY --from=build /app/dist ${DOCROOT}
 
-EXPOSE 80/tcp
+EXPOSE 8080
 
-CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
+CMD ["nginx", "-g", "daemon off;"]
