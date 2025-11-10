@@ -114,7 +114,7 @@ export default function TracesPanel() {
 
   const handleTabChange = (_event: React.SyntheticEvent, value: number) => {
     setTab(value);
-  }
+  };
   const closeTracesPanel = () => {
     dispatch({
       type: OPEN_MENU_BAR,
@@ -142,7 +142,7 @@ export default function TracesPanel() {
       >
         <CloseIcon />
       </IconButton>
-      <Tabs value={tab} onChange={handleTabChange} sx={{width: "97%"}}>
+      <Tabs value={tab} onChange={handleTabChange} sx={{ width: "97%" }}>
         <Tab label="Traces" />
         <Tab label="Time Axis" />
         <Tab label="Value Axes" />
@@ -159,7 +159,6 @@ export default function TracesPanel() {
     </MenuBar>
   );
 }
-
 
 /**
  * A demo table of all Trace components and configuration
@@ -179,11 +178,7 @@ function TracesGrid() {
 
   return (
     <>
-      <Grid
-        container
-        spacing={1}
-        rowSpacing={1}
-      >
+      <Grid container spacing={1} rowSpacing={1}>
         <Grid item xs={8}>
           <TableContainer
             component={Paper}
@@ -254,7 +249,7 @@ function TracesGrid() {
 
 /**
  * Demo Time Axis configuration
- * @returns 
+ * @returns
  */
 function TimeAxisGrid() {
   return (
@@ -263,7 +258,7 @@ function TimeAxisGrid() {
         container
         spacing={0}
         rowSpacing={1}
-        sx={{width: "40%", paddingTop: "0px", alignItems: "center"}}
+        sx={{ width: "40%", paddingTop: "0px", alignItems: "center" }}
       >
         <Grid item xs={2}>
           <Typography>Start Time:</Typography>
@@ -274,14 +269,18 @@ function TimeAxisGrid() {
         <Grid item xs={2}>
           <Typography>End Time:</Typography>
         </Grid>
-         <Grid item xs={4}>
+        <Grid item xs={4}>
           <TextField size="small"></TextField>
         </Grid>
-         <Grid item xs={1}>
+        <Grid item xs={1}>
           <Typography>Grid:</Typography>
         </Grid>
-        <Grid item xs={11} sx={{"&.MuiGrid-item": {paddingTop: "0px", paddingRight: "0px"}}}>
-          <Checkbox/>
+        <Grid
+          item
+          xs={11}
+          sx={{ "&.MuiGrid-item": { paddingTop: "0px", paddingRight: "0px" } }}
+        >
+          <Checkbox />
         </Grid>
         <Grid item xs={2}>
           <Button>30 minutes</Button>
@@ -309,11 +308,7 @@ function TimeAxisGrid() {
 function ValueAxesGrid() {
   return (
     <>
-      <Grid
-        container
-        spacing={1}
-        rowSpacing={1}
-      >
+      <Grid container spacing={1} rowSpacing={1}>
         <Grid item xs={12}>
           <TableContainer
             component={Paper}
@@ -355,67 +350,67 @@ function ValueAxesGrid() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                  <TableRow
-                    key={"demo"}
-                    sx={{
-                      "&:last-child td, &:last-child th": { border: 0 },
-                      "& .MuiTableCell-root": {
-                        height: "10px",
-                        padding: "0"
-                      }
-                    }}
+                <TableRow
+                  key={"demo"}
+                  sx={{
+                    "&:last-child td, &:last-child th": { border: 0 },
+                    "& .MuiTableCell-root": {
+                      height: "10px",
+                      padding: "0"
+                    }
+                  }}
+                >
+                  <TableCell sx={{ textAlign: "center" }}>
+                    <Checkbox checked={true} />
+                  </TableCell>
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    sx={{ textAlign: "center" }}
                   >
-                    <TableCell sx={{ textAlign: "center" }}>
-                      <Checkbox checked={true} />
-                    </TableCell>
-                    <TableCell
-                      component="th"
-                      scope="row"
-                      sx={{ textAlign: "center" }}
-                    >
-                      Axis Name
-                    </TableCell>
-                     <TableCell
-                      component="th"
-                      scope="row"
-                      sx={{ textAlign: "center" }}
-                    >
-                      PV Name
-                    </TableCell>
-                    <TableCell sx={{ textAlign: "center" }}>
-                      <Checkbox checked={false} />
-                    </TableCell>
-                     <TableCell sx={{ textAlign: "center" }}>
-                      <Checkbox checked={false} />
-                    </TableCell>
-                    <TableCell
-                      component="th"
-                      scope="row"
-                      sx={{ textAlign: "center" }}
-                    >
-                      RGBA(255, 40, 1)
-                    </TableCell>
-                    <TableCell
-                      component="th"
-                      scope="row"
-                      sx={{ textAlign: "center" }}
-                    >
-                      0
-                    </TableCell>
-                    <TableCell
-                      component="th"
-                      scope="row"
-                      sx={{ textAlign: "center" }}
-                    >
-                      300
-                    </TableCell>
-                     <TableCell sx={{ textAlign: "center" }}>
-                      <Checkbox checked={true} />
-                    </TableCell>
-                     <TableCell sx={{ textAlign: "center" }}>
-                      <Checkbox checked={true} />
-                    </TableCell>
-                  </TableRow>
+                    Axis Name
+                  </TableCell>
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    sx={{ textAlign: "center" }}
+                  >
+                    PV Name
+                  </TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>
+                    <Checkbox checked={false} />
+                  </TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>
+                    <Checkbox checked={false} />
+                  </TableCell>
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    sx={{ textAlign: "center" }}
+                  >
+                    RGBA(255, 40, 1)
+                  </TableCell>
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    sx={{ textAlign: "center" }}
+                  >
+                    0
+                  </TableCell>
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    sx={{ textAlign: "center" }}
+                  >
+                    300
+                  </TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>
+                    <Checkbox checked={true} />
+                  </TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>
+                    <Checkbox checked={true} />
+                  </TableCell>
+                </TableRow>
               </TableBody>
             </Table>
           </TableContainer>

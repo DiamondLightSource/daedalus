@@ -214,6 +214,7 @@ function ArchiverSearchGrid(props: { children: React.ReactNode }) {
         <Grid item xs={6}>
           <Select
             id="archiver-select"
+            aria-label="archiver-select"
             value={archiver}
             onChange={handleChange}
             sx={{ width: "100%" }}
@@ -224,12 +225,7 @@ function ArchiverSearchGrid(props: { children: React.ReactNode }) {
           </Select>
         </Grid>
         <Grid item xs={6}>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={"0"}
-            sx={{ width: "100%" }}
-          >
+          <Select id="mode-select" value={"0"} sx={{ width: "100%" }}>
             <MenuItem value={0}>Add</MenuItem>
             <MenuItem value={1}>Other</MenuItem>
           </Select>

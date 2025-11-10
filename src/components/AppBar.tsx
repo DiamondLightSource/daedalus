@@ -51,20 +51,21 @@ export const StyledAppBar = styled(MuiAppBar, {
 
 const DLSAppBar = (props: {
   fullScreen: boolean;
-  page: string;
+  page?: string;
   children?: React.ReactNode;
 }) => {
   const history = useHistory();
   const { fullScreen } = props;
   const { state } = useContext(BeamlineTreeStateContext);
-
   const handleOpenSettings = () => {
     console.log("TO DO - create settings modal");
   };
   const open =
     props.page === "synoptic"
       ? state.menuBarsOpen.synoptic
-      : state.menuBarsOpen.archiver;
+      : props.page === "archiver"
+        ? state.menuBarsOpen.archiver
+        : false;
 
   return (
     <>

@@ -12,7 +12,11 @@ import { BeamlineTreeStateContext } from "../../App";
 
 const mockContextValue = {
   state: {
-    menuBarOpen: false
+    menuBarsOpen: {
+      archiver: true,
+      synoptic: false,
+      traces: false
+    }
   } as Partial<BeamlineTreeState> as BeamlineTreeState,
   dispatch: vi.fn()
 };

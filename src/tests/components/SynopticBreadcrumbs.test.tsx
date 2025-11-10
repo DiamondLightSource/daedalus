@@ -40,7 +40,11 @@ describe("SynopticBreadcrumbs Component", () => {
               }
             } as unknown as BeamlineStateProperties
           } as unknown as BeamlineState),
-      menuBarOpen: false
+      menuBarsOpen: {
+        archiver: false,
+        synoptic: false,
+        traces: false
+      }
     }) as unknown as BeamlineTreeState;
 
   const mockFileContext = {
