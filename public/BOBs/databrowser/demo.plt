@@ -35,7 +35,7 @@
         <blue>0</blue>
       </color>
       <min>-1</min>
-      <max>300</max>
+      <max>305</max>
       <grid>false</grid>
       <autoscale>true</autoscale>
       <log_scale>false</log_scale>
