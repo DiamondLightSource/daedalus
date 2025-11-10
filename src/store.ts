@@ -235,7 +235,7 @@ export const initialState: BeamlineTreeState = {
     },
     B23: {
       host: "http://localhost:8000/",
-      entryPoint: "example-synoptic/b23-services/synoptic/data/json_map.json",
+      entryPoint: "example-synoptic/json_map.json",
       topLevelScreen: "",
       screenTree: [],
       filePathIds: {},
