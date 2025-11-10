@@ -20,6 +20,11 @@ npm install
 npm run dev
 ```
 
+### PVWS configuration
+
+The configuration of the PVWS service is managed via the json configuration file 
+`public/config/config.json`. The hostname of the pvws instance is set using the `PVWS_SOCKET` parameter.
+
 ### B23 synoptic demo
 
 The B23 synoptic demo requires [techui-builder](https://github.com/DiamondLightSource/techui-builder) files to be served locally, including the JSON map. The steps to do this are:
