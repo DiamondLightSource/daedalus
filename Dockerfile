@@ -1,5 +1,5 @@
 
-FROM node:22.19-slim as build
+FROM node:22.19-slim AS build
 ARG VITE_PROFILER_ENABLED=false
 ARG VITE_LOG_LEVEL=info
 
@@ -19,7 +19,7 @@ COPY *.json ./
 RUN npm run build:nolint
 
 # Create image for deployment
-FROM nginxinc/nginx-unprivileged:stable as deployment
+FROM nginxinc/nginx-unprivileged:stable AS deployment
 
 ARG DOCROOT=/usr/share/nginx/html
 COPY --from=build /app/dist ${DOCROOT}
