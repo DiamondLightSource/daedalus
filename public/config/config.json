@@ -1,0 +1,6 @@
+
+{
+  "PVWS_SOCKET": "pvws.instance.org:443",
+  "PVWS_SSL": true,
+  "THROTTLE_PERIOD": 100
+}
