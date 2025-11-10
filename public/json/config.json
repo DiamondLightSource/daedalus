@@ -1,6 +1,0 @@
-
-{
-  "VITE_PVWS_SOCKET": "pvws.diamond.ac.uk:443",
-  "VITE_PVWS_SSL": true,
-  "VITE_THROTTLE_PERIOD": 100
-}
