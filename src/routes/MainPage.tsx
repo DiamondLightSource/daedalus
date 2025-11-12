@@ -1,13 +1,7 @@
 import { Box } from "@mui/material";
 import MiniMenuBar from "../components/MenuBar";
-import { useCallback, useContext, useEffect, useReducer } from "react";
-import {
-  CHANGE_BEAMLINE,
-  CHANGE_SCREEN,
-  initialState,
-  LOAD_SCREENS,
-  reducer
-} from "../store";
+import { useCallback, useContext, useEffect } from "react";
+import { CHANGE_BEAMLINE, CHANGE_SCREEN, LOAD_SCREENS } from "../store";
 import DLSAppBar from "../components/AppBar";
 import ScreenDisplay from "../components/ScreenDisplay";
 import { useParams } from "react-router-dom";
@@ -15,9 +9,10 @@ import { parseScreenTree } from "../utils/parser";
 import { executeAction, FileContext } from "@diamondlightsource/cs-web-lib";
 import { RotatingLines } from "react-loader-spinner";
 import { SynopticBreadcrumbs } from "../components/SynopticBreadcrumbs";
+import { BeamlineTreeStateContext } from "../App";
 
 export function MainPage() {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const { state, dispatch } = useContext(BeamlineTreeStateContext);
   const params: { beamline?: string; screenId?: string } = useParams();
   const fileContext = useContext(FileContext);
 

@@ -1,4 +1,8 @@
-import { CsWebLibConfig, FileProvider, store } from "@diamondlightsource/cs-web-lib";
+import {
+  CsWebLibConfig,
+  FileProvider,
+  store
+} from "@diamondlightsource/cs-web-lib";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import "./App.css";
 import { Provider } from "react-redux";
@@ -25,7 +29,7 @@ export const BeamlineTreeStateContext = createContext<{
   dispatch: React.Dispatch<any>;
 }>({ state: initialState, dispatch: () => null });
 
-function App({ config }: { config: CsWebLibConfig })  {
+function App({ config }: { config: CsWebLibConfig }) {
   const [state, dispatch] = useReducer(reducer, initialState);
   return (
     <>
