@@ -30,7 +30,7 @@ const Paper = styled(MuiPaper, {
     {
       props: ({ propertiesopen }) => propertiesopen,
       style: {
-        width: `calc(${useWindowWidth()}px - ${DRAWER_WIDTH}px)`
+        width: `calc(${useWindowWidth()}px - ${DRAWER_WIDTH}px - 5px)`
       }
     },
     {

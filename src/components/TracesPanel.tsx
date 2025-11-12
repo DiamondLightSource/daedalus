@@ -136,13 +136,13 @@ export default function TracesPanel() {
         aria-label="open drawer"
         sx={{
           position: "absolute",
-          left: "97%"
+          left: "96%"
         }}
         onClick={closeTracesPanel}
       >
         <CloseIcon />
       </IconButton>
-      <Tabs value={tab} onChange={handleTabChange} sx={{ width: "97%" }}>
+      <Tabs value={tab} onChange={handleTabChange} sx={{ width: "90%" }}>
         <Tab label="Traces" />
         <Tab label="Time Axis" />
         <Tab label="Value Axes" />
