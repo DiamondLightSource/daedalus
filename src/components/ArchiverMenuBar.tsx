@@ -32,8 +32,7 @@ const openedMixin = (theme: Theme): CSSObject => ({
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen
   }),
-  overflowX: "hidden",
-  height: "100%"
+  overflowX: "hidden"
 });
 
 const closedMixin = (theme: Theme): CSSObject => ({
@@ -148,7 +147,7 @@ export default function ArchiverMenuBar() {
           <IconButton
             color="inherit"
             onClick={openTracesPanel}
-            sx={{ top: "50%", left: "80%" }}
+            sx={{ position: "absolute", left: "80%", top: "90%" }}
           >
             <SsidChartIcon />
           </IconButton>
@@ -157,7 +156,7 @@ export default function ArchiverMenuBar() {
         <IconButton
           color="inherit"
           onClick={openTracesPanel}
-          sx={{ top: "90%" }}
+          sx={{ position: "absolute", left: "20%", top: "90%" }}
         >
           <SsidChartIcon />
         </IconButton>
@@ -209,7 +208,7 @@ function ArchiverSearchGrid(props: { children: React.ReactNode }) {
   });
 
   return (
-    <div style={{ height: "100%" }}>
+    <div>
       <Grid container spacing={1} rowSpacing={1} padding={"5px"}>
         <Grid item xs={6}>
           <Select
@@ -240,7 +239,7 @@ function ArchiverSearchGrid(props: { children: React.ReactNode }) {
           />
         </Grid>
         <Grid item xs={12}>
-          <TableContainer component={Paper} sx={{ height: "100%" }}>
+          <TableContainer component={Paper}>
             <Table aria-label="pv-table">
               <TableHead>
                 <TableRow>
