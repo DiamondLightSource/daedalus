@@ -1,13 +1,6 @@
 import { Box } from "@mui/material";
+import { useCallback, useContext, useEffect, useReducer } from "react";
 import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useReducer
-} from "react";
-import {
-  BeamlineTreeState,
   CHANGE_BEAMLINE,
   CHANGE_SCREEN,
   initialState,
@@ -18,11 +11,6 @@ import { useParams } from "react-router-dom";
 import { parseScreenTree } from "../utils/parser";
 import { executeAction, FileContext } from "@diamondlightsource/cs-web-lib";
 import Editor from "../components/Editor";
-
-const BeamlineTreeStateContext = createContext<{
-  state: BeamlineTreeState;
-  dispatch: React.Dispatch<any>;
-}>({ state: initialState, dispatch: () => null });
 
 /**
  * Displays a mock editor page with palette and Phoebus
@@ -105,5 +93,3 @@ export function EditorPage() {
     </>
   );
 }
-
-export default BeamlineTreeStateContext;

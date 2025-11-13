@@ -10,13 +10,11 @@ import { KeyboardDoubleArrowRight } from "@mui/icons-material";
 import BeamlineSelect from "./BeamlineSelect";
 import ScreenTreeView from "./ScreenTreeView";
 import { useContext } from "react";
-import BeamlineTreeStateContext from "../routes/MainPage";
-import { OPEN_MENU_BAR } from "../store";
-
-const drawerWidth = 240;
+import { DRAWER_WIDTH } from "../utils/helper";
+import { MenuContext } from "../routes/MainPage";
 
 const openedMixin = (theme: Theme): CSSObject => ({
-  width: drawerWidth,
+  width: DRAWER_WIDTH,
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen
@@ -48,7 +46,7 @@ const MenuBarHeader = styled("div")(({ theme }) => ({
 const MenuBar = styled(MuiDrawer, {
   shouldForwardProp: prop => prop !== "open"
 })(({ theme }) => ({
-  width: drawerWidth,
+  width: DRAWER_WIDTH,
   flexShrink: 0,
   whiteSpace: "nowrap",
   boxSizing: "border-box",
@@ -72,22 +70,22 @@ const MenuBar = styled(MuiDrawer, {
 
 export default function MiniMenuBar() {
   const theme = useTheme();
-  const { state, dispatch } = useContext(BeamlineTreeStateContext);
+  const { menuOpen, setMenuOpen } = useContext(MenuContext);
 
   const handleDrawerOpen = () => {
-    dispatch({ type: OPEN_MENU_BAR, payload: { open: true } });
+    setMenuOpen(true);
   };
 
   const handleDrawerClose = () => {
-    dispatch({ type: OPEN_MENU_BAR, payload: { open: false } });
+    setMenuOpen(false);
   };
 
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <MenuBar variant="permanent" open={state.menuBarOpen}>
+      <MenuBar variant="permanent" open={menuOpen}>
         <MenuBarHeader>
-          {state.menuBarOpen ? (
+          {menuOpen ? (
             <>
               <BeamlineSelect />
               <IconButton onClick={handleDrawerClose}>
@@ -109,7 +107,7 @@ export default function MiniMenuBar() {
             </IconButton>
           )}
         </MenuBarHeader>
-        {state.menuBarOpen ? <Divider /> : <></>}
+        {menuOpen ? <Divider /> : <></>}
         <ScreenTreeView />
       </MenuBar>
     </Box>

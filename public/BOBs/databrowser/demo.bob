@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<display version="2.0.0">
+  <name>Data Browser</name>
+  <width>1400</width>
+  <widget type="databrowser" version="2.0.0">
+    <name>Data Browser</name>
+    <file>/BOBs/databrowser/demo.plt</file>
+    <width>1400</width>
+    <height>700</height>
+  </widget>
+</display>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export const DRAWER_WIDTH = 240;
+export const DRAWER_WIDTH = 300;
 export const TRACES_PANEL_HEIGHT = 300;
 export const APP_BAR_HEIGHT = 65;
 export const PROPERTIES_MENU_WIDTH = 350;

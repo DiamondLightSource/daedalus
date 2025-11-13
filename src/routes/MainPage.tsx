@@ -5,16 +5,9 @@ import {
   useCallback,
   useContext,
   useEffect,
-  useReducer
+  useState
 } from "react";
-import {
-  BeamlineTreeState,
-  CHANGE_BEAMLINE,
-  CHANGE_SCREEN,
-  initialState,
-  LOAD_SCREENS,
-  reducer
-} from "../store";
+import { CHANGE_BEAMLINE, CHANGE_SCREEN, LOAD_SCREENS } from "../store";
 import DLSAppBar from "../components/AppBar";
 import ScreenDisplay from "../components/ScreenDisplay";
 import { useParams } from "react-router-dom";
@@ -22,16 +15,18 @@ import { parseScreenTree } from "../utils/parser";
 import { executeAction, FileContext } from "@diamondlightsource/cs-web-lib";
 import { RotatingLines } from "react-loader-spinner";
 import { SynopticBreadcrumbs } from "../components/SynopticBreadcrumbs";
+import { BeamlineTreeStateContext } from "../App";
 
-const BeamlineTreeStateContext = createContext<{
-  state: BeamlineTreeState;
-  dispatch: React.Dispatch<any>;
-}>({ state: initialState, dispatch: () => null });
+export const MenuContext = createContext<{
+  menuOpen: boolean;
+  setMenuOpen: any;
+}>({ menuOpen: true, setMenuOpen: () => null });
 
 export function MainPage() {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const { state, dispatch } = useContext(BeamlineTreeStateContext);
   const params: { beamline?: string; screenId?: string } = useParams();
   const fileContext = useContext(FileContext);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     // Only trigger once
@@ -111,30 +106,28 @@ export function MainPage() {
   return (
     <>
       <Box sx={{ display: "flex" }}>
-        <BeamlineTreeStateContext.Provider value={{ state, dispatch }}>
-          {state.filesLoaded ? (
-            <>
-              <DLSAppBar fullScreen={false}>
+        {state.filesLoaded ? (
+          <>
+            <MenuContext.Provider value={{ menuOpen, setMenuOpen }}>
+              <DLSAppBar fullScreen={false} open={menuOpen}>
                 <SynopticBreadcrumbs />
               </DLSAppBar>
               <MiniMenuBar />
               <ScreenDisplay />
-            </>
-          ) : (
-            <>
-              <RotatingLines
-                strokeColor="grey"
-                strokeWidth="5"
-                animationDuration="0.75"
-                width="96"
-                visible={true}
-              />
-            </>
-          )}
-        </BeamlineTreeStateContext.Provider>
+            </MenuContext.Provider>
+          </>
+        ) : (
+          <>
+            <RotatingLines
+              strokeColor="grey"
+              strokeWidth="5"
+              animationDuration="0.75"
+              width="96"
+              visible={true}
+            />
+          </>
+        )}
       </Box>
     </>
   );
 }
-
-export default BeamlineTreeStateContext;

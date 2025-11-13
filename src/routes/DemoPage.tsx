@@ -20,14 +20,14 @@ export function DemoPage() {
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
-        <DLSAppBar fullScreen={true}>
-            <Typography
-              variant="h1"
-              component="div"
-              sx={{ flexGrow: 1, textAlign: "center" }}
-            >
-              Daedalus Demo
-            </Typography>
+        <DLSAppBar fullScreen={true} open={false}>
+          <Typography
+            variant="h1"
+            component="div"
+            sx={{ flexGrow: 1, textAlign: "center" }}
+          >
+            Daedalus Demo
+          </Typography>
         </DLSAppBar>
         <FileStateContext.Provider value={{ state, dispatch }}>
           <Stack

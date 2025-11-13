@@ -153,7 +153,11 @@ export default function PropertiesSideBar(props: { properties: WidgetProps }) {
         open
         anchor="right"
         PaperProps={{
-          sx: { width: PROPERTIES_MENU_WIDTH, height: "100%", paddingTop: `${APP_BAR_HEIGHT}px` },
+          sx: {
+            width: PROPERTIES_MENU_WIDTH,
+            height: "100%",
+            paddingTop: `${APP_BAR_HEIGHT}px`
+          },
           elevation: 8
         }}
       >
@@ -317,7 +321,12 @@ function PropertiesGrid(props: { positionProps: any[]; widgetProps: any[] }) {
         </Typography>
         <Box>
           {widgetProps.map(item => (
-            <Grid key={`editor_menu_item_widget_${item.label}`} container spacing={1} padding={"5px 5px 5px 5px"}>
+            <Grid
+              key={`editor_menu_item_widget_${item.label}`}
+              container
+              spacing={1}
+              padding={"5px 5px 5px 5px"}
+            >
               <Grid key={item.label} item xs={5}>
                 {item.label}
               </Grid>
@@ -345,7 +354,12 @@ function PropertiesGrid(props: { positionProps: any[]; widgetProps: any[] }) {
         </Typography>
         <Box>
           {positionProps.map(item => (
-            <Grid key={`editor_menu_item_position_${item.label}`} container spacing={1} padding={"5px 5px 5px 5px"}>
+            <Grid
+              key={`editor_menu_item_position_${item.label}`}
+              container
+              spacing={1}
+              padding={"5px 5px 5px 5px"}
+            >
               <Grid key={item.label} item xs={5}>
                 {item.label}
               </Grid>
@@ -373,7 +387,12 @@ function PropertiesGrid(props: { positionProps: any[]; widgetProps: any[] }) {
         </Typography>
         <Box>
           {displayPropList.map(item => (
-            <Grid key={`editor_menu_item_display_${item.label}`} container spacing={1} padding={"5px 5px 5px 5px"}>
+            <Grid
+              key={`editor_menu_item_display_${item.label}`}
+              container
+              spacing={1}
+              padding={"5px 5px 5px 5px"}
+            >
               <Grid key={item.label} item xs={5}>
                 {item.label}
               </Grid>
@@ -402,7 +421,12 @@ function PropertiesGrid(props: { positionProps: any[]; widgetProps: any[] }) {
         </Typography>
         <Box>
           {behaviourPropList.map(item => (
-            <Grid key={`editor_menu_item_behaviour_${item.label}`} container spacing={1} padding={"5px 5px 5px 5px"}>
+            <Grid
+              key={`editor_menu_item_behaviour_${item.label}`}
+              container
+              spacing={1}
+              padding={"5px 5px 5px 5px"}
+            >
               <Grid key={item.label} item xs={5}>
                 {item.label}
               </Grid>

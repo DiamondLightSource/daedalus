@@ -158,6 +158,7 @@ interface ChangeScreen {
 interface OpenMenuBar {
   type: typeof OPEN_MENU_BAR;
   payload: {
+    page: string;
     open: boolean;
   };
 }
@@ -199,7 +200,11 @@ export type BeamlineState = {
 
 export type BeamlineTreeState = {
   filesLoaded: boolean;
-  menuBarOpen: boolean;
+  menuBarsOpen: {
+    archiver: boolean;
+    synoptic: boolean;
+    traces: boolean;
+  };
   currentBeamline: string;
   currentScreenId: string;
   currentScreenLabel: string;
@@ -211,7 +216,11 @@ export type BeamlineTreeState = {
 // filesystem we end up using
 export const initialState: BeamlineTreeState = {
   filesLoaded: true,
-  menuBarOpen: true,
+  menuBarsOpen: {
+    archiver: false,
+    traces: false,
+    synoptic: true
+  },
   currentBeamline: "",
   currentScreenId: "",
   currentScreenLabel: "",
@@ -235,7 +244,7 @@ export const initialState: BeamlineTreeState = {
     },
     B23: {
       host: "http://localhost:8000/",
-      entryPoint: "example-synoptic/b23-services/synoptic/data/json_map.json",
+      entryPoint: "example-synoptic/b23-services/synoptic/opis/json_map.json",
       topLevelScreen: "",
       screenTree: [],
       filePathIds: {},
@@ -275,7 +284,11 @@ export function reducer(state: BeamlineTreeState, action: BeamlineAction) {
       };
     }
     case OPEN_MENU_BAR: {
-      return { ...state, menuBarOpen: action.payload.open };
+      const newMenuBarState = {
+        ...state.menuBarsOpen,
+        [action.payload.page]: action.payload.open
+      };
+      return { ...state, menuBarsOpen: newMenuBarState };
     }
     case LOAD_SCREENS: {
       const newState = {
@@ -307,6 +320,52 @@ export function reducer(state: BeamlineTreeState, action: BeamlineAction) {
       }
       // Load the tree and the array of filepaths associated with IDs
       return newState;
+    }
+  }
+}
+
+// Data browser state
+
+export const TOGGLE_TRACES_PANEL = "toggleTracesPanel";
+export const TOGGLE_ARCHIVER_MENU_BAR = "toggleArchiverMenuBar";
+
+// An interface for our actions
+interface ToggleTracesPanel {
+  type: typeof TOGGLE_TRACES_PANEL;
+  payload: {
+    open: boolean;
+  };
+}
+
+interface ToggleArchiverMenuBar {
+  type: typeof TOGGLE_ARCHIVER_MENU_BAR;
+  payload: {
+    open: boolean;
+  };
+}
+
+type DataBrowserAction = ToggleTracesPanel | ToggleArchiverMenuBar;
+
+export type DataBrowserState = {
+  tracesPanelOpen: boolean;
+  archiverMenuBarOpen: boolean;
+};
+
+export const initialDataBrowserState: DataBrowserState = {
+  tracesPanelOpen: false,
+  archiverMenuBarOpen: false
+};
+
+export function dataBrowserReducer(
+  state: DataBrowserState,
+  action: DataBrowserAction
+) {
+  switch (action.type) {
+    case TOGGLE_TRACES_PANEL: {
+      return { ...state, tracesPanelOpen: action.payload.open };
+    }
+    case TOGGLE_ARCHIVER_MENU_BAR: {
+      return { ...state, archiverMenuBarOpen: action.payload.open };
     }
   }
 }

@@ -7,7 +7,7 @@ import { loadConfig } from "./config.ts";
 const container = document.getElementById("root");
 const root = createRoot(container!);
 
-loadConfig().then((config) => {
+loadConfig().then(config => {
   root.render(
     <OutlineProvider>
       <App config={config} />
