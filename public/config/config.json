@@ -4,6 +4,14 @@
   "PVWS_SSL": true,
   "THROTTLE_PERIOD": 100,
   "beamlines" : {
+    "BLTEST": {
+      "host": "",
+      "entryPoint": "/BOBs/BLTEST/json_map.json"
+    },
+    "BLFAKE": {
+      "host": "",
+      "entryPoint": "/BOBs/BLFAKE/json_map.json"
+    },
     "B23": {
       "host": "http://localhost:8000/",
       "entryPoint": "example-synoptic/b23-services/synoptic/opis/json_map.json"

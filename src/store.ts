@@ -240,24 +240,7 @@ export const initialState: BeamlineTreeState = {
   currentScreenId: "",
   currentScreenLabel: "",
   currentScreenFilepath: "",
-  beamlines: {
-    BLTEST: {
-      host: "",
-      entryPoint: "/BOBs/BLTEST/json_map.json",
-      topLevelScreen: "",
-      screenTree: [],
-      filePathIds: {},
-      loaded: false
-    },
-    BLFAKE: {
-      host: "",
-      entryPoint: "/BOBs/BLFAKE/json_map.json",
-      topLevelScreen: "",
-      screenTree: [],
-      filePathIds: {},
-      loaded: false
-    }
-  }
+  beamlines: { }
 };
 
 export function reducer(state: BeamlineTreeState, action: BeamlineAction) {
