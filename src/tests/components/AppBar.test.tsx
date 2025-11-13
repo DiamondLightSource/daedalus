@@ -5,21 +5,8 @@ import DLSAppBar, { StyledAppBar } from "../../components/AppBar";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import { PageRouteInfo } from "../../routes/PageRouteInfo";
-import { BeamlineTreeState } from "../../store";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { DRAWER_WIDTH } from "../../utils/helper";
-import { BeamlineTreeStateContext } from "../../App";
-
-const mockContextValue = {
-  state: {
-    menuBarsOpen: {
-      archiver: true,
-      synoptic: false,
-      traces: false
-    }
-  } as Partial<BeamlineTreeState> as BeamlineTreeState,
-  dispatch: vi.fn()
-};
 
 console.log = vi.fn();
 
@@ -39,20 +26,12 @@ describe("DLSAppBar Component", () => {
     vi.clearAllMocks();
   });
 
-  const renderComponent = (
-    fullScreen = false,
-    children: ReactNode = null,
-    contextValue = mockContextValue
-  ) => {
+  const renderComponent = (fullScreen = false, children: ReactNode = null) => {
     const history = createMemoryHistory();
 
     return render(
       <Router history={history}>
-        <BeamlineTreeStateContext.Provider value={contextValue}>
-          <DLSAppBar fullScreen={fullScreen} page={""}>
-            {children}
-          </DLSAppBar>
-        </BeamlineTreeStateContext.Provider>
+        <DLSAppBar fullScreen={fullScreen}>{children}</DLSAppBar>
       </Router>
     );
   };

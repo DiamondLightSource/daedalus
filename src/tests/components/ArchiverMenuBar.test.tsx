@@ -1,26 +1,22 @@
 import { fireEvent, render, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import ArchiverMenuBar from "../../components/ArchiverMenuBar";
-import { BeamlineTreeStateContext } from "../../App";
-import { BeamlineTreeState } from "../../store";
+import { MenuContext } from "../../routes/DataBrowserPage";
 
 const mockContextValue = {
-  state: {
-    menuBarsOpen: {
-      archiver: true,
-      synoptic: false,
-      traces: false
-    }
-  } as Partial<BeamlineTreeState> as BeamlineTreeState,
-  dispatch: vi.fn()
+  menusOpen: {
+    archiver: true,
+    trace: false
+  },
+  setMenusOpen: () => vi.fn()
 };
 
-describe("LinkCard", (): void => {
+describe("ArchiverMenuBar", (): void => {
   const renderComponent = (contextValue = mockContextValue) => {
     return render(
-      <BeamlineTreeStateContext.Provider value={contextValue}>
+      <MenuContext.Provider value={contextValue}>
         <ArchiverMenuBar />
-      </BeamlineTreeStateContext.Provider>
+      </MenuContext.Provider>
     );
   };
   it("successfully filters beamlines with regex", async (): Promise<void> => {
