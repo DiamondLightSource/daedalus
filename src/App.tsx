@@ -1,5 +1,4 @@
 import {
-  CsWebLibConfig,
   FileProvider,
   store
 } from "@diamondlightsource/cs-web-lib";
@@ -13,8 +12,10 @@ import { MainPage } from "./routes/MainPage";
 import { EditorPage } from "./routes/EditorPage";
 import { LandingPage } from "./routes/LandingPage";
 import { DataBrowserPage } from "./routes/DataBrowserPage";
-import { createContext, useReducer } from "react";
-import { BeamlineTreeState, initialState, reducer } from "./store";
+import { createContext, useEffect, useReducer, useState } from "react";
+import { APPEND_BEAMLINES, BeamlineTreeState, initialState, reducer } from "./store";
+import { DaedalusConfig, loadConfig } from "./config";
+import { Box, CircularProgress, Typography } from "@mui/material";
 
 const INITIAL_SCREEN_STATE = {
   main: {
@@ -29,42 +30,61 @@ export const BeamlineTreeStateContext = createContext<{
   dispatch: React.Dispatch<any>;
 }>({ state: initialState, dispatch: () => null });
 
-function App({ config }: { config: CsWebLibConfig }) {
+function App({}) {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [config, setConfig] = useState<DaedalusConfig | null>(null);
+  
+  useEffect(() => {
+    loadConfig().then((config) => {
+      if (config?.beamlines) {
+        dispatch( { type: APPEND_BEAMLINES, payload: config.beamlines } );
+      }
+
+      setConfig(config);
+    });
+  }, []);
+
+  if (!config) {   
+    return (
+      <Box sx={{ display: 'flex', height: '100vh', flexDirection: "column", justifyContent: 'center', alignItems: "center" }}>
+        <Typography> Loading </Typography>
+        <CircularProgress />
+      </Box>
+    )
+  }
+  
   return (
-    <>
-      <Provider store={store(config)}>
-        <ThemeProvider theme={diamondTheme}>
-          <Router>
-            <BeamlineTreeStateContext.Provider value={{ state, dispatch }}>
-              <FileProvider initialPageState={INITIAL_SCREEN_STATE}>
-                <Switch>
-                  <Route exact path="/demo" component={DemoPage} />
-                  <Route
-                    exact
-                    path="/data-browser"
-                    component={DataBrowserPage}
-                  />
-                  <Route exact path="/editor" component={EditorPage} />
-                  <Route exact path="/synoptic" component={MainPage} />
-                  <Route
-                    exact
-                    path="/synoptic/:beamline"
-                    component={MainPage}
-                  />
-                  <Route
-                    exact
-                    path="/synoptic/:beamline/:screenId"
-                    component={MainPage}
-                  />
-                  <Route exact path="/" component={LandingPage} />
-                </Switch>
-              </FileProvider>
-            </BeamlineTreeStateContext.Provider>
-          </Router>
-        </ThemeProvider>
-      </Provider>
-    </>
+    <Provider store={store(config)}>
+      <ThemeProvider theme={diamondTheme}>
+        <Router>
+          <BeamlineTreeStateContext.Provider value={{ state, dispatch }}>
+            <FileProvider initialPageState={INITIAL_SCREEN_STATE}>
+              <Switch>
+                <Route exact path="/demo" component={DemoPage} />
+                <Route
+                  exact
+                  path="/data-browser"
+                  component={DataBrowserPage}
+                />
+                <Route exact path="/editor" component={EditorPage} />
+                <Route exact path="/synoptic" component={MainPage} />
+                <Route
+                  exact
+                  path="/synoptic/:beamline"
+                  component={MainPage}
+                />
+                <Route
+                  exact
+                  path="/synoptic/:beamline/:screenId"
+                  component={MainPage}
+                />
+                <Route exact path="/" component={LandingPage} />
+              </Switch>
+            </FileProvider>
+          </BeamlineTreeStateContext.Provider>
+        </Router>
+      </ThemeProvider>
+    </Provider>
   );
 }
 

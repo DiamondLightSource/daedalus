@@ -1,4 +1,5 @@
 import { TreeViewBaseItem } from "@mui/x-tree-view";
+import { BeamlinesConfig } from "./config";
 export const LOAD_NEXT_FILE = "loadNextFile";
 export const ADD_FILE = "addFile";
 export const REMOVE_FILE = "removeFile";
@@ -134,13 +135,18 @@ export function demoReducer(state: FileState, action: Action) {
   }
 }
 
-// WIREFRAMING DEMO STORE
+export const APPEND_BEAMLINES = "appendBeamline";
 export const CHANGE_BEAMLINE = "changeBeamline";
 export const CHANGE_SCREEN = "changeScreen";
 export const OPEN_MENU_BAR = "openMenuBar";
 export const LOAD_SCREENS = "loadScreens";
 
 // An interface for our actions
+interface AppendBeamlines {
+  type: typeof APPEND_BEAMLINES;
+  payload: BeamlinesConfig;
+}
+
 interface ChangeBeamline {
   type: typeof CHANGE_BEAMLINE;
   payload: {
@@ -172,7 +178,7 @@ interface LoadScreens {
   };
 }
 
-type BeamlineAction = ChangeBeamline | ChangeScreen | OpenMenuBar | LoadScreens;
+type BeamlineAction = AppendBeamlines | ChangeBeamline | ChangeScreen | OpenMenuBar | LoadScreens;
 
 export type FileIDs = {
   [id: string]: {
@@ -212,6 +218,15 @@ export type BeamlineTreeState = {
   beamlines: BeamlineState;
 };
 
+const defaultBeamline: BeamlineStateProperties = {
+  host: "",
+  entryPoint: "",
+  topLevelScreen: "",
+  screenTree: [],
+  filePathIds: {},
+  loaded: false
+};
+
 // ID here should be the path of the file in whatever
 // filesystem we end up using
 export const initialState: BeamlineTreeState = {
@@ -241,20 +256,23 @@ export const initialState: BeamlineTreeState = {
       screenTree: [],
       filePathIds: {},
       loaded: false
-    },
-    B23: {
-      host: "http://localhost:8000/",
-      entryPoint: "example-synoptic/b23-services/synoptic/opis/json_map.json",
-      topLevelScreen: "",
-      screenTree: [],
-      filePathIds: {},
-      loaded: false
     }
   }
 };
 
 export function reducer(state: BeamlineTreeState, action: BeamlineAction) {
   switch (action.type) {
+    case APPEND_BEAMLINES: {
+      let newBeamlineState = state.beamlines;
+      Object.keys(action.payload).forEach((beamline) => {
+        newBeamlineState = { ...newBeamlineState, [beamline]: { ...defaultBeamline, ...action.payload[beamline] } };
+      });
+
+      return {
+        ...state,
+        beamlines: newBeamlineState,
+      };
+    }
     case CHANGE_BEAMLINE: {
       let newID = state.currentScreenId;
       // Set current screen to top level screen of new beamline
