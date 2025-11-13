@@ -31,7 +31,7 @@ export const loadConfig = async (): Promise<DaedalusConfig> => {
     };
   }
 
-  return config as DaedalusConfig;;
+  return config as DaedalusConfig;
 }
 
 export const resetConfig = () => {
