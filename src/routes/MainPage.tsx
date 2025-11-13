@@ -1,6 +1,12 @@
 import { Box } from "@mui/material";
 import MiniMenuBar from "../components/MenuBar";
-import { useCallback, useContext, useEffect } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState
+} from "react";
 import { CHANGE_BEAMLINE, CHANGE_SCREEN, LOAD_SCREENS } from "../store";
 import DLSAppBar from "../components/AppBar";
 import ScreenDisplay from "../components/ScreenDisplay";
@@ -11,10 +17,16 @@ import { RotatingLines } from "react-loader-spinner";
 import { SynopticBreadcrumbs } from "../components/SynopticBreadcrumbs";
 import { BeamlineTreeStateContext } from "../App";
 
+export const MenuContext = createContext<{
+  menuOpen: boolean;
+  setMenuOpen: any;
+}>({ menuOpen: true, setMenuOpen: () => null });
+
 export function MainPage() {
   const { state, dispatch } = useContext(BeamlineTreeStateContext);
   const params: { beamline?: string; screenId?: string } = useParams();
   const fileContext = useContext(FileContext);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     // Only trigger once
@@ -96,11 +108,13 @@ export function MainPage() {
       <Box sx={{ display: "flex" }}>
         {state.filesLoaded ? (
           <>
-            <DLSAppBar fullScreen={false} page="synoptic">
-              <SynopticBreadcrumbs />
-            </DLSAppBar>
-            <MiniMenuBar />
-            <ScreenDisplay />
+            <MenuContext.Provider value={{ menuOpen, setMenuOpen }}>
+              <DLSAppBar fullScreen={false} open={menuOpen}>
+                <SynopticBreadcrumbs />
+              </DLSAppBar>
+              <MiniMenuBar />
+              <ScreenDisplay />
+            </MenuContext.Provider>
           </>
         ) : (
           <>

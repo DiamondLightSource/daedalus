@@ -18,6 +18,7 @@ import {
   APP_BAR_HEIGHT
 } from "../utils/helper";
 import { BeamlineTreeStateContext } from "../App";
+import { MenuContext } from "../routes/MainPage";
 
 interface PaperProps extends MuiPaperProps {
   open?: boolean;
@@ -46,6 +47,7 @@ const Paper = styled(MuiPaper, {
 
 export default function ScreenDisplay() {
   const { state } = useContext(BeamlineTreeStateContext);
+  const { menuOpen } = useContext(MenuContext);
   const fileContext = useContext(FileContext);
   const history = useHistory();
   const location = useLocation();
@@ -78,7 +80,7 @@ export default function ScreenDisplay() {
   }, [fileContext.pageState.main]);
 
   return (
-    <Paper component="main" open={state.menuBarsOpen.synoptic}>
+    <Paper component="main" open={menuOpen}>
       <Box>
         <Box>
           {state.currentBeamline && state.currentScreenId ? (

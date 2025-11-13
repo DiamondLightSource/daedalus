@@ -24,10 +24,9 @@ import {
 import Grid from "@mui/material/Grid";
 import CloseIcon from "@mui/icons-material/Close";
 import { useContext, useState } from "react";
-import { OPEN_MENU_BAR } from "../store";
 import { Color } from "@diamondlightsource/cs-web-lib";
 import { DRAWER_WIDTH } from "../utils/helper";
-import { BeamlineTreeStateContext } from "../App";
+import { MenuContext } from "../routes/DataBrowserPage";
 
 interface DrawerProps extends MuiDrawerProps {
   archiverMenuOpen?: boolean;
@@ -108,7 +107,7 @@ function CustomTabPanel(props: TabPanelProps) {
 }
 
 export default function TracesPanel() {
-  const { state, dispatch } = useContext(BeamlineTreeStateContext);
+  const { menusOpen, setMenusOpen } = useContext(MenuContext);
 
   const [tab, setTab] = useState(0);
 
@@ -116,16 +115,16 @@ export default function TracesPanel() {
     setTab(value);
   };
   const closeTracesPanel = () => {
-    dispatch({
-      type: OPEN_MENU_BAR,
-      payload: { open: false, page: "traces" }
+    setMenusOpen({
+      ...menusOpen,
+      trace: false
     });
   };
 
   return (
     <MenuBar
-      archiverMenuOpen={state.menuBarsOpen.archiver}
-      open={state.menuBarsOpen.traces}
+      archiverMenuOpen={menusOpen.archiver}
+      open={menusOpen.trace}
       variant="permanent"
       anchor="bottom"
       sx={{ position: "absolute" }}

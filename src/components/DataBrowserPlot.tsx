@@ -11,11 +11,11 @@ import {
   APP_BAR_HEIGHT,
   TRACES_PANEL_HEIGHT
 } from "../utils/helper";
-import { BeamlineTreeStateContext } from "../App";
 import {
   EmbeddedDisplay,
   RelativePosition
 } from "@diamondlightsource/cs-web-lib";
+import { MenuContext } from "../routes/DataBrowserPage";
 
 interface PaperProps extends MuiPaperProps {
   propertiesopen?: number;
@@ -55,12 +55,12 @@ const Paper = styled(MuiPaper, {
 }));
 
 export default function DataBrowserPlot() {
-  const { state } = useContext(BeamlineTreeStateContext);
+  const { menusOpen } = useContext(MenuContext);
   return (
     <Paper
       component="main"
-      propertiesopen={state.menuBarsOpen.archiver ? 1 : 0}
-      tracesopen={state.menuBarsOpen.traces ? 1 : 0}
+      propertiesopen={menusOpen.archiver ? 1 : 0}
+      tracesopen={menusOpen.trace ? 1 : 0}
     >
       <EmbeddedDisplay
         file={{

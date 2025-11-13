@@ -20,7 +20,7 @@ export function DemoPage() {
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
-        <DLSAppBar fullScreen={true} page={""}>
+        <DLSAppBar fullScreen={true} open={false}>
           <Typography
             variant="h1"
             component="div"

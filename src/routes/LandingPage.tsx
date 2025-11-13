@@ -8,7 +8,7 @@ export function LandingPage() {
   // get width
   return (
     <>
-      <DLSAppBar fullScreen={true} page={""} />
+      <DLSAppBar fullScreen={true} />
       <Box
         sx={{
           display: "flex",

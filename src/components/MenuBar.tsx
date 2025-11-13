@@ -10,9 +10,8 @@ import { KeyboardDoubleArrowRight } from "@mui/icons-material";
 import BeamlineSelect from "./BeamlineSelect";
 import ScreenTreeView from "./ScreenTreeView";
 import { useContext } from "react";
-import { OPEN_MENU_BAR } from "../store";
 import { DRAWER_WIDTH } from "../utils/helper";
-import { BeamlineTreeStateContext } from "../App";
+import { MenuContext } from "../routes/MainPage";
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: DRAWER_WIDTH,
@@ -71,28 +70,22 @@ const MenuBar = styled(MuiDrawer, {
 
 export default function MiniMenuBar() {
   const theme = useTheme();
-  const { state, dispatch } = useContext(BeamlineTreeStateContext);
+  const { menuOpen, setMenuOpen } = useContext(MenuContext);
 
   const handleDrawerOpen = () => {
-    dispatch({
-      type: OPEN_MENU_BAR,
-      payload: { open: true, page: "synoptic" }
-    });
+    setMenuOpen(true);
   };
 
   const handleDrawerClose = () => {
-    dispatch({
-      type: OPEN_MENU_BAR,
-      payload: { open: false, page: "synoptic" }
-    });
+    setMenuOpen(false);
   };
 
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <MenuBar variant="permanent" open={state.menuBarsOpen.synoptic}>
+      <MenuBar variant="permanent" open={menuOpen}>
         <MenuBarHeader>
-          {state.menuBarsOpen.synoptic ? (
+          {menuOpen ? (
             <>
               <BeamlineSelect />
               <IconButton onClick={handleDrawerClose}>
@@ -114,7 +107,7 @@ export default function MiniMenuBar() {
             </IconButton>
           )}
         </MenuBarHeader>
-        {state.menuBarsOpen.synoptic ? <Divider /> : <></>}
+        {menuOpen ? <Divider /> : <></>}
         <ScreenTreeView />
       </MenuBar>
     </Box>

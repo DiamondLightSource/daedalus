@@ -3,9 +3,11 @@ import { useContext, useEffect, useState } from "react";
 import { TreeViewBaseItem, TreeViewItemId } from "@mui/x-tree-view";
 import { executeAction, FileContext } from "@diamondlightsource/cs-web-lib";
 import { BeamlineTreeStateContext } from "../App";
+import { MenuContext } from "../routes/MainPage";
 
 export default function ScreenTreeView() {
   const { state } = useContext(BeamlineTreeStateContext);
+  const { menuOpen } = useContext(MenuContext);
   const fileContext = useContext(FileContext);
   const [expandedScreens, setExpandedScreens] = useState<string[]>([]);
 
@@ -66,7 +68,7 @@ export default function ScreenTreeView() {
 
   return (
     <>
-      {state.menuBarsOpen.synoptic ? (
+      {menuOpen ? (
         <RichTreeView
           items={currentScreenTree}
           expandedItems={expandedScreens}

@@ -4,7 +4,7 @@ import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { KeyboardDoubleArrowRight } from "@mui/icons-material";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import {
   Grid,
   MenuItem,
@@ -20,9 +20,8 @@ import {
   TextField,
   Typography
 } from "@mui/material";
-import { OPEN_MENU_BAR } from "../store";
-import { BeamlineTreeStateContext } from "../App";
 import SsidChartIcon from "@mui/icons-material/SsidChart";
+import { MenuContext } from "../routes/DataBrowserPage";
 
 export const ARCHIVER_SEARCH_DRAWER_WIDTH = 300;
 
@@ -83,44 +82,37 @@ const MenuBar = styled(MuiDrawer, {
 
 export default function ArchiverMenuBar() {
   const theme = useTheme();
-  const { state, dispatch } = useContext(BeamlineTreeStateContext);
+  const { menusOpen, setMenusOpen } = useContext(MenuContext);
 
   const handleDrawerOpen = () => {
-    dispatch({
-      type: OPEN_MENU_BAR,
-      payload: { open: true, page: "archiver" }
+    setMenusOpen({
+      ...menusOpen,
+      archiver: true
     });
   };
 
   const handleDrawerClose = () => {
-    dispatch({
-      type: OPEN_MENU_BAR,
-      payload: { open: false, page: "archiver" }
+    setMenusOpen({
+      ...menusOpen,
+      archiver: false
     });
   };
 
-  useEffect(() => {
-    dispatch({
-      type: OPEN_MENU_BAR,
-      payload: { open: false, page: "archiver" }
-    });
-  }, []);
-
   const openTracesPanel = () => {
-    dispatch({
-      type: OPEN_MENU_BAR,
-      payload: { open: true, page: "traces" }
+    setMenusOpen({
+      ...menusOpen,
+      trace: true
     });
   };
 
   return (
     <MenuBar
       variant="permanent"
-      open={state.menuBarsOpen.archiver}
+      open={menusOpen.archiver}
       PaperProps={{ elevation: 8 }}
     >
       <MenuBarHeader>
-        {state.menuBarsOpen.archiver ? (
+        {menusOpen.archiver ? (
           <>
             <Typography variant="h1">Archive Search</Typography>
             <IconButton onClick={handleDrawerClose}>
@@ -142,7 +134,7 @@ export default function ArchiverMenuBar() {
           </IconButton>
         )}
       </MenuBarHeader>
-      {state.menuBarsOpen.archiver ? (
+      {menusOpen.archiver ? (
         <ArchiverSearchGrid>
           <IconButton
             color="inherit"
