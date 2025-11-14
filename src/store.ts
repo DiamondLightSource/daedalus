@@ -178,7 +178,12 @@ interface LoadScreens {
   };
 }
 
-type BeamlineAction = AppendBeamlines | ChangeBeamline | ChangeScreen | OpenMenuBar | LoadScreens;
+type BeamlineAction =
+  | AppendBeamlines
+  | ChangeBeamline
+  | ChangeScreen
+  | OpenMenuBar
+  | LoadScreens;
 
 export type FileIDs = {
   [id: string]: {
@@ -240,20 +245,23 @@ export const initialState: BeamlineTreeState = {
   currentScreenId: "",
   currentScreenLabel: "",
   currentScreenFilepath: "",
-  beamlines: { }
+  beamlines: {}
 };
 
 export function reducer(state: BeamlineTreeState, action: BeamlineAction) {
   switch (action.type) {
     case APPEND_BEAMLINES: {
       let newBeamlineState = state.beamlines;
-      Object.keys(action.payload).forEach((beamline) => {
-        newBeamlineState = { ...newBeamlineState, [beamline]: { ...defaultBeamline, ...action.payload[beamline] } };
+      Object.keys(action.payload).forEach(beamline => {
+        newBeamlineState = {
+          ...newBeamlineState,
+          [beamline]: { ...defaultBeamline, ...action.payload[beamline] }
+        };
       });
 
       return {
         ...state,
-        beamlines: newBeamlineState,
+        beamlines: newBeamlineState
       };
     }
     case CHANGE_BEAMLINE: {
