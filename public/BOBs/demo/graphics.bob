@@ -1,0 +1,651 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<display version="2.0.0">
+  <name>DCM Mock Diagram</name>
+  <width>1000</width>
+  <height>700</height>
+  <background_color>
+    <color name="Read_Background" red="240" green="240" blue="240">
+    </color>
+  </background_color>
+  <actions>
+  </actions>
+  <grid_step_x>5</grid_step_x>
+  <grid_step_y>5</grid_step_y>
+  <widget type="arc" version="2.0.0">
+    <name>Arc</name>
+    <x>20</x>
+    <y>30</y>
+  </widget>
+  <widget type="ellipse" version="2.0.0">
+    <name>Ellipse</name>
+    <x>25</x>
+    <y>185</y>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text>Graphics widget demo screens</text>
+    <x>20</x>
+    <y>330</y>
+  </widget>
+  <widget type="picture" version="2.0.0">
+    <name>Picture</name>
+    <file>../../images/Panda.jpg</file>
+    <x>590</x>
+    <y>80</y>
+    <rotation>180.0</rotation>
+    <opacity>0.5</opacity>
+  </widget>
+  <widget type="polygon" version="2.0.0">
+    <name>Polygon</name>
+    <x>20</x>
+    <y>330</y>
+  </widget>
+  <widget type="polyline" version="2.0.0">
+    <name>Polyline</name>
+    <x>35</x>
+    <y>510</y>
+    <width>55</width>
+    <points>
+      <point x="0.0" y="0.0">
+      </point>
+      <point x="20.0" y="20.0">
+      </point>
+      <point x="55.0" y="0.0">
+      </point>
+    </points>
+  </widget>
+  <widget type="polygon" version="2.0.0">
+    <name>Polygon_1</name>
+    <x>20</x>
+    <y>405</y>
+    <width>95</width>
+    <height>35</height>
+    <points>
+      <point x="20.0" y="0.0">
+      </point>
+      <point x="95.0" y="15.0">
+      </point>
+      <point x="55.0" y="35.0">
+      </point>
+      <point x="0.0" y="25.0">
+      </point>
+    </points>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>Rectangle</name>
+    <x>20</x>
+    <y>620</y>
+    <line_color>
+      <color name="Button_Background" red="210" green="210" blue="210">
+      </color>
+    </line_color>
+    <line_style>4</line_style>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="arc" version="2.0.0">
+    <name>Arc_1</name>
+    <x>145</x>
+    <y>30</y>
+    <width>190</width>
+    <height>40</height>
+    <total_angle>196.0</total_angle>
+    <line_width>5</line_width>
+    <line_color>
+      <color name="MINOR" red="255" green="128" blue="0">
+      </color>
+    </line_color>
+    <line_style>1</line_style>
+    <background_color>
+      <color name="MAJOR" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="arc" version="2.0.0">
+    <name>Arc_2</name>
+    <x>350</x>
+    <y>30</y>
+    <start_angle>40.0</start_angle>
+    <total_angle>180.0</total_angle>
+    <line_color>
+      <color name="OK" red="0" green="255" blue="0">
+      </color>
+    </line_color>
+    <line_style>4</line_style>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="ellipse" version="2.0.0">
+    <name>Ellipse_1</name>
+    <x>155</x>
+    <y>185</y>
+    <line_width>10</line_width>
+    <line_color>
+      <color name="MINOR" red="255" green="128" blue="0">
+      </color>
+    </line_color>
+    <line_style>2</line_style>
+    <background_color>
+      <color name="Header_ForeGround" red="255" green="255" blue="255">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="ellipse" version="2.0.0">
+    <name>Ellipse_2</name>
+    <x>315</x>
+    <y>185</y>
+    <width>130</width>
+    <height>10</height>
+    <line_width>1</line_width>
+    <line_color>
+      <color name="INVALID" red="255" green="0" blue="255">
+      </color>
+    </line_color>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_1</name>
+    <text>Graphics widget demo screens</text>
+    <x>20</x>
+    <y>305</y>
+    <width>195</width>
+    <font>
+      <font family="Montserrat" style="REGULAR" size="16.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="On" red="0" green="255" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="DISCONNECTED" red="200" green="0" blue="200" alpha="200">
+      </color>
+    </background_color>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_2</name>
+    <text>Graphics widget demo screens</text>
+    <x>230</x>
+    <y>280</y>
+    <height>70</height>
+    <background_color>
+      <color name="MAJOR" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <wrap_words>false</wrap_words>
+    <border_width>5</border_width>
+    <border_color>
+      <color name="INVALID" red="255" green="0" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_3</name>
+    <text>Graphics widget demo screens</text>
+    <x>360</x>
+    <y>280</y>
+    <height>70</height>
+    <horizontal_alignment>2</horizontal_alignment>
+    <vertical_alignment>2</vertical_alignment>
+    <rotation_step>1</rotation_step>
+  </widget>
+  <widget type="picture" version="2.0.0">
+    <name>Picture_1</name>
+    <file>../../images/Panda.jpg</file>
+    <x>760</x>
+    <y>90</y>
+    <height>25</height>
+  </widget>
+  <widget type="picture" version="2.0.0">
+    <name>Picture_2</name>
+    <file>../../images/Panda.jpg</file>
+    <x>760</x>
+    <y>140</y>
+    <height>25</height>
+    <stretch_image>true</stretch_image>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>Rectangle_1</name>
+    <x>165</x>
+    <y>590</y>
+    <width>10</width>
+    <height>85</height>
+    <line_width>5</line_width>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>Rectangle_2</name>
+    <x>20</x>
+    <y>655</y>
+    <height>10</height>
+    <line_width>1</line_width>
+    <line_color>
+      <color name="INVALID" red="255" green="0" blue="255">
+      </color>
+    </line_color>
+    <line_style>1</line_style>
+    <background_color>
+      <color name="MAJOR" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>Rectangle_3</name>
+    <x>210</x>
+    <y>600</y>
+    <width>170</width>
+    <height>60</height>
+    <line_color>
+      <color name="On" red="0" green="255" blue="0">
+      </color>
+    </line_color>
+    <line_style>1</line_style>
+    <corner_width>50</corner_width>
+    <corner_height>50</corner_height>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>Rectangle_4</name>
+    <x>425</x>
+    <y>560</y>
+    <width>40</width>
+    <height>110</height>
+    <line_width>0</line_width>
+    <line_color>
+      <color name="On" red="0" green="255" blue="0">
+      </color>
+    </line_color>
+    <line_style>2</line_style>
+    <corner_width>100</corner_width>
+    <corner_height>100</corner_height>
+  </widget>
+  <widget type="polygon" version="2.0.0">
+    <name>Polygon_2</name>
+    <x>145</x>
+    <y>405</y>
+    <width>95</width>
+    <height>35</height>
+    <points>
+      <point x="20.0" y="0.0">
+      </point>
+      <point x="95.0" y="15.0">
+      </point>
+      <point x="55.0" y="35.0">
+      </point>
+      <point x="0.0" y="25.0">
+      </point>
+    </points>
+    <line_width>1</line_width>
+    <line_color>
+      <color name="INVALID" red="255" green="0" blue="255">
+      </color>
+    </line_color>
+    <line_style>2</line_style>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="polygon" version="2.0.0">
+    <name>Polygon_3</name>
+    <x>285</x>
+    <y>405</y>
+    <width>95</width>
+    <height>35</height>
+    <points>
+      <point x="20.0" y="0.0">
+      </point>
+      <point x="95.0" y="15.0">
+      </point>
+      <point x="55.0" y="35.0">
+      </point>
+      <point x="0.0" y="25.0">
+      </point>
+    </points>
+    <line_width>10</line_width>
+    <line_color>
+      <color name="INVALID" red="255" green="0" blue="255">
+      </color>
+    </line_color>
+    <line_style>2</line_style>
+    <background_color>
+      <color name="MINOR" red="255" green="128" blue="0">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="polygon" version="2.0.0">
+    <name>Polygon_5</name>
+    <x>425</x>
+    <y>380</y>
+    <width>115</width>
+    <height>70</height>
+    <points>
+      <point x="20.0" y="25.0">
+      </point>
+      <point x="30.0" y="20.0">
+      </point>
+      <point x="55.0" y="10.0">
+      </point>
+      <point x="80.0" y="15.0">
+      </point>
+      <point x="105.0" y="20.0">
+      </point>
+      <point x="115.0" y="30.0">
+      </point>
+      <point x="115.0" y="40.0">
+      </point>
+      <point x="105.0" y="45.0">
+      </point>
+      <point x="95.0" y="55.0">
+      </point>
+      <point x="80.0" y="60.0">
+      </point>
+      <point x="60.0" y="70.0">
+      </point>
+      <point x="40.0" y="65.0">
+      </point>
+      <point x="35.0" y="60.0">
+      </point>
+      <point x="25.0" y="55.0">
+      </point>
+      <point x="10.0" y="45.0">
+      </point>
+      <point x="10.0" y="40.0">
+      </point>
+      <point x="0.0" y="15.0">
+      </point>
+      <point x="10.0" y="10.0">
+      </point>
+      <point x="30.0" y="0.0">
+      </point>
+      <point x="50.0" y="0.0">
+      </point>
+      <point x="65.0" y="10.0">
+      </point>
+    </points>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="polyline" version="2.0.0">
+    <name>Polyline_1</name>
+    <x>120</x>
+    <y>470</y>
+    <width>55</width>
+    <points>
+      <point x="0.0" y="0.0">
+      </point>
+      <point x="20.0" y="20.0">
+      </point>
+      <point x="55.0" y="0.0">
+      </point>
+    </points>
+    <line_width>2</line_width>
+    <line_color>
+      <color name="MAJOR" red="255" green="0" blue="0">
+      </color>
+    </line_color>
+    <arrows>1</arrows>
+  </widget>
+  <widget type="polyline" version="2.0.0">
+    <name>Polyline_2</name>
+    <x>120</x>
+    <y>510</y>
+    <width>55</width>
+    <points>
+      <point x="0.0" y="0.0">
+      </point>
+      <point x="20.0" y="20.0">
+      </point>
+      <point x="55.0" y="0.0">
+      </point>
+    </points>
+    <line_width>2</line_width>
+    <line_color>
+      <color name="MAJOR" red="255" green="0" blue="0">
+      </color>
+    </line_color>
+    <line_style>3</line_style>
+    <arrows>2</arrows>
+    <arrow_length>50</arrow_length>
+  </widget>
+  <widget type="polyline" version="2.0.0">
+    <name>Polyline_3</name>
+    <x>210</x>
+    <y>480</y>
+    <width>35</width>
+    <height>50</height>
+    <points>
+      <point x="0.0" y="0.0">
+      </point>
+      <point x="19.09090909090909" y="50.0">
+      </point>
+      <point x="35.0" y="0.0">
+      </point>
+    </points>
+    <line_width>2</line_width>
+    <line_color>
+      <color name="MAJOR" red="255" green="0" blue="0">
+      </color>
+    </line_color>
+    <line_style>1</line_style>
+    <arrows>3</arrows>
+    <arrow_length>10</arrow_length>
+  </widget>
+  <widget type="polyline" version="2.0.0">
+    <name>Polyline_4</name>
+    <x>285</x>
+    <y>470</y>
+    <width>125</width>
+    <height>70</height>
+    <points>
+      <point x="0.0" y="0.0">
+      </point>
+      <point x="10.0" y="55.0">
+      </point>
+      <point x="20.0" y="10.0">
+      </point>
+      <point x="45.0" y="55.0">
+      </point>
+      <point x="50.0" y="5.0">
+      </point>
+      <point x="75.0" y="70.0">
+      </point>
+      <point x="80.0" y="5.0">
+      </point>
+      <point x="105.0" y="55.0">
+      </point>
+      <point x="125.0" y="15.0">
+      </point>
+    </points>
+    <line_width>10</line_width>
+  </widget>
+  <widget type="picture" version="2.0.0">
+    <name>Picture_3</name>
+    <file>../../images/vite.svg</file>
+    <x>585</x>
+    <y>235</y>
+    <rotation>90.0</rotation>
+    <opacity>0.8</opacity>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_4</name>
+    <text>Rectangle</text>
+    <x>20</x>
+    <y>570</y>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_5</name>
+    <text>Line</text>
+    <x>25</x>
+    <y>460</y>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_6</name>
+    <text>Polygon</text>
+    <x>20</x>
+    <y>370</y>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_7</name>
+    <text>Label</text>
+    <x>20</x>
+    <y>260</y>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_8</name>
+    <text>Ellipse</text>
+    <x>25</x>
+    <y>165</y>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+  </widget>
+  <widget type="ellipse" version="2.0.0">
+    <name>Ellipse_3</name>
+    <x>295</x>
+    <y>220</y>
+    <width>15</width>
+    <height>10</height>
+    <line_width>1</line_width>
+    <line_color>
+      <color name="INVALID" red="255" green="0" blue="255">
+      </color>
+    </line_color>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_9</name>
+    <text>Arc</text>
+    <x>25</x>
+    <y>10</y>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>Rectangle_5</name>
+    <x>485</x>
+    <y>580</y>
+    <width>15</width>
+    <height>10</height>
+    <line_width>0</line_width>
+    <line_color>
+      <color name="On" red="0" green="255" blue="0">
+      </color>
+    </line_color>
+    <line_style>2</line_style>
+    <corner_width>100</corner_width>
+    <corner_height>100</corner_height>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_10</name>
+    <text>Graphics widget demo screens</text>
+    <x>485</x>
+    <y>280</y>
+    <width>15</width>
+    <height>10</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rotation_step>1</rotation_step>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_11</name>
+    <text>Picture</text>
+    <x>655</x>
+    <y>30</y>
+    <width>180</width>
+    <height>15</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_12</name>
+    <text>.jpg</text>
+    <x>625</x>
+    <y>60</y>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_13</name>
+    <text>.svg</text>
+    <x>595</x>
+    <y>210</y>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_14</name>
+    <text>.png</text>
+    <x>585</x>
+    <y>350</y>
+  </widget>
+  <widget type="picture" version="2.0.0">
+    <name>Picture_4</name>
+    <file>../../images/vite.svg</file>
+    <x>740</x>
+    <y>220</y>
+    <width>40</width>
+    <height>15</height>
+  </widget>
+  <widget type="picture" version="2.0.0">
+    <name>Picture_5</name>
+    <file>../../images/vite.svg</file>
+    <x>725</x>
+    <y>210</y>
+    <width>15</width>
+    <height>125</height>
+  </widget>
+  <widget type="picture" version="2.0.0">
+    <name>Picture_6</name>
+    <file>../../images/fm.png</file>
+    <x>770</x>
+    <y>415</y>
+    <width>170</width>
+    <height>15</height>
+    <stretch_image>true</stretch_image>
+  </widget>
+  <widget type="picture" version="2.0.0">
+    <name>Picture_7</name>
+    <file>../../images/fm.png</file>
+    <x>585</x>
+    <y>390</y>
+    <rotation>90.0</rotation>
+    <opacity>0.8</opacity>
+  </widget>
+  <widget type="picture" version="2.0.0">
+    <name>Picture_8</name>
+    <file>../../images/fm.png</file>
+    <x>740</x>
+    <y>360</y>
+    <width>15</width>
+    <height>125</height>
+  </widget>
+  <widget type="picture" version="2.0.0">
+    <name>Picture_9</name>
+    <file>../../images/fm.png</file>
+    <x>770</x>
+    <y>355</y>
+    <width>40</width>
+    <height>15</height>
+  </widget>
+  <widget type="picture" version="2.0.0">
+    <name>Picture_10</name>
+    <file>../../images/vite.svg</file>
+    <x>790</x>
+    <y>295</y>
+    <width>170</width>
+    <height>15</height>
+    <stretch_image>true</stretch_image>
+  </widget>
+</display>
