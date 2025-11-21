@@ -7,12 +7,19 @@
     <name>Label</name>
     <class>TITLE</class>
     <text>Meter Widgets</text>
+    <x use_class="true">0</x>
+    <y use_class="true">0</y>
     <width>550</width>
     <height>31</height>
-    <font>
+    <font use_class="true">
       <font name="Header 1" family="Liberation Sans" style="BOLD" size="22.0">
       </font>
     </font>
+    <foreground_color use_class="true">
+      <color name="Text" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <transparent use_class="true">true</transparent>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_1</name>
@@ -52,15 +59,6 @@ By default, the meter reflects the range, units, alarm limits, and current alarm
       <color red="0" green="0" blue="255">
       </color>
     </knob_color>
-  </widget>
-  <widget type="scrollbar" version="2.0.0">
-    <name>Scrollbar</name>
-    <pv_name>loc://x(50)</pv_name>
-    <x>420</x>
-    <y>340</y>
-    <width>350</width>
-    <height>30</height>
-    <limits_from_pv>false</limits_from_pv>
   </widget>
   <widget type="meter" version="3.0.0">
     <name>Meter_1</name>
