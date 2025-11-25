@@ -1,0 +1,88 @@
+{
+    "file": "/BOBs/demo/01_main.bob",
+    "children": [
+        {
+            "file": "/BOBs/demo/controls_action_buttons.bob",
+            "children": [
+                {
+                    "file": "/BOBs/demo/screen_A.bob"
+                },
+                {
+                    "file": "/BOBs/demo/screen_B.bob"
+                },
+                {
+                    "file": "/BOBs/demo/screen_C.bob"
+                }
+            ]
+        },
+        {
+            "file": "/BOBs/demo/controls_checkboxes_slidebuttons.bob"
+        },
+        {
+            "file": "/BOBs/demo/controls_choice.bob"
+        },
+        {
+            "file": "/BOBs/demo/controls_combo.bob"
+        },
+        {
+            "file": "/BOBs/demo/controls_spinner_slider_scrollbar.bob"
+        },
+        {
+            "file": "/BOBs/demo/controls_textentry.bob"
+        },
+        {
+            "file": "/BOBs/demo/controls_toggle_buttons.bob"
+        },
+        {
+            "file": "/BOBs/demo/graphics_arc.bob"
+        },
+        {
+            "file": "/BOBs/demo/graphics_label.bob"
+        },
+        {
+            "file": "/BOBs/demo/graphics_picture.bob"
+        },
+        {
+            "file": "/BOBs/demo/graphics_poly.bob"
+        },
+        {
+            "file": "/BOBs/demo/graphics_rect.bob"
+        },
+        {
+            "file": "/BOBs/demo/monitors_bytemonitor.bob"
+        },
+        {
+            "file": "/BOBs/demo/monitors_led.bob"
+        },
+        {
+            "file": "/BOBs/demo/monitors_meter.bob"
+        },
+        {
+            "file": "/BOBs/demo/monitors_symbols.bob"
+        },
+        {
+            "file": "/BOBs/demo/monitors_tank.bob"
+        },
+        {
+            "file": "/BOBs/demo/monitors_textupdate.bob"
+        },
+        {
+            "file": "/BOBs/demo/monitors_thermo.bob"
+        },
+        {
+            "file": "/BOBs/demo/plots_databrowser.bob"
+        },
+        {
+            "file": "/BOBs/demo/plots_strip.bob"
+        },
+        {
+            "file": "/BOBs/demo/plots_xy.bob"
+        },
+        {
+            "file": "/BOBs/demo/structure_group.bob"
+        },
+        {
+            "file": "/BOBs/demo/embedded/structure_embedded.bob"
+        }
+    ]
+}

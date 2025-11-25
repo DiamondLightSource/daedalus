@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<display version="2.0.0">
+  <name>Main</name>
+  <width>1010</width>
+  <height>570</height>
+  <grid_color>
+    <color red="127" green="127" blue="127">
+    </color>
+  </grid_color>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <class>TITLE</class>
+    <text>Display Builder Examples</text>
+    <x use_class="true">0</x>
+    <y use_class="true">0</y>
+    <width>280</width>
+    <height>30</height>
+    <font use_class="true">
+      <font name="Header 1" family="Liberation Sans" style="BOLD" size="22.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="Text" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <transparent use_class="true">true</transparent>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Widgets</name>
+    <text>Widgets</text>
+    <x>10</x>
+    <y>100</y>
+    <width>120</width>
+    <height>30</height>
+    <font>
+      <font name="Header 2" family="Liberation Sans" style="BOLD" size="18.0">
+      </font>
+    </font>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Graphics</name>
+    <text>Graphics</text>
+    <x>10</x>
+    <y>140</y>
+    <width>120</width>
+    <height>30</height>
+    <font>
+      <font name="Header 3" family="Liberation Sans" style="BOLD" size="16.0">
+      </font>
+    </font>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_1</name>
+    <actions>
+      <action type="open_display">
+        <description>Label</description>
+        <file>graphics_label.bob</file>
+        <target>replace</target>
+      </action>
+    </actions>
+    <text>Label</text>
+    <x>10</x>
+    <y>170</y>
+    <width>120</width>
+    <height>26</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_8</name>
+    <actions>
+      <action type="open_display">
+        <description>Picture</description>
+        <file>graphics_picture.bob</file>
+        <target>replace</target>
+      </action>
+    </actions>
+    <text>Picture</text>
+    <x>10</x>
+    <y>210</y>
+    <width>120</width>
+    <height>26</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_17</name>
+    <actions>
+      <action type="open_display">
+        <description>Rectangle</description>
+        <file>graphics_rect.bob</file>
+        <target>replace</target>
+      </action>
+    </actions>
+    <text>Rectangle</text>
+    <x>10</x>
+    <y>250</y>
+    <width>120</width>
+    <height>26</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_38</name>
+    <actions>
+      <action type="open_display">
+        <description>Arc</description>
+        <file>graphics_arc.bob</file>
+        <target>replace</target>
+      </action>
+    </actions>
+    <text>Arc</text>
+    <x>10</x>
+    <y>290</y>
+    <width>120</width>
+    <height>26</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_39</name>
+    <actions>
+      <action type="open_display">
+        <description>Polygon/line</description>
+        <file>graphics_poly.bob</file>
+        <target>replace</target>
+      </action>
+    </actions>
+    <text>Polygon/line</text>
+    <x>10</x>
+    <y>330</y>
+    <width>120</width>
+    <height>26</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Monitors</name>
+    <text>Monitors</text>
+    <x>150</x>
+    <y>140</y>
+    <width>120</width>
+    <height>30</height>
+    <font>
+      <font name="Header 3" family="Liberation Sans" style="BOLD" size="16.0">
+      </font>
+    </font>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_2</name>
+    <actions>
+      <action type="open_display">
+        <description>Text Update</description>
+        <file>monitors_textupdate.bob</file>
+        <target>replace</target>
+      </action>
+    </actions>
+    <text>Text Update</text>
+    <x>150</x>
+    <y>170</y>
+    <width>120</width>
+    <height>26</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_3</name>
+    <actions>
+      <action type="open_display">
+        <description>LED</description>
+        <file>monitors_led.bob</file>
+        <target>replace</target>
+      </action>
+    </actions>
+    <text>LED</text>
+    <x>150</x>
+    <y>210</y>
+    <width>120</width>
+    <height>26</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_20</name>
+    <actions>
+      <action type="open_display">
+        <description>Byte Monitor</description>
+        <file>monitors_bytemonitor.bob</file>
+        <target>replace</target>
+      </action>
+    </actions>
+    <text>Byte Monitor</text>
+    <x>150</x>
+    <y>250</y>
+    <width>120</width>
+    <height>26</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_34</name>
+    <actions>
+      <action type="open_display">
+        <description>Tank</description>
+        <file>monitors_tank.bob</file>
+        <target>replace</target>
+      </action>
+    </actions>
+    <text>Tank</text>
+    <x>150</x>
+    <y>290</y>
+    <width>120</width>
+    <height>26</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_28</name>
+    <actions>
+      <action type="open_display">
+        <description>Meters</description>
+        <file>monitors_meter.bob</file>
+        <target>replace</target>
+      </action>
+    </actions>
+    <text>Meters</text>
+    <x>150</x>
+    <y>370</y>
+    <width>120</width>
+    <height>26</height>
+    <scripts>
+      <script file="scripts/disable_missing.py">
+        <pv_name>loc://meter("meter")</pv_name>
+      </script>
+    </scripts>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_32</name>
+    <actions>
+      <action type="open_display">
+        <description>Symbols</description>
+        <file>monitors_symbols.bob</file>
+        <target>replace</target>
+      </action>
+    </actions>
+    <text>Symbols</text>
+    <x>150</x>
+    <y>330</y>
+    <width>120</width>
+    <height>26</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Controls</name>
+    <text>Controls</text>
+    <x>290</x>
+    <y>140</y>
+    <width>120</width>
+    <height>30</height>
+    <font>
+      <font name="Header 3" family="Liberation Sans" style="BOLD" size="16.0">
+      </font>
+    </font>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_14</name>
+    <actions>
+      <action type="open_display">
+        <description>Text Entry</description>
+        <file>controls_textentry.bob</file>
+        <target>replace</target>
+      </action>
+    </actions>
+    <text>Text Entry</text>
+    <x>290</x>
+    <y>170</y>
+    <width>120</width>
+    <height>26</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_15</name>
+    <actions>
+      <action type="open_display">
+        <description>Toggle Buttons</description>
+        <file>controls_toggle_buttons.bob</file>
+        <target>replace</target>
+      </action>
+    </actions>
+    <text>Toggle Buttons</text>
+    <x>290</x>
+    <y>210</y>
+    <width>120</width>
+    <height>26</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_16</name>
+    <actions>
+      <action type="open_display">
+        <description>Action Buttons</description>
+        <file>controls_action_buttons.bob</file>
+        <target>replace</target>
+      </action>
+    </actions>
+    <text>Action Buttons</text>
+    <x>290</x>
+    <y>250</y>
+    <width>120</width>
+    <height>26</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_18</name>
+    <actions>
+      <action type="open_display">
+        <description>Incr. Controls</description>
+        <file>controls_spinner_slider_scrollbar.bob</file>
+        <target>replace</target>
+      </action>
+    </actions>
+    <text>Incr. Controls</text>
+    <x>290</x>
+    <y>290</y>
+    <width>120</width>
+    <height>26</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_19</name>
+    <actions>
+      <action type="open_display">
+        <description>Combo Box</description>
+        <file>controls_combo.bob</file>
+        <target>replace</target>
+      </action>
+    </actions>
+    <text>Combo Box</text>
+    <x>290</x>
+    <y>330</y>
+    <width>120</width>
+    <height>26</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_36</name>
+    <actions>
+      <action type="open_display">
+        <description>Check Boxes</description>
+        <file>controls_checkboxes_slidebuttons.bob</file>
+        <target>replace</target>
+      </action>
+    </actions>
+    <text>Check Boxes</text>
+    <x>290</x>
+    <y>370</y>
+    <width>120</width>
+    <height>26</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Plots</name>
+    <text>Plots</text>
+    <x>430</x>
+    <y>140</y>
+    <width>120</width>
+    <height>30</height>
+    <font>
+      <font name="Header 3" family="Liberation Sans" style="BOLD" size="16.0">
+      </font>
+    </font>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>XY</name>
+    <actions>
+      <action type="open_display">
+        <description>X/Y Plot</description>
+        <file>plots_xy.bob</file>
+        <target>replace</target>
+      </action>
+    </actions>
+    <text>X/Y Plot</text>
+    <x>430</x>
+    <y>170</y>
+    <width>120</width>
+    <height>26</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Strip</name>
+    <actions>
+      <action type="open_display">
+        <description>Strip Chart</description>
+        <file>plots_strip.bob</file>
+        <target>replace</target>
+      </action>
+    </actions>
+    <text>Strip Chart</text>
+    <x>430</x>
+    <y>210</y>
+    <width>120</width>
+    <height>26</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>DB</name>
+    <actions>
+      <action type="open_display">
+        <description>Data Browser</description>
+        <file>plots_databrowser.bob</file>
+        <target>replace</target>
+      </action>
+    </actions>
+    <text>Data Browser</text>
+    <x>430</x>
+    <y>250</y>
+    <width>120</width>
+    <height>26</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Structure</name>
+    <text>Structure</text>
+    <x>570</x>
+    <y>140</y>
+    <width>120</width>
+    <height>30</height>
+    <font>
+      <font name="Header 3" family="Liberation Sans" style="BOLD" size="16.0">
+      </font>
+    </font>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_13</name>
+    <actions>
+      <action type="open_display">
+        <description>Group</description>
+        <file>structure_group.bob</file>
+        <target>replace</target>
+      </action>
+    </actions>
+    <text>Group</text>
+    <x>570</x>
+    <y>170</y>
+    <width>120</width>
+    <height>26</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_11</name>
+    <actions>
+      <action type="open_display">
+        <description>Embedded</description>
+        <file>embedded/structure_embedded.bob</file>
+        <target>replace</target>
+      </action>
+    </actions>
+    <text>Embedded</text>
+    <x>570</x>
+    <y>210</y>
+    <width>120</width>
+    <height>26</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_21</name>
+    <actions>
+      <action type="open_display">
+        <description>Choice Buttons</description>
+        <file>controls_choice.bob</file>
+        <target>replace</target>
+      </action>
+    </actions>
+    <text>Choice Buttons</text>
+    <x>290</x>
+    <y>410</y>
+    <width>120</width>
+    <height>26</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_2</name>
+    <text>These are a series of demonstration screens that show the functionality of various widgets, based off the built-in Phoebus example screens.
+
+These include only widgets implemented in cs-web-lib.</text>
+    <x>10</x>
+    <y>30</y>
+    <width>700</width>
+    <height>70</height>
+  </widget>
+</display>
