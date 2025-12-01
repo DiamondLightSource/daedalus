@@ -5,7 +5,6 @@ import {
   PaperProps as MuiPaperProps,
   styled
 } from "@mui/material";
-import { useHistory, useLocation } from "react-router-dom";
 import {
   DynamicPageWidget,
   FileContext,
@@ -19,6 +18,7 @@ import {
 } from "../utils/helper";
 import { BeamlineTreeStateContext } from "../App";
 import { MenuContext } from "../routes/MainPage";
+import { useNavigate, useLocation } from "react-router-dom-v5-compat";
 
 interface PaperProps extends MuiPaperProps {
   open?: boolean;
@@ -49,7 +49,7 @@ export default function ScreenDisplay() {
   const { state } = useContext(BeamlineTreeStateContext);
   const { menuOpen } = useContext(MenuContext);
   const fileContext = useContext(FileContext);
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
@@ -71,10 +71,7 @@ export default function ScreenDisplay() {
       );
       if (currentPath !== pathname) {
         // URL and state are out of sync with file displayed, update accordingly
-        history.replace(
-          `/synoptic/${state.currentBeamline}/${currentPath}`,
-          location.state
-        );
+        navigate(`/synoptic/${state.currentBeamline}/${currentPath}`, { state: location.state, replace: true } );
       }
     }
   }, [fileContext.pageState.main]);

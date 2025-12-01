@@ -1,17 +1,15 @@
 import { fireEvent, render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import LinkCard from "../../components/LinkCard";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom-v5-compat";
 
 const mockHistoryPush = vi.fn();
 
-vi.mock("react-router-dom", async importOriginal => {
-  const actual = await importOriginal<typeof import("react-router-dom")>();
+vi.mock("react-router-dom-v5-compat", async importOriginal => {
+  const actual = await importOriginal<typeof import("react-router-dom-v5-compat")>();
   return {
     ...actual,
-    useHistory: () => ({
-      push: mockHistoryPush
-    })
+    useNavigate: () => mockHistoryPush
   };
 });
 
