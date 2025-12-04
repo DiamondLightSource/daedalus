@@ -12,6 +12,7 @@ export default function ScreenTreeView() {
   const [expandedScreens, setExpandedScreens] = useState<string[]>([]);
 
   const handleExpandedScreensChange = (screenIds: string[]) => {
+    console.log(screenIds);
     setExpandedScreens(screenIds);
   };
 
@@ -71,9 +72,13 @@ export default function ScreenTreeView() {
       {menuOpen ? (
         <RichTreeView
           items={currentScreenTree}
+          selectedItems={state.currentScreenId}
           expandedItems={expandedScreens}
-          onExpandedItemsChange={_event => handleExpandedScreensChange}
+          onExpandedItemsChange={(_event, itemIds) =>
+            handleExpandedScreensChange(itemIds)
+          }
           onItemClick={(_event, itemId) => handleClick(itemId)}
+          expansionTrigger="iconContainer"
         />
       ) : (
         <></>
