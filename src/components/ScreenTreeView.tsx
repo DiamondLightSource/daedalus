@@ -36,7 +36,7 @@ export default function ScreenTreeView() {
       fileContext,
       undefined,
       {},
-      `/synoptic/${state.currentBeamline}/${itemId}`
+      `/synoptic/${state.currentBeamline}/${state.beamlines[state.currentBeamline].filePathIds[itemId].urlId}`
     );
   };
 
@@ -51,10 +51,10 @@ export default function ScreenTreeView() {
     ) => {
       const screenIds: TreeViewItemId[] = [];
 
-      const registerScreenId = (item: TreeViewBaseItem) => {
+      const registerScreenId = (item: TreeViewBaseItem): void => {
         if (item.children?.length) {
           screenIds.push(item.id);
-          item.children.forEach(registerScreenId);
+          (item.children as TreeViewBaseItem[]).forEach(registerScreenId);
         }
       };
 

@@ -24,7 +24,7 @@ export const MenuContext = createContext<{
 
 export function MainPage() {
   const { state, dispatch } = useContext(BeamlineTreeStateContext);
-  const params: { beamline?: string; screenId?: string } = useParams();
+  const params: { beamline?: string; screenUrlId?: string } = useParams();
   const fileContext = useContext(FileContext);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -36,13 +36,13 @@ export function MainPage() {
           type: CHANGE_BEAMLINE,
           payload: { beamline: params.beamline }
         });
-      if (params.screenId && params.screenId !== state.currentScreenId)
+      if (params.screenUrlId && params.screenUrlId !== state.currentScreenUrlId)
         dispatch({
           type: CHANGE_SCREEN,
-          payload: { screenId: params.screenId }
+          payload: { screenUrlId: params.screenUrlId }
         });
     }
-  }, [params.beamline, params.screenId]);
+  }, [params.beamline, params.screenUrlId]);
 
   // Only run once on mount
   useEffect(() => {
@@ -62,8 +62,9 @@ export function MainPage() {
         item.loaded = true;
       } catch (e) {
         console.error(
-          `Unable to load JSON map for ${beamline}. Check file is available at ${item.host + item.entryPoint} and reload.`
+          `Unable to process JSON map for ${beamline}. Check file is available at ${item.host + item.entryPoint} and reload.`
         );
+        console.error(e);
       }
     }
     dispatch({
@@ -71,17 +72,19 @@ export function MainPage() {
       payload: {
         beamlines: newBeamlines,
         loadBeamline: params.beamline,
-        loadScreen: params.screenId
+        loadScreen: params.screenUrlId
       }
     });
     if (params.beamline) {
       // If we navigated directly to a beamline and/or screen, load in display
       const newBeamlineState = newBeamlines[params.beamline];
+      const filepath = Object.values(newBeamlineState.filePathIds).find(
+        x => x.urlId === params.screenUrlId
+      )?.file;
+
       const newScreen =
-        newBeamlineState.host +
-        (params.screenId
-          ? newBeamlineState.filePathIds[params.screenId].file
-          : newBeamlineState.topLevelScreen);
+        newBeamlineState.host + (filepath ?? newBeamlineState.topLevelScreen);
+
       executeAction(
         {
           type: "OPEN_PAGE",

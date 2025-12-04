@@ -1,5 +1,9 @@
 import { TreeViewBaseItem } from "@mui/x-tree-view";
-import { FileIDs } from "../store";
+import { FileIDs, Macros } from "../store";
+import {
+  CsWebLibHttpResponseError,
+  httpRequest
+} from "@diamondlightsource/cs-web-lib";
 
 /**
  * Parse the parent file and all child files into a
@@ -9,87 +13,141 @@ import { FileIDs } from "../store";
 export async function parseScreenTree(
   filepath: string
 ): Promise<[TreeViewBaseItem[], FileIDs, string]> {
-  const response = await fetch(filepath);
-  const json = await response.json();
-  const topLevelScreen = json.file.split(".bob")[0].split("/").pop()!;
+  try {
+    const response = await httpRequest(filepath);
+    const json = await response.json();
 
-  const parentScreen: TreeViewBaseItem = {
-    id: topLevelScreen,
-    label: topLevelScreen,
-    children: []
-  };
+    const { urlId, fileLabel: topLevelScreen } = buildUrlId(json.file, "");
 
-  const [children, ids] = await parseChildren(json, "");
-  parentScreen.children = children;
-  return [[parentScreen], ids, json.file];
-}
+    // Process the child items
+    const { fileMap, treeViewItems } = RecursiveTreeViewBuilder(
+      json.children,
+      topLevelScreen
+    );
 
-/**
- * Recursive synchronous function that parses JSON object to find all files and
- * return a TreeViewBaseItem of all screens
- * @param json the parsed json
- * @param screen TreeViewBaseItem holding the currently parsed tree items
- * @param parentId string ID of the parent file
- * @returns
- */
-export async function parseChildren(
-  json: any,
-  parentId: string
-): Promise<[TreeViewBaseItem[], FileIDs]> {
-  const screen: TreeViewBaseItem[] = [];
-  let screenIDs: FileIDs = {};
-  // Construct ID of file using parents ID and + as separator
-  const id = `${parentId}${parentId === "" ? "" : "+"}${json.file.split(".bob")[0].split("/").pop()!}`;
-  screenIDs[id] = { file: json.file };
-  if (json.macros) screenIDs[id].macros = [json.macros];
+    // Using a GUID guarantees that each TreeeViewItem has a unique id.
+    const guid = crypto.randomUUID();
 
-  for (const child of json.children) {
-    const fileLabel: string = child.file.split(".bob")[0].split("/").pop()!;
-    const fileId = `${id}+${fileLabel}`;
-    const newScreen: TreeViewBaseItem = { id: fileId, label: fileLabel };
-    // Check if this has been parsed already
-    if (child.duplicate) {
-      screenIDs = handleDuplicate(child.macros, screenIDs, child.file);
+    // Append the top level screen to the fileMap
+    fileMap[guid] = {
+      guid: guid,
+      file: json?.file,
+      urlId: urlId,
+      macros: json.macros ? [json.macros as Macros] : []
+    };
+
+    // Now we have the initial fileMap with unique file entries, update fileMap with macros for duplicate files.
+    RecursiveAppendDuplicateFileMacros(json.children, fileMap);
+
+    const parentScreen: TreeViewBaseItem = {
+      id: guid,
+      label: topLevelScreen,
+      children: treeViewItems
+    };
+
+    return [[parentScreen], fileMap, json.file];
+  } catch (e) {
+    if (e instanceof CsWebLibHttpResponseError) {
+      console.error(`Failed to fetch the file: ${filepath}`);
     } else {
-      // If not a duplicate, check for children
-      if (child.children) {
-        // If it has children, loop over recursively
-        const [children, ids] = await parseChildren(child, id);
-        screenIDs = { ...screenIDs, ...ids };
-        newScreen.children = children;
-      } else {
-        // If it doesn't have children, add to the array
-        screenIDs[fileId] = { file: child.file };
-        if (child.macros) screenIDs[fileId].macros = [child.macros];
-      }
-      screen.push(newScreen);
+      console.error(`Failed to parse the file: ${filepath}`);
     }
+    console.error(e);
+    throw e;
   }
-  return [screen, screenIDs];
 }
 
 /**
- * Adds macros of a duplicate file to the existing file object in the tree
- * @param macros macros of the file, if they exist
- * @param screenIDs dictionary of all files with their ids and attached macros
- * @param file string filepath
- * @returns
+ * Recursive function that parses an array of JSON objects from an beamline JsonMap.json file to find all non-duplicate files and
+ * return a TreeViewBaseItem of all screens
+ * @param jsonSiblings Array of JSON objects; each object contains the data for a screen file.
+ * @param idPrefix Prefix for the ID.
+ * @returns a file map and array of TreeViewItems for all sibling screens and all their descendants.
  */
-export function handleDuplicate(
-  macros: any,
-  screenIDs: FileIDs,
-  file: string
-): FileIDs {
-  if (macros) {
-    for (const value of Object.values(screenIDs)) {
-      if (value.file === file) {
-        if (value.macros) {
-          value.macros.push(macros);
-        } else {
-          value.macros = [macros];
-        }
+export const RecursiveTreeViewBuilder = (
+  jsonSiblings: any[],
+  idPrefix: string
+): { fileMap: FileIDs; treeViewItems: TreeViewBaseItem[] } => {
+  let fileMap: FileIDs = {};
+  const treeViewItems: TreeViewBaseItem[] = [];
+
+  if (!jsonSiblings) {
+    return { fileMap, treeViewItems };
+  }
+
+  for (const sibling of jsonSiblings) {
+    const { urlId, fileLabel } = buildUrlId(sibling.file, idPrefix);
+    const guid = crypto.randomUUID();
+
+    const treeViewItem: TreeViewBaseItem = {
+      id: guid,
+      label: fileLabel,
+      children: []
+    };
+
+    if (!sibling.duplicate) {
+      fileMap[guid] = {
+        guid: guid,
+        file: sibling.file,
+        urlId,
+        macros: sibling.macros ? [sibling.macros] : []
+      };
+
+      // If not a duplicate, check for children
+      if (sibling.children) {
+        // If it has children make recursive call
+        const { fileMap: childFileMap, treeViewItems: childTreeViewItems } =
+          RecursiveTreeViewBuilder(sibling.children, urlId);
+
+        fileMap = { ...fileMap, ...childFileMap };
+        treeViewItem.children = childTreeViewItems;
       }
+
+      treeViewItems.push(treeViewItem);
     }
   }
-  return screenIDs;
-}
+
+  return { fileMap, treeViewItems };
+};
+
+/**
+ * Recursive function that finds files flagged as duplicates with macros and appends these macros to the filemap entry for the duplicate.
+ * @param jsonSiblings Array of JSON objects; each object contains the data for a screen file.
+ * @param fileMap Prepopulated map of file metadata, this is modified in place.
+ */
+export const RecursiveAppendDuplicateFileMacros = (
+  jsonSiblings: any[],
+  fileMap: FileIDs
+) => {
+  if (!jsonSiblings) {
+    return;
+  }
+
+  for (const sibling of jsonSiblings) {
+    if (sibling.duplicate && sibling.macros) {
+      const matchingFileKey = Object.keys(fileMap).find(
+        key => fileMap[key].file === sibling.file
+      );
+      if (matchingFileKey) {
+        fileMap[matchingFileKey].macros = fileMap[matchingFileKey].macros
+          ? [...fileMap[matchingFileKey].macros, sibling.macros]
+          : [sibling.macros];
+      }
+    }
+
+    RecursiveAppendDuplicateFileMacros(sibling?.children, fileMap);
+  }
+};
+
+const buildUrlId = (filepath: string, idPrefix: string) => {
+  const splitFilePath = filepath.split(".bob")[0].split("/");
+  let fileLabel: string = splitFilePath.pop()!;
+  if (fileLabel === "index") {
+    const parentDir = splitFilePath.pop();
+    if (parentDir) {
+      fileLabel = `${parentDir}__${fileLabel}`;
+    }
+  }
+  const urlId = `${idPrefix}${idPrefix === "" ? "" : "+"}${fileLabel}`;
+  return { urlId, fileLabel };
+};
