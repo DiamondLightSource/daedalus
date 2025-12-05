@@ -7,7 +7,7 @@ import { IconButton, Paper, Typography } from "@mui/material";
 import FileStateContext from "../routes/DemoPage";
 import { useContext, useEffect, useState } from "react";
 import { Close } from "@mui/icons-material";
-import RefreshIcon from '@mui/icons-material/Refresh';
+import RefreshIcon from "@mui/icons-material/Refresh";
 import { REMOVE_FILE } from "../store";
 import { refreshFile, store } from "@diamondlightsource/cs-web-lib";
 
@@ -27,7 +27,7 @@ export default function FileDisplay() {
   };
 
   const handleCloseButtonClick = (fileName: string) => {
-    dispatch({ type: REMOVE_FILE, payload: { name: fileName } })
+    dispatch({ type: REMOVE_FILE, payload: { name: fileName } });
   };
 
   const handleRefreshButtonClick = (fileName: string) => {
