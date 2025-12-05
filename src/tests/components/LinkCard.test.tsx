@@ -5,7 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 
 const mockHistoryPush = vi.fn();
 
-vi.mock("react-router-dom-v5-compat", async importOriginal => {
+vi.mock("react-router-dom", async importOriginal => {
   const actual = await importOriginal<typeof import("react-router-dom")>();
   return {
     ...actual,

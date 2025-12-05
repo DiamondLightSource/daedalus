@@ -10,8 +10,8 @@ import { MemoryRouter } from "react-router-dom";
 console.log = vi.fn();
 
 const mockHistoryPush = vi.fn();
-vi.mock("react-router-dom-v5-compat", async () => {
-  const actual = await vi.importActual("react-router-dom-v5-compat");
+vi.mock("react-router-dom", async () => {
+  const actual = await vi.importActual("react-router-dom");
   return {
     ...actual,
     useNavigate: () => mockHistoryPush
@@ -25,7 +25,7 @@ describe("DLSAppBar Component", () => {
 
   const renderComponent = (fullScreen = false, children: ReactNode = null) => {
     return render(
-      <MemoryRouter initialEntries={['/']}>
+      <MemoryRouter initialEntries={["/"]}>
         <DLSAppBar fullScreen={fullScreen}>{children}</DLSAppBar>
       </MemoryRouter>
     );

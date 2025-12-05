@@ -72,7 +72,10 @@ export default function ScreenDisplay() {
       );
       if (currentFile?.urlId !== pathname) {
         // URL and state are out of sync with file displayed, update accordingly
-        navigate(`/synoptic/${state.currentBeamline}/${currentFile?.urlId}`, { state: location.state, replace: true } );
+        navigate(`/synoptic/${state.currentBeamline}/${currentFile?.urlId}`, {
+          state: location.state,
+          replace: true
+        });
       }
     }
   }, [fileContext.pageState.main]);
