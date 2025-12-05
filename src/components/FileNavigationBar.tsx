@@ -28,7 +28,11 @@ export default function FileNavigationBar() {
       } else {
         dispatch({
           type: ADD_FILE,
-          payload: { name: state.nextFile.path, macros: state.nextFile.macros, protocol: state.nextFile.protocol }
+          payload: {
+            name: state.nextFile.path,
+            macros: state.nextFile.macros,
+            protocol: state.nextFile.protocol
+          }
         });
         setAlert("success");
       }
