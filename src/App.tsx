@@ -77,7 +77,7 @@ function App({}) {
                 <Route exact path="/synoptic/:beamline" component={MainPage} />
                 <Route
                   exact
-                  path="/synoptic/:beamline/:screenId"
+                  path="/synoptic/:beamline/:screenUrlId"
                   component={MainPage}
                 />
                 <Route exact path="/" component={LandingPage} />

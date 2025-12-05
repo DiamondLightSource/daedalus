@@ -19,7 +19,7 @@ import Editor from "../components/Editor";
  */
 export function EditorPage() {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const params: { beamline?: string; screenId?: string } = useParams();
+  const params: { beamline?: string; screenUrlId?: string } = useParams();
   const fileContext = useContext(FileContext);
 
   useEffect(() => {
@@ -30,13 +30,13 @@ export function EditorPage() {
           type: CHANGE_BEAMLINE,
           payload: { beamline: params.beamline }
         });
-      if (params.screenId && params.screenId !== state.currentScreenId)
+      if (params.screenUrlId && params.screenUrlId !== state.currentScreenUrlId)
         dispatch({
           type: CHANGE_SCREEN,
-          payload: { screenId: params.screenId }
+          payload: { screenUrlId: params.screenUrlId }
         });
     }
-  }, [params.beamline, params.screenId]);
+  }, [params.beamline, params.screenUrlId]);
 
   // Only run once on mount
   useEffect(() => {
@@ -55,14 +55,14 @@ export function EditorPage() {
       payload: {
         beamlines: newBeamlines,
         loadBeamline: params.beamline,
-        loadScreen: params.screenId
+        loadScreen: params.screenUrlId
       }
     });
     if (params.beamline) {
       // If we navigated directly to a beamline and/or screen, load in display
       const newBeamlineState = newBeamlines[params.beamline];
-      const newScreen = params.screenId
-        ? newBeamlineState.filePathIds[params.screenId].file
+      const newScreen = params.screenUrlId
+        ? newBeamlineState.filePathIds[params.screenUrlId].file
         : newBeamlineState.host + newBeamlineState.topLevelScreen;
       executeAction(
         {

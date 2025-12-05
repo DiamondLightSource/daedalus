@@ -1,7 +1,7 @@
 {
   "name": "daedalus",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.2",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,10 +11,11 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0 --fix",
     "prettier-check": "prettier --check 'src/**/*.{ts,tsx}'",
+    "prettier-write": "prettier --write 'src/**/*.{ts,tsx}'",
     "preview": "vite preview"
   },
   "dependencies": {
-    "@diamondlightsource/cs-web-lib": "^0.9.2",
+    "@diamondlightsource/cs-web-lib": "^0.9.4",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@mui/icons-material": "^5.15.17",

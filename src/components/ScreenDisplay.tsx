@@ -65,14 +65,15 @@ export default function ScreenDisplay() {
         state.beamlines[state.currentBeamline].host!,
         ""
       );
+
       const allFiles = state.beamlines[state.currentBeamline].filePathIds;
-      const currentPath = Object.keys(allFiles).find(
-        key => allFiles[key].file === displayedPath
+      const currentFile = Object.values(allFiles).find(
+        values => values.file === displayedPath
       );
-      if (currentPath !== pathname) {
+      if (currentFile?.urlId !== pathname) {
         // URL and state are out of sync with file displayed, update accordingly
         history.replace(
-          `/synoptic/${state.currentBeamline}/${currentPath}`,
+          `/synoptic/${state.currentBeamline}/${currentFile?.urlId}`,
           location.state
         );
       }
@@ -83,7 +84,7 @@ export default function ScreenDisplay() {
     <Paper component="main" open={menuOpen}>
       <Box>
         <Box>
-          {state.currentBeamline && state.currentScreenId ? (
+          {state.currentBeamline && state.currentScreenUrlId ? (
             <DynamicPageWidget
               location={"main"}
               position={new RelativePosition()}
