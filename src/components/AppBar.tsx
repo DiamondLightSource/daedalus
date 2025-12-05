@@ -8,8 +8,8 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import { APP_BAR_HEIGHT, DRAWER_WIDTH } from "../utils/helper";
 import { Box, Tooltip } from "@mui/material";
 import DiamondLogo from "../assets/DiamondLogoWhite.svg";
-import { useNavigate } from "react-router-dom-v5-compat"
 import { PageRouteInfo } from "../routes/PageRouteInfo";
+import { useNavigate } from "react-router-dom";
 
 interface AppBarProps extends MuiAppBarProps {
   fullscreen: number;

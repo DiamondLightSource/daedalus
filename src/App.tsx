@@ -1,5 +1,5 @@
 import { FileProvider, store } from "@diamondlightsource/cs-web-lib";
-import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.css";
 import { Provider } from "react-redux";
 import { ThemeProvider } from "@mui/material/styles";
@@ -18,7 +18,6 @@ import {
 } from "./store";
 import { DaedalusConfig, loadConfig } from "./config";
 import { Box, CircularProgress, Typography } from "@mui/material";
-import { CompatRoute, CompatRouter } from "react-router-dom-v5-compat";
 
 const INITIAL_SCREEN_STATE = {
   main: {
@@ -68,25 +67,22 @@ function App({}) {
     <Provider store={store(config)}>
       <ThemeProvider theme={diamondTheme}>
         <Router>
-          <CompatRouter>
             <BeamlineTreeStateContext.Provider value={{ state, dispatch }}>
               <FileProvider initialPageState={INITIAL_SCREEN_STATE}>
-                <Switch>
-                  <CompatRoute exact path="/demo" component={DemoPage} />
-                  <CompatRoute exact path="/data-browser" component={DataBrowserPage} />
-                  <CompatRoute exact path="/editor" component={EditorPage} />
-                  <CompatRoute exact path="/synoptic" component={MainPage} />
-                  <CompatRoute exact path="/synoptic/:beamline" component={MainPage} />
-                  <CompatRoute
-                    exact
+                <Routes>
+                  <Route path="/demo" element={<DemoPage />} />
+                  <Route path="/data-browser" element={<DataBrowserPage />} />
+                  <Route path="/editor" element={<EditorPage />} />
+                  <Route path="/synoptic" element={<MainPage />} />
+                  <Route path="/synoptic/:beamline" element={<MainPage />} />
+                  <Route
                     path="/synoptic/:beamline/:screenId"
-                    component={MainPage}
+                    element={<MainPage />}
                   />
-                  <CompatRoute exact path="/" component={LandingPage} />
-                </Switch>
+                  <Route path="/" element={<LandingPage />} />
+                </Routes>
               </FileProvider>
             </BeamlineTreeStateContext.Provider>
-          </CompatRouter>
         </Router>
       </ThemeProvider>
     </Provider>

@@ -2,10 +2,10 @@ import { ReactNode } from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import DLSAppBar, { StyledAppBar } from "../../components/AppBar";
-import { MemoryRouter } from "react-router-dom-v5-compat";
 import { PageRouteInfo } from "../../routes/PageRouteInfo";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { DRAWER_WIDTH } from "../../utils/helper";
+import { MemoryRouter } from "react-router-dom";
 
 console.log = vi.fn();
 

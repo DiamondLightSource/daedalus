@@ -6,7 +6,7 @@ import {
   CardActionArea,
   useTheme
 } from "@mui/material";
-import { useNavigate } from "react-router-dom-v5-compat";
+import { useNavigate } from "react-router-dom";
 interface LinkCardProps extends CardProps {
   info: {
     name: string;

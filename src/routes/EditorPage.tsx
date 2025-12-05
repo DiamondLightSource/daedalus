@@ -7,10 +7,10 @@ import {
   LOAD_SCREENS,
   reducer
 } from "../store";
-import { useParams } from "react-router-dom-v5-compat";
 import { parseScreenTree } from "../utils/parser";
 import { executeAction, FileContext } from "@diamondlightsource/cs-web-lib";
 import Editor from "../components/Editor";
+import { useParams } from "react-router-dom";
 
 /**
  * Displays a mock editor page with palette and Phoebus
