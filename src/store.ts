@@ -23,7 +23,8 @@ interface AddFile {
   type: typeof ADD_FILE;
   payload: {
     name: string;
-    display: JSX.Element;
+    protocol: string;
+    macros?: MacroMap;
   };
 }
 
@@ -73,7 +74,8 @@ type FileInfo = {
 
 type LoadedFile = {
   name: string;
-  display: JSX.Element;
+  protocol: string;
+  macros?: MacroMap;
 };
 
 export type FileState = {
@@ -99,7 +101,8 @@ export function demoReducer(state: FileState, action: Action) {
       const newFiles = [...state.files];
       const newFile: LoadedFile = {
         name: action.payload.name,
-        display: action.payload.display
+        protocol: action.payload.protocol,
+        macros: action.payload.macros
       };
       newFiles.push(newFile);
       // Create the Embedded Display json that we want

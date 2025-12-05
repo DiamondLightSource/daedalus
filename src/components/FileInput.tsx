@@ -5,7 +5,7 @@ import { isValidHttpUrl } from "../utils/helper";
 import { LOAD_NEXT_FILE } from "../store";
 
 export default function FileInput() {
-  const { state, dispatch } = useContext(FileStateContext);
+  const { dispatch } = useContext(FileStateContext);
   const [filePath, setFilePath] = useState("");
   const [validFile, setValidFile] = useState<boolean | undefined>(true);
   const [helperText, setHelperText] = useState<string>("");
