@@ -56,10 +56,10 @@ export default function ScreenDisplay() {
     // This catches file changes done inside the file by actionbuttons
     // and updates the URL to match the fileroute
     if (state.currentBeamline) {
-      const pathname = location.pathname.replace(
-        `/${state.currentBeamline}/`,
-        ""
-      );
+      const pathname = decodeURI(location.pathname)
+        .replace(`/synoptic`, "")
+        .replace(`/${state.currentBeamline}/`, "");
+
       // Remove host from file name if necessary
       const displayedPath = fileContext.pageState.main.path.replace(
         state.beamlines[state.currentBeamline].host!,
