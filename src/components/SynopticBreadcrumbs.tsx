@@ -11,7 +11,7 @@ export const SynopticBreadcrumbs = () => {
   const fileContext = useContext(FileContext);
 
   const breadcrumbs = createBreadcrumbs(
-    state.currentScreenId,
+    state.currentScreenUrlId,
     state.currentBeamline
   );
 
@@ -40,12 +40,16 @@ const handleClick =
   (event: any) => {
     if (event.target.pathname) {
       event.preventDefault();
-      const screenId = decodeURI(event.target.pathname)
+      const urlId = decodeURI(event.target.pathname)
         .split("/")
         .at(-1) as string;
-      const newScreen =
-        currentBeamlineState.host +
-        currentBeamlineState.filePathIds[screenId].file;
+
+      const filepath =
+        Object.values(currentBeamlineState.filePathIds).find(
+          x => x.urlId === urlId
+        )?.file ?? "";
+
+      const newScreen = currentBeamlineState.host + filepath;
       executeAction(
         {
           type: "OPEN_PAGE",
@@ -72,11 +76,15 @@ const handleClick =
  * Navigates the screen Treeview to determine the correct
  * breadcrumb trail
  */
-const createBreadcrumbs = (screenId: string, beamline: string): ReactNode => {
+const createBreadcrumbs = (
+  screenUrlId: string,
+  beamline: string
+): ReactNode => {
   const breadcrumbs: ReactNode[] = [];
   if (beamline === "") return null;
-  const breadcrumbLabels = screenId.split("+");
+  const breadcrumbLabels = screenUrlId.split("+");
   let linkUrl = `/synoptic/${beamline}/`;
+
   breadcrumbLabels.forEach((label, idx) => {
     if (idx !== 0) linkUrl += "+";
     linkUrl += label;

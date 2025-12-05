@@ -1,5 +1,5 @@
 import { RichTreeView } from "@mui/x-tree-view/RichTreeView";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { TreeViewBaseItem, TreeViewItemId } from "@mui/x-tree-view";
 import { executeAction, FileContext } from "@diamondlightsource/cs-web-lib";
 import { BeamlineTreeStateContext } from "../App";
@@ -36,13 +36,14 @@ export default function ScreenTreeView() {
       fileContext,
       undefined,
       {},
-      `/synoptic/${state.currentBeamline}/${itemId}`
+      `/synoptic/${state.currentBeamline}/${state.beamlines[state.currentBeamline].filePathIds[itemId].urlId}`
     );
   };
 
-  let currentScreenTree: TreeViewBaseItem[] = [];
-  const currentBeamline = state.beamlines[state.currentBeamline];
-  if (currentBeamline) currentScreenTree = currentBeamline.screenTree;
+  const currentScreenTree: TreeViewBaseItem[] = useMemo(() => {
+    const currentBeamline = state.beamlines[state.currentBeamline];
+    return currentBeamline?.screenTree ?? [];
+  }, [state.currentBeamline, state.beamlines]);
 
   // When beamline is updated, trigger refresh of expanded screens to fully expand all
   useEffect(() => {
@@ -51,10 +52,10 @@ export default function ScreenTreeView() {
     ) => {
       const screenIds: TreeViewItemId[] = [];
 
-      const registerScreenId = (item: TreeViewBaseItem) => {
+      const registerScreenId = (item: TreeViewBaseItem): void => {
         if (item.children?.length) {
           screenIds.push(item.id);
-          item.children.forEach(registerScreenId);
+          (item.children as TreeViewBaseItem[]).forEach(registerScreenId);
         }
       };
 
@@ -64,16 +65,20 @@ export default function ScreenTreeView() {
       setExpandedScreens(screenIds);
     };
     getAllScreensWithChildrenItemIds(currentScreenTree);
-  }, [state.currentBeamline, state.beamlines]);
+  }, [state.currentBeamline, state.beamlines, currentScreenTree]);
 
   return (
     <>
       {menuOpen ? (
         <RichTreeView
           items={currentScreenTree}
+          selectedItems={state.currentScreenId}
           expandedItems={expandedScreens}
-          onExpandedItemsChange={_event => handleExpandedScreensChange}
+          onExpandedItemsChange={(_event, itemIds) =>
+            handleExpandedScreensChange(itemIds)
+          }
           onItemClick={(_event, itemId) => handleClick(itemId)}
+          expansionTrigger="iconContainer"
         />
       ) : (
         <></>

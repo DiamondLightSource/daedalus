@@ -23,11 +23,13 @@ describe("SynopticBreadcrumbs Component", () => {
   });
 
   const createMockState = (
-    screenId = "Area1+Area2",
-    beamline?: string
+    screenUrlId = "Area1+Area2",
+    beamline?: string,
+    screenGuid: string = crypto.randomUUID()
   ): BeamlineTreeState =>
     ({
-      currentScreenId: screenId,
+      currentScreenId: screenGuid,
+      currentScreenUrlId: screenUrlId,
       currentBeamline: beamline,
       beamlines: !beamline
         ? {}
@@ -35,8 +37,8 @@ describe("SynopticBreadcrumbs Component", () => {
             [beamline]: {
               host: "http://example.com/",
               filePathIds: {
-                Area1: { file: "area1.opi" },
-                "Area1+Area2": { file: "area2.opi" }
+                Area1: { urlId: "Area1", file: "area1.opi" },
+                [screenGuid]: { urlId: "Area1+Area2", file: "area2.opi" }
               }
             } as unknown as BeamlineStateProperties
           } as unknown as BeamlineState),

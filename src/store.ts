@@ -157,7 +157,7 @@ interface ChangeBeamline {
 interface ChangeScreen {
   type: typeof CHANGE_SCREEN;
   payload: {
-    screenId: string;
+    screenUrlId: string;
   };
 }
 
@@ -185,15 +185,18 @@ type BeamlineAction =
   | OpenMenuBar
   | LoadScreens;
 
+export type Macros = {
+  [key: string]: string;
+};
+
+export type FileMetadata = {
+  file: string;
+  urlId: string;
+  macros?: Macros[];
+};
+
 export type FileIDs = {
-  [id: string]: {
-    file: string;
-    macros?: [
-      {
-        [key: string]: string;
-      }
-    ];
-  };
+  [guid: string]: FileMetadata;
 };
 
 export type BeamlineStateProperties = {
@@ -218,6 +221,7 @@ export type BeamlineTreeState = {
   };
   currentBeamline: string;
   currentScreenId: string;
+  currentScreenUrlId: string;
   currentScreenLabel: string;
   currentScreenFilepath: string;
   beamlines: BeamlineState;
@@ -243,12 +247,16 @@ export const initialState: BeamlineTreeState = {
   },
   currentBeamline: "",
   currentScreenId: "",
+  currentScreenUrlId: "",
   currentScreenLabel: "",
   currentScreenFilepath: "",
-  beamlines: {}
+  beamlines: {} as BeamlineState
 };
 
-export function reducer(state: BeamlineTreeState, action: BeamlineAction) {
+export function reducer(
+  state: BeamlineTreeState,
+  action: BeamlineAction
+): BeamlineTreeState {
   switch (action.type) {
     case APPEND_BEAMLINES: {
       let newBeamlineState = state.beamlines;
@@ -276,6 +284,7 @@ export function reducer(state: BeamlineTreeState, action: BeamlineAction) {
         ...state,
         currentBeamline: action.payload.beamline,
         currentScreenId: newID,
+        currentScreenUrlId: newBeamlineState.filePathIds[newID]?.urlId,
         currentScreenFilepath: newBeamlineState.topLevelScreen,
         currentScreenLabel: newBeamlineState.topLevelScreen
           .split(".bob")[0]
@@ -285,10 +294,17 @@ export function reducer(state: BeamlineTreeState, action: BeamlineAction) {
     }
     case CHANGE_SCREEN: {
       // Parse the label from the end of the ID. This is the specific screen name
-      const newLabel = action.payload.screenId.split("+").pop() || "";
+      const newLabel = action.payload.screenUrlId.split("+").pop() || "";
+      const beamlineFilePaths =
+        state.beamlines[state.currentBeamline].filePathIds;
+      const screenId = Object.keys(beamlineFilePaths).find(
+        x => beamlineFilePaths[x].urlId === action.payload.screenUrlId
+      );
+
       return {
         ...state,
-        currentScreenId: action.payload.screenId,
+        currentScreenId: screenId ?? "",
+        currentScreenUrlId: action.payload.screenUrlId,
         currentScreenLabel: newLabel
       };
     }
@@ -310,11 +326,13 @@ export function reducer(state: BeamlineTreeState, action: BeamlineAction) {
         newState.currentBeamline = action.payload.loadBeamline;
         const newBeamlineState =
           action.payload.beamlines[action.payload.loadBeamline];
+
         Object.entries(newBeamlineState.filePathIds).forEach(([key, value]) => {
           // If the screen ID we've been passed matches
-          if (action.payload.loadScreen === key) {
+          if (action.payload.loadScreen === value.urlId) {
             newState.currentScreenFilepath = value.file;
             newState.currentScreenId = key;
+            newState.currentScreenUrlId = value.urlId;
             newState.currentScreenLabel = key.split(".").pop()!;
             // If no loadscreen match, use
           } else if (
@@ -323,6 +341,7 @@ export function reducer(state: BeamlineTreeState, action: BeamlineAction) {
           ) {
             newState.currentScreenFilepath = value.file;
             newState.currentScreenId = key;
+            newState.currentScreenUrlId = value.urlId;
             newState.currentScreenLabel = key.split(".").pop()!;
           }
         });
@@ -334,7 +353,6 @@ export function reducer(state: BeamlineTreeState, action: BeamlineAction) {
 }
 
 // Data browser state
-
 export const TOGGLE_TRACES_PANEL = "toggleTracesPanel";
 export const TOGGLE_ARCHIVER_MENU_BAR = "toggleArchiverMenuBar";
 

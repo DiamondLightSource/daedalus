@@ -1,4 +1,4 @@
-import { CsWebLibConfig } from "@diamondlightsource/cs-web-lib";
+import { CsWebLibConfig, httpRequest } from "@diamondlightsource/cs-web-lib";
 
 export type BeamlinesConfig = {
   [beamline: string]: {
@@ -19,7 +19,7 @@ export const loadConfig = async (): Promise<DaedalusConfig> => {
   }
 
   try {
-    const response = await fetch("/config/config.json");
+    const response = await httpRequest("/config/config.json");
     config = await response.json();
   } catch (error) {
     console.warn("Configuration not found falling back to defaults", error);

@@ -3,6 +3,7 @@ import FileStateContext from "../routes/DemoPage";
 import { Stack, Typography, TextField, Button } from "@mui/material";
 import { isValidHttpUrl } from "../utils/helper";
 import { LOAD_NEXT_FILE } from "../store";
+import { httpRequest } from "@diamondlightsource/cs-web-lib";
 
 export default function FileInput() {
   const { state, dispatch } = useContext(FileStateContext);
@@ -27,9 +28,11 @@ export default function FileInput() {
         : true;
     let valid = false;
     try {
-      const fileExists = await fetch(filePath, { method: "HEAD" }).then(res => {
-        return res.ok;
-      });
+      const fileExists = await httpRequest(filePath, { method: "HEAD" }).then(
+        res => {
+          return res.ok;
+        }
+      );
       if (fileExists) {
         if (validUrl) {
           if (validExtension) {

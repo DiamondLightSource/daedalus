@@ -67,22 +67,22 @@ function App({}) {
     <Provider store={store(config)}>
       <ThemeProvider theme={diamondTheme}>
         <Router>
-            <BeamlineTreeStateContext.Provider value={{ state, dispatch }}>
-              <FileProvider initialPageState={INITIAL_SCREEN_STATE}>
-                <Routes>
-                  <Route path="/demo" element={<DemoPage />} />
-                  <Route path="/data-browser" element={<DataBrowserPage />} />
-                  <Route path="/editor" element={<EditorPage />} />
-                  <Route path="/synoptic" element={<MainPage />} />
-                  <Route path="/synoptic/:beamline" element={<MainPage />} />
-                  <Route
-                    path="/synoptic/:beamline/:screenId"
-                    element={<MainPage />}
-                  />
-                  <Route path="/" element={<LandingPage />} />
-                </Routes>
-              </FileProvider>
-            </BeamlineTreeStateContext.Provider>
+          <BeamlineTreeStateContext.Provider value={{ state, dispatch }}>
+            <FileProvider initialPageState={INITIAL_SCREEN_STATE}>
+              <Routes>
+                <Route path="/demo" element={<DemoPage />} />
+                <Route path="/data-browser" element={<DataBrowserPage />} />
+                <Route path="/editor" element={<EditorPage />} />
+                <Route path="/synoptic" element={<MainPage />} />
+                <Route path="/synoptic/:beamline" element={<MainPage />} />
+                <Route
+                  path="/synoptic/:beamline/:screenUrlId"
+                  element={<MainPage />}
+                />
+                <Route path="/" element={<LandingPage />} />
+              </Routes>
+            </FileProvider>
+          </BeamlineTreeStateContext.Provider>
         </Router>
       </ThemeProvider>
     </Provider>
