@@ -20,6 +20,7 @@ declare global {
 }
 
 interface GlobalFetch extends NodeJS.Global {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   fetch: any;
 }
 const globalWithFetch = global as GlobalFetch;
@@ -55,7 +56,7 @@ describe("parseScreenTree()", (): void => {
     const mockFetch = (): Promise<unknown> => mockFetchPromise;
     vi.spyOn(globalWithFetch, "fetch").mockImplementation(mockFetch);
 
-    const [tree, ids, firstFile] = await parseScreenTree("test-map.json");
+    const [tree, , firstFile] = await parseScreenTree("test-map.json");
     expect(tree.length).toEqual(1);
     expect(firstFile).toEqual("top.bob");
   });
@@ -248,9 +249,8 @@ describe("RecursiveAppendDuplicateFileMacros()", (): void => {
       ]
     };
 
-    let ids: FileIDs = {
+    const ids: FileIDs = {
       test: {
-        guid: "1123",
         file: "middle1.bob",
         urlId: "top+middle1",
         macros: [{ Q: "something" }]
@@ -278,9 +278,8 @@ describe("RecursiveAppendDuplicateFileMacros()", (): void => {
   });
 
   it("does nothing if no json undefined", (): void => {
-    let ids: FileIDs = {
+    const ids: FileIDs = {
       test: {
-        guid: "1123",
         file: "test.bob",
         urlId: "top+middle1",
         macros: [{ Q: "something" }]
@@ -322,9 +321,8 @@ describe("RecursiveAppendDuplicateFileMacros()", (): void => {
       ]
     };
 
-    let ids: FileIDs = {
+    const ids: FileIDs = {
       test: {
-        guid: "1123",
         file: "Bottom1.bob",
         urlId: "top+middle1+Bottom1",
         macros: [{ Q: "something" }]

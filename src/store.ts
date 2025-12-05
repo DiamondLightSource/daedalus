@@ -190,7 +190,6 @@ export type Macros = {
 };
 
 export type FileMetadata = {
-  guid: string;
   file: string;
   urlId: string;
   macros?: Macros[];

@@ -30,7 +30,6 @@ export async function parseScreenTree(
 
     // Append the top level screen to the fileMap
     fileMap[guid] = {
-      guid: guid,
       file: json?.file,
       urlId: urlId,
       macros: json.macros ? [json.macros as Macros] : []
@@ -87,7 +86,6 @@ export const RecursiveTreeViewBuilder = (
 
     if (!sibling.duplicate) {
       fileMap[guid] = {
-        guid: guid,
         file: sibling.file,
         urlId,
         macros: sibling.macros ? [sibling.macros] : []
