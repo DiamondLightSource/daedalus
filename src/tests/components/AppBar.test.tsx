@@ -2,11 +2,10 @@ import { ReactNode } from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import DLSAppBar, { StyledAppBar } from "../../components/AppBar";
-import { Router } from "react-router-dom";
-import { createMemoryHistory } from "history";
 import { PageRouteInfo } from "../../routes/PageRouteInfo";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { DRAWER_WIDTH } from "../../utils/helper";
+import { MemoryRouter } from "react-router-dom";
 
 console.log = vi.fn();
 
@@ -15,9 +14,7 @@ vi.mock("react-router-dom", async () => {
   const actual = await vi.importActual("react-router-dom");
   return {
     ...actual,
-    useHistory: () => ({
-      push: mockHistoryPush
-    })
+    useNavigate: () => mockHistoryPush
   };
 });
 
@@ -27,12 +24,10 @@ describe("DLSAppBar Component", () => {
   });
 
   const renderComponent = (fullScreen = false, children: ReactNode = null) => {
-    const history = createMemoryHistory();
-
     return render(
-      <Router history={history}>
+      <MemoryRouter initialEntries={["/"]}>
         <DLSAppBar fullScreen={fullScreen}>{children}</DLSAppBar>
-      </Router>
+      </MemoryRouter>
     );
   };
 

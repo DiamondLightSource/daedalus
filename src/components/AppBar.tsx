@@ -8,8 +8,8 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import { APP_BAR_HEIGHT, DRAWER_WIDTH } from "../utils/helper";
 import { Box, Tooltip } from "@mui/material";
 import DiamondLogo from "../assets/DiamondLogoWhite.svg";
-import { useHistory } from "react-router-dom";
 import { PageRouteInfo } from "../routes/PageRouteInfo";
+import { useNavigate } from "react-router-dom";
 
 interface AppBarProps extends MuiAppBarProps {
   fullscreen: number;
@@ -52,7 +52,7 @@ const DLSAppBar = (props: {
   open?: boolean;
   children?: React.ReactNode;
 }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { fullScreen, open } = props;
   const handleOpenSettings = () => {
     console.log("TO DO - create settings modal");
@@ -97,7 +97,7 @@ const DLSAppBar = (props: {
                       color="inherit"
                       aria-label={page.ariaLabel}
                       size="small"
-                      onClick={() => history.push(page.route)}
+                      onClick={() => navigate(page.route)}
                     >
                       {page.icon}
                     </IconButton>

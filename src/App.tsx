@@ -1,5 +1,5 @@
 import { FileProvider, store } from "@diamondlightsource/cs-web-lib";
-import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.css";
 import { Provider } from "react-redux";
 import { ThemeProvider } from "@mui/material/styles";
@@ -69,19 +69,18 @@ function App({}) {
         <Router>
           <BeamlineTreeStateContext.Provider value={{ state, dispatch }}>
             <FileProvider initialPageState={INITIAL_SCREEN_STATE}>
-              <Switch>
-                <Route exact path="/demo" component={DemoPage} />
-                <Route exact path="/data-browser" component={DataBrowserPage} />
-                <Route exact path="/editor" component={EditorPage} />
-                <Route exact path="/synoptic" component={MainPage} />
-                <Route exact path="/synoptic/:beamline" component={MainPage} />
+              <Routes>
+                <Route path="/demo" element={<DemoPage />} />
+                <Route path="/data-browser" element={<DataBrowserPage />} />
+                <Route path="/editor" element={<EditorPage />} />
+                <Route path="/synoptic" element={<MainPage />} />
+                <Route path="/synoptic/:beamline" element={<MainPage />} />
                 <Route
-                  exact
                   path="/synoptic/:beamline/:screenUrlId"
-                  component={MainPage}
+                  element={<MainPage />}
                 />
-                <Route exact path="/" component={LandingPage} />
-              </Switch>
+                <Route path="/" element={<LandingPage />} />
+              </Routes>
             </FileProvider>
           </BeamlineTreeStateContext.Provider>
         </Router>

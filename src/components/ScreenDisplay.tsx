@@ -5,7 +5,6 @@ import {
   PaperProps as MuiPaperProps,
   styled
 } from "@mui/material";
-import { useHistory, useLocation } from "react-router-dom";
 import {
   DynamicPageWidget,
   FileContext,
@@ -19,6 +18,7 @@ import {
 } from "../utils/helper";
 import { BeamlineTreeStateContext } from "../App";
 import { MenuContext } from "../routes/MainPage";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface PaperProps extends MuiPaperProps {
   open?: boolean;
@@ -49,17 +49,17 @@ export default function ScreenDisplay() {
   const { state } = useContext(BeamlineTreeStateContext);
   const { menuOpen } = useContext(MenuContext);
   const fileContext = useContext(FileContext);
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
     // This catches file changes done inside the file by actionbuttons
     // and updates the URL to match the fileroute
     if (state.currentBeamline) {
-      const pathname = location.pathname.replace(
-        `/${state.currentBeamline}/`,
-        ""
-      );
+      const pathname = decodeURI(location.pathname)
+        .replace(`/synoptic`, "")
+        .replace(`/${state.currentBeamline}/`, "");
+
       // Remove host from file name if necessary
       const displayedPath = fileContext.pageState.main.path.replace(
         state.beamlines[state.currentBeamline].host!,
@@ -72,10 +72,10 @@ export default function ScreenDisplay() {
       );
       if (currentFile?.urlId !== pathname) {
         // URL and state are out of sync with file displayed, update accordingly
-        history.replace(
-          `/synoptic/${state.currentBeamline}/${currentFile?.urlId}`,
-          location.state
-        );
+        navigate(`/synoptic/${state.currentBeamline}/${currentFile?.urlId}`, {
+          state: location.state,
+          replace: true
+        });
       }
     }
   }, [fileContext.pageState.main]);

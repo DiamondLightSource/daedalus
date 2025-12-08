@@ -9,9 +9,7 @@ vi.mock("react-router-dom", async importOriginal => {
   const actual = await importOriginal<typeof import("react-router-dom")>();
   return {
     ...actual,
-    useHistory: () => ({
-      push: mockHistoryPush
-    })
+    useNavigate: () => mockHistoryPush
   };
 });
 
