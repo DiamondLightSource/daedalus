@@ -2,10 +2,6 @@ import MacrosModal from "./MacrosModal";
 import { Alert, AlertTitle, Button, Container, Stack } from "@mui/material";
 import { useContext, useState } from "react";
 import { ADD_FILE } from "../store";
-import {
-  EmbeddedDisplay,
-  RelativePosition
-} from "@diamondlightsource/cs-web-lib";
 import FileStateContext from "../routes/DemoPage";
 import ProtocolButton from "./ProtocolButton";
 import FileInput from "./FileInput";
@@ -30,22 +26,13 @@ export default function FileNavigationBar() {
         // Change the last attempted load back to a failure
         setAlert("error");
       } else {
-        const display = (
-          <EmbeddedDisplay
-            height={800}
-            position={new RelativePosition()}
-            scroll={true}
-            resize={0}
-            file={{
-              path: state.nextFile.path,
-              macros: { ...state.nextFile.macros },
-              defaultProtocol: state.nextFile.protocol
-            }}
-          />
-        );
         dispatch({
           type: ADD_FILE,
-          payload: { name: state.nextFile.path, display: display }
+          payload: {
+            name: state.nextFile.path,
+            macros: state.nextFile.macros,
+            protocol: state.nextFile.protocol
+          }
         });
         setAlert("success");
       }

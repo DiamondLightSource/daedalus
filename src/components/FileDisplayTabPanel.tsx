@@ -1,12 +1,17 @@
+import {
+  EmbeddedDisplay,
+  RelativePosition
+} from "@diamondlightsource/cs-web-lib";
 import Box from "@mui/material/Box";
+import { MacroMap } from "../store";
 interface FileDisplayTabPanelProps {
   index: number;
   value: number;
-  display: JSX.Element;
+  file: { name: string; protocol: string; macros?: MacroMap };
 }
 
 export default function FileDisplayTabPanel(props: FileDisplayTabPanelProps) {
-  const { index, value, display } = props;
+  const { index, value, file } = props;
   // Here is where we load our files
   return (
     <div
@@ -16,7 +21,21 @@ export default function FileDisplayTabPanel(props: FileDisplayTabPanelProps) {
       aria-labelledby={`simple-tab-${index}`}
       style={{ height: "100%", overflowY: "scroll" }}
     >
-      {value === index && <Box>{display}</Box>}
+      {value === index && (
+        <Box>
+          <EmbeddedDisplay
+            height={800}
+            position={new RelativePosition()}
+            scroll={true}
+            resize={0}
+            file={{
+              path: file.name,
+              macros: { ...file.macros },
+              defaultProtocol: file.protocol
+            }}
+          />
+        </Box>
+      )}
     </div>
   );
 }
