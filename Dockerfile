@@ -21,6 +21,7 @@ RUN npm run build:nolint
 # Create image for deployment
 FROM nginxinc/nginx-unprivileged:stable AS deployment
 
+COPY nginx.conf /etc/nginx/nginx.conf
 ARG DOCROOT=/usr/share/nginx/html
 COPY --from=build /app/dist ${DOCROOT}
 
