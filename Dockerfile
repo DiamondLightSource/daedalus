@@ -9,7 +9,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 # to fix a security vulnerability (CVE-2025-64720)
 RUN set -eux; \
     apt-get update; \
-    apt-get install -y --no-install-recommends libpng16-16; \
+    apt-get install -y --no-install-recommends libpng16-16=1.6.39-2+deb12u1; \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
