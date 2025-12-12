@@ -21,6 +21,18 @@ RUN npm run build:nolint
 # Create image for deployment
 FROM nginxinc/nginx-unprivileged:stable AS deployment
 
+
+# Update package lists and upgrade libpng1.6 (libpng16-16 runtime)
+# to fix a security vulnerability (CVE-2025-64720)
+USER root
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN set -eux; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends libpng16-16=1.6.39-2+deb12u1; \
+    rm -rf /var/lib/apt/lists/*
+
+USER nginx
 COPY nginx.conf /etc/nginx/nginx.conf
 ARG DOCROOT=/usr/share/nginx/html
 COPY --from=build /app/dist ${DOCROOT}
