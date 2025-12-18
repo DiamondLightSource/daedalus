@@ -4,7 +4,7 @@
   <width>1400</width>
   <widget type="databrowser" version="2.0.0">
     <name>Data Browser</name>
-    <file>/BOBs/databrowser/demo.plt</file>
+    <file>demo.plt</file>
     <width>1400</width>
     <height>700</height>
   </widget>
