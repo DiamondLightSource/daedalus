@@ -70,8 +70,9 @@ export default function ScreenDisplay() {
       const currentFile = Object.values(allFiles).find(
         values => values.file === displayedPath
       );
-      if (currentFile?.urlId !== pathname) {
-        // URL and state are out of sync with file displayed, update accordingly
+
+      if (currentFile?.urlId && currentFile.urlId !== pathname) {
+        // URL and state are out of sync with file displayed, update accordingly, if currentFile is null this file is not in the JsonMap
         navigate(`/synoptic/${state.currentBeamline}/${currentFile?.urlId}`, {
           state: location.state,
           replace: true
