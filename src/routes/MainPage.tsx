@@ -16,6 +16,7 @@ import { RotatingLines } from "react-loader-spinner";
 import { SynopticBreadcrumbs } from "../components/SynopticBreadcrumbs";
 import { BeamlineTreeStateContext } from "../App";
 import { useParams } from "react-router-dom";
+import { buildUrl } from "../utils/urlUtils";
 
 export const MenuContext = createContext<{
   menuOpen: boolean;
@@ -54,7 +55,7 @@ export function MainPage() {
     for (const [beamline, item] of Object.entries(newBeamlines)) {
       try {
         const [tree, fileIDs, firstFile] = await parseScreenTree(
-          item.host + item.entryPoint
+          buildUrl(item.host, item.entryPoint)
         );
         item.screenTree = tree;
         item.filePathIds = fileIDs;
@@ -82,8 +83,10 @@ export function MainPage() {
         x => x.urlId === params.screenUrlId
       )?.file;
 
-      const newScreen =
-        newBeamlineState.host + (filepath ?? newBeamlineState.topLevelScreen);
+      const newScreen = buildUrl(
+        newBeamlineState.host,
+        filepath ?? newBeamlineState.topLevelScreen
+      );
 
       executeAction(
         {
