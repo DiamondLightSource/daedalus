@@ -64,10 +64,7 @@ export function EditorPage() {
       const newBeamlineState = newBeamlines[params.beamline];
       const newScreen = params.screenUrlId
         ? newBeamlineState.filePathIds[params.screenUrlId].file
-        : buildUrl(
-            newBeamlineState.host,
-            newBeamlineState.topLevelScreen
-          );
+        : buildUrl(newBeamlineState.host, newBeamlineState.topLevelScreen);
       executeAction(
         {
           type: "OPEN_PAGE",

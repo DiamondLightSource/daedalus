@@ -1,8 +1,5 @@
 import { describe, expect, it } from "vitest";
-import {
-  buildUrl,
-  isFullyQualifiedUrl
-} from "../../utils/urlUtils";
+import { buildUrl, isFullyQualifiedUrl } from "../../utils/urlUtils";
 
 describe("urlUtils", () => {
   describe("isFullyQualifiedUrl", () => {

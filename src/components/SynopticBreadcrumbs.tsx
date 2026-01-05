@@ -48,10 +48,7 @@ const handleClick =
       const fileMetadata = Object.values(currentBeamlineState.filePathIds).find(
         x => x.urlId === urlId
       );
-      const newScreen = buildUrl(
-        currentBeamlineState.host,
-        fileMetadata?.file
-      );
+      const newScreen = buildUrl(currentBeamlineState.host, fileMetadata?.file);
 
       executeAction(
         {
