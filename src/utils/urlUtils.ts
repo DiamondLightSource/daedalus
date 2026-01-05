@@ -7,7 +7,7 @@ export const isFullyQualifiedUrl = (url: string): boolean => {
   }
 };
 
-export const buildFullyQualifiedUrl = (
+export const buildUrl = (
   defaultBaseHost: string,
   ...args: (string | undefined)[]
 ) => {
@@ -27,7 +27,6 @@ export const buildFullyQualifiedUrl = (
     return parsedUrl.toString();
   }
 
-  throw new Error(
-    `Invalid base URL: ${defaultBaseHost} and args do not form a valid URL`
-  );
+  // Assume a local relative path
+  return `/${path}`;
 };

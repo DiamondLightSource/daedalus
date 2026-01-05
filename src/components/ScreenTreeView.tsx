@@ -4,7 +4,7 @@ import { TreeViewBaseItem, TreeViewItemId } from "@mui/x-tree-view";
 import { executeAction, FileContext } from "@diamondlightsource/cs-web-lib";
 import { BeamlineTreeStateContext } from "../App";
 import { MenuContext } from "../routes/MainPage";
-import { buildFullyQualifiedUrl } from "../utils/urlUtils";
+import { buildUrl } from "../utils/urlUtils";
 
 export default function ScreenTreeView() {
   const { state } = useContext(BeamlineTreeStateContext);
@@ -19,7 +19,7 @@ export default function ScreenTreeView() {
   const handleClick = (itemId: string) => {
     const fileMetadata =
       state.beamlines[state.currentBeamline].filePathIds[itemId];
-    const newScreen = buildFullyQualifiedUrl(
+    const newScreen = buildUrl(
       state.beamlines[state.currentBeamline].host,
       fileMetadata.file
     );

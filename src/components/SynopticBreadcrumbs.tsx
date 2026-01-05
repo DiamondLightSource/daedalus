@@ -5,7 +5,7 @@ import { Breadcrumbs, Link } from "@mui/material";
 import { executeAction, FileContext } from "@diamondlightsource/cs-web-lib";
 import { BeamlineStateProperties } from "../store";
 import { BeamlineTreeStateContext } from "../App";
-import { buildFullyQualifiedUrl } from "../utils/urlUtils";
+import { buildUrl } from "../utils/urlUtils";
 
 export const SynopticBreadcrumbs = () => {
   const { state } = useContext(BeamlineTreeStateContext);
@@ -48,7 +48,7 @@ const handleClick =
       const fileMetadata = Object.values(currentBeamlineState.filePathIds).find(
         x => x.urlId === urlId
       );
-      const newScreen = buildFullyQualifiedUrl(
+      const newScreen = buildUrl(
         currentBeamlineState.host,
         fileMetadata?.file
       );

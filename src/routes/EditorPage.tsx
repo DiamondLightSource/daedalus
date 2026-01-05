@@ -11,7 +11,7 @@ import { parseScreenTree } from "../utils/parser";
 import { executeAction, FileContext } from "@diamondlightsource/cs-web-lib";
 import Editor from "../components/Editor";
 import { useParams } from "react-router-dom";
-import { buildFullyQualifiedUrl } from "../utils/urlUtils";
+import { buildUrl } from "../utils/urlUtils";
 
 /**
  * Displays a mock editor page with palette and Phoebus
@@ -64,7 +64,7 @@ export function EditorPage() {
       const newBeamlineState = newBeamlines[params.beamline];
       const newScreen = params.screenUrlId
         ? newBeamlineState.filePathIds[params.screenUrlId].file
-        : buildFullyQualifiedUrl(
+        : buildUrl(
             newBeamlineState.host,
             newBeamlineState.topLevelScreen
           );

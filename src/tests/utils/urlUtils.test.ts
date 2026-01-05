@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
-  buildFullyQualifiedUrl,
+  buildUrl,
   isFullyQualifiedUrl
 } from "../../utils/urlUtils";
 
@@ -22,12 +22,12 @@ describe("urlUtils", () => {
     });
   });
 
-  describe("buildFullyQualifiedUrl", () => {
+  describe("buildUrl", () => {
     it("should use base url when the joined path args don't make a fully qualified URL", async () => {
       const baseUrl = "http://diamond.ac.uk";
       const args = ["path1"];
 
-      const result = buildFullyQualifiedUrl(baseUrl, ...args);
+      const result = buildUrl(baseUrl, ...args);
 
       expect(result).toEqual("http://diamond.ac.uk/path1");
     });
@@ -35,7 +35,7 @@ describe("urlUtils", () => {
     it("should return the default base url when the path args not specified", async () => {
       const baseUrl = "http://diamond.ac.uk";
 
-      const result = buildFullyQualifiedUrl(baseUrl);
+      const result = buildUrl(baseUrl);
 
       expect(result).toEqual("http://diamond.ac.uk/");
     });
@@ -43,7 +43,7 @@ describe("urlUtils", () => {
     it("should return the default base url when the only path arg is undefined", async () => {
       const baseUrl = "http://diamond.ac.uk";
 
-      const result = buildFullyQualifiedUrl(baseUrl, undefined);
+      const result = buildUrl(baseUrl, undefined);
 
       expect(result).toEqual("http://diamond.ac.uk/");
     });
@@ -52,7 +52,7 @@ describe("urlUtils", () => {
       const baseUrl = "http://diamond.ac.uk";
       const args = ["path 1"];
 
-      const result = buildFullyQualifiedUrl(baseUrl, ...args);
+      const result = buildUrl(baseUrl, ...args);
 
       expect(result).toEqual("http://diamond.ac.uk/path%201");
     });
@@ -61,7 +61,7 @@ describe("urlUtils", () => {
       const baseUrl = "http://diamond.ac.uk/";
       const args = ["/path1/"];
 
-      const result = buildFullyQualifiedUrl(baseUrl, ...args);
+      const result = buildUrl(baseUrl, ...args);
 
       expect(result).toEqual("http://diamond.ac.uk/path1");
     });
@@ -70,7 +70,7 @@ describe("urlUtils", () => {
       const baseUrl = "http://diamond.ac.uk";
       const args = ["/path1/", "/path2", "path3/"];
 
-      const result = buildFullyQualifiedUrl(baseUrl, ...args);
+      const result = buildUrl(baseUrl, ...args);
 
       expect(result).toEqual("http://diamond.ac.uk/path1/path2/path3");
     });
@@ -79,7 +79,7 @@ describe("urlUtils", () => {
       const baseUrl = "http://diamond.ac.uk/path0/filename";
       const args = ["/path1/"];
 
-      const result = buildFullyQualifiedUrl(baseUrl, ...args);
+      const result = buildUrl(baseUrl, ...args);
 
       expect(result).toEqual("http://diamond.ac.uk/path0/path1");
     });
@@ -88,7 +88,7 @@ describe("urlUtils", () => {
       const baseUrl = "http://diamond.ac.uk/path0/path1/";
       const args = ["/path10/", "/path20"];
 
-      const result = buildFullyQualifiedUrl(baseUrl, ...args);
+      const result = buildUrl(baseUrl, ...args);
 
       expect(result).toEqual("http://diamond.ac.uk/path0/path1/path10/path20");
     });
@@ -97,7 +97,7 @@ describe("urlUtils", () => {
       const baseUrl = "http://diamond.ac.uk";
       const args = ["http://ral.ac.uk/", "path1", "path2"];
 
-      const result = buildFullyQualifiedUrl(baseUrl, ...args);
+      const result = buildUrl(baseUrl, ...args);
 
       expect(result).toEqual("http://ral.ac.uk/path1/path2");
     });
@@ -106,7 +106,7 @@ describe("urlUtils", () => {
       const baseUrl = "https://diamond.ac.uk/path0";
       const args = ["https://ral.ac.uk:4000/", "path1", "path2"];
 
-      const result = buildFullyQualifiedUrl(baseUrl, ...args);
+      const result = buildUrl(baseUrl, ...args);
 
       expect(result).toEqual("https://ral.ac.uk:4000/path1/path2");
     });
@@ -114,7 +114,7 @@ describe("urlUtils", () => {
     it("ignores default base url if the args start with a fully qualified url, when base url is invalid", async () => {
       const args = ["http://ral.ac.uk/", "path1", "path2"];
 
-      const result = buildFullyQualifiedUrl("abcd", ...args);
+      const result = buildUrl("abcd", ...args);
 
       expect(result).toEqual("http://ral.ac.uk/path1/path2");
     });
@@ -122,17 +122,17 @@ describe("urlUtils", () => {
     it("ignores default base url if the args start with a fully qualified url, when base url is undefined", async () => {
       const args = ["http://ral.ac.uk/", "path1", "path2"];
 
-      const result = buildFullyQualifiedUrl(undefined, ...args);
+      const result = buildUrl(undefined, ...args);
 
       expect(result).toEqual("http://ral.ac.uk/path1/path2");
     });
 
-    it("Throws if default base url is invalid and args don't form a fully qualified url", async () => {
-      const args = ["path1", "path2"];
+    it("Returns a relative path if base url is an empty string and path is not a fully qualified URL", async () => {
+      const args = ["path1", "filename.json"];
 
-      expect(() => buildFullyQualifiedUrl("abcd", ...args)).toThrow(
-        "Invalid base URL: abcd and args do not form a valid URL"
-      );
+      const result = buildUrl("", ...args);
+
+      expect(result).toEqual("/path1/filename.json");
     });
   });
 });
