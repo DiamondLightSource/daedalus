@@ -7,6 +7,7 @@ import { FileContext, executeAction } from "@diamondlightsource/cs-web-lib";
 import { CHANGE_BEAMLINE } from "../store";
 import { Tooltip } from "@mui/material";
 import { BeamlineTreeStateContext } from "../App";
+import { buildFullyQualifiedUrl } from "../utils/urlUtils";
 
 const MenuItem = styled(MuiMenuItem)({
   "&.Mui-disabled": {
@@ -32,9 +33,10 @@ export default function BeamlineSelect() {
           location: "main",
           description: undefined,
           file: {
-            path:
-              state.beamlines[event.target.value].host +
-              state.beamlines[event.target.value].topLevelScreen,
+            path: buildFullyQualifiedUrl(
+              state.beamlines[event.target.value].host,
+              state.beamlines[event.target.value].topLevelScreen
+            ),
             macros: {},
             defaultProtocol: "ca"
           }
