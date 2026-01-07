@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - automatic_semver_tag_action
   workflow_dispatch:
 jobs:
   tag-main:
