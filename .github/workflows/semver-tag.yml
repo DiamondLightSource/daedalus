@@ -50,7 +50,7 @@ jobs:
       - name: Create new tag
         id: create_tag
         run: |
-          NEW_TAG="v${{ steps.get_latest_tag.outputs.new_version }}"
+          NEW_TAG="${{ steps.get_latest_tag.outputs.new_version }}"
           echo "new_tag=$NEW_TAG" >> $GITHUB_OUTPUT
           
           git config --local user.email "action@github.com"
