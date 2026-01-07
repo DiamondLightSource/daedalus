@@ -1,0 +1,64 @@
+name: Auto Tag with SemVer
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+jobs:
+  tag-main:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Fetch all tags
+        run: git fetch --tags --force
+          
+      - name: Get latest semver tag
+        id: get_latest_tag
+        run: |
+          # Get all tags and filter for valid semver tags (vX.Y.Z format)
+          LATEST_TAG=$(git tag -l '[0-9]*.[0-9]*.[0-9]*' | sort -V | tail -n 1)
+          
+          # If no valid semver tags exist, start with 0.0.0
+          if [ -z "$LATEST_TAG" ]; then
+            echo "::error::No semantic versioning tags found in the repository. Please create an initial tag (e.g., 0.0.0) manually."
+            exit 1
+          fi
+          
+          echo "latest_tag=$LATEST_TAG" >> $GITHUB_OUTPUT
+          
+          # Extract the version numbers
+          VERSION=${LATEST_TAG}
+          MAJOR=$(echo $VERSION | cut -d. -f1)
+          MINOR=$(echo $VERSION | cut -d. -f2)
+          PATCH=$(echo $VERSION | cut -d. -f3)
+          
+          # Increment patch version
+          NEW_PATCH=$((PATCH + 1))
+          NEW_VERSION="$MAJOR.$MINOR.$NEW_PATCH"
+          
+          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+      
+      - name: Create new tag
+        id: create_tag
+        run: |
+          NEW_TAG="v${{ steps.get_latest_tag.outputs.new_version }}"
+          echo "new_tag=$NEW_TAG" >> $GITHUB_OUTPUT
+          
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git tag -a $NEW_TAG -m "Auto-incremented patch version"
+      
+      - name: Push tag
+        run: |
+          git push origin ${{ steps.create_tag.outputs.new_tag }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
