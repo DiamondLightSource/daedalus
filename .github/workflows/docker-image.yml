@@ -57,7 +57,7 @@ jobs:
         if: github.ref_type == 'tag' || github.event_name == 'workflow_dispatch'
         run: |
           TAG=$(git describe --tags --exact-match || echo "")
-          echo "IMAGE_TAG=$TAG" >> $GITHUB_ENV
+          echo "LATEST_TAG=$TAG" >> $GITHUB_ENV
 
       - name: Create tags for publishing image
         id: meta
