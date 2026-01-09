@@ -7,7 +7,7 @@ import {
   useEffect,
   useState
 } from "react";
-import { CHANGE_BEAMLINE, CHANGE_SCREEN, LOAD_SCREENS } from "../store";
+import { CHANGE_BEAMLINE, CHANGE_SCREEN, LOAD_SCREENS, MacroMap } from "../store";
 import DLSAppBar from "../components/AppBar";
 import ScreenDisplay from "../components/ScreenDisplay";
 import { parseScreenTree } from "../utils/parser";
@@ -79,14 +79,17 @@ export function MainPage() {
     if (params.beamline) {
       // If we navigated directly to a beamline and/or screen, load in display
       const newBeamlineState = newBeamlines[params.beamline];
-      const filepath = Object.values(newBeamlineState.filePathIds).find(
+
+      const fileMetadata = Object.values(newBeamlineState.filePathIds).find(
         x => x.urlId === params.screenUrlId
-      )?.file;
+      );
 
       const newScreen = buildUrl(
         newBeamlineState.host,
-        filepath ?? newBeamlineState.topLevelScreen
+        fileMetadata?.file ?? newBeamlineState.topLevelScreen
       );
+
+      const macros: MacroMap = fileMetadata?.macros?.reduce((acc, obj) => Object.assign(acc, obj), {}) ?? {};
 
       executeAction(
         {
@@ -97,7 +100,7 @@ export function MainPage() {
             description: undefined,
             file: {
               path: newScreen,
-              macros: {},
+              macros: macros,
               defaultProtocol: "ca"
             }
           }

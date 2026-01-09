@@ -4,7 +4,7 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useContext } from "react";
 import { FileContext, executeAction } from "@diamondlightsource/cs-web-lib";
-import { CHANGE_BEAMLINE } from "../store";
+import { CHANGE_BEAMLINE, MacroMap } from "../store";
 import { Tooltip } from "@mui/material";
 import { BeamlineTreeStateContext } from "../App";
 import { buildUrl } from "../utils/urlUtils";
@@ -24,20 +24,30 @@ export default function BeamlineSelect() {
       type: CHANGE_BEAMLINE,
       payload: { beamline: event.target.value }
     });
+
+    const beamlineState = state.beamlines[event.target.value];
+
+    const fileMetadata =
+      beamlineState.filePathIds[beamlineState.topLevelScreen];
+
+    const newScreen = buildUrl(
+      beamlineState.host,
+      beamlineState.topLevelScreen
+    );
+
+    const macros: MacroMap = fileMetadata?.macros?.reduce((acc, obj) => Object.assign(acc, obj), {}) ?? {};
+    
     // Load the toplevel screen for the beamline on click
     executeAction(
       {
         type: "OPEN_PAGE",
         dynamicInfo: {
-          name: state.beamlines[event.target.value].topLevelScreen,
+          name: newScreen,
           location: "main",
           description: undefined,
           file: {
-            path: buildUrl(
-              state.beamlines[event.target.value].host,
-              state.beamlines[event.target.value].topLevelScreen
-            ),
-            macros: {},
+            path: newScreen,
+            macros: macros,
             defaultProtocol: "ca"
           }
         }

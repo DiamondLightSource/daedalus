@@ -5,6 +5,7 @@ import {
   CHANGE_SCREEN,
   initialState,
   LOAD_SCREENS,
+  MacroMap,
   reducer
 } from "../store";
 import { parseScreenTree } from "../utils/parser";
@@ -59,12 +60,20 @@ export function EditorPage() {
         loadScreen: params.screenUrlId
       }
     });
-    if (params.beamline) {
+    if (params.beamline && params.screenUrlId) {
       // If we navigated directly to a beamline and/or screen, load in display
-      const newBeamlineState = newBeamlines[params.beamline];
-      const newScreen = params.screenUrlId
-        ? newBeamlineState.filePathIds[params.screenUrlId].file
-        : buildUrl(newBeamlineState.host, newBeamlineState.topLevelScreen);
+      const beamlineState = newBeamlines[params.beamline];
+
+      const fileMetadata =
+          beamlineState.filePathIds[params.screenUrlId];
+
+      const newScreen = buildUrl(
+        beamlineState.host,
+        fileMetadata?.file ?? beamlineState.topLevelScreen
+      );
+
+      const macros: MacroMap = fileMetadata?.macros?.reduce((acc, obj) => Object.assign(acc, obj), {}) ?? {};
+
       executeAction(
         {
           type: "OPEN_PAGE",
@@ -74,7 +83,7 @@ export function EditorPage() {
             description: undefined,
             file: {
               path: newScreen,
-              macros: {},
+              macros: macros,
               defaultProtocol: "ca"
             }
           }

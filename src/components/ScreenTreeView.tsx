@@ -5,6 +5,7 @@ import { executeAction, FileContext } from "@diamondlightsource/cs-web-lib";
 import { BeamlineTreeStateContext } from "../App";
 import { MenuContext } from "../routes/MainPage";
 import { buildUrl } from "../utils/urlUtils";
+import { MacroMap } from "../store";
 
 export default function ScreenTreeView() {
   const { state } = useContext(BeamlineTreeStateContext);
@@ -17,12 +18,17 @@ export default function ScreenTreeView() {
   };
 
   const handleClick = (itemId: string) => {
+    const beamlineState = state.beamlines[state.currentBeamline]
+
     const fileMetadata =
-      state.beamlines[state.currentBeamline].filePathIds[itemId];
+      beamlineState.filePathIds[itemId];
+
     const newScreen = buildUrl(
-      state.beamlines[state.currentBeamline].host,
-      fileMetadata.file
+      beamlineState.host,
+      fileMetadata?.file ?? beamlineState.topLevelScreen
     );
+
+    const macros: MacroMap = fileMetadata?.macros?.reduce((acc, obj) => Object.assign(acc, obj), {}) ?? {};
 
     executeAction(
       {
@@ -33,7 +39,7 @@ export default function ScreenTreeView() {
           description: undefined,
           file: {
             path: newScreen,
-            macros: {},
+            macros: macros,
             defaultProtocol: "ca"
           }
         }

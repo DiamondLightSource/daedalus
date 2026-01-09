@@ -3,7 +3,7 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { ReactNode, useContext } from "react";
 import { Breadcrumbs, Link } from "@mui/material";
 import { executeAction, FileContext } from "@diamondlightsource/cs-web-lib";
-import { BeamlineStateProperties } from "../store";
+import { BeamlineStateProperties, MacroMap } from "../store";
 import { BeamlineTreeStateContext } from "../App";
 import { buildUrl } from "../utils/urlUtils";
 
@@ -37,7 +37,7 @@ export const SynopticBreadcrumbs = () => {
 };
 
 const handleClick =
-  (currentBeamlineState: BeamlineStateProperties, fileContext: any) =>
+  (beamlineState: BeamlineStateProperties, fileContext: any) =>
   (event: any) => {
     if (event.target.pathname) {
       event.preventDefault();
@@ -45,10 +45,15 @@ const handleClick =
         .split("/")
         .at(-1) as string;
 
-      const fileMetadata = Object.values(currentBeamlineState.filePathIds).find(
+      const fileMetadata = Object.values(beamlineState.filePathIds).find(
         x => x.urlId === urlId
       );
-      const newScreen = buildUrl(currentBeamlineState.host, fileMetadata?.file);
+
+      const newScreen = buildUrl(
+        beamlineState.host,
+        fileMetadata?.file);
+
+      const macros: MacroMap = fileMetadata?.macros?.reduce((acc, obj) => Object.assign(acc, obj), {}) ?? {};
 
       executeAction(
         {
@@ -59,7 +64,7 @@ const handleClick =
             description: undefined,
             file: {
               path: newScreen,
-              macros: {},
+              macros: macros,
               defaultProtocol: "ca"
             }
           }
