@@ -5,14 +5,13 @@ import {
   CHANGE_SCREEN,
   initialState,
   LOAD_SCREENS,
-  MacroMap,
   reducer
 } from "../store";
 import { parseScreenTree } from "../utils/parser";
-import { executeAction, FileContext } from "@diamondlightsource/cs-web-lib";
+import { FileContext } from "@diamondlightsource/cs-web-lib";
 import Editor from "../components/Editor";
 import { useParams } from "react-router-dom";
-import { buildUrl } from "../utils/urlUtils";
+import { executeOpenPageActionWithUrlId } from "../utils/csWebLibActions";
 
 /**
  * Displays a mock editor page with palette and Phoebus
@@ -63,34 +62,11 @@ export function EditorPage() {
     if (params.beamline && params.screenUrlId) {
       // If we navigated directly to a beamline and/or screen, load in display
       const beamlineState = newBeamlines[params.beamline];
-
-      const fileMetadata =
-          beamlineState.filePathIds[params.screenUrlId];
-
-      const newScreen = buildUrl(
-        beamlineState.host,
-        fileMetadata?.file ?? beamlineState.topLevelScreen
-      );
-
-      const macros: MacroMap = fileMetadata?.macros?.reduce((acc, obj) => Object.assign(acc, obj), {}) ?? {};
-
-      executeAction(
-        {
-          type: "OPEN_PAGE",
-          dynamicInfo: {
-            name: newScreen,
-            location: "main",
-            description: undefined,
-            file: {
-              path: newScreen,
-              macros: macros,
-              defaultProtocol: "ca"
-            }
-          }
-        },
-        fileContext,
-        undefined,
-        {}
+      executeOpenPageActionWithUrlId(
+        beamlineState,
+        params.screenUrlId,
+        params.beamline,
+        fileContext
       );
     }
   }, []);

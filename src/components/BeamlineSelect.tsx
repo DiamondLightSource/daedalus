@@ -3,11 +3,11 @@ import { MenuItem as MuiMenuItem, styled } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useContext } from "react";
-import { FileContext, executeAction } from "@diamondlightsource/cs-web-lib";
-import { CHANGE_BEAMLINE, MacroMap } from "../store";
+import { FileContext } from "@diamondlightsource/cs-web-lib";
+import { CHANGE_BEAMLINE } from "../store";
 import { Tooltip } from "@mui/material";
 import { BeamlineTreeStateContext } from "../App";
-import { buildUrl } from "../utils/urlUtils";
+import { executeOpenPageActionWithFileGuid } from "../utils/csWebLibActions";
 
 const MenuItem = styled(MuiMenuItem)({
   "&.Mui-disabled": {
@@ -27,35 +27,11 @@ export default function BeamlineSelect() {
 
     const beamlineState = state.beamlines[event.target.value];
 
-    const fileMetadata =
-      beamlineState.filePathIds[beamlineState.topLevelScreen];
-
-    const newScreen = buildUrl(
-      beamlineState.host,
-      beamlineState.topLevelScreen
-    );
-
-    const macros: MacroMap = fileMetadata?.macros?.reduce((acc, obj) => Object.assign(acc, obj), {}) ?? {};
-    
-    // Load the toplevel screen for the beamline on click
-    executeAction(
-      {
-        type: "OPEN_PAGE",
-        dynamicInfo: {
-          name: newScreen,
-          location: "main",
-          description: undefined,
-          file: {
-            path: newScreen,
-            macros: macros,
-            defaultProtocol: "ca"
-          }
-        }
-      },
-      fileContext,
-      undefined,
-      {},
-      `/synoptic/${event.target.value}`
+    executeOpenPageActionWithFileGuid(
+      beamlineState,
+      beamlineState.topLevelScreen,
+      event.target.value,
+      fileContext
     );
   };
 

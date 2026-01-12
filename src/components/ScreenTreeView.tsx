@@ -1,11 +1,10 @@
 import { RichTreeView } from "@mui/x-tree-view/RichTreeView";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { TreeViewBaseItem, TreeViewItemId } from "@mui/x-tree-view";
-import { executeAction, FileContext } from "@diamondlightsource/cs-web-lib";
+import { FileContext } from "@diamondlightsource/cs-web-lib";
 import { BeamlineTreeStateContext } from "../App";
 import { MenuContext } from "../routes/MainPage";
-import { buildUrl } from "../utils/urlUtils";
-import { MacroMap } from "../store";
+import { executeOpenPageActionWithFileGuid } from "../utils/csWebLibActions";
 
 export default function ScreenTreeView() {
   const { state } = useContext(BeamlineTreeStateContext);
@@ -18,36 +17,14 @@ export default function ScreenTreeView() {
   };
 
   const handleClick = (itemId: string) => {
-    const beamlineState = state.beamlines[state.currentBeamline]
+    const selectedBeamlineId = state.currentBeamline;
+    const beamlineState = state.beamlines[selectedBeamlineId];
 
-    const fileMetadata =
-      beamlineState.filePathIds[itemId];
-
-    const newScreen = buildUrl(
-      beamlineState.host,
-      fileMetadata?.file ?? beamlineState.topLevelScreen
-    );
-
-    const macros: MacroMap = fileMetadata?.macros?.reduce((acc, obj) => Object.assign(acc, obj), {}) ?? {};
-
-    executeAction(
-      {
-        type: "OPEN_PAGE",
-        dynamicInfo: {
-          name: newScreen,
-          location: "main",
-          description: undefined,
-          file: {
-            path: newScreen,
-            macros: macros,
-            defaultProtocol: "ca"
-          }
-        }
-      },
-      fileContext,
-      undefined,
-      {},
-      `/synoptic/${state.currentBeamline}/${state.beamlines[state.currentBeamline].filePathIds[itemId].urlId}`
+    executeOpenPageActionWithFileGuid(
+      beamlineState,
+      itemId,
+      selectedBeamlineId,
+      fileContext
     );
   };
 

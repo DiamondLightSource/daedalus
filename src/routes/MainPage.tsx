@@ -7,16 +7,17 @@ import {
   useEffect,
   useState
 } from "react";
-import { CHANGE_BEAMLINE, CHANGE_SCREEN, LOAD_SCREENS, MacroMap } from "../store";
+import { CHANGE_BEAMLINE, CHANGE_SCREEN, LOAD_SCREENS } from "../store";
 import DLSAppBar from "../components/AppBar";
 import ScreenDisplay from "../components/ScreenDisplay";
 import { parseScreenTree } from "../utils/parser";
-import { executeAction, FileContext } from "@diamondlightsource/cs-web-lib";
+import { FileContext } from "@diamondlightsource/cs-web-lib";
 import { RotatingLines } from "react-loader-spinner";
 import { SynopticBreadcrumbs } from "../components/SynopticBreadcrumbs";
 import { BeamlineTreeStateContext } from "../App";
 import { useParams } from "react-router-dom";
 import { buildUrl } from "../utils/urlUtils";
+import { executeOpenPageActionWithUrlId } from "../utils/csWebLibActions";
 
 export const MenuContext = createContext<{
   menuOpen: boolean;
@@ -80,34 +81,11 @@ export function MainPage() {
       // If we navigated directly to a beamline and/or screen, load in display
       const newBeamlineState = newBeamlines[params.beamline];
 
-      const fileMetadata = Object.values(newBeamlineState.filePathIds).find(
-        x => x.urlId === params.screenUrlId
-      );
-
-      const newScreen = buildUrl(
-        newBeamlineState.host,
-        fileMetadata?.file ?? newBeamlineState.topLevelScreen
-      );
-
-      const macros: MacroMap = fileMetadata?.macros?.reduce((acc, obj) => Object.assign(acc, obj), {}) ?? {};
-
-      executeAction(
-        {
-          type: "OPEN_PAGE",
-          dynamicInfo: {
-            name: newScreen,
-            location: "main",
-            description: undefined,
-            file: {
-              path: newScreen,
-              macros: macros,
-              defaultProtocol: "ca"
-            }
-          }
-        },
-        fileContext,
-        undefined,
-        {}
+      executeOpenPageActionWithUrlId(
+        newBeamlineState,
+        params.screenUrlId,
+        params.beamline,
+        fileContext
       );
     }
   }, []);

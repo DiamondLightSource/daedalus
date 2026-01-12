@@ -2,10 +2,10 @@ import Typography from "@mui/material/Typography";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { ReactNode, useContext } from "react";
 import { Breadcrumbs, Link } from "@mui/material";
-import { executeAction, FileContext } from "@diamondlightsource/cs-web-lib";
-import { BeamlineStateProperties, MacroMap } from "../store";
+import { FileContext } from "@diamondlightsource/cs-web-lib";
+import { BeamlineStateProperties } from "../store";
 import { BeamlineTreeStateContext } from "../App";
-import { buildUrl } from "../utils/urlUtils";
+import { executeOpenPageActionWithUrlId } from "../utils/csWebLibActions";
 
 export const SynopticBreadcrumbs = () => {
   const { state } = useContext(BeamlineTreeStateContext);
@@ -18,7 +18,11 @@ export const SynopticBreadcrumbs = () => {
 
   return (
     <Breadcrumbs
-      onClick={handleClick(state.beamlines[state.currentBeamline], fileContext)}
+      onClick={handleClick(
+        state.currentBeamline,
+        state.beamlines[state.currentBeamline],
+        fileContext
+      )}
       separator={<NavigateNextIcon fontSize="small" />}
       aria-label="breadcrumb"
       sx={{
@@ -37,7 +41,11 @@ export const SynopticBreadcrumbs = () => {
 };
 
 const handleClick =
-  (beamlineState: BeamlineStateProperties, fileContext: any) =>
+  (
+    selectedBeamlineId: string,
+    beamlineState: BeamlineStateProperties,
+    fileContext: any
+  ) =>
   (event: any) => {
     if (event.target.pathname) {
       event.preventDefault();
@@ -45,34 +53,11 @@ const handleClick =
         .split("/")
         .at(-1) as string;
 
-      const fileMetadata = Object.values(beamlineState.filePathIds).find(
-        x => x.urlId === urlId
-      );
-
-      const newScreen = buildUrl(
-        beamlineState.host,
-        fileMetadata?.file);
-
-      const macros: MacroMap = fileMetadata?.macros?.reduce((acc, obj) => Object.assign(acc, obj), {}) ?? {};
-
-      executeAction(
-        {
-          type: "OPEN_PAGE",
-          dynamicInfo: {
-            name: newScreen,
-            location: "main",
-            description: undefined,
-            file: {
-              path: newScreen,
-              macros: macros,
-              defaultProtocol: "ca"
-            }
-          }
-        },
-        fileContext,
-        undefined,
-        {},
-        event.target.pathname
+      executeOpenPageActionWithUrlId(
+        beamlineState,
+        urlId,
+        selectedBeamlineId,
+        fileContext
       );
     }
   };
