@@ -17,7 +17,11 @@ export async function parseScreenTree(
     const response = await httpRequest(filepath);
     const json = await response.json();
 
-    const { urlId, fileLabel: topLevelScreen } = buildUrlId(json.file, "");
+    const { urlId, fileLabel: topLevelScreen } = buildUrlId(
+      json.file,
+      json.displayName,
+      ""
+    );
 
     // Process the child items
     const { fileMap, treeViewItems } = RecursiveTreeViewBuilder(
@@ -76,7 +80,11 @@ export const RecursiveTreeViewBuilder = (
   }
 
   for (const sibling of jsonSiblings) {
-    const { urlId, fileLabel } = buildUrlId(sibling.file, idPrefix);
+    const { urlId, fileLabel } = buildUrlId(
+      sibling.file,
+      sibling.displayName,
+      idPrefix
+    );
     const guid = crypto.randomUUID();
 
     const treeViewItem: TreeViewBaseItem = {
@@ -88,9 +96,9 @@ export const RecursiveTreeViewBuilder = (
     if (!sibling.duplicate) {
       fileMap[guid] = {
         file: sibling.file,
-        urlId,
-        macros: sibling.macros ? [sibling.macros] : [],
-        exists: sibling?.exists
+        exists: sibling?.exists,
+        urlId: urlId,
+        macros: sibling.macros ? [sibling.macros] : []
       };
 
       // If not a duplicate, check for children
@@ -139,9 +147,13 @@ export const RecursiveAppendDuplicateFileMacros = (
   }
 };
 
-const buildUrlId = (filepath: string, idPrefix: string) => {
+const buildUrlId = (
+  filepath: string,
+  displayName: string,
+  idPrefix: string
+) => {
   const splitFilePath = filepath.split(".bob")[0].split("/");
-  let fileLabel: string = splitFilePath.pop()!;
+  let fileLabel: string = displayName || splitFilePath.pop()!;
   if (fileLabel === "index") {
     const parentDir = splitFilePath.pop();
     if (parentDir) {
