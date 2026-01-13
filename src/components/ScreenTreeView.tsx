@@ -3,7 +3,7 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { TreeViewBaseItem, TreeViewItemId } from "@mui/x-tree-view";
 import { FileContext } from "@diamondlightsource/cs-web-lib";
 import { BeamlineTreeStateContext } from "../App";
-import { MenuContext } from "../routes/MainPage";
+import { MenuContext } from "../routes/SynopticPage";
 import { executeOpenPageActionWithFileGuid } from "../utils/csWebLibActions";
 
 export default function ScreenTreeView() {

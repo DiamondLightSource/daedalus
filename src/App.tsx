@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import { ThemeProvider } from "@mui/material/styles";
 import { diamondTheme } from "./theme";
 import { DemoPage } from "./routes/DemoPage";
-import { MainPage } from "./routes/MainPage";
+import { SynopticPage } from "./routes/SynopticPage";
 import { EditorPage } from "./routes/EditorPage";
 import { LandingPage } from "./routes/LandingPage";
 import { DataBrowserPage } from "./routes/DataBrowserPage";
@@ -73,11 +73,11 @@ function App({}) {
                 <Route path="/demo" element={<DemoPage />} />
                 <Route path="/data-browser" element={<DataBrowserPage />} />
                 <Route path="/editor" element={<EditorPage />} />
-                <Route path="/synoptic" element={<MainPage />} />
-                <Route path="/synoptic/:beamline" element={<MainPage />} />
+                <Route path="/synoptic" element={<SynopticPage />} />
+                <Route path="/synoptic/:beamline" element={<SynopticPage />} />
                 <Route
                   path="/synoptic/:beamline/:screenUrlId"
-                  element={<MainPage />}
+                  element={<SynopticPage />}
                 />
                 <Route path="/" element={<LandingPage />} />
               </Routes>
