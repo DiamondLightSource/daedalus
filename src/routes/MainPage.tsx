@@ -28,7 +28,7 @@ export function MainPage() {
   const { state, dispatch } = useContext(BeamlineTreeStateContext);
   const params: { beamline?: string; screenUrlId?: string } = useParams();
   const fileContext = useContext(FileContext);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(true);
 
   useEffect(() => {
     // Only trigger once
