@@ -17,7 +17,7 @@ import {
   APP_BAR_HEIGHT
 } from "../utils/helper";
 import { BeamlineTreeStateContext } from "../App";
-import { MenuContext } from "../routes/MainPage";
+import { MenuContext } from "../routes/SynopticPage";
 import { useLocation, useNavigate } from "react-router-dom";
 
 interface PaperProps extends MuiPaperProps {

@@ -24,7 +24,7 @@ export const MenuContext = createContext<{
   setMenuOpen: any;
 }>({ menuOpen: true, setMenuOpen: () => null });
 
-export function MainPage() {
+export function SynopticPage() {
   const { state, dispatch } = useContext(BeamlineTreeStateContext);
   const params: { beamline?: string; screenUrlId?: string } = useParams();
   const fileContext = useContext(FileContext);

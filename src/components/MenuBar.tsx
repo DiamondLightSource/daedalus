@@ -11,7 +11,7 @@ import BeamlineSelect from "./BeamlineSelect";
 import ScreenTreeView from "./ScreenTreeView";
 import { useContext } from "react";
 import { DRAWER_WIDTH } from "../utils/helper";
-import { MenuContext } from "../routes/MainPage";
+import { MenuContext } from "../routes/SynopticPage";
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: DRAWER_WIDTH,
