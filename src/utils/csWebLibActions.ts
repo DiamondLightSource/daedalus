@@ -1,6 +1,5 @@
-import { executeAction } from "@diamondlightsource/cs-web-lib";
+import { buildUrl, executeAction } from "@diamondlightsource/cs-web-lib";
 import { BeamlineStateProperties, FileMetadata, MacroMap } from "../store";
-import { buildUrl } from "./urlUtils";
 
 export const executeOpenPageActionWithFileGuid = (
   beamlineState: BeamlineStateProperties,
@@ -9,7 +8,7 @@ export const executeOpenPageActionWithFileGuid = (
   fileContext: any
 ) => {
   const fileMetadata = beamlineState.filePathIds[fileGuid];
-  executeOpenPageAction(
+  executeOpenPageActionWithFileMetadata(
     beamlineState,
     fileMetadata,
     selectedBeamlineId,
@@ -21,25 +20,28 @@ export const executeOpenPageActionWithUrlId = (
   beamlineState: BeamlineStateProperties,
   urlId: string | undefined,
   selectedBeamlineId: string,
-  fileContext: any
+  fileContext: any,
+  extraMacros?: MacroMap
 ) => {
   const fileMetadata = Object.values(beamlineState.filePathIds).find(
     x => x.urlId === (urlId ?? "index")
   );
 
-  executeOpenPageAction(
+  executeOpenPageActionWithFileMetadata(
     beamlineState,
     fileMetadata,
     selectedBeamlineId,
-    fileContext
+    fileContext,
+    extraMacros
   );
 };
 
-export const executeOpenPageAction = (
+export const executeOpenPageActionWithFileMetadata = (
   beamlineState: BeamlineStateProperties,
   fileMetadata: FileMetadata | undefined,
   selectedBeamlineId: string,
-  fileContext: any
+  fileContext: any,
+  extraMacros?: MacroMap
 ) => {
   const newScreen = buildUrl(
     beamlineState.host,
@@ -49,29 +51,43 @@ export const executeOpenPageAction = (
   const macros: MacroMap =
     fileMetadata?.macros?.reduce((acc, obj) => Object.assign(acc, obj), {}) ??
     {};
+
+  const allMacros = extraMacros ? { ...extraMacros, ...macros } : macros;
   const beamlineUrlId = `/synoptic/${selectedBeamlineId}`;
 
   const urlPath = fileMetadata?.urlId
     ? `${beamlineUrlId}/${fileMetadata.urlId}`
     : beamlineUrlId;
 
+  const protocol = "ca";
+
+  OpenPageAction(newScreen, allMacros, protocol, fileContext, urlPath);
+};
+
+export const OpenPageAction = (
+  screenFileUrl: string,
+  macros: MacroMap,
+  protocol: string,
+  fileContext: any,
+  browserUrl: string
+) => {
   executeAction(
     {
       type: "OPEN_PAGE",
       dynamicInfo: {
-        name: newScreen,
+        name: screenFileUrl,
         location: "main",
         description: undefined,
         file: {
-          path: newScreen,
+          path: screenFileUrl,
           macros: macros,
-          defaultProtocol: "ca"
+          defaultProtocol: protocol
         }
       }
     },
     fileContext,
     undefined,
     {},
-    urlPath
+    browserUrl
   );
 };
