@@ -148,7 +148,8 @@ export const RecursiveAppendDuplicateFileMacros = (
 };
 
 /**
- *
+ * Builds the ID to display in the URL, based on the file name
+ * and/or a given display name
  * @param filepath string path of bob file
  * @param idPrefix string prefix of all parent file IDs
  * @param displayName string alternate name of file to display
