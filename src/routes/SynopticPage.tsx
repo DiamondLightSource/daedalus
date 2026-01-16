@@ -29,7 +29,7 @@ import { BeamlineTreeStateContext } from "../App";
 import { useParams, useSearchParams, useLocation } from "react-router-dom";
 import {
   executeOpenPageActionWithUrlId,
-  OpenPageAction
+  ExecutePageAction
 } from "../utils/csWebLibActions";
 
 const FILE_DESCRIPTION_SEARCH_PARAMETER_NAME = "file_description";
@@ -107,7 +107,7 @@ export function SynopticPage() {
         const fileDescription = JSON.parse(
           fileDescriptionParam
         ) as FileDescription;
-        OpenPageAction(
+        ExecutePageAction(
           fileDescription.path,
           fileDescription.macros,
           fileDescription.defaultProtocol,

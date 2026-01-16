@@ -61,10 +61,10 @@ export const executeOpenPageActionWithFileMetadata = (
 
   const protocol = "ca";
 
-  OpenPageAction(newScreen, allMacros, protocol, fileContext, urlPath);
+  ExecutePageAction(newScreen, allMacros, protocol, fileContext, urlPath);
 };
 
-export const OpenPageAction = (
+export const ExecutePageAction = (
   screenFileUrl: string,
   macros: MacroMap,
   protocol: string,
