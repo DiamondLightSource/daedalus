@@ -32,7 +32,8 @@ export async function parseScreenTree(
     fileMap[guid] = {
       file: json?.file,
       urlId: urlId,
-      macros: json.macros ? [json.macros as Macros] : []
+      macros: json.macros ? [json.macros as Macros] : [],
+      exists: json?.exists
     };
 
     // Now we have the initial fileMap with unique file entries, update fileMap with macros for duplicate files.
@@ -88,7 +89,8 @@ export const RecursiveTreeViewBuilder = (
       fileMap[guid] = {
         file: sibling.file,
         urlId,
-        macros: sibling.macros ? [sibling.macros] : []
+        macros: sibling.macros ? [sibling.macros] : [],
+        exists: sibling?.exists
       };
 
       // If not a duplicate, check for children
