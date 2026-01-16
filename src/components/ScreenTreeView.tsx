@@ -5,6 +5,7 @@ import { FileContext } from "@diamondlightsource/cs-web-lib";
 import { BeamlineTreeStateContext } from "../App";
 import { MenuContext } from "../routes/SynopticPage";
 import { executeOpenPageActionWithFileGuid } from "../utils/csWebLibActions";
+import { FileIDs } from "../store";
 
 export default function ScreenTreeView() {
   const { state } = useContext(BeamlineTreeStateContext);
@@ -31,6 +32,11 @@ export default function ScreenTreeView() {
   const currentScreenTree: TreeViewBaseItem[] = useMemo(() => {
     const currentBeamline = state.beamlines[state.currentBeamline];
     return currentBeamline?.screenTree ?? [];
+  }, [state.currentBeamline, state.beamlines]);
+
+  const currentFileMetadata: FileIDs = useMemo(() => {
+    const currentBeamline = state.beamlines[state.currentBeamline];
+    return currentBeamline?.filePathIds ?? [];
   }, [state.currentBeamline, state.beamlines]);
 
   // When beamline is updated, trigger refresh of expanded screens to fully expand all
@@ -65,8 +71,16 @@ export default function ScreenTreeView() {
           onExpandedItemsChange={(_event, itemIds) =>
             handleExpandedScreensChange(itemIds)
           }
-          onItemClick={(_event, itemId) => handleClick(itemId)}
+          onItemClick={(_event, itemId) => {
+            if (!itemId || currentFileMetadata[itemId]?.exists === false) {
+              return;
+            }
+            handleClick(itemId);
+          }}
           expansionTrigger="iconContainer"
+          isItemDisabled={item =>
+            currentFileMetadata[item.id]?.exists === false
+          }
         />
       ) : (
         <></>

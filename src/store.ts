@@ -196,6 +196,7 @@ export type FileMetadata = {
   file: string;
   urlId: string;
   macros?: Macros[];
+  exists?: boolean;
 };
 
 export type FileIDs = {

@@ -2,19 +2,15 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import {
   executeOpenPageActionWithFileGuid,
   executeOpenPageActionWithUrlId,
-  executeOpenPageAction
+  executeOpenPageActionWithFileMetadata
 } from "../../utils/csWebLibActions";
-import { executeAction } from "@diamondlightsource/cs-web-lib";
-import * as urlUtils from "../../utils/urlUtils";
 import { BeamlineStateProperties, FileMetadata } from "../../store";
+import { executeAction, buildUrl } from "@diamondlightsource/cs-web-lib";
 
 vi.mock("@diamondlightsource/cs-web-lib", () => ({
-  executeAction: vi.fn()
+  executeAction: vi.fn(),
+  buildUrl: vi.fn((host, file) => `${host}/${file}`)
 }));
-
-const buildUrlSpy = vi
-  .spyOn(urlUtils, "buildUrl")
-  .mockImplementation((host, file) => `${host}/${file}`);
 
 describe("executeAction: OPEN_PAGE", () => {
   let mockBeamlineState: BeamlineStateProperties;
@@ -61,7 +57,7 @@ describe("executeAction: OPEN_PAGE", () => {
         mockFileContext
       );
 
-      expect(buildUrlSpy).toHaveBeenCalledWith(
+      expect(buildUrl).toHaveBeenCalledWith(
         mockBeamlineState.host,
         expectedFileMetadata.file
       );
@@ -96,7 +92,7 @@ describe("executeAction: OPEN_PAGE", () => {
         mockFileContext
       );
 
-      expect(buildUrlSpy).toHaveBeenCalledWith(
+      expect(buildUrl).toHaveBeenCalledWith(
         mockBeamlineState.host,
         expectedFileMetadata.file
       );
@@ -129,7 +125,7 @@ describe("executeAction: OPEN_PAGE", () => {
         mockFileContext
       );
 
-      expect(buildUrlSpy).toHaveBeenCalledWith(
+      expect(buildUrl).toHaveBeenCalledWith(
         mockBeamlineState.host,
         expectedFileMetadata.file
       );
@@ -154,7 +150,7 @@ describe("executeAction: OPEN_PAGE", () => {
         mockFileContext
       );
 
-      expect(buildUrlSpy).toHaveBeenCalledWith(
+      expect(buildUrl).toHaveBeenCalledWith(
         mockBeamlineState.host,
         mockBeamlineState.topLevelScreen
       );
@@ -176,7 +172,7 @@ describe("executeAction: OPEN_PAGE", () => {
     });
   });
 
-  describe("executeOpenPageAction", () => {
+  describe("executeOpenPageActionWithFileMetadata", () => {
     it("should call executeAction with correct parameters including macros when fileMetadata is provided", () => {
       const fileMetadata: FileMetadata = {
         file: "test-screen.opi",
@@ -186,14 +182,14 @@ describe("executeAction: OPEN_PAGE", () => {
       const selectedBeamlineId = "beamline-1";
       const expectedUrl = `${mockBeamlineState.host}/${fileMetadata.file}`;
 
-      executeOpenPageAction(
+      executeOpenPageActionWithFileMetadata(
         mockBeamlineState,
         fileMetadata,
         selectedBeamlineId,
         mockFileContext
       );
 
-      expect(buildUrlSpy).toHaveBeenCalledWith(
+      expect(buildUrl).toHaveBeenCalledWith(
         mockBeamlineState.host,
         fileMetadata.file
       );
@@ -224,14 +220,14 @@ describe("executeAction: OPEN_PAGE", () => {
       const selectedBeamlineId = "beamline-1";
       const expectedUrl = `${mockBeamlineState.host}/${mockBeamlineState.topLevelScreen}`;
 
-      executeOpenPageAction(
+      executeOpenPageActionWithFileMetadata(
         mockBeamlineState,
         fileMetadata,
         selectedBeamlineId,
         mockFileContext
       );
 
-      expect(buildUrlSpy).toHaveBeenCalledWith(
+      expect(buildUrl).toHaveBeenCalledWith(
         mockBeamlineState.host,
         mockBeamlineState.topLevelScreen
       );
@@ -265,7 +261,7 @@ describe("executeAction: OPEN_PAGE", () => {
       };
       const selectedBeamlineId = "beamline-1";
 
-      executeOpenPageAction(
+      executeOpenPageActionWithFileMetadata(
         mockBeamlineState,
         fileMetadata,
         selectedBeamlineId,
@@ -294,7 +290,7 @@ describe("executeAction: OPEN_PAGE", () => {
       };
       const selectedBeamlineId = "beamline-1";
 
-      executeOpenPageAction(
+      executeOpenPageActionWithFileMetadata(
         mockBeamlineState,
         fileMetadata,
         selectedBeamlineId,
@@ -325,7 +321,7 @@ describe("executeAction: OPEN_PAGE", () => {
       const selectedBeamlineId = "beamline-1";
       const expectedUrlPath = `/synoptic/${selectedBeamlineId}`;
 
-      executeOpenPageAction(
+      executeOpenPageActionWithFileMetadata(
         mockBeamlineState,
         fileMetadata,
         selectedBeamlineId,
