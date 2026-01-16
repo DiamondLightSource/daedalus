@@ -50,6 +50,7 @@ export function SynopticPage() {
 
   useEffect(() => {
     // Only trigger once
+    document.title = `${params.beamline} Synoptic | Daedalus`;
     if (state.filesLoaded) {
       if (params.beamline && params.beamline !== state.currentBeamline)
         dispatch({
@@ -66,6 +67,7 @@ export function SynopticPage() {
 
   // Only run once on mount
   useEffect(() => {
+    document.title = "Synoptic | Daedalus";
     loadScreens();
   }, []);
 

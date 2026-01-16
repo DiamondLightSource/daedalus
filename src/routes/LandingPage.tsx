@@ -3,8 +3,13 @@ import DLSAppBar from "../components/AppBar";
 import { useWindowHeight, APP_BAR_HEIGHT } from "../utils/helper";
 import LinkCard from "../components/LinkCard";
 import { PageRouteInfo } from "./PageRouteInfo";
+import { useEffect } from "react";
 
 export function LandingPage() {
+  useEffect(() => {
+    document.title = "Home | Daedalus";
+  }, []);
+
   // get width
   return (
     <>
