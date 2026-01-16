@@ -19,8 +19,8 @@ export async function parseScreenTree(
 
     const { urlId, fileLabel: topLevelScreen } = buildUrlId(
       json.file,
-      json.displayName,
-      ""
+      "",
+      json.displayName
     );
 
     // Process the child items
@@ -82,8 +82,8 @@ export const RecursiveTreeViewBuilder = (
   for (const sibling of jsonSiblings) {
     const { urlId, fileLabel } = buildUrlId(
       sibling.file,
-      sibling.displayName,
-      idPrefix
+      idPrefix,
+      sibling.displayName
     );
     const guid = crypto.randomUUID();
 
@@ -147,10 +147,17 @@ export const RecursiveAppendDuplicateFileMacros = (
   }
 };
 
-const buildUrlId = (
+/**
+ *
+ * @param filepath string path of bob file
+ * @param idPrefix string prefix of all parent file IDs
+ * @param displayName string alternate name of file to display
+ * @returns string ID of url, label to display for current file
+ */
+export const buildUrlId = (
   filepath: string,
-  displayName: string,
-  idPrefix: string
+  idPrefix: string,
+  displayName?: string
 ) => {
   const splitFilePath = filepath.split(".bob")[0].split("/");
   let fileLabel: string = displayName || splitFilePath.pop()!;
