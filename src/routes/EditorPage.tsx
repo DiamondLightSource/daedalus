@@ -41,6 +41,7 @@ export function EditorPage() {
 
   // Only run once on mount
   useEffect(() => {
+    document.title = "Editor | Daedalus";
     loadScreens();
   }, []);
 
