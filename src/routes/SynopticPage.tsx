@@ -12,7 +12,7 @@ import {
   BeamlineState,
   CHANGE_BEAMLINE,
   CHANGE_SCREEN,
-  LOAD_SCREENS,
+  LOAD_SCREENS
 } from "../store";
 import DLSAppBar from "../components/AppBar";
 import ScreenDisplay from "../components/ScreenDisplay";
