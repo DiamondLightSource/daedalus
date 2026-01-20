@@ -3,7 +3,7 @@ import ArchiverMenuBar from "../components/ArchiverMenuBar";
 import TracesPanel from "../components/TracesPanel";
 import DataBrowserPlot from "../components/DataBrowserPlot";
 import DLSAppBar from "../components/AppBar";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 export const MenuContext = createContext<{
   menusOpen: {
@@ -20,6 +20,11 @@ export const MenuContext = createContext<{
  */
 export function DataBrowserPage() {
   const [menusOpen, setMenusOpen] = useState({ trace: false, archiver: false });
+
+  useEffect(() => {
+    document.title = "Data Browser | Daedalus";
+  }, []);
+
   return (
     <MenuContext.Provider value={{ menusOpen, setMenusOpen }}>
       <Box sx={{ display: "flex", width: "100%" }}>

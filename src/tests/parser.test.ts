@@ -2,7 +2,8 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   parseScreenTree,
   RecursiveTreeViewBuilder,
-  RecursiveAppendDuplicateFileMacros
+  RecursiveAppendDuplicateFileMacros,
+  buildUrlId
 } from "../utils/parser";
 import { FileIDs } from "../store";
 
@@ -59,6 +60,41 @@ describe("parseScreenTree()", (): void => {
     const [tree, , firstFile] = await parseScreenTree("test-map.json");
     expect(tree.length).toEqual(1);
     expect(firstFile).toEqual("top.bob");
+  });
+
+  it("successfully fetches the file with a display name", async (): Promise<void> => {
+    const mockSuccessResponse = JSON.parse(`
+    {
+      "file": "top.bob",
+      "displayName": "Top Synoptic",
+      "children": [
+          {
+              "file": "middle1.bob",
+              "displayName": "Middle File 1",
+              "children": [
+                  {
+                      "file": "bottom.bob",
+                      "displayName": "Bottom File"
+                  }
+              ]
+          },
+          {
+              "file": "middle2.bob",
+              "displayName": "Middle File 2"
+          }
+      ]
+    }`);
+    const mockJsonPromise = Promise.resolve(mockSuccessResponse);
+    const mockFetchPromise = Promise.resolve({
+      json: (): Promise<unknown> => mockJsonPromise
+    });
+    const mockFetch = (): Promise<unknown> => mockFetchPromise;
+    vi.spyOn(globalWithFetch, "fetch").mockImplementation(mockFetch);
+
+    const [tree, , firstFile] = await parseScreenTree("test-map.json");
+    expect(tree.length).toEqual(1);
+    expect(firstFile).toEqual("top.bob");
+    expect(tree[0].label).toEqual("Top Synoptic");
   });
 });
 
@@ -219,6 +255,58 @@ describe("RecursiveTreeViewBuilder()", (): void => {
 
     expect(actualUrlIds.sort()).toEqual(expectedUrlIds.sort());
   });
+
+  it("parses child screens to generate the expected urlId strings with display names", async (): Promise<void> => {
+    const testJson = {
+      file: "top.bob",
+      displayName: "Top Screen",
+      children: [
+        {
+          file: "middle1.bob",
+          displayName: "Middle Screen",
+          children: [
+            {
+              file: "path1/index.bob",
+              displayName: "Index 1"
+            },
+            {
+              file: "path2/index.bob",
+              displayName: "Index 2"
+            },
+            {
+              file: "index.bob",
+              displayName: "Index 3"
+            },
+            {
+              file: "path1/not_index.bob",
+              displayName: "Not Index"
+            }
+          ]
+        },
+        {
+          file: "path0/index.bob",
+          displayName: "Index"
+        }
+      ]
+    };
+
+    const { fileMap } = await RecursiveTreeViewBuilder(
+      testJson.children,
+      "Top Screen"
+    );
+
+    const expectedUrlIds = [
+      "Top Screen+Index",
+      "Top Screen+Middle Screen",
+      "Top Screen+Middle Screen+Index 1",
+      "Top Screen+Middle Screen+Index 2",
+      "Top Screen+Middle Screen+Index 3",
+      "Top Screen+Middle Screen+Not Index"
+    ];
+    const actualUrlIds = Object.values(fileMap).map(x => x.urlId);
+
+    expect(actualUrlIds.sort()).toEqual(expectedUrlIds.sort());
+  });
 });
 
 describe("RecursiveAppendDuplicateFileMacros()", (): void => {
@@ -349,5 +437,32 @@ describe("RecursiveAppendDuplicateFileMacros()", (): void => {
       macroHash => "Another" in macroHash
     );
     expect(aMacros).toEqual({ Another: "AnotherFilesMacros" });
+  });
+});
+
+describe("buildUrlId()", (): void => {
+  it("uses the file name if no display name", (): void => {
+    const { urlId, fileLabel } = buildUrlId("testing.bob", "", undefined);
+
+    expect(urlId).toBe("testing");
+    expect(fileLabel).toBe("testing");
+  });
+
+  it("uses display name as url id", (): void => {
+    const { urlId, fileLabel } = buildUrlId("testing.bob", "", "My File");
+
+    expect(urlId).toBe("My File");
+    expect(fileLabel).toBe("My File");
+  });
+
+  it("correctly attaches a prefix", (): void => {
+    const { urlId, fileLabel } = buildUrlId(
+      "testing.bob",
+      "First File",
+      "My File"
+    );
+
+    expect(urlId).toBe("First File+My File");
+    expect(fileLabel).toBe("My File");
   });
 });

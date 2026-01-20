@@ -4,7 +4,7 @@ import { demoReducer, demoInitialState, FileState } from "../store";
 import { useWindowWidth, useWindowHeight } from "../utils/helper";
 import FileDisplay from "../components/FileDisplay";
 import FileNavigationBar from "../components/FileNavigationBar";
-import { createContext } from "react";
+import { createContext, useEffect } from "react";
 import DLSAppBar from "../components/AppBar";
 
 const FileStateContext = createContext<{
@@ -16,6 +16,10 @@ export function DemoPage() {
   const [state, dispatch] = React.useReducer(demoReducer, demoInitialState);
   const width = useWindowWidth();
   const height = useWindowHeight();
+
+  useEffect(() => {
+    document.title = "Demo | Daedalus";
+  }, []);
 
   return (
     <>
