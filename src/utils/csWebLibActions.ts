@@ -41,18 +41,23 @@ export const executeOpenPageActionWithFileMetadata = (
   fileMetadata: FileMetadata | undefined,
   selectedBeamlineId: string,
   fileContext: any,
-  extraMacros?: MacroMap
+  overrideMacros?: MacroMap
 ) => {
   const newScreen = buildUrl(
     beamlineState.host,
     fileMetadata?.file ?? beamlineState.topLevelScreen
   );
 
-  const macros: MacroMap =
-    fileMetadata?.macros?.reduce((acc, obj) => Object.assign(acc, obj), {}) ??
-    {};
+  const fileMetadataMacros: MacroMap =
+    fileMetadata?.macros && fileMetadata?.macros.length > 0
+      ? fileMetadata?.macros[0]
+      : {};
 
-  const allMacros = extraMacros ? { ...extraMacros, ...macros } : macros;
+  const selectedMacros =
+    overrideMacros && Object.entries(overrideMacros).length > 0
+      ? overrideMacros
+      : fileMetadataMacros;
+
   const beamlineUrlId = `/synoptic/${selectedBeamlineId}`;
 
   const urlPath = fileMetadata?.urlId
@@ -61,7 +66,13 @@ export const executeOpenPageActionWithFileMetadata = (
 
   const protocol = "ca";
 
-  executeOpenPageAction(newScreen, allMacros, protocol, fileContext, urlPath);
+  executeOpenPageAction(
+    newScreen,
+    selectedMacros,
+    protocol,
+    fileContext,
+    urlPath
+  );
 };
 
 export const executeOpenPageAction = (

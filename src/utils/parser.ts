@@ -1,9 +1,53 @@
 import { TreeViewBaseItem } from "@mui/x-tree-view";
-import { FileIDs, Macros } from "../store";
+import { FileIDs, FileMetadata, MacroMap, Macros } from "../store";
 import {
   CsWebLibHttpResponseError,
   httpRequest
 } from "@diamondlightsource/cs-web-lib";
+
+/**
+ * Select a file metadata record from a set of records, using the file path and the macro set
+ * to identify the record.
+ * @param allFileMetadata File metadata to be searched
+ * @param targetFilePath Path of the file to find
+ * @param targetMacros The set of macros to match
+ * @returns A file metadata record or undefined if no match is found
+ */
+export const selectFileMetadataByFilePathAndMacros = (
+  allFileMetadata: FileIDs,
+  targetFilePath: string,
+  targetMacros?: MacroMap
+): FileMetadata | undefined => {
+  // remove macros injected by cs-web-lib
+  const filteredMacros = Object.fromEntries(
+    Object.entries(targetMacros ?? {}).filter(
+      ([key]) => key !== "LCID" && key !== "DID"
+    )
+  );
+
+  const filteredMacrosKeys = Object.keys(filteredMacros);
+
+  return Object.values(allFileMetadata)
+    .filter(fileMetadata => fileMetadata.file === targetFilePath)
+    .find(fileMetadata => {
+      // Check for matching macros
+      if (!fileMetadata?.macros || fileMetadata?.macros.length === 0) {
+        return filteredMacrosKeys.length === 0;
+      }
+      return (fileMetadata?.macros ?? []).some(metadataMacroMap => {
+        const macroSetKeys = Object.keys(metadataMacroMap);
+        // Check has identical set of keys
+        if (macroSetKeys.length !== filteredMacrosKeys.length) return false;
+        if (macroSetKeys.length === 0) return true;
+        if (!macroSetKeys.every(key => filteredMacrosKeys.includes(key)))
+          return false;
+        // Check has equal values for each key
+        return macroSetKeys.every(
+          key => metadataMacroMap[key] === filteredMacros[key]
+        );
+      });
+    });
+};
 
 /**
  * Parse the parent file and all child files into a
