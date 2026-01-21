@@ -1,6 +1,6 @@
 import { Box, Grid, Stack, Typography } from "@mui/material";
 import DLSAppBar from "../components/AppBar";
-import { useWindowHeight, APP_BAR_HEIGHT } from "../utils/helper";
+import { APP_BAR_HEIGHT } from "../utils/helper";
 import LinkCard from "../components/LinkCard";
 import { PageRouteInfo } from "./PageRouteInfo";
 import { useEffect } from "react";
@@ -18,7 +18,7 @@ export function LandingPage() {
         sx={{
           display: "flex",
           width: "100%",
-          height: `calc(${useWindowHeight()}px - ${APP_BAR_HEIGHT}px - 10px)`,
+          height: "100%",
           margin: `calc(${APP_BAR_HEIGHT}px + 5px) 5px 5px 5px`
         }}
       >
