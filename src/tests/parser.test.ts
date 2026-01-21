@@ -3,7 +3,8 @@ import {
   parseScreenTree,
   RecursiveTreeViewBuilder,
   RecursiveAppendDuplicateFileMacros,
-  buildUrlId
+  buildUrlId,
+  selectFileMetadataByFilePathAndMacros
 } from "../utils/parser";
 import { FileIDs } from "../store";
 
@@ -464,5 +465,193 @@ describe("buildUrlId()", (): void => {
 
     expect(urlId).toBe("First File+My File");
     expect(fileLabel).toBe("My File");
+  });
+});
+
+describe("selectFileMetadataByFilePathAndMacros", () => {
+  // Sample test data
+  const sampleFileMetadata: FileIDs = {
+    file1: {
+      urlId: "id1",
+      file: "/path/to/file1.txt",
+      macros: [{ KEY1: "value1", KEY2: "value2" }]
+    },
+    file2: {
+      urlId: "id2",
+      file: "/path/to/file2.txt",
+      macros: [{ KEY3: "value3" }]
+    },
+    file3: {
+      urlId: "id3",
+      file: "/path/to/file3.txt",
+      macros: []
+    },
+    file4: {
+      urlId: "id4",
+      file: "/path/to/file4.txt"
+    },
+    file5: {
+      urlId: "id5",
+      file: "/path/to/file1.txt",
+      macros: [{ KEY1: "different", KEY2: "value2" }]
+    },
+    file6: {
+      urlId: "id6",
+      file: "/path/to/file1.txt",
+      macros: [{ KEY1: "value1", KEY2: "value2", EXTRA: "extra" }]
+    },
+    file7: {
+      urlId: "id7",
+      file: "/path/to/file7.txt",
+      macros: [{ KEY1: "value1", KEY2: "value3" }, { OTHER: "set" }]
+    }
+  };
+
+  it("should find file with exact matching macros", () => {
+    const result = selectFileMetadataByFilePathAndMacros(
+      sampleFileMetadata,
+      "/path/to/file1.txt",
+      { KEY1: "value1", KEY2: "value2" }
+    );
+
+    expect(result).toBeDefined();
+    expect(result?.file).toBe("/path/to/file1.txt");
+    expect(result?.urlId).toBe("id1");
+    expect(result?.macros?.[0]).toEqual({ KEY1: "value1", KEY2: "value2" });
+  });
+
+  it("should filter out LCID and DID macros when matching", () => {
+    const result = selectFileMetadataByFilePathAndMacros(
+      sampleFileMetadata,
+      "/path/to/file1.txt",
+      { KEY1: "value1", KEY2: "value2", LCID: "1033", DID: "123" }
+    );
+
+    expect(result).toBeDefined();
+    expect(result?.file).toBe("/path/to/file1.txt");
+    expect(result?.urlId).toBe("id1");
+    expect(result?.macros?.[0]).toEqual({ KEY1: "value1", KEY2: "value2" });
+  });
+
+  it("should find file with no macros when target macros are empty", () => {
+    const result = selectFileMetadataByFilePathAndMacros(
+      sampleFileMetadata,
+      "/path/to/file3.txt",
+      {}
+    );
+
+    expect(result).toBeDefined();
+    expect(result?.file).toBe("/path/to/file3.txt");
+    expect(result?.urlId).toBe("id3");
+    expect(result?.macros).toEqual([]);
+  });
+
+  it("should find file with undefined macros when target macros are empty", () => {
+    const result = selectFileMetadataByFilePathAndMacros(
+      sampleFileMetadata,
+      "/path/to/file4.txt",
+      {}
+    );
+
+    expect(result).toBeDefined();
+    expect(result?.file).toBe("/path/to/file4.txt");
+    expect(result?.urlId).toBe("id4");
+    expect(result?.macros).toBeUndefined();
+  });
+
+  it("should find file with undefined macros when target macros are undefined", () => {
+    const result = selectFileMetadataByFilePathAndMacros(
+      sampleFileMetadata,
+      "/path/to/file4.txt"
+    );
+
+    expect(result).toBeDefined();
+    expect(result?.urlId).toBe("id4");
+    expect(result?.file).toBe("/path/to/file4.txt");
+  });
+
+  it("should not find file when macros do not match", () => {
+    const result = selectFileMetadataByFilePathAndMacros(
+      sampleFileMetadata,
+      "/path/to/file1.txt",
+      { KEY1: "wrong", KEY2: "value2" }
+    );
+
+    expect(result).toBeUndefined();
+  });
+
+  it("should not find file when macros have different keys", () => {
+    const result = selectFileMetadataByFilePathAndMacros(
+      sampleFileMetadata,
+      "/path/to/file1.txt",
+      { KEY1: "value1", DIFFERENT: "value2" }
+    );
+
+    expect(result).toBeUndefined();
+  });
+
+  it("should not find file when target has fewer macros than file", () => {
+    const result = selectFileMetadataByFilePathAndMacros(
+      sampleFileMetadata,
+      "/path/to/file1.txt",
+      { KEY1: "value1" }
+    );
+
+    expect(result).toBeUndefined();
+  });
+
+  it("should not find file when target has more macros than file", () => {
+    const result = selectFileMetadataByFilePathAndMacros(
+      sampleFileMetadata,
+      "/path/to/file1.txt",
+      { KEY1: "value1", KEY2: "value2", EXTRA: "value3" }
+    );
+
+    expect(result).toBeUndefined();
+  });
+
+  it("should not find file when file path does not exist", () => {
+    const result = selectFileMetadataByFilePathAndMacros(
+      sampleFileMetadata,
+      "/path/to/nonexistent.txt",
+      { KEY1: "value1", KEY2: "value2" }
+    );
+
+    expect(result).toBeUndefined();
+  });
+
+  it("should handle empty file metadata", () => {
+    const result = selectFileMetadataByFilePathAndMacros(
+      {},
+      "/path/to/file1.txt",
+      { KEY1: "value1", KEY2: "value2" }
+    );
+
+    expect(result).toBeUndefined();
+  });
+
+  it("should find file with matching macros when multiple files have the same path", () => {
+    const result = selectFileMetadataByFilePathAndMacros(
+      sampleFileMetadata,
+      "/path/to/file1.txt",
+      { KEY1: "value1", KEY2: "value2" }
+    );
+
+    expect(result).toBeDefined();
+    expect(result?.file).toBe("/path/to/file1.txt");
+    expect(result?.urlId).toBe("id1");
+    expect(result?.macros?.[0]).toEqual({ KEY1: "value1", KEY2: "value2" });
+  });
+
+  it("should find file with multiple macro sets if one set matches", () => {
+    const result = selectFileMetadataByFilePathAndMacros(
+      sampleFileMetadata,
+      "/path/to/file7.txt",
+      { KEY1: "value1", KEY2: "value3" }
+    );
+
+    expect(result).toBeDefined();
+    expect(result?.urlId).toBe("id7");
+    expect(result?.file).toBe("/path/to/file7.txt");
   });
 });

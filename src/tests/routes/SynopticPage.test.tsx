@@ -141,15 +141,23 @@ describe("addTabCallbackAction", () => {
     bl01: {
       host: "http://daedalus.ac.uk",
       filePathIds: {
-        file1: { urlId: "screen1", file: "/path/to/file1" },
-        file2: { urlId: "screen2", file: "/path/to/file2" }
+        file1: {
+          urlId: "screen1",
+          file: "/path/to/file1",
+          macros: [{ key: "value" }]
+        },
+        file2: {
+          urlId: "screen2",
+          file: "/path/to/file2",
+          macros: [{ key: "value2" }]
+        }
       }
     } as Partial<BeamlineStateProperties> as BeamlineStateProperties
   } as Partial<BeamlineState> as BeamlineState;
 
   const mockLocation = {
-    origin: "http://localhost:3000",
-    href: "http://localhost:3000/synoptic/bl01/screen1",
+    origin: "http://daedalus.ac.uk",
+    href: "http://daedalus.ac.uk/synoptic/bl01/screen1",
     pathname: "/synoptic/bl01/screen1"
   } as Location;
 
@@ -165,7 +173,7 @@ describe("addTabCallbackAction", () => {
     const addTab = addTabCallbackAction(mockBeamlines, "bl01", mockLocation);
 
     const fileDesc = {
-      path: "http://daedalus.ac.uk/path/to/file1",
+      path: "/path/to/file1",
       macros: { key: "value" }
     } as Partial<FileDescription> as FileDescription;
 

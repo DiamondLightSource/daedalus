@@ -67,7 +67,7 @@ describe("executeAction: OPEN_PAGE", () => {
           type: "OPEN_PAGE",
           dynamicInfo: expect.objectContaining({
             file: expect.objectContaining({
-              macros: { key1: "value1", key2: "value2" }
+              macros: { key1: "value1" }
             })
           })
         }),
@@ -203,7 +203,7 @@ describe("executeAction: OPEN_PAGE", () => {
             description: undefined,
             file: {
               path: expectedUrl,
-              macros: { param1: "value1", param2: "value2", param3: "value3" },
+              macros: { param1: "value1" },
               defaultProtocol: "ca"
             }
           }

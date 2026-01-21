@@ -19,6 +19,7 @@ import {
 import { BeamlineTreeStateContext } from "../App";
 import { MenuContext } from "../routes/SynopticPage";
 import { useLocation, useNavigate } from "react-router-dom";
+import { selectFileMetadataByFilePathAndMacros } from "../utils/parser";
 
 interface PaperProps extends MuiPaperProps {
   open?: boolean;
@@ -66,9 +67,10 @@ export default function ScreenDisplay() {
         ""
       );
 
-      const allFiles = state.beamlines[state.currentBeamline].filePathIds;
-      const currentFile = Object.values(allFiles).find(
-        values => values.file === displayedPath
+      const currentFile = selectFileMetadataByFilePathAndMacros(
+        state.beamlines[state.currentBeamline].filePathIds,
+        displayedPath,
+        fileContext.pageState.main?.macros
       );
 
       if (currentFile?.urlId && currentFile.urlId !== pathname) {

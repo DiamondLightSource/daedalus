@@ -16,7 +16,10 @@ import {
 } from "../store";
 import DLSAppBar from "../components/AppBar";
 import ScreenDisplay from "../components/ScreenDisplay";
-import { parseScreenTree } from "../utils/parser";
+import {
+  parseScreenTree,
+  selectFileMetadataByFilePathAndMacros
+} from "../utils/parser";
 import {
   buildUrl,
   FileContext,
@@ -121,6 +124,7 @@ export function SynopticPage() {
         const macrosMap = macrosParameter
           ? JSON.parse(macrosParameter)
           : undefined;
+
         executeOpenPageActionWithUrlId(
           newBeamlineState,
           params.screenUrlId,
@@ -194,21 +198,23 @@ export const addTabCallbackAction =
       ""
     );
 
-    const allFiles = beamlines[currentBeamline].filePathIds;
-    const currentFile = Object.values(allFiles).find(
-      values => values.file === displayedPath
+    const matchingFileMetadata = selectFileMetadataByFilePathAndMacros(
+      beamlines[currentBeamline].filePathIds,
+      displayedPath,
+      fileDesc?.macros
     );
 
     // Build the URL for the new tab
     let newURL = new URL(windowLocation.origin);
-    if (currentFile?.urlId) {
+    if (matchingFileMetadata?.urlId) {
       // we have a file mapping
       newURL.pathname = buildUrl(
         "",
         "synoptic",
         currentBeamline,
-        currentFile?.urlId
+        matchingFileMetadata?.urlId
       );
+
       if (fileDesc?.macros) {
         newURL.searchParams.append(
           MACROS_SEARCH_PARAMETER_NAME,
