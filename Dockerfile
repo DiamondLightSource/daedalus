@@ -21,6 +21,11 @@ RUN npm run build:nolint
 # Create image for deployment
 FROM nginxinc/nginx-unprivileged:1.29-alpine AS deployment
 
+# Update package lists and upgrade libpng1.6 
+# to fix a security vulnerability (CVE-2026-22695)
+USER root
+RUN apk update && apk add --no-cache "libpng>=1.6.54"
+
 USER nginx
 COPY nginx.conf /etc/nginx/nginx.conf
 ARG DOCROOT=/usr/share/nginx/html
