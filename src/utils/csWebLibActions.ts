@@ -43,7 +43,6 @@ export const executeOpenPageActionWithFileMetadata = (
   fileContext: any,
   overrideMacros?: MacroMap
 ) => {
-
   // get macros
   const fileMetadataMacros: MacroMap =
     fileMetadata?.macros && fileMetadata?.macros.length > 0
@@ -55,22 +54,23 @@ export const executeOpenPageActionWithFileMetadata = (
       : fileMetadataMacros;
 
   // TEMP FIX - adding colon as PVs using M macros don't work because they are missing a colon
-  if (selectedMacros.M && !selectedMacros.M.startsWith(':')) {
-    selectedMacros.M = ':' + selectedMacros.M;
+  if (selectedMacros.M && !selectedMacros.M.startsWith(":")) {
+    selectedMacros.M = ":" + selectedMacros.M;
   }
 
   let filePath = fileMetadata?.file ?? beamlineState.topLevelScreen;
-  
+
   // replace macro values first
   Object.entries(selectedMacros).forEach(([key, value]) => {
     filePath = filePath.replace(`$(${key})`, value);
   });
 
   // check if the filepath is now already a url
-  const isFullUrl = filePath.startsWith('http://') || filePath.startsWith('https://');
-  
+  const isFullUrl =
+    filePath.startsWith("http://") || filePath.startsWith("https://");
+
   // build screen from url or relative path
-  const newScreen = isFullUrl 
+  const newScreen = isFullUrl
     ? filePath
     : buildUrl(beamlineState.host, filePath);
 
@@ -100,7 +100,7 @@ export const executeOpenPageAction = (
 ) => {
   console.log("executeOpenPageAction - macros parameter:", macros); // ADD THIS
   console.log("executeOpenPageAction - screenFileUrl:", screenFileUrl); // ADD THIS
-  
+
   executeAction(
     {
       type: "OPEN_PAGE",
