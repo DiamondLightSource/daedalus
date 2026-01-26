@@ -98,8 +98,6 @@ export const executeOpenPageAction = (
   fileContext: any,
   browserUrl: string
 ) => {
-  console.log("executeOpenPageAction - macros parameter:", macros); // ADD THIS
-  console.log("executeOpenPageAction - screenFileUrl:", screenFileUrl); // ADD THIS
 
   executeAction(
     {
