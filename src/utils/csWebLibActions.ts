@@ -98,7 +98,6 @@ export const executeOpenPageAction = (
   fileContext: any,
   browserUrl: string
 ) => {
-
   executeAction(
     {
       type: "OPEN_PAGE",
