@@ -43,7 +43,8 @@ export const executeOpenPageActionWithFileMetadata = (
   fileContext: any,
   overrideMacros?: MacroMap
 ) => {
-  // get macros
+  let filePath = fileMetadata?.file ?? beamlineState.topLevelScreen;
+
   const fileMetadataMacros: MacroMap =
     fileMetadata?.macros && fileMetadata?.macros.length > 0
       ? fileMetadata?.macros[0]
@@ -53,26 +54,7 @@ export const executeOpenPageActionWithFileMetadata = (
       ? overrideMacros
       : fileMetadataMacros;
 
-  // TEMP FIX - adding colon as PVs using M macros don't work because they are missing a colon
-  if (selectedMacros.M && !selectedMacros.M.startsWith(":")) {
-    selectedMacros.M = ":" + selectedMacros.M;
-  }
-
-  let filePath = fileMetadata?.file ?? beamlineState.topLevelScreen;
-
-  // replace macro values first
-  Object.entries(selectedMacros).forEach(([key, value]) => {
-    filePath = filePath.replace(`$(${key})`, value);
-  });
-
-  // check if the filepath is now already a url
-  const isFullUrl =
-    filePath.startsWith("http://") || filePath.startsWith("https://");
-
-  // build screen from url or relative path
-  const newScreen = isFullUrl
-    ? filePath
-    : buildUrl(beamlineState.host, filePath);
+  const newScreen = buildUrl(beamlineState.host, filePath);
 
   const beamlineUrlId = `/synoptic/${selectedBeamlineId}`;
 
