@@ -43,20 +43,18 @@ export const executeOpenPageActionWithFileMetadata = (
   fileContext: any,
   overrideMacros?: MacroMap
 ) => {
-  const newScreen = buildUrl(
-    beamlineState.host,
-    fileMetadata?.file ?? beamlineState.topLevelScreen
-  );
+  let filePath = fileMetadata?.file ?? beamlineState.topLevelScreen;
 
   const fileMetadataMacros: MacroMap =
     fileMetadata?.macros && fileMetadata?.macros.length > 0
       ? fileMetadata?.macros[0]
       : {};
-
   const selectedMacros =
     overrideMacros && Object.entries(overrideMacros).length > 0
       ? overrideMacros
       : fileMetadataMacros;
+
+  const newScreen = buildUrl(beamlineState.host, filePath);
 
   const beamlineUrlId = `/synoptic/${selectedBeamlineId}`;
 

@@ -174,16 +174,31 @@ export const RecursiveAppendDuplicateFileMacros = (
   if (!jsonSiblings) {
     return;
   }
-
   for (const sibling of jsonSiblings) {
-    if (sibling.duplicate && sibling.macros) {
+    if (sibling.macros) {
+      // TEMP?
+      addMColon(sibling.macros);
+
+      // Substitute macros into the filename
+      const filename =
+        sibling.file && sibling.macros
+          ? substituteMacrosIntoFilename(sibling.file, sibling.macros)
+          : sibling.file;
+
+      // Match against unresolved filename
       const matchingFileKey = Object.keys(fileMap).find(
         key => fileMap[key].file === sibling.file
       );
       if (matchingFileKey) {
-        fileMap[matchingFileKey].macros = fileMap[matchingFileKey].macros
-          ? [...fileMap[matchingFileKey].macros, sibling.macros]
-          : [sibling.macros];
+        // Replace with resolved filename
+        fileMap[matchingFileKey].file = filename;
+
+        if (sibling.duplicate) {
+          // Attach macros
+          fileMap[matchingFileKey].macros = fileMap[matchingFileKey].macros
+            ? [...fileMap[matchingFileKey].macros, sibling.macros]
+            : [sibling.macros];
+        }
       }
     }
 
@@ -214,4 +229,23 @@ export const buildUrlId = (
   }
   const urlId = `${idPrefix}${idPrefix === "" ? "" : "+"}${fileLabel}`;
   return { urlId, fileLabel };
+};
+
+// TEMP? add colon to M macro
+const addMColon = (macros: any) => {
+  if (macros.M && !macros.M.startsWith(":")) {
+    macros.M = ":" + macros.M;
+  }
+};
+
+// Substitute macros into a filename
+const substituteMacrosIntoFilename = (
+  filename: string,
+  macros: any
+): string => {
+  let resolvedFilename = filename;
+  Object.entries(macros).forEach(([key, value]) => {
+    resolvedFilename = resolvedFilename.replace(`$(${key})`, value as string);
+  });
+  return resolvedFilename;
 };
