@@ -29,7 +29,7 @@ import {
 import { RotatingLines } from "react-loader-spinner";
 import { SynopticBreadcrumbs } from "../components/SynopticBreadcrumbs";
 import { BeamlineTreeStateContext } from "../App";
-import { useParams, useSearchParams, useLocation } from "react-router-dom";
+import { useParams, useSearchParams, useLocation } from "react-router";
 import {
   executeOpenPageActionWithUrlId,
   executeOpenPageAction

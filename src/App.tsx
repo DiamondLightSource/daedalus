@@ -1,5 +1,5 @@
 import { FileProvider, store } from "@diamondlightsource/cs-web-lib";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router";
 import "./App.css";
 import { Provider } from "react-redux";
 import { ThemeProvider } from "@mui/material/styles";
@@ -66,7 +66,7 @@ function App({}) {
   return (
     <Provider store={store(config)}>
       <ThemeProvider theme={diamondTheme}>
-        <Router>
+        <BrowserRouter>
           <BeamlineTreeStateContext.Provider value={{ state, dispatch }}>
             <FileProvider initialPageState={INITIAL_SCREEN_STATE}>
               <Routes>
@@ -83,7 +83,7 @@ function App({}) {
               </Routes>
             </FileProvider>
           </BeamlineTreeStateContext.Provider>
-        </Router>
+        </BrowserRouter>
       </ThemeProvider>
     </Provider>
   );
