@@ -1,5 +1,5 @@
 import { FileProvider, store } from "@diamondlightsource/cs-web-lib";
-import { BrowserRouter, Route, Routes } from "react-router";
+import { createBrowserRouter, Outlet } from "react-router";
 import "./App.css";
 import { Provider } from "react-redux";
 import { ThemeProvider } from "@mui/material/styles";
@@ -32,7 +32,7 @@ export const BeamlineTreeStateContext = createContext<{
   dispatch: React.Dispatch<any>;
 }>({ state: initialState, dispatch: () => null });
 
-function App({}) {
+const App = ({}) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [config, setConfig] = useState<DaedalusConfig | null>(null);
 
@@ -66,27 +66,35 @@ function App({}) {
   return (
     <Provider store={store(config)}>
       <ThemeProvider theme={diamondTheme}>
-        <BrowserRouter>
-          <BeamlineTreeStateContext.Provider value={{ state, dispatch }}>
-            <FileProvider initialPageState={INITIAL_SCREEN_STATE}>
-              <Routes>
-                <Route path="/demo" element={<DemoPage />} />
-                <Route path="/data-browser" element={<DataBrowserPage />} />
-                <Route path="/editor" element={<EditorPage />} />
-                <Route path="/synoptic" element={<SynopticPage />} />
-                <Route path="/synoptic/:beamline" element={<SynopticPage />} />
-                <Route
-                  path="/synoptic/:beamline/:screenUrlId"
-                  element={<SynopticPage />}
-                />
-                <Route path="/" element={<LandingPage />} />
-              </Routes>
-            </FileProvider>
-          </BeamlineTreeStateContext.Provider>
-        </BrowserRouter>
+        <BeamlineTreeStateContext.Provider value={{ state, dispatch }}>
+          <FileProvider initialPageState={INITIAL_SCREEN_STATE}>
+            <Outlet />
+          </FileProvider>
+        </BeamlineTreeStateContext.Provider>
       </ThemeProvider>
     </Provider>
   );
-}
+};
 
-export default App;
+export const appRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    children: [
+      { path: "/demo", element: <DemoPage /> },
+      { path: "/data-browser", element: <DataBrowserPage /> },
+      { path: "/editor", element: <EditorPage /> },
+
+      {
+        path: "/synoptic",
+        children: [
+          { index: true, element: <SynopticPage /> },
+          { path: ":beamline", element: <SynopticPage /> },
+          { path: ":beamline/:screenUrlId", element: <SynopticPage /> }
+        ]
+      },
+
+      { index: true, element: <LandingPage /> }
+    ]
+  }
+]);
