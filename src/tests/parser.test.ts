@@ -7,6 +7,8 @@ import {
 } from "../utils/parser";
 import { FileIDs } from "../store";
 
+const SCREEN_SEPARATOR = "/";
+
 /**
  * The next few lines are mocking global fetch. This is necessary since
  * vitest runs in the "jsdom" browser environment in order to render components
@@ -124,13 +126,15 @@ describe("RecursiveTreeViewBuilder()", (): void => {
     );
 
     const guid = Object.keys(fileMap).find(
-      key => fileMap[key].urlId === "top+middle1+bottom"
+      key =>
+        fileMap[key].urlId ===
+        `top${SCREEN_SEPARATOR}middle1${SCREEN_SEPARATOR}bottom`
     );
     const guidMiddle1 = Object.keys(fileMap).find(
-      key => fileMap[key].urlId === "top+middle1"
+      key => fileMap[key].urlId === `top${SCREEN_SEPARATOR}middle1`
     );
     const guidMiddle2 = Object.keys(fileMap).find(
-      key => fileMap[key].urlId === "top+middle2"
+      key => fileMap[key].urlId === `top${SCREEN_SEPARATOR}middle2`
     );
 
     expect(guid).not.toBeUndefined();
@@ -196,7 +200,7 @@ describe("RecursiveTreeViewBuilder()", (): void => {
     );
     expect(treeViewItems.length).toEqual(1);
     const guid = Object.keys(fileMap).find(
-      key => fileMap[key].urlId === "top+middle1"
+      key => fileMap[key].urlId === `top${SCREEN_SEPARATOR}middle1`
     );
 
     expect(guid).not.toBeUndefined();
@@ -244,12 +248,12 @@ describe("RecursiveTreeViewBuilder()", (): void => {
     );
 
     const expectedUrlIds = [
-      "top+middle1",
-      "top+path0__index",
-      "top+middle1+path1__index",
-      "top+middle1+path2__index",
-      "top+middle1+index",
-      "top+middle1+not_index"
+      `top${SCREEN_SEPARATOR}middle1`,
+      `top${SCREEN_SEPARATOR}path0__index`,
+      `top${SCREEN_SEPARATOR}middle1${SCREEN_SEPARATOR}path1__index`,
+      `top${SCREEN_SEPARATOR}middle1${SCREEN_SEPARATOR}path2__index`,
+      `top${SCREEN_SEPARATOR}middle1${SCREEN_SEPARATOR}index`,
+      `top${SCREEN_SEPARATOR}middle1${SCREEN_SEPARATOR}not_index`
     ];
     const actualUrlIds = Object.values(fileMap).map(x => x.urlId);
 
@@ -296,12 +300,12 @@ describe("RecursiveTreeViewBuilder()", (): void => {
     );
 
     const expectedUrlIds = [
-      "Top Screen+Index",
-      "Top Screen+Middle Screen",
-      "Top Screen+Middle Screen+Index 1",
-      "Top Screen+Middle Screen+Index 2",
-      "Top Screen+Middle Screen+Index 3",
-      "Top Screen+Middle Screen+Not Index"
+      `Top Screen${SCREEN_SEPARATOR}Index`,
+      `Top Screen${SCREEN_SEPARATOR}Middle Screen`,
+      `Top Screen${SCREEN_SEPARATOR}Middle Screen${SCREEN_SEPARATOR}Index 1`,
+      `Top Screen${SCREEN_SEPARATOR}Middle Screen${SCREEN_SEPARATOR}Index 2`,
+      `Top Screen${SCREEN_SEPARATOR}Middle Screen${SCREEN_SEPARATOR}Index 3`,
+      `Top Screen${SCREEN_SEPARATOR}Middle Screen${SCREEN_SEPARATOR}Not Index`
     ];
     const actualUrlIds = Object.values(fileMap).map(x => x.urlId);
 

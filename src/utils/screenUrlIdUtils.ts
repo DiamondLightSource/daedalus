@@ -1,4 +1,4 @@
-const SCREEN_SEPARATOR = "+";
+const SCREEN_SEPARATOR = "/";
 
 /**
  * Builds the ID to display in the URL, based on the file name
@@ -24,6 +24,14 @@ export const buildUrlId = (
   const urlId = `${idPrefix}${idPrefix === "" ? "" : SCREEN_SEPARATOR}${fileLabel}`;
   return { urlId, fileLabel };
 };
+
+export const parseFullSynopticPath = (path: string): { beamline: string; screenUrlId: string } | null => {
+  const m = path.match(/^\/synoptic\/([^/]+)\/(.*)$/);
+  if (!m) return null;
+
+  const [, beamline, screenUrlId] = m;
+  return { beamline, screenUrlId };
+}
 
 export const parseScreenUrlId = (screenUrlId: string): string[] =>
   screenUrlId

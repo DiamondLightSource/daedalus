@@ -4,10 +4,11 @@ import {
   buildUrlId,
   extractAncestorScreens,
   extractDisplayNameFromScreenUrlId,
+  parseFullSynopticPath,
   parseScreenUrlId
 } from "../utils/screenUrlIdUtils";
 
-const EXPECTED_SEPARATOR = "+";
+const EXPECTED_SEPARATOR = "/";
 
 describe("buildUrlId()", (): void => {
   it("uses the file name if no display name", (): void => {
@@ -101,7 +102,7 @@ describe("extractAncestorScreens", () => {
   });
 
   it("works with names containing special characters and spaces", () => {
-    const input = `Home${EXPECTED_SEPARATOR}User Settings${EXPECTED_SEPARATOR}Billing/Invoices`;
+    const input = `Home${EXPECTED_SEPARATOR}User Settings${EXPECTED_SEPARATOR}Billing+Invoices`;
     const result = extractAncestorScreens(input);
 
     expect(result).toEqual([
@@ -111,8 +112,8 @@ describe("extractAncestorScreens", () => {
         path: `Home${EXPECTED_SEPARATOR}User Settings`
       },
       {
-        displayName: "Billing/Invoices",
-        path: `Home${EXPECTED_SEPARATOR}User Settings${EXPECTED_SEPARATOR}Billing/Invoices`
+        displayName: "Billing+Invoices",
+        path: `Home${EXPECTED_SEPARATOR}User Settings${EXPECTED_SEPARATOR}Billing+Invoices`
       }
     ]);
   });
@@ -195,10 +196,10 @@ describe("extractDisplayNameFromScreenUrlId", () => {
   });
 
   it("preserves spaces and special characters in the display name", () => {
-    const input = `Home${EXPECTED_SEPARATOR}User Settings${EXPECTED_SEPARATOR}Billing/Invoices`;
+    const input = `Home${EXPECTED_SEPARATOR}User Settings${EXPECTED_SEPARATOR}Billing+Invoices`;
     const result = extractDisplayNameFromScreenUrlId(input);
 
-    expect(result).toBe("Billing/Invoices");
+    expect(result).toBe("Billing+Invoices");
   });
 
   it("does not mutate the input string", () => {
@@ -262,10 +263,10 @@ describe("parseScreenUrlId", () => {
   });
 
   it("preserves spaces and special characters (no trimming performed)", () => {
-    const input = `Home${EXPECTED_SEPARATOR}User Settings${EXPECTED_SEPARATOR}Billing/Invoices`;
+    const input = `Home${EXPECTED_SEPARATOR}User Settings${EXPECTED_SEPARATOR}Billing+Invoices`;
     const result = parseScreenUrlId(input);
 
-    expect(result).toEqual(["Home", "User Settings", "Billing/Invoices"]);
+    expect(result).toEqual(["Home", "User Settings", "Billing+Invoices"]);
   });
 
   it("does not include whitespace-only segments", () => {
@@ -355,5 +356,75 @@ describe("buildSynopticScreenPath", () => {
     const result = buildSynopticScreenPath("BL06", "Screen");
 
     expect(result.split("/")[1]).toBe("synoptic");
+  });
+});
+
+describe('parseFullSynopticPath', () => {
+  it('should correctly parse a valid synoptic path', () => {
+    const path = '/synoptic/bl01/synoptic-screen';
+    const result = parseFullSynopticPath(path);
+    
+    expect(result).toEqual({
+      beamline: 'bl01',
+      screenUrlId: 'synoptic-screen'
+    });
+  });
+
+  it('should correctly parse a path with complex screenUrlId containing slashes', () => {
+    const path = '/synoptic/bl02/controls/main/dashboard';
+    const result = parseFullSynopticPath(path);
+    
+    expect(result).toEqual({
+      beamline: 'bl02',
+      screenUrlId: 'controls/main/dashboard'
+    });
+  });
+
+  it('should correctly parse a path with special characters in beamline and screenUrlId', () => {
+    const path = '/synoptic/bl-03_test/screen_01/dash-board';
+    const result = parseFullSynopticPath(path);
+    
+    expect(result).toEqual({
+      beamline: 'bl-03_test',
+      screenUrlId: 'screen_01/dash-board'
+    });
+  });
+
+  it('should return null for a path not starting with /synoptic/', () => {
+    const path = '/editor/bl01/main';
+    const result = parseFullSynopticPath(path);
+    
+    expect(result).toBeNull();
+  });
+
+  it('should return null for a path with incorrect format', () => {
+    const path = '/synoptic/';
+    const result = parseFullSynopticPath(path);
+    
+    expect(result).toBeNull();
+  });
+
+  it('should return null for an empty path', () => {
+    const path = '';
+    const result = parseFullSynopticPath(path);
+    
+    expect(result).toBeNull();
+  });
+
+  it('should return null for a path with empty beamline', () => {
+    const path = '/synoptic//screen';
+    const result = parseFullSynopticPath(path);
+    
+    expect(result).toBeNull();
+  });
+
+  it('should handle a path with empty screenUrlId correctly', () => {
+    const path = '/synoptic/bl04/';
+    const result = parseFullSynopticPath(path);
+    
+    expect(result).toEqual({
+      beamline: 'bl04',
+      screenUrlId: ''
+    });
   });
 });

@@ -8,7 +8,8 @@ import { BeamlineTreeStateContext } from "../App";
 import { executeOpenPageActionWithUrlId } from "../utils/csWebLibActions";
 import {
   buildSynopticScreenPath,
-  extractAncestorScreens
+  extractAncestorScreens,
+  parseFullSynopticPath
 } from "../utils/screenUrlIdUtils";
 
 export const SynopticBreadcrumbs = () => {
@@ -53,13 +54,12 @@ const handleClick =
   (event: any) => {
     if (event.target.pathname) {
       event.preventDefault();
-      const urlId = decodeURI(event.target.pathname)
-        .split("/")
-        .at(-1) as string;
+
+      const params = parseFullSynopticPath(decodeURI(event.target.pathname));
 
       executeOpenPageActionWithUrlId(
         beamlineState,
-        urlId,
+        params?.screenUrlId,
         selectedBeamlineId,
         fileContext
       );
