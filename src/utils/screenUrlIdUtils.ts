@@ -25,13 +25,15 @@ export const buildUrlId = (
   return { urlId, fileLabel };
 };
 
-export const parseFullSynopticPath = (path: string): { beamline: string; screenUrlId: string } | null => {
+export const parseFullSynopticPath = (
+  path: string
+): { beamline: string; screenUrlId: string } | null => {
   const m = path.match(/^\/synoptic\/([^/]+)\/(.*)$/);
   if (!m) return null;
 
   const [, beamline, screenUrlId] = m;
   return { beamline, screenUrlId };
-}
+};
 
 export const parseScreenUrlId = (screenUrlId: string): string[] =>
   screenUrlId

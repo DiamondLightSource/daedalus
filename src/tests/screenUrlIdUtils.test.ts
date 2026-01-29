@@ -359,72 +359,72 @@ describe("buildSynopticScreenPath", () => {
   });
 });
 
-describe('parseFullSynopticPath', () => {
-  it('should correctly parse a valid synoptic path', () => {
-    const path = '/synoptic/bl01/synoptic-screen';
+describe("parseFullSynopticPath", () => {
+  it("should correctly parse a valid synoptic path", () => {
+    const path = "/synoptic/bl01/synoptic-screen";
     const result = parseFullSynopticPath(path);
-    
+
     expect(result).toEqual({
-      beamline: 'bl01',
-      screenUrlId: 'synoptic-screen'
+      beamline: "bl01",
+      screenUrlId: "synoptic-screen"
     });
   });
 
-  it('should correctly parse a path with complex screenUrlId containing slashes', () => {
-    const path = '/synoptic/bl02/controls/main/dashboard';
+  it("should correctly parse a path with complex screenUrlId containing slashes", () => {
+    const path = "/synoptic/bl02/controls/main/dashboard";
     const result = parseFullSynopticPath(path);
-    
+
     expect(result).toEqual({
-      beamline: 'bl02',
-      screenUrlId: 'controls/main/dashboard'
+      beamline: "bl02",
+      screenUrlId: "controls/main/dashboard"
     });
   });
 
-  it('should correctly parse a path with special characters in beamline and screenUrlId', () => {
-    const path = '/synoptic/bl-03_test/screen_01/dash-board';
+  it("should correctly parse a path with special characters in beamline and screenUrlId", () => {
+    const path = "/synoptic/bl-03_test/screen_01/dash-board";
     const result = parseFullSynopticPath(path);
-    
+
     expect(result).toEqual({
-      beamline: 'bl-03_test',
-      screenUrlId: 'screen_01/dash-board'
+      beamline: "bl-03_test",
+      screenUrlId: "screen_01/dash-board"
     });
   });
 
-  it('should return null for a path not starting with /synoptic/', () => {
-    const path = '/editor/bl01/main';
+  it("should return null for a path not starting with /synoptic/", () => {
+    const path = "/editor/bl01/main";
     const result = parseFullSynopticPath(path);
-    
+
     expect(result).toBeNull();
   });
 
-  it('should return null for a path with incorrect format', () => {
-    const path = '/synoptic/';
+  it("should return null for a path with incorrect format", () => {
+    const path = "/synoptic/";
     const result = parseFullSynopticPath(path);
-    
+
     expect(result).toBeNull();
   });
 
-  it('should return null for an empty path', () => {
-    const path = '';
+  it("should return null for an empty path", () => {
+    const path = "";
     const result = parseFullSynopticPath(path);
-    
+
     expect(result).toBeNull();
   });
 
-  it('should return null for a path with empty beamline', () => {
-    const path = '/synoptic//screen';
+  it("should return null for a path with empty beamline", () => {
+    const path = "/synoptic//screen";
     const result = parseFullSynopticPath(path);
-    
+
     expect(result).toBeNull();
   });
 
-  it('should handle a path with empty screenUrlId correctly', () => {
-    const path = '/synoptic/bl04/';
+  it("should handle a path with empty screenUrlId correctly", () => {
+    const path = "/synoptic/bl04/";
     const result = parseFullSynopticPath(path);
-    
+
     expect(result).toEqual({
-      beamline: 'bl04',
-      screenUrlId: ''
+      beamline: "bl04",
+      screenUrlId: ""
     });
   });
 });
