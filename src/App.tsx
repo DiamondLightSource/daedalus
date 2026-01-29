@@ -90,7 +90,7 @@ export const appRouter = createBrowserRouter([
         children: [
           { index: true, element: <SynopticPage /> },
           { path: ":beamline", element: <SynopticPage /> },
-          { path: ":beamline/:screenUrlId", element: <SynopticPage /> }
+          { path: ":beamline/*", element: <SynopticPage /> }
         ]
       },
 
