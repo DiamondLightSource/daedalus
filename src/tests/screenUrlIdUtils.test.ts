@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
-    buildSynopticScreenPath,
+  buildSynopticScreenPath,
   buildUrlId,
   extractAncestorScreens,
   extractDisplayNameFromScreenUrlId,
@@ -211,72 +211,71 @@ describe("extractDisplayNameFromScreenUrlId", () => {
   });
 });
 
-
-describe('parseScreenUrlId', () => {
-  it('returns a single segment when there is only one screen', () => {
-    const input = 'Home';
+describe("parseScreenUrlId", () => {
+  it("returns a single segment when there is only one screen", () => {
+    const input = "Home";
     const result = parseScreenUrlId(input);
 
-    expect(result).toEqual(['Home']);
+    expect(result).toEqual(["Home"]);
   });
 
   it('splits multiple segments by "+" and removes empties', () => {
     const input = `Home${EXPECTED_SEPARATOR}Settings${EXPECTED_SEPARATOR}Profile`;
     const result = parseScreenUrlId(input);
 
-    expect(result).toEqual(['Home', 'Settings', 'Profile']);
+    expect(result).toEqual(["Home", "Settings", "Profile"]);
   });
 
-  it('returns an empty array for an empty string', () => {
-    const input = '';
+  it("returns an empty array for an empty string", () => {
+    const input = "";
     const result = parseScreenUrlId(input);
 
     expect(result).toEqual([]);
   });
 
-  it('removes leading empty segments (leading separator)', () => {
+  it("removes leading empty segments (leading separator)", () => {
     const input = `${EXPECTED_SEPARATOR}Home${EXPECTED_SEPARATOR}Settings`;
     const result = parseScreenUrlId(input);
 
-    expect(result).toEqual(['Home', 'Settings']);
+    expect(result).toEqual(["Home", "Settings"]);
   });
 
-  it('removes trailing empty segments (trailing separator)', () => {
+  it("removes trailing empty segments (trailing separator)", () => {
     const input = `Home${EXPECTED_SEPARATOR}Settings${EXPECTED_SEPARATOR}`;
     const result = parseScreenUrlId(input);
 
-    expect(result).toEqual(['Home', 'Settings']);
+    expect(result).toEqual(["Home", "Settings"]);
   });
 
-  it('removes empty segments from consecutive separators', () => {
+  it("removes empty segments from consecutive separators", () => {
     const input = `Home${EXPECTED_SEPARATOR}${EXPECTED_SEPARATOR}Settings${EXPECTED_SEPARATOR}${EXPECTED_SEPARATOR}${EXPECTED_SEPARATOR}Profile`;
     const result = parseScreenUrlId(input);
 
-    expect(result).toEqual(['Home', 'Settings', 'Profile']);
+    expect(result).toEqual(["Home", "Settings", "Profile"]);
   });
 
-  it('returns empty array when the input is only separators', () => {
+  it("returns empty array when the input is only separators", () => {
     const input = `${EXPECTED_SEPARATOR}${EXPECTED_SEPARATOR}${EXPECTED_SEPARATOR}${EXPECTED_SEPARATOR}`;
     const result = parseScreenUrlId(input);
 
     expect(result).toEqual([]);
   });
 
-  it('preserves spaces and special characters (no trimming performed)', () => {
+  it("preserves spaces and special characters (no trimming performed)", () => {
     const input = `Home${EXPECTED_SEPARATOR}User Settings${EXPECTED_SEPARATOR}Billing/Invoices`;
     const result = parseScreenUrlId(input);
 
-    expect(result).toEqual(['Home', 'User Settings', 'Billing/Invoices']);
+    expect(result).toEqual(["Home", "User Settings", "Billing/Invoices"]);
   });
 
-  it('does not include whitespace-only segments', () => {
+  it("does not include whitespace-only segments", () => {
     const input = `Home${EXPECTED_SEPARATOR}   ${EXPECTED_SEPARATOR}Settings`;
     const result = parseScreenUrlId(input);
 
-    expect(result).toEqual(['Home', 'Settings']);
+    expect(result).toEqual(["Home", "Settings"]);
   });
 
-  it('does not mutate the input string', () => {
+  it("does not mutate the input string", () => {
     const input = `A${EXPECTED_SEPARATOR}B${EXPECTED_SEPARATOR}C`;
     const before = input;
 
@@ -285,31 +284,34 @@ describe('parseScreenUrlId', () => {
     expect(input).toBe(before);
   });
 
-  it('returns the correct length matching non-empty segments only', () => {
+  it("returns the correct length matching non-empty segments only", () => {
     const input = `A${EXPECTED_SEPARATOR}${EXPECTED_SEPARATOR}B${EXPECTED_SEPARATOR}${EXPECTED_SEPARATOR}${EXPECTED_SEPARATOR}C${EXPECTED_SEPARATOR}`;
     const result = parseScreenUrlId(input);
 
     expect(result).toHaveLength(3);
-    expect(result).toEqual(['A', 'B', 'C']);
+    expect(result).toEqual(["A", "B", "C"]);
   });
 });
 
-describe('buildSynopticScreenPath', () => {
-  it('builds the correct synoptic path for valid inputs', () => {
-    const result = buildSynopticScreenPath('BL01', `Home${EXPECTED_SEPARATOR}Settings`);
+describe("buildSynopticScreenPath", () => {
+  it("builds the correct synoptic path for valid inputs", () => {
+    const result = buildSynopticScreenPath(
+      "BL01",
+      `Home${EXPECTED_SEPARATOR}Settings`
+    );
 
     expect(result).toBe(`/synoptic/BL01/Home${EXPECTED_SEPARATOR}Settings`);
   });
 
-  it('works with single-segment screenUrlId', () => {
-    const result = buildSynopticScreenPath('BL02', 'Overview');
+  it("works with single-segment screenUrlId", () => {
+    const result = buildSynopticScreenPath("BL02", "Overview");
 
-    expect(result).toBe('/synoptic/BL02/Overview');
+    expect(result).toBe("/synoptic/BL02/Overview");
   });
 
-  it('preserves special characters and separators in screenUrlId', () => {
+  it("preserves special characters and separators in screenUrlId", () => {
     const result = buildSynopticScreenPath(
-      'BL-α',
+      "BL-α",
       `User Settings${EXPECTED_SEPARATOR}Billing/Invoices`
     );
 
@@ -318,27 +320,27 @@ describe('buildSynopticScreenPath', () => {
     );
   });
 
-  it('handles empty screenUrlId', () => {
-    const result = buildSynopticScreenPath('BL03', '');
+  it("handles empty screenUrlId", () => {
+    const result = buildSynopticScreenPath("BL03", "");
 
-    expect(result).toBe('/synoptic/BL03/');
+    expect(result).toBe("/synoptic/BL03/");
   });
 
-  it('handles empty beamline', () => {
-    const result = buildSynopticScreenPath('', 'Home');
+  it("handles empty beamline", () => {
+    const result = buildSynopticScreenPath("", "Home");
 
-    expect(result).toBe('/synoptic//Home');
+    expect(result).toBe("/synoptic//Home");
   });
 
-  it('returns a path starting with a leading slash', () => {
-    const result = buildSynopticScreenPath('BL04', 'Dashboard');
+  it("returns a path starting with a leading slash", () => {
+    const result = buildSynopticScreenPath("BL04", "Dashboard");
 
-    expect(result.startsWith('/')).toBe(true);
+    expect(result.startsWith("/")).toBe(true);
   });
 
-  it('does not mutate input arguments', () => {
-    const beamline = 'BL05';
-    const screenUrlId = 'A${EXPECTED_SEPARATOR}B';
+  it("does not mutate input arguments", () => {
+    const beamline = "BL05";
+    const screenUrlId = "A${EXPECTED_SEPARATOR}B";
 
     const beamlineBefore = beamline;
     const screenUrlIdBefore = screenUrlId;
@@ -350,8 +352,8 @@ describe('buildSynopticScreenPath', () => {
   });
 
   it('always places "synoptic" as the first path segment', () => {
-    const result = buildSynopticScreenPath('BL06', 'Screen');
+    const result = buildSynopticScreenPath("BL06", "Screen");
 
-    expect(result.split('/')[1]).toBe('synoptic');
+    expect(result.split("/")[1]).toBe("synoptic");
   });
 });
