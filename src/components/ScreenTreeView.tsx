@@ -72,16 +72,15 @@ export default function ScreenTreeView() {
             handleExpandedScreensChange(itemIds)
           }
           onItemClick={(_event, itemId) => {
-            // if (!itemId || currentFileMetadata[itemId]?.exists === false) {
-            if (!itemId) {
+            if (!itemId || currentFileMetadata[itemId]?.exists === false) {
               return;
             }
             handleClick(itemId);
           }}
           expansionTrigger="iconContainer"
-          // isItemDisabled={item =>
-          //   currentFileMetadata[item.id]?.exists === false
-          // }
+          isItemDisabled={item =>
+            currentFileMetadata[item.id]?.exists === false
+          }
         />
       ) : (
         <></>
