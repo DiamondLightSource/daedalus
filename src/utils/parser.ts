@@ -2,6 +2,7 @@ import { TreeViewBaseItem } from "@mui/x-tree-view";
 import { FileIDs, FileMetadata, MacroMap, Macros } from "../store";
 import {
   CsWebLibHttpResponseError,
+  resolveMacros,
   httpRequest
 } from "@diamondlightsource/cs-web-lib";
 
@@ -86,6 +87,19 @@ export async function parseScreenTree(
 
     // Now we have the initial fileMap with unique file entries, update fileMap with macros for duplicate files.
     RecursiveAppendDuplicateFileMacros(json.children, fileMap);
+
+    // Substitute macros in fileMap
+    Object.keys(fileMap).forEach(key => {
+      const entry = fileMap[key];
+      
+      if (entry.macros && entry.macros.length > 0 && entry.file) {
+        // Use the first macro set
+        const macros = entry.macros[0];
+
+        // Use resolveMacros
+        entry.file = resolveMacros(entry.file, macros);
+      }
+    });
 
     const parentScreen: TreeViewBaseItem = {
       id: guid,
@@ -176,24 +190,14 @@ export const RecursiveAppendDuplicateFileMacros = (
   }
   for (const sibling of jsonSiblings) {
     if (sibling.macros) {
-      // TEMP?
-      addMColon(sibling.macros);
-
-      // Substitute macros into the filename
-      const filename =
-        sibling.file && sibling.macros
-          ? substituteMacrosIntoFilename(sibling.file, sibling.macros)
-          : sibling.file;
 
       // Match against unresolved filename
       const matchingFileKey = Object.keys(fileMap).find(
         key => fileMap[key].file === sibling.file
       );
       if (matchingFileKey) {
-        // Replace with resolved filename
-        fileMap[matchingFileKey].file = filename;
 
-        if (sibling.duplicate) {
+        if (matchingFileKey && sibling.duplicate) {
           // Attach macros
           fileMap[matchingFileKey].macros = fileMap[matchingFileKey].macros
             ? [...fileMap[matchingFileKey].macros, sibling.macros]
@@ -229,23 +233,4 @@ export const buildUrlId = (
   }
   const urlId = `${idPrefix}${idPrefix === "" ? "" : "+"}${fileLabel}`;
   return { urlId, fileLabel };
-};
-
-// TEMP? add colon to M macro
-const addMColon = (macros: any) => {
-  if (macros.M && !macros.M.startsWith(":")) {
-    macros.M = ":" + macros.M;
-  }
-};
-
-// Substitute macros into a filename
-const substituteMacrosIntoFilename = (
-  filename: string,
-  macros: any
-): string => {
-  let resolvedFilename = filename;
-  Object.entries(macros).forEach(([key, value]) => {
-    resolvedFilename = resolvedFilename.replace(`$(${key})`, value as string);
-  });
-  return resolvedFilename;
 };
