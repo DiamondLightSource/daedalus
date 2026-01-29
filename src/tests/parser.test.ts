@@ -3,7 +3,6 @@ import {
   parseScreenTree,
   RecursiveTreeViewBuilder,
   RecursiveAppendDuplicateFileMacros,
-  buildUrlId,
   selectFileMetadataByFilePathAndMacros
 } from "../utils/parser";
 import { FileIDs } from "../store";
@@ -438,33 +437,6 @@ describe("RecursiveAppendDuplicateFileMacros()", (): void => {
       macroHash => "Another" in macroHash
     );
     expect(aMacros).toEqual({ Another: "AnotherFilesMacros" });
-  });
-});
-
-describe("buildUrlId()", (): void => {
-  it("uses the file name if no display name", (): void => {
-    const { urlId, fileLabel } = buildUrlId("testing.bob", "", undefined);
-
-    expect(urlId).toBe("testing");
-    expect(fileLabel).toBe("testing");
-  });
-
-  it("uses display name as url id", (): void => {
-    const { urlId, fileLabel } = buildUrlId("testing.bob", "", "My File");
-
-    expect(urlId).toBe("My File");
-    expect(fileLabel).toBe("My File");
-  });
-
-  it("correctly attaches a prefix", (): void => {
-    const { urlId, fileLabel } = buildUrlId(
-      "testing.bob",
-      "First File",
-      "My File"
-    );
-
-    expect(urlId).toBe("First File+My File");
-    expect(fileLabel).toBe("My File");
   });
 });
 

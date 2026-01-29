@@ -45,14 +45,11 @@ export const MenuContext = createContext<{
 
 export function SynopticPage() {
   const { state, dispatch } = useContext(BeamlineTreeStateContext);
+  const { beamline: paramsBeamline, "*": paramsScreenUrlId } = useParams();
   const fileContext = useContext(FileContext);
   const [searchParams] = useSearchParams();
   const [menuOpen, setMenuOpen] = useState(true);
   const location = useLocation();
-
-  const params = useParams();
-  const paramsBeamline: string | undefined = params.beamline;
-  const paramsScreenUrlId: string | undefined = params["*"];
 
   useEffect(() => {
     // Only trigger once
