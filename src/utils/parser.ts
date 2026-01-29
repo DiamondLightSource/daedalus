@@ -91,7 +91,7 @@ export async function parseScreenTree(
     // Substitute macros in fileMap
     Object.keys(fileMap).forEach(key => {
       const entry = fileMap[key];
-      
+
       if (entry.macros && entry.macros.length > 0 && entry.file) {
         // Use the first macro set
         const macros = entry.macros[0];
@@ -190,13 +190,11 @@ export const RecursiveAppendDuplicateFileMacros = (
   }
   for (const sibling of jsonSiblings) {
     if (sibling.macros) {
-
       // Match against unresolved filename
       const matchingFileKey = Object.keys(fileMap).find(
         key => fileMap[key].file === sibling.file
       );
       if (matchingFileKey) {
-
         if (matchingFileKey && sibling.duplicate) {
           // Attach macros
           fileMap[matchingFileKey].macros = fileMap[matchingFileKey].macros
