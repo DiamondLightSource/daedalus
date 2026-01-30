@@ -5,13 +5,13 @@ import DLSAppBar, { StyledAppBar } from "../../components/AppBar";
 import { PageRouteInfo } from "../../routes/PageRouteInfo";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { DRAWER_WIDTH } from "../../utils/helper";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter } from "react-router";
 
 console.log = vi.fn();
 
 const mockHistoryPush = vi.fn();
-vi.mock("react-router-dom", async () => {
-  const actual = await vi.importActual("react-router-dom");
+vi.mock("react-router", async () => {
+  const actual = await vi.importActual("react-router");
   return {
     ...actual,
     useNavigate: () => mockHistoryPush

@@ -9,7 +9,7 @@ import { APP_BAR_HEIGHT, DRAWER_WIDTH } from "../utils/helper";
 import { Box, Tooltip } from "@mui/material";
 import DiamondLogo from "../assets/DiamondLogoWhite.svg";
 import { PageRouteInfo } from "../routes/PageRouteInfo";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 interface AppBarProps extends MuiAppBarProps {
   fullscreen: number;

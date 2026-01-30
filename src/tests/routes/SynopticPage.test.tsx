@@ -11,7 +11,7 @@ import {
   FileContextType,
   FileDescription
 } from "@diamondlightsource/cs-web-lib";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter } from "react-router";
 import * as parser from "../../utils/parser";
 import * as csWebLibActions from "../../utils/csWebLibActions";
 import {

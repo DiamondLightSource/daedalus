@@ -18,7 +18,7 @@ import {
 } from "../utils/helper";
 import { BeamlineTreeStateContext } from "../App";
 import { MenuContext } from "../routes/SynopticPage";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router";
 import { selectFileMetadataByFilePathAndMacros } from "../utils/parser";
 
 interface PaperProps extends MuiPaperProps {

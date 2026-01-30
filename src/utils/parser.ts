@@ -5,6 +5,7 @@ import {
   resolveMacros,
   httpRequest
 } from "@diamondlightsource/cs-web-lib";
+import { buildUrlId } from "./screenUrlIdUtils";
 
 /**
  * Select a file metadata record from a set of records, using the file path and the macro set
@@ -206,29 +207,4 @@ export const RecursiveAppendDuplicateFileMacros = (
 
     RecursiveAppendDuplicateFileMacros(sibling?.children, fileMap);
   }
-};
-
-/**
- * Builds the ID to display in the URL, based on the file name
- * and/or a given display name
- * @param filepath string path of bob file
- * @param idPrefix string prefix of all parent file IDs
- * @param displayName string alternate name of file to display
- * @returns string ID of url, label to display for current file
- */
-export const buildUrlId = (
-  filepath: string,
-  idPrefix: string,
-  displayName?: string
-) => {
-  const splitFilePath = filepath.split(".bob")[0].split("/");
-  let fileLabel: string = displayName || splitFilePath.pop()!;
-  if (fileLabel === "index") {
-    const parentDir = splitFilePath.pop();
-    if (parentDir) {
-      fileLabel = `${parentDir}__${fileLabel}`;
-    }
-  }
-  const urlId = `${idPrefix}${idPrefix === "" ? "" : "+"}${fileLabel}`;
-  return { urlId, fileLabel };
 };

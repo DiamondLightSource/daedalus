@@ -9,6 +9,8 @@ import {
 } from "../../store";
 import { BeamlineTreeStateContext } from "../../App";
 
+const EXPECTED_SEPARATOR = "/";
+
 vi.mock("@diamondlightsource/cs-web-lib", async () => {
   const actual = await vi.importActual("@diamondlightsource/cs-web-lib");
   return {
@@ -23,7 +25,7 @@ describe("SynopticBreadcrumbs Component", () => {
   });
 
   const createMockState = (
-    screenUrlId = "Area1+Area2",
+    screenUrlId = `Area1${EXPECTED_SEPARATOR}Area2`,
     beamline?: string,
     screenGuid: string = crypto.randomUUID()
   ): BeamlineTreeState =>
@@ -38,7 +40,10 @@ describe("SynopticBreadcrumbs Component", () => {
               host: "http://example.com/",
               filePathIds: {
                 Area1: { urlId: "Area1", file: "area1.opi" },
-                [screenGuid]: { urlId: "Area1+Area2", file: "area2.opi" }
+                [screenGuid]: {
+                  urlId: `Area1${EXPECTED_SEPARATOR}Area2`,
+                  file: "area2.opi"
+                }
               }
             } as unknown as BeamlineStateProperties
           } as unknown as BeamlineState),
@@ -94,11 +99,19 @@ describe("SynopticBreadcrumbs Component", () => {
   });
 
   it("renders breadcrumbs with correct URLs", () => {
-    renderComponent(createMockState("Area1+Area2+Area3", "BL01"));
+    renderComponent(
+      createMockState(
+        `Area1${EXPECTED_SEPARATOR}Area2${EXPECTED_SEPARATOR}Area3`,
+        "BL01"
+      )
+    );
 
     const links = screen.getAllByRole("link");
     expect(links[0]).toHaveAttribute("href", "/synoptic/BL01/Area1");
-    expect(links[1]).toHaveAttribute("href", "/synoptic/BL01/Area1+Area2");
+    expect(links[1]).toHaveAttribute(
+      "href",
+      `/synoptic/BL01/Area1${EXPECTED_SEPARATOR}Area2`
+    );
 
     expect(screen.getByText("Area3").tagName).not.toBe("A");
   });
@@ -141,7 +154,12 @@ describe("SynopticBreadcrumbs Component", () => {
   });
 
   it("handles multi-level breadcrumb paths correctly", () => {
-    renderComponent(createMockState("Level1+Level2+Level3+Level4", "BL02"));
+    renderComponent(
+      createMockState(
+        `Level1${EXPECTED_SEPARATOR}Level2${EXPECTED_SEPARATOR}Level3${EXPECTED_SEPARATOR}Level4`,
+        "BL02"
+      )
+    );
 
     expect(screen.getByText("Level1")).toBeInTheDocument();
     expect(screen.getByText("Level2")).toBeInTheDocument();
@@ -151,10 +169,13 @@ describe("SynopticBreadcrumbs Component", () => {
     const links = screen.getAllByRole("link");
     expect(links.length).toBe(3);
     expect(links[0]).toHaveAttribute("href", "/synoptic/BL02/Level1");
-    expect(links[1]).toHaveAttribute("href", "/synoptic/BL02/Level1+Level2");
+    expect(links[1]).toHaveAttribute(
+      "href",
+      `/synoptic/BL02/Level1${EXPECTED_SEPARATOR}Level2`
+    );
     expect(links[2]).toHaveAttribute(
       "href",
-      "/synoptic/BL02/Level1+Level2+Level3"
+      `/synoptic/BL02/Level1${EXPECTED_SEPARATOR}Level2${EXPECTED_SEPARATOR}Level3`
     );
   });
 
@@ -169,7 +190,12 @@ describe("SynopticBreadcrumbs Component", () => {
   });
 
   it("renders NavigateNextIcon as separator", () => {
-    renderComponent(createMockState("Area1+Area2+Area3", "BL01"));
+    renderComponent(
+      createMockState(
+        `Area1${EXPECTED_SEPARATOR}Area2${EXPECTED_SEPARATOR}Area3`,
+        "BL01"
+      )
+    );
 
     const separators = document.querySelectorAll("svg");
     expect(separators.length).toBe(2);

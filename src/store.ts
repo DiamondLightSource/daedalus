@@ -1,5 +1,6 @@
 import { TreeViewBaseItem } from "@mui/x-tree-view";
 import { BeamlinesConfig } from "./config";
+import { extractDisplayNameFromScreenUrlId } from "./utils/screenUrlIdUtils";
 export const LOAD_NEXT_FILE = "loadNextFile";
 export const ADD_FILE = "addFile";
 export const REMOVE_FILE = "removeFile";
@@ -297,8 +298,9 @@ export function reducer(
       };
     }
     case CHANGE_SCREEN: {
-      // Parse the label from the end of the ID. This is the specific screen name
-      const newLabel = action.payload.screenUrlId.split("+").pop() || "";
+      const newLabel = extractDisplayNameFromScreenUrlId(
+        action.payload.screenUrlId
+      );
       const beamlineFilePaths =
         state.beamlines[state.currentBeamline].filePathIds;
       const screenId = Object.keys(beamlineFilePaths).find(

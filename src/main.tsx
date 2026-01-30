@@ -1,13 +1,14 @@
 import { createRoot } from "react-dom/client";
-import App from "./App.tsx";
+import { appRouter } from "./App.tsx";
 import "./index.css";
 import { OutlineProvider } from "@diamondlightsource/cs-web-lib";
+import { RouterProvider } from "react-router";
 
 const container = document.getElementById("root");
 const root = createRoot(container!);
 
 root.render(
   <OutlineProvider>
-    <App />
+    <RouterProvider router={appRouter} />
   </OutlineProvider>
 );
