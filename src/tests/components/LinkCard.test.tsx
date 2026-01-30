@@ -1,7 +1,7 @@
 import { fireEvent, render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import LinkCard from "../../components/LinkCard";
-import { BrowserRouter } from "react-router";
+import { MemoryRouter } from "react-router";
 
 const mockHistoryPush = vi.fn();
 
@@ -21,9 +21,9 @@ describe("LinkCard", (): void => {
       text: "A test."
     };
     const { getByText } = render(
-      <BrowserRouter>
+      <MemoryRouter>
         <LinkCard info={info} />
-      </BrowserRouter>
+      </MemoryRouter>
     );
     const card = getByText("Testing");
     expect(card).toBeInTheDocument();
