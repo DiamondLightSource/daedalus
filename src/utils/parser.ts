@@ -2,6 +2,7 @@ import { TreeViewBaseItem } from "@mui/x-tree-view";
 import { FileIDs, FileMetadata, MacroMap, Macros } from "../store";
 import {
   CsWebLibHttpResponseError,
+  resolveMacros,
   httpRequest
 } from "@diamondlightsource/cs-web-lib";
 
@@ -86,6 +87,19 @@ export async function parseScreenTree(
 
     // Now we have the initial fileMap with unique file entries, update fileMap with macros for duplicate files.
     RecursiveAppendDuplicateFileMacros(json.children, fileMap);
+
+    // Substitute macros in fileMap
+    Object.keys(fileMap).forEach(key => {
+      const entry = fileMap[key];
+
+      if (entry.macros && entry.macros.length > 0 && entry.file) {
+        // Use the first macro set
+        const macros = entry.macros[0];
+
+        // Use resolveMacros
+        entry.file = resolveMacros(entry.file, macros);
+      }
+    });
 
     const parentScreen: TreeViewBaseItem = {
       id: guid,
@@ -174,16 +188,19 @@ export const RecursiveAppendDuplicateFileMacros = (
   if (!jsonSiblings) {
     return;
   }
-
   for (const sibling of jsonSiblings) {
-    if (sibling.duplicate && sibling.macros) {
+    if (sibling.macros) {
+      // Match against unresolved filename
       const matchingFileKey = Object.keys(fileMap).find(
         key => fileMap[key].file === sibling.file
       );
       if (matchingFileKey) {
-        fileMap[matchingFileKey].macros = fileMap[matchingFileKey].macros
-          ? [...fileMap[matchingFileKey].macros, sibling.macros]
-          : [sibling.macros];
+        if (matchingFileKey && sibling.duplicate) {
+          // Attach macros
+          fileMap[matchingFileKey].macros = fileMap[matchingFileKey].macros
+            ? [...fileMap[matchingFileKey].macros, sibling.macros]
+            : [sibling.macros];
+        }
       }
     }
 
