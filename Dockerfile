@@ -26,6 +26,9 @@ FROM nginxinc/nginx-unprivileged:1.29-alpine AS deployment
 USER root
 RUN apk update && apk add --no-cache "libpng>=1.6.54"
 
+# Update libcrypto3 to fix a security vulnerability (CVE-2025-15467)
+RUN apk add --no-cache "libcrypto3>=3.5.5"
+
 USER nginx
 COPY nginx.conf /etc/nginx/nginx.conf
 ARG DOCROOT=/usr/share/nginx/html
