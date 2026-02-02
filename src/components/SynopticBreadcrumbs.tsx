@@ -6,6 +6,11 @@ import { FileContext } from "@diamondlightsource/cs-web-lib";
 import { BeamlineStateProperties } from "../store";
 import { BeamlineTreeStateContext } from "../App";
 import { executeOpenPageActionWithUrlId } from "../utils/csWebLibActions";
+import {
+  buildSynopticScreenPath,
+  extractAncestorScreens,
+  parseFullSynopticPath
+} from "../utils/screenUrlIdUtils";
 
 export const SynopticBreadcrumbs = () => {
   const { state } = useContext(BeamlineTreeStateContext);
@@ -49,13 +54,12 @@ const handleClick =
   (event: any) => {
     if (event.target.pathname) {
       event.preventDefault();
-      const urlId = decodeURI(event.target.pathname)
-        .split("/")
-        .at(-1) as string;
+
+      const params = parseFullSynopticPath(decodeURI(event.target.pathname));
 
       executeOpenPageActionWithUrlId(
         beamlineState,
-        urlId,
+        params?.screenUrlId,
         selectedBeamlineId,
         fileContext
       );
@@ -71,21 +75,24 @@ const createBreadcrumbs = (
   beamline: string
 ): ReactNode => {
   const breadcrumbs: ReactNode[] = [];
-  if (beamline === "") return null;
-  const breadcrumbLabels = screenUrlId.split("+");
-  let linkUrl = `/synoptic/${beamline}/`;
+  if (!beamline || beamline === "") return null;
 
-  breadcrumbLabels.forEach((label, idx) => {
-    if (idx !== 0) linkUrl += "+";
-    linkUrl += label;
+  const screenAncestry = extractAncestorScreens(screenUrlId);
+
+  screenAncestry.forEach((item, idx) => {
     breadcrumbs.push(
-      idx === breadcrumbLabels.length - 1 ? (
+      idx === screenAncestry.length - 1 ? (
         <Typography key="3" sx={{ color: "white" }}>
-          {label}
+          {item.displayName}
         </Typography>
       ) : (
-        <Link underline="hover" key={idx} color="white" href={linkUrl}>
-          {label}
+        <Link
+          underline="hover"
+          key={idx}
+          color="white"
+          href={buildSynopticScreenPath(beamline, item.path)}
+        >
+          {item.displayName}
         </Link>
       )
     );

@@ -1,12 +1,12 @@
 import { fireEvent, render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import LinkCard from "../../components/LinkCard";
-import { BrowserRouter } from "react-router-dom";
+import { MemoryRouter } from "react-router";
 
 const mockHistoryPush = vi.fn();
 
-vi.mock("react-router-dom", async importOriginal => {
-  const actual = await importOriginal<typeof import("react-router-dom")>();
+vi.mock("react-router", async importOriginal => {
+  const actual = await importOriginal<typeof import("react-router")>();
   return {
     ...actual,
     useNavigate: () => mockHistoryPush
@@ -21,9 +21,9 @@ describe("LinkCard", (): void => {
       text: "A test."
     };
     const { getByText } = render(
-      <BrowserRouter>
+      <MemoryRouter>
         <LinkCard info={info} />
-      </BrowserRouter>
+      </MemoryRouter>
     );
     const card = getByText("Testing");
     expect(card).toBeInTheDocument();

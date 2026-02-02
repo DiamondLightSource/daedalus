@@ -29,7 +29,7 @@ import {
 import { RotatingLines } from "react-loader-spinner";
 import { SynopticBreadcrumbs } from "../components/SynopticBreadcrumbs";
 import { BeamlineTreeStateContext } from "../App";
-import { useParams, useSearchParams, useLocation } from "react-router-dom";
+import { useParams, useSearchParams, useLocation } from "react-router";
 import {
   executeOpenPageActionWithUrlId,
   executeOpenPageAction
@@ -45,7 +45,7 @@ export const MenuContext = createContext<{
 
 export function SynopticPage() {
   const { state, dispatch } = useContext(BeamlineTreeStateContext);
-  const params: { beamline?: string; screenUrlId?: string } = useParams();
+  const { beamline: paramsBeamline, "*": paramsScreenUrlId } = useParams();
   const fileContext = useContext(FileContext);
   const [searchParams] = useSearchParams();
   const [menuOpen, setMenuOpen] = useState(true);
@@ -53,20 +53,20 @@ export function SynopticPage() {
 
   useEffect(() => {
     // Only trigger once
-    document.title = `${params.beamline} Synoptic | Daedalus`;
+    document.title = `${paramsBeamline ?? ""} Synoptic | Daedalus`;
     if (state.filesLoaded) {
-      if (params.beamline && params.beamline !== state.currentBeamline)
+      if (paramsBeamline && paramsBeamline !== state.currentBeamline)
         dispatch({
           type: CHANGE_BEAMLINE,
-          payload: { beamline: params.beamline }
+          payload: { beamline: paramsBeamline }
         });
-      if (params.screenUrlId && params.screenUrlId !== state.currentScreenUrlId)
+      if (paramsScreenUrlId && paramsScreenUrlId !== state.currentScreenUrlId)
         dispatch({
           type: CHANGE_SCREEN,
-          payload: { screenUrlId: params.screenUrlId }
+          payload: { screenUrlId: paramsScreenUrlId }
         });
     }
-  }, [params.beamline, params.screenUrlId]);
+  }, [paramsBeamline, paramsScreenUrlId]);
 
   // Only run once on mount
   useEffect(() => {
@@ -76,7 +76,7 @@ export function SynopticPage() {
 
   const loadScreens = useCallback(async () => {
     const newBeamlines = { ...state.beamlines };
-    for (const [beamline, item] of Object.entries(newBeamlines)) {
+    for (const [newBeamline, item] of Object.entries(newBeamlines)) {
       try {
         const [tree, fileIDs, firstFile] = await parseScreenTree(
           buildUrl(item.host, item.entryPoint)
@@ -87,7 +87,7 @@ export function SynopticPage() {
         item.loaded = true;
       } catch (e) {
         console.error(
-          `Unable to process JSON map for ${beamline}. Check file is available at ${item.host + item.entryPoint} and reload.`
+          `Unable to process JSON map for ${newBeamline}. Check file is available at ${item.host + item.entryPoint} and reload.`
         );
         console.error(e);
       }
@@ -96,13 +96,13 @@ export function SynopticPage() {
       type: LOAD_SCREENS,
       payload: {
         beamlines: newBeamlines,
-        loadBeamline: params.beamline,
-        loadScreen: params.screenUrlId
+        loadBeamline: paramsBeamline,
+        loadScreen: paramsScreenUrlId
       }
     });
-    if (params.beamline) {
+    if (paramsBeamline) {
       // If we navigated directly to a beamline and/or screen, load in display
-      const newBeamlineState = newBeamlines[params.beamline];
+      const newBeamlineState = newBeamlines[paramsBeamline];
 
       const fileDescriptionParam = searchParams.get(
         FILE_DESCRIPTION_SEARCH_PARAMETER_NAME
@@ -127,8 +127,8 @@ export function SynopticPage() {
 
         executeOpenPageActionWithUrlId(
           newBeamlineState,
-          params.screenUrlId,
-          params.beamline,
+          paramsScreenUrlId,
+          paramsBeamline,
           fileContext,
           macrosMap
         );

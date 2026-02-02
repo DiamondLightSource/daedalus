@@ -10,7 +10,7 @@ import {
 import { parseScreenTree } from "../utils/parser";
 import { FileContext } from "@diamondlightsource/cs-web-lib";
 import Editor from "../components/Editor";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import { executeOpenPageActionWithUrlId } from "../utils/csWebLibActions";
 
 /**
