@@ -17,12 +17,8 @@
       "entryPoint": "/BOBs/BLFAKE/json_map.json"
     },
     "B23": {
-      "host": "http://localhost:3000/example-synoptic/b23-services/synoptic/",
-      "entryPoint": "JsonMap.json"
-    },
-    "I19": {
-      "host": "http://localhost:3000/i19-services/synoptic/",
-      "entryPoint": "JsonMap.json"
+      "host": "http://localhost:8000/",
+      "entryPoint": "example-synoptic/b23-services/synoptic/opis/json_map.json"
     }
   }
 }
