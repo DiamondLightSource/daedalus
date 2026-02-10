@@ -1,6 +1,6 @@
 import {
   EmbeddedDisplay,
-  RelativePosition
+  newRelativePosition
 } from "@diamondlightsource/cs-web-lib";
 import Box from "@mui/material/Box";
 import { MacroMap } from "../store";
@@ -25,7 +25,7 @@ export default function FileDisplayTabPanel(props: FileDisplayTabPanelProps) {
         <Box>
           <EmbeddedDisplay
             height={800}
-            position={new RelativePosition()}
+            position={newRelativePosition()}
             scroll={true}
             resize={0}
             file={{

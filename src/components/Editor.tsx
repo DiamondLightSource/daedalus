@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import {
   EmbeddedDisplay,
-  RelativePosition
+  newRelativePosition
 } from "@diamondlightsource/cs-web-lib";
 import {
   useWindowWidth,
@@ -146,7 +146,7 @@ export default function Editor() {
                 defaultProtocol: "ca",
                 macros: {}
               }}
-              position={new RelativePosition()}
+              position={newRelativePosition()}
               scroll={false}
             />
           </Box>

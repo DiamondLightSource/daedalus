@@ -13,7 +13,7 @@ import {
 } from "../utils/helper";
 import {
   EmbeddedDisplay,
-  RelativePosition
+  newRelativePosition
 } from "@diamondlightsource/cs-web-lib";
 import { MenuContext } from "../routes/DataBrowserPage";
 
@@ -68,7 +68,7 @@ export default function DataBrowserPlot() {
           defaultProtocol: "ca",
           macros: {}
         }}
-        position={new RelativePosition("0", "0", "100%", "100%")}
+        position={newRelativePosition("0", "0", "100%", "100%")}
         scroll={false}
         resize={"scroll-content"}
       />
