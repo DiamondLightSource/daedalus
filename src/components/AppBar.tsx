@@ -14,6 +14,7 @@ import { useNavigate } from "react-router";
 interface AppBarProps extends MuiAppBarProps {
   fullscreen: number;
   open?: boolean;
+  drawerWidth?: number;
 }
 
 export const StyledAppBar = styled(MuiAppBar, {
@@ -50,10 +51,17 @@ export const StyledAppBar = styled(MuiAppBar, {
 const DLSAppBar = (props: {
   fullScreen: boolean;
   open?: boolean;
+  drawerWidth?: number;
+  isResizingDrawer?: boolean;
   children?: React.ReactNode;
 }) => {
   const navigate = useNavigate();
-  const { fullScreen, open } = props;
+  const {
+    fullScreen,
+    open,
+    drawerWidth = DRAWER_WIDTH,
+    isResizingDrawer
+  } = props;
   const handleOpenSettings = () => {
     console.log("TO DO - create settings modal");
   };
@@ -65,7 +73,26 @@ const DLSAppBar = (props: {
         position="absolute"
         open={open}
         fullscreen={fullScreen ? 1 : 0}
-        sx={{ height: APP_BAR_HEIGHT }}
+        sx={{
+          height: APP_BAR_HEIGHT,
+          ...(open &&
+            !fullScreen && {
+              marginLeft: `${drawerWidth}px`,
+              width: `calc(100% - ${drawerWidth}px)`,
+              transition: isResizingDrawer
+                ? "none"
+                : theme =>
+                    theme.transitions.create(["width", "margin"], {
+                      easing: theme.transitions.easing.sharp,
+                      duration: theme.transitions.duration.enteringScreen
+                    })
+            }),
+          ...(!open &&
+            !fullScreen && {
+              marginLeft: theme => `calc(${theme.spacing(7)} + 1px)`,
+              width: theme => `calc(100% - ${theme.spacing(7)} - 8px)`
+            })
+        }}
       >
         <Toolbar>
           <Box

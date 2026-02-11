@@ -34,6 +34,7 @@ import {
   executeOpenPageActionWithUrlId,
   executeOpenPageAction
 } from "../utils/csWebLibActions";
+import { DRAWER_WIDTH } from "../utils/helper";
 
 const FILE_DESCRIPTION_SEARCH_PARAMETER_NAME = "file_description";
 const MACROS_SEARCH_PARAMETER_NAME = "macros";
@@ -41,7 +42,18 @@ const MACROS_SEARCH_PARAMETER_NAME = "macros";
 export const MenuContext = createContext<{
   menuOpen: boolean;
   setMenuOpen: any;
-}>({ menuOpen: true, setMenuOpen: () => null });
+  drawerWidth: number;
+  setDrawerWidth: any;
+  isResizingDrawer: boolean;
+  setIsResizingDrawer: any;
+}>({
+  menuOpen: true,
+  setMenuOpen: () => null,
+  drawerWidth: DRAWER_WIDTH,
+  setDrawerWidth: () => null,
+  isResizingDrawer: false,
+  setIsResizingDrawer: () => null
+});
 
 export function SynopticPage() {
   const { state, dispatch } = useContext(BeamlineTreeStateContext);
@@ -49,6 +61,8 @@ export function SynopticPage() {
   const fileContext = useContext(FileContext);
   const [searchParams] = useSearchParams();
   const [menuOpen, setMenuOpen] = useState(true);
+  const [drawerWidth, setDrawerWidth] = useState(DRAWER_WIDTH);
+  const [isResizingDrawer, setIsResizingDrawer] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -157,8 +171,22 @@ export function SynopticPage() {
         {state.filesLoaded ? (
           <>
             <FileContext.Provider value={updatedFileContext}>
-              <MenuContext.Provider value={{ menuOpen, setMenuOpen }}>
-                <DLSAppBar fullScreen={false} open={menuOpen}>
+              <MenuContext.Provider
+                value={{
+                  menuOpen,
+                  setMenuOpen,
+                  drawerWidth,
+                  setDrawerWidth,
+                  isResizingDrawer,
+                  setIsResizingDrawer
+                }}
+              >
+                <DLSAppBar
+                  fullScreen={false}
+                  open={menuOpen}
+                  drawerWidth={drawerWidth}
+                  isResizingDrawer={isResizingDrawer}
+                >
                   <SynopticBreadcrumbs />
                 </DLSAppBar>
                 <MiniMenuBar />
