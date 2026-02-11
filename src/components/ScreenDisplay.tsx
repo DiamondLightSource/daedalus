@@ -23,32 +23,25 @@ import { selectFileMetadataByFilePathAndMacros } from "../utils/parser";
 
 interface PaperProps extends MuiPaperProps {
   open?: boolean;
+  drawerWidth?: number;
 }
 
 const Paper = styled(MuiPaper, {
-  shouldForwardProp: prop => prop !== "open"
-})<PaperProps>(({ theme }) => ({
+  shouldForwardProp: prop => prop !== "open" && prop !== "drawerWidth"
+})<PaperProps>(({ theme, open, drawerWidth = DRAWER_WIDTH }) => ({
   height: `calc(${useWindowHeight()}px - ${APP_BAR_HEIGHT}px - 10px)`,
   margin: `calc(${APP_BAR_HEIGHT}px + 5px) 5px 5px 5px`,
-  variants: [
-    {
-      props: ({ open }) => open,
-      style: {
-        width: `calc(${useWindowWidth()}px - 10px - ${DRAWER_WIDTH}px)`
-      }
-    },
-    {
-      props: ({ open }) => !open,
-      style: {
-        width: `calc(${useWindowWidth()}px - 10px - ${theme.spacing(7)} - 8px)`
-      }
-    }
-  ]
+  ...(open && {
+    width: `calc(${useWindowWidth()}px - 10px - ${drawerWidth}px)`
+  }),
+  ...(!open && {
+    width: `calc(${useWindowWidth()}px - 10px - ${theme.spacing(7)} - 8px)`
+  })
 }));
 
 export default function ScreenDisplay() {
   const { state } = useContext(BeamlineTreeStateContext);
-  const { menuOpen } = useContext(MenuContext);
+  const { menuOpen, drawerWidth } = useContext(MenuContext);
   const fileContext = useContext(FileContext);
   const navigate = useNavigate();
   const location = useLocation();
@@ -84,7 +77,7 @@ export default function ScreenDisplay() {
   }, [fileContext.pageState.main]);
 
   return (
-    <Paper component="main" open={menuOpen}>
+    <Paper component="main" open={menuOpen} drawerWidth={drawerWidth}>
       <Box>
         <Box>
           {state.currentBeamline && state.currentScreenUrlId ? (
