@@ -8,7 +8,7 @@ import {
 import {
   DynamicPageWidget,
   FileContext,
-  RelativePosition
+  newRelativePosition
 } from "@diamondlightsource/cs-web-lib";
 import {
   useWindowWidth,
@@ -83,7 +83,7 @@ export default function ScreenDisplay() {
           {state.currentBeamline && state.currentScreenUrlId ? (
             <DynamicPageWidget
               location={"main"}
-              position={new RelativePosition()}
+              position={newRelativePosition()}
               scroll={false}
               showCloseButton={false}
             />

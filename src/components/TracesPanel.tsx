@@ -24,7 +24,7 @@ import {
 import Grid from "@mui/material/Grid";
 import CloseIcon from "@mui/icons-material/Close";
 import { useContext, useState } from "react";
-import { Color } from "@diamondlightsource/cs-web-lib";
+import { Color, ColorUtils } from "@diamondlightsource/cs-web-lib";
 import { DRAWER_WIDTH } from "../utils/helper";
 import { MenuContext } from "../routes/DataBrowserPage";
 
@@ -170,9 +170,14 @@ function TracesGrid() {
 
   // Fake test PVS
   const rows = [
-    createData("BL07-TEST-01", true, Color.fromRgba(10, 20, 150), "Line"),
-    createData("BL07-TEST-02", false, Color.fromRgba(100, 100, 120), "Line"),
-    createData("BL07-TEST-03", true, Color.fromRgba(40, 45, 200), "Area")
+    createData("BL07-TEST-01", true, ColorUtils.fromRgba(10, 20, 150), "Line"),
+    createData(
+      "BL07-TEST-02",
+      false,
+      ColorUtils.fromRgba(100, 100, 120),
+      "Line"
+    ),
+    createData("BL07-TEST-03", true, ColorUtils.fromRgba(40, 45, 200), "Area")
   ];
 
   return (
