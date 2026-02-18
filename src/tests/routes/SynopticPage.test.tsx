@@ -47,6 +47,15 @@ vi.mock("react-loader-spinner", () => ({
   RotatingLines: () => <div data-testid="loading-spinner">Loading...</div>
 }));
 
+// Set up the mock
+vi.mock("@diamondlightsource/cs-web-lib", async importOriginal => {
+  const actual = (await importOriginal()) as Record<string, any>;
+  return {
+    ...actual,
+    useNotification: () => ({ showWarning: vi.fn() })
+  };
+});
+
 describe("SynopticPage", () => {
   const mockDispatch = vi.fn();
   const mockState = {

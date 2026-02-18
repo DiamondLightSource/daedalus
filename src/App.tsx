@@ -1,4 +1,8 @@
-import { FileProvider, store } from "@diamondlightsource/cs-web-lib";
+import {
+  FileProvider,
+  NotificationContainer,
+  store
+} from "@diamondlightsource/cs-web-lib";
 import { createBrowserRouter, Outlet } from "react-router";
 import "./App.css";
 import { Provider } from "react-redux";
@@ -68,7 +72,10 @@ const App = ({}) => {
       <ThemeProvider theme={diamondTheme}>
         <BeamlineTreeStateContext.Provider value={{ state, dispatch }}>
           <FileProvider initialPageState={INITIAL_SCREEN_STATE}>
-            <Outlet />
+            <>
+              <NotificationContainer />
+              <Outlet />
+            </>
           </FileProvider>
         </BeamlineTreeStateContext.Provider>
       </ThemeProvider>
