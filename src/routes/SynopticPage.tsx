@@ -24,7 +24,8 @@ import {
   buildUrl,
   FileContext,
   FileContextType,
-  FileDescription
+  FileDescription,
+  useNotification
 } from "@diamondlightsource/cs-web-lib";
 import { RotatingLines } from "react-loader-spinner";
 import { SynopticBreadcrumbs } from "../components/SynopticBreadcrumbs";
@@ -64,6 +65,7 @@ export function SynopticPage() {
   const [drawerWidth, setDrawerWidth] = useState(DRAWER_WIDTH);
   const [isResizingDrawer, setIsResizingDrawer] = useState(false);
   const location = useLocation();
+  const { showWarning } = useNotification();
 
   useEffect(() => {
     // Only trigger once
@@ -100,6 +102,9 @@ export function SynopticPage() {
         item.topLevelScreen = firstFile;
         item.loaded = true;
       } catch (e) {
+        showWarning(
+          `Unable to process the beamline: ${newBeamline}. JsonMap file is not found where expected: ${item.host + item.entryPoint}.`
+        );
         console.error(
           `Unable to process JSON map for ${newBeamline}. Check file is available at ${item.host + item.entryPoint} and reload.`
         );

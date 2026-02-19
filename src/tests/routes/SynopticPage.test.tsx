@@ -47,6 +47,15 @@ vi.mock("react-loader-spinner", () => ({
   RotatingLines: () => <div data-testid="loading-spinner">Loading...</div>
 }));
 
+const mockShowWarning = vi.fn();
+vi.mock("@diamondlightsource/cs-web-lib", async importOriginal => {
+  const actual = (await importOriginal()) as Record<string, any>;
+  return {
+    ...actual,
+    useNotification: () => ({ showWarning: mockShowWarning })
+  };
+});
+
 describe("SynopticPage", () => {
   const mockDispatch = vi.fn();
   const mockState = {
@@ -132,6 +141,31 @@ describe("SynopticPage", () => {
           loadScreen: undefined
         }
       });
+    });
+  });
+
+  it("calls showWarning when parseScreenTree throws", async () => {
+    vi.spyOn(parser, "parseScreenTree").mockRejectedValue(new Error("Boom"));
+
+    render(
+      <BeamlineTreeStateContext.Provider
+        value={{ state: mockState, dispatch: mockDispatch }}
+      >
+        <FileContext.Provider value={mockFileContext}>
+          <MemoryRouter>
+            <SynopticPage />
+          </MemoryRouter>
+        </FileContext.Provider>
+      </BeamlineTreeStateContext.Provider>
+    );
+
+    await waitFor(() => {
+      expect(mockShowWarning).toHaveBeenCalledTimes(1);
+      expect(mockShowWarning).toHaveBeenCalledWith(
+        expect.stringContaining(
+          "Unable to process the beamline: bl01. JsonMap file is not found where expected: http://daedalus.ac.uk/entry-point."
+        )
+      );
     });
   });
 });
