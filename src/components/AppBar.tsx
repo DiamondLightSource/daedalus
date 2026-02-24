@@ -70,7 +70,7 @@ const DLSAppBar = (props: {
     <>
       <CssBaseline />
       <StyledAppBar
-        position="absolute"
+        position="fixed"
         open={open}
         fullscreen={fullScreen ? 1 : 0}
         sx={{
