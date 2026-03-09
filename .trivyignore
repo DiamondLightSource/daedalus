@@ -1,0 +1,2 @@
+# Ignore zlib untgz false positive (zlib is not the problem)
+CVE-2026-22184
