@@ -19,7 +19,7 @@ COPY *.json ./
 RUN npm run build:nolint
 
 # Create image for deployment
-FROM nginxinc/nginx-unprivileged:1.29-alpine AS deployment
+FROM nginxinc/nginx-unprivileged:1.29.5-alpine3.23 AS deployment
 
 # Update package lists and upgrade libpng1.6 
 # to fix a security vulnerability (CVE-2026-22695)
