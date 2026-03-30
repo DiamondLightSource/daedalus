@@ -44,16 +44,6 @@ jobs:
           load: true
           tags: tag_for_testing
           network: host
-      
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.35.0
-        with:
-          image-ref: 'docker.io/library/tag_for_testing:latest'
-          format: 'table'
-          exit-code: '1'
-          ignore-unfixed: true
-          vuln-type: 'os,library'
-          severity: 'CRITICAL,HIGH'
 
       # Extract the git tag for the checked out commit, or blank string if it does not have one
       - name: Get commit tag

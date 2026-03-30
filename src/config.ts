@@ -2,6 +2,7 @@ import { CsWebLibConfig, httpRequest } from "@diamondlightsource/cs-web-lib";
 
 export type BeamlinesConfig = {
   [beamline: string]: {
+    pvwsHost: string | undefined,
     host: string;
     entryPoint: string;
   };
@@ -27,6 +28,7 @@ export const loadConfig = async (): Promise<DaedalusConfig> => {
       PVWS_SOCKET: undefined,
       PVWS_SSL: undefined,
       THROTTLE_PERIOD: undefined,
+      storeMode: undefined,
       beamlines: {}
     };
   }
