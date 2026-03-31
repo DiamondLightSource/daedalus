@@ -2,7 +2,7 @@ import { CsWebLibConfig, httpRequest } from "@diamondlightsource/cs-web-lib";
 
 export type BeamlinesConfig = {
   [beamline: string]: {
-    pvwsHost: string | undefined,
+    pvwsHost: string | undefined;
     host: string;
     entryPoint: string;
   };
