@@ -136,7 +136,8 @@ export function SynopticPage() {
           fileDescription.macros,
           fileDescription.defaultProtocol,
           fileContext,
-          location.pathname
+          location.pathname,
+          newBeamlineState.pvwsHost
         );
       } else {
         const macrosParameter = searchParams.get(MACROS_SEARCH_PARAMETER_NAME);

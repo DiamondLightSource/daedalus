@@ -210,6 +210,7 @@ export type BeamlineStateProperties = {
   screenTree: TreeViewBaseItem[];
   filePathIds: FileIDs;
   host: string;
+  pvwsHost?: string;
   loaded: boolean;
 };
 
@@ -234,6 +235,7 @@ export type BeamlineTreeState = {
 
 const defaultBeamline: BeamlineStateProperties = {
   host: "",
+  pvwsHost: undefined,
   entryPoint: "",
   topLevelScreen: "",
   screenTree: [],

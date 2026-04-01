@@ -71,7 +71,8 @@ export const executeOpenPageActionWithFileMetadata = (
     selectedMacros,
     protocol,
     fileContext,
-    urlPath
+    urlPath,
+    beamlineState.pvwsHost
   );
 };
 
@@ -80,7 +81,8 @@ export const executeOpenPageAction = (
   macros: MacroMap,
   protocol: string,
   fileContext: any,
-  browserUrl: string
+  browserUrl: string,
+  pvwsHost?: string
 ) => {
   executeAction(
     {
@@ -89,6 +91,7 @@ export const executeOpenPageAction = (
         name: screenFileUrl,
         location: "main",
         description: undefined,
+        pvwsHost,
         file: {
           path: screenFileUrl,
           macros: macros,
