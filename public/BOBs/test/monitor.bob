@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Saved on 2026-04-14 08:31:36 by uns32131-->
+<display version="2.0.0">
+  <name>Monitor Test</name>
+  <width>1000</width>
+  <height>2000</height>
+  <background_color>
+    <color name="Read_Background" red="240" green="240" blue="240">
+    </color>
+  </background_color>
+  <actions>
+  </actions>
+  <grid_step_x>5</grid_step_x>
+  <grid_step_y>5</grid_step_y>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text>Byte Monitor:</text>
+    <x>5</x>
+    <y>5</y>
+  </widget>
+  <widget type="byte_monitor" version="2.0.0">
+    <name>Byte Monitor</name>
+    <x>25</x>
+    <y>40</y>
+  </widget>
+  <widget type="byte_monitor" version="2.0.0">
+    <name>Byte Monitor_1</name>
+    <x>25</x>
+    <y>80</y>
+    <width>43</width>
+    <height>350</height>
+    <numBits>32</numBits>
+    <horizontal>false</horizontal>
+    <square>true</square>
+    <off_color>
+      <color red="255" green="160" blue="0">
+      </color>
+    </off_color>
+    <on_color>
+      <color red="128" green="255" blue="255">
+      </color>
+    </on_color>
+  </widget>
+  <widget type="byte_monitor" version="2.0.0">
+    <name>Byte Monitor_2</name>
+    <x>80</x>
+    <y>80</y>
+    <width>25</width>
+    <height>12</height>
+    <numBits>2</numBits>
+    <bitReverse>true</bitReverse>
+    <off_color>
+      <color red="255" green="255" blue="0">
+      </color>
+    </off_color>
+    <on_color>
+      <color red="255" green="0" blue="0">
+      </color>
+    </on_color>
+    <labels>
+      <text>Label 0</text>
+      <text>Label 1</text>
+    </labels>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LED</name>
+    <x>245</x>
+    <y>40</y>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_1</name>
+    <text>LED:</text>
+    <x>225</x>
+    <y>5</y>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LED_1</name>
+    <x>195</x>
+    <y>92</y>
+    <width>190</width>
+    <height>185</height>
+    <off_color>
+      <color red="200" green="0" blue="200">
+      </color>
+    </off_color>
+    <on_color>
+      <color red="183" green="189" blue="60">
+      </color>
+    </on_color>
+    <square>true</square>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LED_2</name>
+    <x>250</x>
+    <y>295</y>
+    <width>15</width>
+    <height>10</height>
+    <off_color>
+      <color red="255" green="0" blue="0">
+      </color>
+    </off_color>
+    <on_color>
+      <color red="255" green="255" blue="0">
+      </color>
+    </on_color>
+  </widget>
+  <widget type="linearmeter" version="2.0.0">
+    <name>LinearMeter</name>
+    <x>440</x>
+    <y>40</y>
+    <width>230</width>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_2</name>
+    <text>Linear Meter:</text>
+    <x>440</x>
+    <y>5</y>
+  </widget>
+  <widget type="linearmeter" version="2.0.0">
+    <name>LinearMeter_1</name>
+    <x>440</x>
+    <y>160</y>
+    <width>250</width>
+    <height>390</height>
+    <displayHorizontal>false</displayHorizontal>
+    <knob_size>20</knob_size>
+    <needle_width>6</needle_width>
+    <colors>
+      <foreground_color>
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color red="0" green="0" blue="0" alpha="0">
+        </color>
+      </background_color>
+      <needle_color>
+        <color name="INVALID" red="255" green="0" blue="255">
+        </color>
+      </needle_color>
+      <knob_color>
+        <color name="MINOR" red="255" green="128" blue="0">
+        </color>
+      </knob_color>
+      <normal_status_color>
+        <color name="OK" red="0" green="255" blue="0">
+        </color>
+      </normal_status_color>
+      <minor_warning_color>
+        <color name="Write_Background" red="128" green="255" blue="255">
+        </color>
+      </minor_warning_color>
+      <major_warning_color>
+        <color name="ActiveText" red="255" green="255" blue="0">
+        </color>
+      </major_warning_color>
+      <is_gradient_enabled>false</is_gradient_enabled>
+      <is_highlighting_of_active_regions_enabled>true</is_highlighting_of_active_regions_enabled>
+    </colors>
+  </widget>
+  <widget type="linearmeter" version="2.0.0">
+    <name>LinearMeter_2</name>
+    <x>680</x>
+    <y>70</y>
+    <width>70</width>
+    <height>70</height>
+    <colors>
+      <foreground_color>
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color red="0" green="0" blue="0" alpha="0">
+        </color>
+      </background_color>
+      <needle_color>
+        <color name="ActiveText" red="255" green="255" blue="0">
+        </color>
+      </needle_color>
+      <knob_color>
+        <color name="MAJOR" red="255" green="0" blue="0">
+        </color>
+      </knob_color>
+      <normal_status_color>
+        <color name="MINOR" red="255" green="128" blue="0">
+        </color>
+      </normal_status_color>
+      <minor_warning_color>
+        <color name="ActiveText" red="255" green="255" blue="0">
+        </color>
+      </minor_warning_color>
+      <major_warning_color>
+        <color red="240" green="60" blue="46">
+        </color>
+      </major_warning_color>
+      <is_gradient_enabled>false</is_gradient_enabled>
+      <is_highlighting_of_active_regions_enabled>true</is_highlighting_of_active_regions_enabled>
+    </colors>
+  </widget>
+  <widget type="meter" version="3.0.0">
+    <name>Meter</name>
+    <x>25</x>
+    <y>495</y>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_3</name>
+    <text>Meter:</text>
+    <x>30</x>
+    <y>465</y>
+  </widget>
+  <widget type="meter" version="3.0.0">
+    <name>Meter_1</name>
+    <x>25</x>
+    <y>640</y>
+    <width>45</width>
+    <height>30</height>
+    <show_value>false</show_value>
+    <show_units>false</show_units>
+    <show_limits>false</show_limits>
+    <needle_color>
+      <color name="Attention" red="255" green="160" blue="0">
+      </color>
+    </needle_color>
+    <knob_color>
+      <color name="On" red="0" green="255" blue="0">
+      </color>
+    </knob_color>
+  </widget>
+  <widget type="meter" version="3.0.0">
+    <name>Meter_2</name>
+    <x>20</x>
+    <y>690</y>
+    <width>435</width>
+    <height>270</height>
+    <foreground_color>
+      <color name="Write_Background" red="128" green="255" blue="255">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Grid" red="128" green="128" blue="128">
+      </color>
+    </background_color>
+    <needle_color>
+      <color name="Write_Background" red="128" green="255" blue="255">
+      </color>
+    </needle_color>
+    <knob_color>
+      <color red="35" green="47" blue="255">
+      </color>
+    </knob_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_4</name>
+    <text>Progress Bar:</text>
+    <x>515</x>
+    <y>583</y>
+  </widget>
+  <widget type="progressbar" version="2.0.0">
+    <name>Progress Bar</name>
+    <x>505</x>
+    <y>615</y>
+    <width>165</width>
+    <height>23</height>
+  </widget>
+  <widget type="progressbar" version="2.0.0">
+    <name>Progress Bar_1</name>
+    <x>505</x>
+    <y>650</y>
+    <width>35</width>
+    <height>11</height>
+    <fill_color>
+      <color name="Write_Background" red="128" green="255" blue="255">
+      </color>
+    </fill_color>
+    <background_color>
+      <color name="Header_Background" red="77" green="77" blue="77">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="progressbar" version="2.0.0">
+    <name>Progress Bar_3</name>
+    <x>560</x>
+    <y>650</y>
+    <width>230</width>
+    <height>410</height>
+    <fill_color>
+      <color name="MINOR" red="255" green="128" blue="0">
+      </color>
+    </fill_color>
+    <horizontal>false</horizontal>
+  </widget>
+  <widget type="symbol" version="2.0.0">
+    <name>Symbol</name>
+    <x>825</x>
+    <y>620</y>
+    <width>60</width>
+    <height>35</height>
+    <tooltip>$(pv_name)
+$(pv_value)
+$(actions)</tooltip>
+  </widget>
+  <widget type="symbol" version="2.0.0">
+    <name>Symbol_1</name>
+    <x>825</x>
+    <y>690</y>
+    <width>165</width>
+    <height>165</height>
+    <tooltip>$(pv_name)
+$(pv_value)
+$(actions)</tooltip>
+  </widget>
+  <widget type="symbol" version="2.0.0">
+    <name>Symbol_2</name>
+    <x>905</x>
+    <y>620</y>
+    <width>25</width>
+    <height>20</height>
+    <tooltip>$(pv_name)
+$(pv_value)
+$(actions)</tooltip>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_5</name>
+    <text>Symbol:</text>
+    <x>817</x>
+    <y>582</y>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_6</name>
+    <text>Tank:</text>
+    <x>35</x>
+    <y>1009</y>
+  </widget>
+  <widget type="tank" version="2.0.0">
+    <name>Tank</name>
+    <x>25</x>
+    <y>1040</y>
+    <width>50</width>
+    <height>100</height>
+  </widget>
+  <widget type="tank" version="2.0.0">
+    <name>Tank_1</name>
+    <x>90</x>
+    <y>1040</y>
+    <width>105</width>
+    <height>235</height>
+    <fill_color>
+      <color name="ActiveText" red="255" green="255" blue="0">
+      </color>
+    </fill_color>
+  </widget>
+  <widget type="tank" version="2.0.0">
+    <name>Tank_2</name>
+    <x>45</x>
+    <y>1150</y>
+    <width>30</width>
+    <height>35</height>
+    <fill_color>
+      <color name="MAJOR" red="255" green="0" blue="0">
+      </color>
+    </fill_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update</name>
+    <x>775</x>
+    <y>35</y>
+    <width>0</width>
+    <height>5</height>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_7</name>
+    <text>Text Update:</text>
+    <x>778</x>
+    <y>45</y>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_1</name>
+    <x>780</x>
+    <y>85</y>
+    <width>120</width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_2</name>
+    <x>765</x>
+    <y>140</y>
+    <width>230</width>
+    <height>75</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rotation_step>1</rotation_step>
+    <border_color>
+      <color name="INVALID" red="255" green="0" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_3</name>
+    <x>780</x>
+    <y>240</y>
+    <width>60</width>
+    <height>10</height>
+    <horizontal_alignment>2</horizontal_alignment>
+    <vertical_alignment>2</vertical_alignment>
+    <rotation_step>2</rotation_step>
+    <border_color>
+      <color name="MAJOR" red="255" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+</display>
