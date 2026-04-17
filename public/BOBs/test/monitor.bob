@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Saved on 2026-04-17 09:48:09 by uns32131-->
+<!--Saved on 2026-04-17 11:49:30 by uns32131-->
 <display version="2.0.0">
   <name>Monitor Test</name>
   <width>1000</width>
@@ -112,7 +112,7 @@
   </widget>
   <widget type="linearmeter" version="2.0.0">
     <name>LinearMeter</name>
-    <pv_name>sim://sinewave(1,1,100,0.1)</pv_name>
+    <pv_name>sim://sine(0,100,1)</pv_name>
     <x>440</x>
     <y>40</y>
     <width>230</width>
@@ -125,7 +125,7 @@
   </widget>
   <widget type="linearmeter" version="2.0.0">
     <name>LinearMeter_1</name>
-    <pv_name>sim://sinewave(1,1,100,0.1)</pv_name>
+    <pv_name>sim://sine(0,100,1)</pv_name>
     <x>440</x>
     <y>160</y>
     <width>250</width>
@@ -168,7 +168,7 @@
   </widget>
   <widget type="linearmeter" version="2.0.0">
     <name>LinearMeter_2</name>
-    <pv_name>sim://sinewave(1,1,100,0.1)</pv_name>
+    <pv_name>sim://sinewave(1,1,100,1)</pv_name>
     <x>680</x>
     <y>70</y>
     <width>70</width>
@@ -208,7 +208,7 @@
   </widget>
   <widget type="meter" version="3.0.0">
     <name>Meter</name>
-    <pv_name>sim://sinewave(1,1,5,0.1)</pv_name>
+    <pv_name>sim://sine(0,100,1)</pv_name>
     <x>25</x>
     <y>495</y>
   </widget>
@@ -220,7 +220,7 @@
   </widget>
   <widget type="meter" version="3.0.0">
     <name>Meter_1</name>
-    <pv_name>sim://sinewave(1,1,5,0.1)</pv_name>
+    <pv_name>sim://sine(0,100,1)</pv_name>
     <x>25</x>
     <y>640</y>
     <width>45</width>
@@ -239,7 +239,7 @@
   </widget>
   <widget type="meter" version="3.0.0">
     <name>Meter_2</name>
-    <pv_name>sim://sinewave(1,1,100,0.1)</pv_name>
+    <pv_name>sim://sine(0,100,1)</pv_name>
     <x>20</x>
     <y>690</y>
     <width>435</width>
@@ -269,7 +269,7 @@
   </widget>
   <widget type="progressbar" version="2.0.0">
     <name>Progress Bar</name>
-    <pv_name>sim://sinewave(1,1,10,0.1)</pv_name>
+    <pv_name>sim://sine(0,100,1)</pv_name>
     <x>505</x>
     <y>615</y>
     <width>165</width>
@@ -277,7 +277,7 @@
   </widget>
   <widget type="progressbar" version="2.0.0">
     <name>Progress Bar_1</name>
-    <pv_name>sim://sinewave(1,1,5,0.1)</pv_name>
+    <pv_name>sim://sine(0,100,1)</pv_name>
     <x>505</x>
     <y>650</y>
     <width>35</width>
@@ -293,7 +293,7 @@
   </widget>
   <widget type="progressbar" version="2.0.0">
     <name>Progress Bar_3</name>
-    <pv_name>sim://sinewave(1,1,100,0.1)</pv_name>
+    <pv_name>sim://sine(0,100,1)</pv_name>
     <x>560</x>
     <y>650</y>
     <width>230</width>
@@ -304,49 +304,6 @@
     </fill_color>
     <horizontal>false</horizontal>
   </widget>
-  <widget type="symbol" version="2.0.0">
-    <name>Symbol</name>
-    <pv_name>sim://flipflop(2)</pv_name>
-    <x>825</x>
-    <y>620</y>
-    <width>60</width>
-    <height>35</height>
-    <tooltip>$(pv_name)
-$(pv_value)
-$(actions)</tooltip>
-  </widget>
-  <widget type="symbol" version="2.0.0">
-    <name>Symbol_1</name>
-    <pv_name>sim://flipflop(3)</pv_name>
-    <x>825</x>
-    <y>690</y>
-    <width>165</width>
-    <height>165</height>
-    <tooltip>$(pv_name)
-$(pv_value)
-$(actions)</tooltip>
-  </widget>
-  <widget type="symbol" version="2.0.0">
-    <name>Symbol_2</name>
-    <pv_name>sim://flipflop(1)</pv_name>
-    <symbols>
-      <symbol>examples:/icons/default_symbol.png</symbol>
-      <symbol></symbol>
-    </symbols>
-    <x>905</x>
-    <y>620</y>
-    <width>25</width>
-    <height>20</height>
-    <tooltip>$(pv_name)
-$(pv_value)
-$(actions)</tooltip>
-  </widget>
-  <widget type="label" version="2.0.0">
-    <name>Label_5</name>
-    <text>Symbol:</text>
-    <x>817</x>
-    <y>582</y>
-  </widget>
   <widget type="label" version="2.0.0">
     <name>Label_6</name>
     <text>Tank:</text>
@@ -355,7 +312,7 @@ $(actions)</tooltip>
   </widget>
   <widget type="tank" version="2.0.0">
     <name>Tank</name>
-    <pv_name>sim://sinewave(1,1,5,0.1)</pv_name>
+    <pv_name>sim://sine(0,100,1)</pv_name>
     <x>25</x>
     <y>1040</y>
     <width>50</width>
@@ -363,7 +320,7 @@ $(actions)</tooltip>
   </widget>
   <widget type="tank" version="2.0.0">
     <name>Tank_1</name>
-    <pv_name>sim://sinewave(1,1,100,0.1)</pv_name>
+    <pv_name>sim://sine(0,100,1)</pv_name>
     <x>90</x>
     <y>1040</y>
     <width>105</width>
@@ -375,7 +332,7 @@ $(actions)</tooltip>
   </widget>
   <widget type="tank" version="2.0.0">
     <name>Tank_2</name>
-    <pv_name>sim://sinewave(1,1,10,0.1)</pv_name>
+    <pv_name>sim://sine(0,100,1)</pv_name>
     <x>45</x>
     <y>1150</y>
     <width>30</width>
@@ -422,7 +379,7 @@ $(actions)</tooltip>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_3</name>
-    <pv_name>sim://strings(0.1)</pv_name>
+    <pv_name>sim://strings(1)</pv_name>
     <x>780</x>
     <y>240</y>
     <width>60</width>
