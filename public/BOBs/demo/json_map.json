@@ -58,6 +58,9 @@
             "file": "/BOBs/demo/monitors_meter.bob"
         },
         {
+            "file": "/BOBs/demo/monitors_linearmeter.bob"
+        },
+        {
             "file": "/BOBs/demo/monitors_symbols.bob"
         },
         {
@@ -83,6 +86,9 @@
         },
         {
             "file": "/BOBs/demo/embedded/structure_embedded.bob"
+        },
+        {
+            "file": "/BOBs/demo/quickScreens_drag_and_drop.bob"
         }
     ]
 }
