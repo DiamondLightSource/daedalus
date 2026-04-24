@@ -89,6 +89,9 @@
         },
         {
             "file": "/BOBs/demo/quickScreens_drag_and_drop.bob"
+        },
+        {
+            "file": "/BOBs/demo/quickScreens_responsive.bob"
         }
     ]
 }
