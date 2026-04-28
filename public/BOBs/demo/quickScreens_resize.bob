@@ -2,7 +2,7 @@
 <displayResponsive version="2.0.0">
   <id>responsive_resize_id3</id>
   <width>100%</width>
-  <name>Responsive Layout Demo</name>
+  <name>Responsive Layout With Resizable Widgets Demo</name>
   <responsive_cell_margins>6 6</responsive_cell_margins>
   <responsive_cell_height>15</responsive_cell_height>
   <responsive_columns>
