@@ -92,6 +92,9 @@
         },
         {
             "file": "/BOBs/demo/quickScreens_responsive.bob"
+        },
+        {
+            "file": "/BOBs/demo/quickScreens_resize.bob"
         }
     ]
 }

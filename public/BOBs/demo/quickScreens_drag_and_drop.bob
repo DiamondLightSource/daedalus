@@ -11,6 +11,7 @@
   <responsive_breakpoints>
     <lg>700</lg>
   </responsive_breakpoints>
+  <responsive_resize_enabled>false</responsive_resize_enabled>
   <responsive_layouts>
     <lg>
       <element_position i="uniqueId01" x="0" y="0" w="30" h="2" />

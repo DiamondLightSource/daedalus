@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <displayResponsive version="2.0.0">
-  <id>responsive_id2</id>
+  <id>responsive_resize_id3</id>
   <width>100%</width>
   <name>Responsive Layout Demo</name>
   <responsive_cell_margins>6 6</responsive_cell_margins>
@@ -15,7 +15,6 @@
     <md>800</md>
     <sm>300</sm>
   </responsive_breakpoints>
-  <responsive_resize_enabled>false</responsive_resize_enabled>
   <responsive_layouts>
     <lg>
       <element_position i="widgetUID01" x="0" y="0" w="48" h="2" />
@@ -65,7 +64,7 @@
     <name>Label_5</name>
     <text>Responsive Layout Demo</text>
     <width>100%</width>
-    <height>30</height>
+    <height>100%</height>
     <font>
       <font name="Header 1" family="Liberation Sans" style="BOLD" size="22.0">
       </font>
@@ -76,7 +75,7 @@
     <name>Combo_ItemsFromPV</name>
     <pv_name>loc://test3&lt;VEnum&gt;(0, "High", "Medium", "Low")</pv_name>
     <width>100%</width>
-    <height>27</height>
+    <height>100%</height>
     <items>
       <item>Item 1</item>
       <item>Item 2</item>
@@ -87,14 +86,14 @@
     <name>Text Update_2</name>
     <pv_name>loc://test3&lt;VEnum&gt;(0, "High", "Medium", "Low")</pv_name>
     <width>100%</width>
-    <height>25</height>
+    <height>100%</height>
   </widget>
   <widget type="choice" version="2.0.0">
     <id>widgetUID04</id>
     <name>Combo</name>
     <pv_name>loc://test&lt;String&gt;</pv_name>
     <width>100%</width>
-    <height>27</height>
+    <height>100%</height>
     <items>
       <item>One Item</item>
       <item>Another Item</item>
@@ -107,7 +106,7 @@
     <name>Text Update</name>
     <pv_name>loc://test&lt;String&gt;</pv_name>
     <width>100%</width>
-    <height>25</height>
+    <height>100%</height>
   </widget>
   <widget type="group" version="2.0.0">
     <id>widgetUID06</id>
@@ -117,7 +116,7 @@
       <TEXT>This is group one</TEXT>
     </macros>
     <width>100%</width>
-    <height>140</height>
+    <height>100%</height>
     <widget type="led" version="2.0.0">
       <name>BoolLED_3</name>
       <pv_name>sim://ramp(0, 4, 1)</pv_name>
@@ -168,7 +167,7 @@
       <TEXT>This is group two</TEXT>
     </macros>
     <width>100%</width>
-    <height>140</height>
+    <height>100%</height>
     <widget type="led" version="2.0.0">
       <name>BoolLED_4</name>
       <pv_name>sim://ramp(0, 4, 1)</pv_name>
@@ -216,7 +215,7 @@
     <name>LinearMeter</name>
     <pv_name>sim://ramp(5, 55, 2, 0.5)</pv_name>
     <width>100%</width>
-    <height>105</height>
+    <height>100%</height>
     <colors>
       <foreground_color>
         <color name="Text" red="0" green="0" blue="0">
@@ -262,7 +261,7 @@
     <name>Meter_1</name>
     <pv_name>sim://ramp(-5, 5, 0.05, 0.5)</pv_name>
     <width>100%</width>
-    <height>210</height>
+    <height>100%</height>
     <minimum>-5.0</minimum>
     <maximum>5.0</maximum>
   </widget>
@@ -271,7 +270,7 @@
     <name>Scaled Slider_1</name>
     <pv_name>loc://number(0.0)</pv_name>
     <width>100%</width>
-    <height>61</height>
+    <height>100%</height>
     <limits_from_pv>false</limits_from_pv>
   </widget>
   <widget type="thermometer" version="2.0.0">
@@ -279,7 +278,7 @@
     <name>Thermometer</name>
     <pv_name>sim://ramp(10, 100, 10, 0.5)</pv_name>
     <width>100%</width>
-    <height>300</height>
+    <height>100%</height>
     <limits_from_pv>false</limits_from_pv>
   </widget>
   <widget type="led" version="2.0.0">
@@ -287,7 +286,7 @@
     <name>LED_2</name>
     <pv_name>sim://ramp(0, 4, 1)</pv_name>
     <width>100%</width>
-    <height>52</height>
+    <height>100%</height>
     <off_color>
       <color red="206" green="89" blue="250">
       </color>
