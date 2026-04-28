@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Saved on 2026-04-14 15:04:20 by mjn74133-->
+<display version="2.0.0">
+  <name>Meter Widgets</name>
+  <width>980</width>
+  <height>1000</height>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <class>TITLE</class>
+    <text>Linear Meter Widgets</text>
+    <x use_class="true">0</x>
+    <y use_class="true">0</y>
+    <width>550</width>
+    <height>31</height>
+    <font use_class="true">
+      <font name="Header 1" family="Liberation Sans" style="BOLD" size="22.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="Text" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <transparent use_class="true">true</transparent>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_1</name>
+    <text>Meters display numerical values.
+By default, the meter reflects the range, units, alarm limits, and current alarm state of the process variable.</text>
+    <y>31</y>
+    <width>370</width>
+    <height>70</height>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_2</name>
+    <text>Alarm limits form widget config</text>
+    <x>20</x>
+    <y>250</y>
+    <width>370</width>
+    <height>39</height>
+  </widget>
+  <widget type="linearmeter" version="2.0.0">
+    <name>LinearMeter</name>
+    <pv_name>sim://sine(10,50,0.5)</pv_name>
+    <x>10</x>
+    <y>120</y>
+    <width>400</width>
+    <height>105</height>
+    <colors>
+      <foreground_color>
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color red="0" green="0" blue="0" alpha="0">
+        </color>
+      </background_color>
+      <needle_color>
+        <color red="0" green="0" blue="0">
+        </color>
+      </needle_color>
+      <knob_color>
+        <color red="0" green="0" blue="0">
+        </color>
+      </knob_color>
+      <normal_status_color>
+        <color red="194" green="198" blue="195">
+        </color>
+      </normal_status_color>
+      <minor_warning_color>
+        <color red="242" green="148" blue="141">
+        </color>
+      </minor_warning_color>
+      <major_warning_color>
+        <color red="240" green="60" blue="46">
+        </color>
+      </major_warning_color>
+      <is_gradient_enabled>false</is_gradient_enabled>
+      <is_highlighting_of_active_regions_enabled>false</is_highlighting_of_active_regions_enabled>
+    </colors>
+    <minimum>10.0</minimum>
+    <maximum>50.0</maximum>
+    <level_lolo>15.0</level_lolo>
+    <level_low>25.0</level_low>
+    <level_high>35.0</level_high>
+    <level_hihi>45.0</level_hihi>
+  </widget>
+  <widget type="linearmeter" version="2.0.0">
+    <name>LinearMeter_1</name>
+    <pv_name>sim://sine(10,50,0.5)</pv_name>
+    <x>10</x>
+    <y>289</y>
+    <width>400</width>
+    <height>105</height>
+    <colors>
+      <foreground_color>
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color red="0" green="0" blue="0" alpha="0">
+        </color>
+      </background_color>
+      <needle_color>
+        <color red="0" green="0" blue="0">
+        </color>
+      </needle_color>
+      <knob_color>
+        <color red="0" green="0" blue="0">
+        </color>
+      </knob_color>
+      <normal_status_color>
+        <color red="194" green="198" blue="195">
+        </color>
+      </normal_status_color>
+      <minor_warning_color>
+        <color red="242" green="148" blue="141">
+        </color>
+      </minor_warning_color>
+      <major_warning_color>
+        <color red="240" green="60" blue="46">
+        </color>
+      </major_warning_color>
+      <is_gradient_enabled>false</is_gradient_enabled>
+      <is_highlighting_of_active_regions_enabled>false</is_highlighting_of_active_regions_enabled>
+    </colors>
+    <limits_from_pv>false</limits_from_pv>
+    <minimum>10.0</minimum>
+    <maximum>50.0</maximum>
+    <level_lolo>15.0</level_lolo>
+    <level_low>25.0</level_low>
+    <level_high>35.0</level_high>
+    <level_hihi>45.0</level_hihi>
+  </widget>
+  <widget type="linearmeter" version="2.0.0">
+    <name>LinearMeter_2</name>
+    <pv_name>sim://sine(10,50,0.5)</pv_name>
+    <x>20</x>
+    <y>460</y>
+    <width>105</width>
+    <height>400</height>
+    <displayHorizontal>false</displayHorizontal>
+    <limits_from_pv>false</limits_from_pv>
+    <minimum>10.0</minimum>
+    <maximum>50.0</maximum>
+    <level_lolo>15.0</level_lolo>
+    <level_low>25.0</level_low>
+    <level_high>35.0</level_high>
+    <level_hihi>45.0</level_hihi>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_3</name>
+    <text>Vertical vertical layout and vertical layout with lurid colors and no scale</text>
+    <x>20</x>
+    <y>420</y>
+    <width>370</width>
+    <height>39</height>
+  </widget>
+  <widget type="linearmeter" version="2.0.0">
+    <name>LinearMeter_3</name>
+    <pv_name>sim://sine(10,50,0.5)</pv_name>
+    <x>220</x>
+    <y>459</y>
+    <width>105</width>
+    <height>400</height>
+    <show_units>false</show_units>
+    <scale_visible>false</scale_visible>
+    <displayHorizontal>false</displayHorizontal>
+    <knob_size>30</knob_size>
+    <needle_width>3</needle_width>
+    <colors>
+      <foreground_color>
+        <color name="Transparent" red="255" green="255" blue="255" alpha="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="Grid" red="128" green="128" blue="128">
+        </color>
+      </background_color>
+      <needle_color>
+        <color name="Grid" red="128" green="128" blue="128">
+        </color>
+      </needle_color>
+      <knob_color>
+        <color name="ActiveText" red="255" green="255" blue="0">
+        </color>
+      </knob_color>
+      <normal_status_color>
+        <color name="OK" red="0" green="255" blue="0">
+        </color>
+      </normal_status_color>
+      <minor_warning_color>
+        <color name="Attention" red="255" green="160" blue="0">
+        </color>
+      </minor_warning_color>
+      <major_warning_color>
+        <color name="INVALID" red="255" green="0" blue="255">
+        </color>
+      </major_warning_color>
+      <is_gradient_enabled>false</is_gradient_enabled>
+      <is_highlighting_of_active_regions_enabled>false</is_highlighting_of_active_regions_enabled>
+    </colors>
+    <limits_from_pv>false</limits_from_pv>
+    <minimum>10.0</minimum>
+    <maximum>50.0</maximum>
+    <level_lolo>15.0</level_lolo>
+    <level_low>25.0</level_low>
+    <level_high>35.0</level_high>
+    <level_hihi>45.0</level_hihi>
+  </widget>
+</display>

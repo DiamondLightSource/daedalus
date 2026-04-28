@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<displayResponsive version="2.0.0">
+  <id>responsive_resize_id3</id>
+  <width>100%</width>
+  <name>Responsive Layout With Resizable Widgets Demo</name>
+  <responsive_cell_margins>6 6</responsive_cell_margins>
+  <responsive_cell_height>15</responsive_cell_height>
+  <responsive_columns>
+    <lg>48</lg>
+    <md>32</md>
+    <sm>16</sm>
+  </responsive_columns>
+  <responsive_breakpoints>
+    <lg>1200</lg>
+    <md>800</md>
+    <sm>300</sm>
+  </responsive_breakpoints>
+  <responsive_layouts>
+    <lg>
+      <element_position i="widgetUID01" x="0" y="0" w="48" h="2" />
+      <element_position i="widgetUID02" x="0" y="2" w="16" h="2" />
+      <element_position i="widgetUID03" x="16" y="2" w="8" h="2" />
+      <element_position i="widgetUID04" x="0" y="4" w="16" h="2" />
+      <element_position i="widgetUID05" x="16" y="4" w="8" h="2" />
+      <element_position i="widgetUID06" x="30" y="2" w="9" h="7" />
+      <element_position i="widgetUID07" x="39" y="2" w="9" h="7" />
+      <element_position i="widgetUID08" x="6" y="14" w="16" h="6" />
+      <element_position i="widgetUID09" x="0" y="20" w="10" h="10" />
+      <element_position i="widgetUID10" x="20" y="20" w="6" h="6" />
+      <element_position i="widgetUID11" x="35" y="20" w="2" h="16" />
+      <element_position i="widgetUID12" x="35" y="20" w="3" h="4" />
+    </lg>
+    <md>
+      <element_position i="widgetUID01" x="0" y="0" w="30" h="2" />
+      <element_position i="widgetUID02" x="0" y="2" w="16" h="2" />
+      <element_position i="widgetUID03" x="16" y="2" w="8" h="2" />
+      <element_position i="widgetUID04" x="0" y="4" w="16" h="2" />
+      <element_position i="widgetUID05" x="16" y="4" w="8" h="2" />
+      <element_position i="widgetUID06" x="0" y="6" w="9" h="7" />
+      <element_position i="widgetUID07" x="16" y="6" w="9" h="7" />
+      <element_position i="widgetUID08" x="6" y="14" w="16" h="6" />
+      <element_position i="widgetUID09" x="0" y="20" w="10" h="10" />
+      <element_position i="widgetUID10" x="15" y="20" w="6" h="6" />
+      <element_position i="widgetUID11" x="28" y="2" w="2" h="16" />
+      <element_position i="widgetUID12" x="10" y="20" w="3" h="4" />
+    </md>
+    <sm>
+      <element_position i="widgetUID01" x="0" y="0" w="30" h="2" />
+      <element_position i="widgetUID02" x="0" y="2" w="16" h="2" />
+      <element_position i="widgetUID03" x="0" y="4" w="8" h="2" />
+      <element_position i="widgetUID04" x="0" y="6" w="16" h="2" />
+      <element_position i="widgetUID05" x="0" y="8" w="8" h="2" />
+      <element_position i="widgetUID06" x="0" y="10" w="9" h="7" />
+      <element_position i="widgetUID07" x="0" y="17" w="9" h="7" />
+      <element_position i="widgetUID08" x="0" y="24" w="16" h="6" />
+      <element_position i="widgetUID09" x="0" y="30" w="10" h="10" />
+      <element_position i="widgetUID10" x="11" y="30" w="6" h="6" />
+      <element_position i="widgetUID11" x="0" y="40" w="2" h="16" />
+      <element_position i="widgetUID12" x="10" y="20" w="3" h="4" />
+    </sm>
+  </responsive_layouts>
+  <widget type="label" version="2.0.0">
+    <id>widgetUID01</id>
+    <name>Label_5</name>
+    <text>Responsive Layout Demo</text>
+    <width>100%</width>
+    <height>100%</height>
+    <font>
+      <font name="Header 1" family="Liberation Sans" style="BOLD" size="22.0">
+      </font>
+    </font>
+  </widget>
+  <widget type="choice" version="2.0.0">
+    <id>widgetUID02</id>
+    <name>Combo_ItemsFromPV</name>
+    <pv_name>loc://test3&lt;VEnum&gt;(0, "High", "Medium", "Low")</pv_name>
+    <width>100%</width>
+    <height>100%</height>
+    <items>
+      <item>Item 1</item>
+      <item>Item 2</item>
+    </items>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <id>widgetUID03</id>
+    <name>Text Update_2</name>
+    <pv_name>loc://test3&lt;VEnum&gt;(0, "High", "Medium", "Low")</pv_name>
+    <width>100%</width>
+    <height>100%</height>
+  </widget>
+  <widget type="choice" version="2.0.0">
+    <id>widgetUID04</id>
+    <name>Combo</name>
+    <pv_name>loc://test&lt;String&gt;</pv_name>
+    <width>100%</width>
+    <height>100%</height>
+    <items>
+      <item>One Item</item>
+      <item>Another Item</item>
+      <item>Yet another</item>
+    </items>
+    <items_from_pv>false</items_from_pv>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <id>widgetUID05</id>
+    <name>Text Update</name>
+    <pv_name>loc://test&lt;String&gt;</pv_name>
+    <width>100%</width>
+    <height>100%</height>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <id>widgetUID06</id>
+    <name>Group 1</name>
+    <macros>
+      <PV>sim://sine</PV>
+      <TEXT>This is group one</TEXT>
+    </macros>
+    <width>100%</width>
+    <height>100%</height>
+    <widget type="led" version="2.0.0">
+      <name>BoolLED_3</name>
+      <pv_name>sim://ramp(0, 4, 1)</pv_name>
+      <x>161</x>
+      <y>40</y>
+      <width>26</width>
+      <height>26</height>
+      <off_color>
+        <color name="Off" red="60" green="100" blue="60">
+        </color>
+      </off_color>
+      <on_color>
+        <color name="On" red="0" green="255" blue="0">
+        </color>
+      </on_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_5</name>
+      <pv_name>$(PV)</pv_name>
+      <x>61</x>
+      <y>40</y>
+      <width>80</width>
+      <height>26</height>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_18</name>
+      <text>Value:</text>
+      <x>1</x>
+      <y>40</y>
+      <width>80</width>
+      <height>26</height>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_19</name>
+      <text>$(TEXT)</text>
+      <x>1</x>
+      <y>10</y>
+      <width>186</width>
+    </widget>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <id>widgetUID07</id>
+    <name>Group 2</name>
+    <macros>
+      <PV>sim://ramp</PV>
+      <TEXT>This is group two</TEXT>
+    </macros>
+    <width>100%</width>
+    <height>100%</height>
+    <widget type="led" version="2.0.0">
+      <name>BoolLED_4</name>
+      <pv_name>sim://ramp(0, 4, 1)</pv_name>
+      <x>161</x>
+      <y>40</y>
+      <width>26</width>
+      <height>26</height>
+      <off_color>
+        <color name="Off" red="60" green="100" blue="60">
+        </color>
+      </off_color>
+      <on_color>
+        <color name="On" red="0" green="255" blue="0">
+        </color>
+      </on_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_6</name>
+      <pv_name>$(PV)</pv_name>
+      <x>61</x>
+      <y>40</y>
+      <width>80</width>
+      <height>26</height>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_20</name>
+      <text>Value:</text>
+      <x>1</x>
+      <y>40</y>
+      <width>80</width>
+      <height>26</height>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_21</name>
+      <text>$(TEXT)</text>
+      <x>1</x>
+      <y>10</y>
+      <width>186</width>
+    </widget>
+  </widget>
+ <widget type="linearmeter" version="2.0.0">
+    <id>widgetUID08</id>
+    <name>LinearMeter</name>
+    <pv_name>sim://ramp(5, 55, 2, 0.5)</pv_name>
+    <width>100%</width>
+    <height>100%</height>
+    <colors>
+      <foreground_color>
+        <color name="Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color red="0" green="0" blue="0" alpha="0">
+        </color>
+      </background_color>
+      <needle_color>
+        <color red="0" green="0" blue="0">
+        </color>
+      </needle_color>
+      <knob_color>
+        <color red="0" green="0" blue="0">
+        </color>
+      </knob_color>
+      <normal_status_color>
+        <color red="194" green="198" blue="195">
+        </color>
+      </normal_status_color>
+      <minor_warning_color>
+        <color red="242" green="148" blue="141">
+        </color>
+      </minor_warning_color>
+      <major_warning_color>
+        <color red="240" green="60" blue="46">
+        </color>
+      </major_warning_color>
+      <is_gradient_enabled>false</is_gradient_enabled>
+      <is_highlighting_of_active_regions_enabled>true</is_highlighting_of_active_regions_enabled>
+    </colors>
+    <minimum>0.0</minimum>
+    <maximum>60.0</maximum>
+    <level_lolo>15.0</level_lolo>
+    <level_low>25.0</level_low>
+    <level_high>35.0</level_high>
+    <level_hihi>45.0</level_hihi>
+    <limits_from_pv>false</limits_from_pv>    
+  </widget>
+  <widget type="meter" version="3.0.0">
+    <id>widgetUID09</id>
+    <name>Meter_1</name>
+    <pv_name>sim://ramp(-5, 5, 0.05, 0.5)</pv_name>
+    <width>100%</width>
+    <height>100%</height>
+    <minimum>-5.0</minimum>
+    <maximum>5.0</maximum>
+  </widget>
+  <widget type="scaledslider" version="2.0.0">
+    <id>widgetUID10</id>
+    <name>Scaled Slider_1</name>
+    <pv_name>loc://number(0.0)</pv_name>
+    <width>100%</width>
+    <height>100%</height>
+    <limits_from_pv>false</limits_from_pv>
+  </widget>
+  <widget type="thermometer" version="2.0.0">
+    <id>widgetUID11</id>
+    <name>Thermometer</name>
+    <pv_name>sim://ramp(10, 100, 10, 0.5)</pv_name>
+    <width>100%</width>
+    <height>100%</height>
+    <limits_from_pv>false</limits_from_pv>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <id>widgetUID12</id>
+    <name>LED_2</name>
+    <pv_name>sim://ramp(0, 4, 1)</pv_name>
+    <width>100%</width>
+    <height>100%</height>
+    <off_color>
+      <color red="206" green="89" blue="250">
+      </color>
+    </off_color>
+    <on_color>
+      <color red="255" green="128" blue="0">
+      </color>
+    </on_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+
+</displayResponsive>
