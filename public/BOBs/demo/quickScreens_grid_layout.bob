@@ -1,100 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<displayResponsive version="2.0.0">
-  <id>responsive_id2</id>
-  <width>100%</width>
-  <name>Responsive Layout Demo</name>
-  <responsive_cell_margins>6 6</responsive_cell_margins>
-  <responsive_cell_height>15</responsive_cell_height>
-  <responsive_columns>
-    <lg>48</lg>
-    <md>32</md>
-    <sm>16</sm>
-  </responsive_columns>
-  <responsive_breakpoints>
-    <lg>1200</lg>
-    <md>800</md>
-    <sm>300</sm>
-  </responsive_breakpoints>
-  <responsive_resize_enabled>false</responsive_resize_enabled>
-  <responsive_layouts>
-    <lg>
-      <element_position i="widgetUID01" x="0" y="0" w="48" h="2" />
-      <element_position i="widgetUID02" x="0" y="2" w="16" h="2" />
-      <element_position i="widgetUID03" x="16" y="2" w="8" h="2" />
-      <element_position i="widgetUID04" x="0" y="4" w="16" h="2" />
-      <element_position i="widgetUID05" x="16" y="4" w="8" h="2" />
-      <element_position i="widgetUID06" x="30" y="2" w="9" h="7" />
-      <element_position i="widgetUID07" x="39" y="2" w="9" h="7" />
-      <element_position i="widgetUID08" x="6" y="14" w="16" h="6" />
-      <element_position i="widgetUID09" x="0" y="20" w="10" h="10" />
-      <element_position i="widgetUID10" x="20" y="20" w="6" h="6" />
-      <element_position i="widgetUID11" x="35" y="20" w="2" h="16" />
-      <element_position i="widgetUID12" x="35" y="20" w="3" h="4" />
-    </lg>
-    <md>
-      <element_position i="widgetUID01" x="0" y="0" w="30" h="2" />
-      <element_position i="widgetUID02" x="0" y="2" w="16" h="2" />
-      <element_position i="widgetUID03" x="16" y="2" w="8" h="2" />
-      <element_position i="widgetUID04" x="0" y="4" w="16" h="2" />
-      <element_position i="widgetUID05" x="16" y="4" w="8" h="2" />
-      <element_position i="widgetUID06" x="0" y="6" w="9" h="7" />
-      <element_position i="widgetUID07" x="16" y="6" w="9" h="7" />
-      <element_position i="widgetUID08" x="6" y="14" w="16" h="6" />
-      <element_position i="widgetUID09" x="0" y="20" w="10" h="10" />
-      <element_position i="widgetUID10" x="15" y="20" w="6" h="6" />
-      <element_position i="widgetUID11" x="28" y="2" w="2" h="16" />
-      <element_position i="widgetUID12" x="10" y="20" w="3" h="4" />
-    </md>
-    <sm>
-      <element_position i="widgetUID01" x="0" y="0" w="30" h="2" />
-      <element_position i="widgetUID02" x="0" y="2" w="16" h="2" />
-      <element_position i="widgetUID03" x="0" y="4" w="8" h="2" />
-      <element_position i="widgetUID04" x="0" y="6" w="16" h="2" />
-      <element_position i="widgetUID05" x="0" y="8" w="8" h="2" />
-      <element_position i="widgetUID06" x="0" y="10" w="9" h="7" />
-      <element_position i="widgetUID07" x="0" y="17" w="9" h="7" />
-      <element_position i="widgetUID08" x="0" y="24" w="16" h="6" />
-      <element_position i="widgetUID09" x="0" y="30" w="10" h="10" />
-      <element_position i="widgetUID10" x="11" y="30" w="6" h="6" />
-      <element_position i="widgetUID11" x="0" y="40" w="2" h="16" />
-      <element_position i="widgetUID12" x="10" y="20" w="3" h="4" />
-    </sm>
-  </responsive_layouts>
+<displayGridLayout version="2.0.0">
+  <id>DandD_id1</id>
+  <width>1400</width>
+  <height>1000</height>
+  <name>Drag and Drop demo</name>
+  <grid_cell_height>15</grid_cell_height>
+  <grid_cell_resize_enabled>true</grid_cell_resize_enabled>
+  <grid_cell_drag_enabled>true</grid_cell_drag_enabled>
+  <grid_cell_margins>6 6</grid_cell_margins>
+  <grid_layout_columns>32</grid_layout_columns>
+  <grid_layout>
+    <element_position i="uniqueId01" x="0" y="0" w="30" h="2" />
+    <element_position i="uniqueId02" x="0" y="2" w="16" h="2" />
+    <element_position i="uniqueId03" x="16" y="2" w="8" h="2" />
+    <element_position i="uniqueId04" x="0" y="4" w="16" h="2" />
+    <element_position i="uniqueId05" x="16" y="4" w="8" h="2" />
+    <element_position i="uniqueId06" x="0" y="6" w="9" h="7" />
+    <element_position i="uniqueId07" x="16" y="6" w="9" h="7" />
+    <element_position i="uniqueId08" x="6" y="14" w="16" h="6" />
+  </grid_layout>
   <widget type="label" version="2.0.0">
-    <id>widgetUID01</id>
+    <id>uniqueId01</id>
     <name>Label_5</name>
-    <text>Responsive Layout Demo</text>
+    <text>Grid Layout Demo</text>
+    <x>0</x>
+    <y>0</y>
     <width>100%</width>
-    <height>30</height>
+    <height>100%</height>
     <font>
       <font name="Header 1" family="Liberation Sans" style="BOLD" size="22.0">
       </font>
     </font>
   </widget>
   <widget type="choice" version="2.0.0">
-    <id>widgetUID02</id>
+    <id>uniqueId02</id>
     <name>Combo_ItemsFromPV</name>
     <pv_name>loc://test3&lt;VEnum&gt;(0, "High", "Medium", "Low")</pv_name>
     <width>100%</width>
-    <height>27</height>
+    <height>100%</height>
     <items>
       <item>Item 1</item>
       <item>Item 2</item>
     </items>
   </widget>
   <widget type="textupdate" version="2.0.0">
-    <id>widgetUID03</id>
+    <id>uniqueId03</id>
     <name>Text Update_2</name>
     <pv_name>loc://test3&lt;VEnum&gt;(0, "High", "Medium", "Low")</pv_name>
+    <x>0</x>
+    <y>0</y>
     <width>100%</width>
-    <height>25</height>
+    <height>100%</height>
   </widget>
   <widget type="choice" version="2.0.0">
-    <id>widgetUID04</id>
+    <id>uniqueId04</id>
     <name>Combo</name>
     <pv_name>loc://test&lt;String&gt;</pv_name>
     <width>100%</width>
-    <height>27</height>
+    <height>100%</height>
     <items>
       <item>One Item</item>
       <item>Another Item</item>
@@ -103,21 +66,23 @@
     <items_from_pv>false</items_from_pv>
   </widget>
   <widget type="textupdate" version="2.0.0">
-    <id>widgetUID05</id>
+    <id>uniqueId05</id>
     <name>Text Update</name>
     <pv_name>loc://test&lt;String&gt;</pv_name>
+    <x>0</x>
+    <y>0</y>
     <width>100%</width>
-    <height>25</height>
+    <height>100%</height>
   </widget>
   <widget type="group" version="2.0.0">
-    <id>widgetUID06</id>
+    <id>uniqueId06</id>
     <name>Group 1</name>
     <macros>
       <PV>sim://sine</PV>
       <TEXT>This is group one</TEXT>
     </macros>
     <width>100%</width>
-    <height>140</height>
+    <height>100%</height>
     <widget type="led" version="2.0.0">
       <name>BoolLED_3</name>
       <pv_name>sim://ramp(0, 4, 1)</pv_name>
@@ -161,14 +126,14 @@
     </widget>
   </widget>
   <widget type="group" version="2.0.0">
-    <id>widgetUID07</id>
+    <id>uniqueId07</id>
     <name>Group 2</name>
     <macros>
       <PV>sim://ramp</PV>
       <TEXT>This is group two</TEXT>
     </macros>
     <width>100%</width>
-    <height>140</height>
+    <height>100%</height>
     <widget type="led" version="2.0.0">
       <name>BoolLED_4</name>
       <pv_name>sim://ramp(0, 4, 1)</pv_name>
@@ -212,11 +177,11 @@
     </widget>
   </widget>
  <widget type="linearmeter" version="2.0.0">
-    <id>widgetUID08</id>
+    <id>uniqueId08</id>
     <name>LinearMeter</name>
-    <pv_name>sim://ramp(5, 55, 2, 0.5)</pv_name>
+    <pv_name>sim://sine(10,50,0.5)</pv_name>
     <width>100%</width>
-    <height>105</height>
+    <height>100%</height>
     <colors>
       <foreground_color>
         <color name="Text" red="0" green="0" blue="0">
@@ -257,46 +222,4 @@
     <level_hihi>45.0</level_hihi>
     <limits_from_pv>false</limits_from_pv>    
   </widget>
-  <widget type="meter" version="3.0.0">
-    <id>widgetUID09</id>
-    <name>Meter_1</name>
-    <pv_name>sim://ramp(-5, 5, 0.05, 0.5)</pv_name>
-    <width>100%</width>
-    <height>210</height>
-    <minimum>-5.0</minimum>
-    <maximum>5.0</maximum>
-  </widget>
-  <widget type="scaledslider" version="2.0.0">
-    <id>widgetUID10</id>
-    <name>Scaled Slider_1</name>
-    <pv_name>loc://number(0.0)</pv_name>
-    <width>100%</width>
-    <height>61</height>
-    <limits_from_pv>false</limits_from_pv>
-  </widget>
-  <widget type="thermometer" version="2.0.0">
-    <id>widgetUID11</id>
-    <name>Thermometer</name>
-    <pv_name>sim://ramp(10, 100, 10, 0.5)</pv_name>
-    <width>100%</width>
-    <height>300</height>
-    <limits_from_pv>false</limits_from_pv>
-  </widget>
-  <widget type="led" version="2.0.0">
-    <id>widgetUID12</id>
-    <name>LED_2</name>
-    <pv_name>sim://ramp(0, 4, 1)</pv_name>
-    <width>100%</width>
-    <height>52</height>
-    <off_color>
-      <color red="206" green="89" blue="250">
-      </color>
-    </off_color>
-    <on_color>
-      <color red="255" green="128" blue="0">
-      </color>
-    </on_color>
-    <border_alarm_sensitive>false</border_alarm_sensitive>
-  </widget>
-
-</displayResponsive>
+</displayGridLayout>
