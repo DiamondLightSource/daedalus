@@ -88,13 +88,10 @@
             "file": "/BOBs/demo/embedded/structure_embedded.bob"
         },
         {
-            "file": "/BOBs/demo/quickScreens_drag_and_drop.bob"
+            "file": "/BOBs/demo/quickScreens_grid_layout.bob"
         },
         {
-            "file": "/BOBs/demo/quickScreens_responsive.bob"
-        },
-        {
-            "file": "/BOBs/demo/quickScreens_resize.bob"
+            "file": "/BOBs/demo/quickScreens_responsive_layout.bob"
         }
     ]
 }

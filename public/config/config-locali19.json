@@ -3,10 +3,7 @@
   "PVWS_SOCKET": "pvws.diamond.ac.uk:443",
   "PVWS_SSL": true,
   "THROTTLE_PERIOD": 100,
-  "storeMode": "DEV",
-  "csWebLibFeatureFlags": {
-    "enableDynamicScripts": true
-  },
+  "storeMode": "PROD",
   "beamlines" : {
     "Example Screens": {
       "host": "",
@@ -20,19 +17,14 @@
       "host": "",
       "entryPoint": "/BOBs/BLFAKE/json_map.json"
     },
-    "b01-1": {
-      "pvwsHost": "pvws-test.diamond.ac.uk:443",
-      "host": "https://b01-1-opis.diamond.ac.uk/bl01c-synoptic/",
-      "entryPoint": "JsonMap.json"
-    },
-    "bl19i": {
-      "pvwsHost": "pvws.diamond.ac.uk:443",
-      "host": "https://i19-opis.diamond.ac.uk/synoptic/",
-      "entryPoint": "JsonMap.json"
-    },
     "I19-localhost": {
       "pvwsHost": "pvws.diamond.ac.uk:443",
-      "host": "http://localhost:3000/i19-services/synoptic/",
+      "host": "http://localhost:3000/",
+      "entryPoint": "JsonMap.json"
+    },
+    "I19-localhost-bad-pvws": {
+      "pvwsHost": "visr-pvws.diamond.ac.uk:443",
+      "host": "http://localhost:3000/",
       "entryPoint": "JsonMap.json"
     }
   }
