@@ -1,15 +1,6 @@
 name: Docker Image CI
 
 on:
-  push:
-    tags:
-    - '*'
-  pull_request:
-    branches:
-      - main
-  workflow_run:
-    workflows: [ "Auto Tag with SemVer" ]
-    types: [ completed ]
   workflow_dispatch:
 
 jobs:
@@ -43,7 +34,6 @@ jobs:
           # Need load and tags so we can test it below
           load: true
           tags: tag_for_testing
-          network: host
 
       # Extract the git tag for the checked out commit, or blank string if it does not have one
       - name: Get commit tag
