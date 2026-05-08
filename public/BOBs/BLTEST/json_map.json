@@ -10,6 +10,10 @@
             ]
         },
         {
+            "file": "/BOBs/BLTEST/DCM_Diagram_responsive.bob",
+            "displayName": "DCM Diagram responsive"
+        },        
+        {
             "file": "/BOBs/BLTEST/SEQ1.bob"
         },
         {
