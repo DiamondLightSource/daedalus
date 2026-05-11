@@ -64,7 +64,12 @@ describe("Configuration Module", () => {
         PVWS_SOCKET: undefined,
         PVWS_SSL: undefined,
         THROTTLE_PERIOD: undefined,
-        beamlines: {}
+        beamlines: {},
+        csWebLibFeatureFlags: {
+          enableDynamicScripts: false
+        },
+        defaultMjpgEndpoint: undefined,
+        storeMode: undefined
       });
     });
 
@@ -81,7 +86,12 @@ describe("Configuration Module", () => {
         PVWS_SOCKET: undefined,
         PVWS_SSL: undefined,
         THROTTLE_PERIOD: undefined,
-        beamlines: {}
+        beamlines: {},
+        csWebLibFeatureFlags: {
+          enableDynamicScripts: false
+        },
+        defaultMjpgEndpoint: undefined,
+        storeMode: undefined
       });
     });
   });
