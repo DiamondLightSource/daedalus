@@ -4,6 +4,7 @@
   "PVWS_SSL": true,
   "THROTTLE_PERIOD": 100,
   "storeMode": "DEV",
+  "defaultMjpgEndpoint": "https://pvws.diamond.ac.uk/mjpg",
   "csWebLibFeatureFlags": {
     "enableDynamicScripts": true
   },
@@ -23,7 +24,8 @@
     "b01-1": {
       "pvwsHost": "pvws-test.diamond.ac.uk:443",
       "host": "https://b01-1-opis.diamond.ac.uk/bl01c-synoptic/",
-      "entryPoint": "JsonMap.json"
+      "entryPoint": "JsonMap.json",
+      "mjpgEndpoint": "https://visr-pvws.diamond.ac.uk/mjpg"
     },
     "bl19i": {
       "pvwsHost": "pvws.diamond.ac.uk:443",

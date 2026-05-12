@@ -4,6 +4,7 @@ export type BeamlinesConfig = {
   [beamline: string]: {
     pvwsHost: string | undefined;
     host: string;
+    mjpgEndpoint: string | undefined;
     entryPoint: string;
   };
 };
@@ -29,6 +30,10 @@ export const loadConfig = async (): Promise<DaedalusConfig> => {
       PVWS_SSL: undefined,
       THROTTLE_PERIOD: undefined,
       storeMode: undefined,
+      defaultMjpgEndpoint: undefined,
+      csWebLibFeatureFlags: {
+        enableDynamicScripts: false
+      },
       beamlines: {}
     };
   }

@@ -46,29 +46,32 @@ export default function ScreenDisplay() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const selectedBeamlineId = state.currentBeamline;
+  const beamlineState = state.beamlines[selectedBeamlineId];
+
   useEffect(() => {
-    // This catches file changes done inside the file by actionbuttons
+    // This catches a file change triggered by an action buttons
     // and updates the URL to match the fileroute
-    if (state.currentBeamline) {
+    if (selectedBeamlineId) {
       const pathname = decodeURI(location.pathname)
         .replace(`/synoptic`, "")
-        .replace(`/${state.currentBeamline}/`, "");
+        .replace(`/${selectedBeamlineId}/`, "");
 
       // Remove host from file name if necessary
       const displayedPath = fileContext.pageState.main.path.replace(
-        state.beamlines[state.currentBeamline].host!,
+        beamlineState.host!,
         ""
       );
 
       const currentFile = selectFileMetadataByFilePathAndMacros(
-        state.beamlines[state.currentBeamline].filePathIds,
+        beamlineState.filePathIds,
         displayedPath,
         fileContext.pageState.main?.macros
       );
 
       if (currentFile?.urlId && currentFile.urlId !== pathname) {
         // URL and state are out of sync with file displayed, update accordingly, if currentFile is null this file is not in the JsonMap
-        navigate(`/synoptic/${state.currentBeamline}/${currentFile?.urlId}`, {
+        navigate(`/synoptic/${selectedBeamlineId}/${currentFile?.urlId}`, {
           state: location.state,
           replace: true
         });
@@ -86,6 +89,7 @@ export default function ScreenDisplay() {
               position={newRelativePosition()}
               scroll={false}
               showCloseButton={false}
+              mjpgEndpoint={beamlineState?.mjpgEndpoint}
             />
           ) : (
             <></>

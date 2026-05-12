@@ -211,6 +211,7 @@ export type BeamlineStateProperties = {
   filePathIds: FileIDs;
   host: string;
   pvwsHost?: string;
+  mjpgEndpoint?: string;
   loaded: boolean;
 };
 
@@ -236,6 +237,7 @@ export type BeamlineTreeState = {
 const defaultBeamline: BeamlineStateProperties = {
   host: "",
   pvwsHost: undefined,
+  mjpgEndpoint: undefined,
   entryPoint: "",
   topLevelScreen: "",
   screenTree: [],
