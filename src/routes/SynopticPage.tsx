@@ -173,7 +173,7 @@ export function SynopticPage() {
 
   return (
     <>
-      <Box sx={{ display: "flex" }}>
+      <Box sx={{ display: "flex", height: "100dvh", width: "100%" }}>
         {state.filesLoaded ? (
           <>
             <FileContext.Provider value={updatedFileContext}>

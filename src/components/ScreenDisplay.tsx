@@ -81,21 +81,17 @@ export default function ScreenDisplay() {
 
   return (
     <Paper component="main" open={menuOpen} drawerWidth={drawerWidth}>
-      <Box>
-        <Box>
-          {state.currentBeamline && state.currentScreenUrlId ? (
-            <DynamicPageWidget
-              location={"main"}
-              position={newRelativePosition()}
-              scroll={false}
-              showCloseButton={false}
-              mjpgEndpoint={beamlineState?.mjpgEndpoint}
-            />
-          ) : (
-            <></>
-          )}
-        </Box>
-      </Box>
+      {state.currentBeamline && state.currentScreenUrlId ? (
+        <DynamicPageWidget
+          location={"main"}
+          position={newRelativePosition(undefined, undefined, "100%", "100%")}
+          scroll={false}
+          showCloseButton={false}
+          mjpgEndpoint={beamlineState?.mjpgEndpoint}
+        />
+      ) : (
+        <></>
+      )}
     </Paper>
   );
 }

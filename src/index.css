@@ -13,6 +13,20 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+html {
+  scrollbar-gutter: stable both-edges;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -25,7 +39,7 @@ a:hover {
 
 body {
   margin: 0;
-
+  overflow-x: hidden;
   min-width: 320px;
   min-height: 100vh;
 }
