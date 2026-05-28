@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -10,6 +10,7 @@ import { Box, Tooltip } from "@mui/material";
 import DiamondLogo from "../assets/DiamondLogoWhite.svg";
 import { PageRouteInfo } from "../routes/PageRouteInfo";
 import { useNavigate } from "react-router";
+import SettingsModal from "./SettingsModal";
 
 interface AppBarProps extends MuiAppBarProps {
   fullscreen: number;
@@ -62,8 +63,9 @@ const DLSAppBar = (props: {
     drawerWidth = DRAWER_WIDTH,
     isResizingDrawer
   } = props;
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const handleOpenSettings = () => {
-    console.log("TO DO - create settings modal");
+    setSettingsOpen(true);
   };
 
   return (
@@ -145,6 +147,7 @@ const DLSAppBar = (props: {
           </Box>
         </Toolbar>
       </StyledAppBar>
+      <SettingsModal open={settingsOpen} setOpen={setSettingsOpen}/>
     </>
   );
 };

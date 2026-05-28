@@ -7,7 +7,7 @@ import { createBrowserRouter, Outlet } from "react-router";
 import "./App.css";
 import { Provider } from "react-redux";
 import { ThemeProvider } from "@mui/material/styles";
-import { diamondTheme } from "./theme";
+import { DiamondTheme } from "@diamondlightsource/sci-react-ui";
 import { DemoPage } from "./routes/DemoPage";
 import { SynopticPage } from "./routes/SynopticPage";
 import { EditorPage } from "./routes/EditorPage";
@@ -69,7 +69,7 @@ const App = ({}) => {
 
   return (
     <Provider store={store(config)}>
-      <ThemeProvider theme={diamondTheme}>
+      <ThemeProvider theme={DiamondTheme} defaultMode="light">
         <BeamlineTreeStateContext.Provider value={{ state, dispatch }}>
           <FileProvider initialPageState={INITIAL_SCREEN_STATE}>
             <>

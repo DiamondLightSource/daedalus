@@ -183,7 +183,7 @@ function TracesGrid() {
   return (
     <>
       <Grid container spacing={1} rowSpacing={1}>
-        <Grid item xs={8}>
+        <Grid size={{xs: 8}}>
           <TableContainer
             component={Paper}
             sx={{ height: "100%", textAlign: "center" }}
@@ -264,41 +264,40 @@ function TimeAxisGrid() {
         rowSpacing={1}
         sx={{ width: "40%", paddingTop: "0px", alignItems: "center" }}
       >
-        <Grid item xs={2}>
+        <Grid size={{xs: 2}}>
           <Typography>Start Time:</Typography>
         </Grid>
-        <Grid item xs={4}>
+        <Grid size={{xs: 4}}>
           <TextField size="small"></TextField>
         </Grid>
-        <Grid item xs={2}>
+        <Grid size={{xs: 2}}>
           <Typography>End Time:</Typography>
         </Grid>
-        <Grid item xs={4}>
+        <Grid size={{xs: 4}}>
           <TextField size="small"></TextField>
         </Grid>
-        <Grid item xs={1}>
+        <Grid size={{xs: 1}}>
           <Typography>Grid:</Typography>
         </Grid>
         <Grid
-          item
-          xs={11}
+          size={{xs: 11}}
           sx={{ "&.MuiGrid-item": { paddingTop: "0px", paddingRight: "0px" } }}
         >
           <Checkbox />
         </Grid>
-        <Grid item xs={2}>
+        <Grid size={{xs: 2}}>
           <Button>30 minutes</Button>
         </Grid>
-        <Grid item xs={2}>
+        <Grid size={{xs: 2}}>
           <Button>1 hour</Button>
         </Grid>
-        <Grid item xs={2}>
+        <Grid size={{xs: 2}}>
           <Button>12 hours</Button>
         </Grid>
-        <Grid item xs={2}>
+        <Grid size={{xs: 2}}>
           <Button>1 day</Button>
         </Grid>
-        <Grid item xs={2}>
+        <Grid size={{xs: 2}}>
           <Button>7 days</Button>
         </Grid>
       </Grid>
@@ -313,7 +312,7 @@ function ValueAxesGrid() {
   return (
     <>
       <Grid container spacing={1} rowSpacing={1}>
-        <Grid item xs={12}>
+        <Grid size={{xs: 12}}>
           <TableContainer
             component={Paper}
             sx={{ height: "100%", textAlign: "center" }}

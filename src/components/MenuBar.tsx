@@ -47,7 +47,7 @@ const MenuBarHeader = styled("div")(({ theme }) => ({
   position: "sticky",
   top: 0,
   zIndex: 1,
-  backgroundColor: theme.palette.background.paper,
+  backgroundColor: theme.palette.mode === "dark" ? "black" : theme.palette.background.paper,
   flexShrink: 0,
   // necessary for content to be below app bar
   ...theme.mixins.toolbar
