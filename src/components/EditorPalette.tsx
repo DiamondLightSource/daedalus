@@ -132,8 +132,7 @@ function PaletteGrid(props: { togglePalette: any }) {
       name: "Boolean Button",
       component: (
         <BoolButton
-          position={newRelativePosition("100%", "100%")}
-          height={20}
+          position={newRelativePosition("100%", "100%", undefined, "20px")}
         />
       )
     },
@@ -141,8 +140,7 @@ function PaletteGrid(props: { togglePalette: any }) {
       name: "Choice Button",
       component: (
         <ChoiceButton
-          position={newRelativePosition("100%", "100%")}
-          height={20}
+          position={newRelativePosition("100%", "100%", undefined, "20px")}
         />
       )
     },
@@ -150,9 +148,7 @@ function PaletteGrid(props: { togglePalette: any }) {
       name: "Arc",
       component: (
         <Arc
-          position={newRelativePosition("50px", "30px")}
-          width={30}
-          height={30}
+          position={newRelativePosition("50px", "30px", "30px", "20px")}
           lineWidth={1}
         />
       )
