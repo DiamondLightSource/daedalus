@@ -15,12 +15,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@diamondlightsource/cs-web-lib": "file:../cs-web-lib/diamondlightsource-cs-web-lib-0.10.15.tgz",
-    "@diamondlightsource/sci-react-ui": "^0.4.1",
+    "@diamondlightsource/cs-web-lib": "^0.10.15",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
-    "@mui/icons-material": "^6.1.7",
-    "@mui/material": "^7.0.0",
+    "@mui/icons-material": "^7.3.11",
+    "@mui/material": "^7.3.11",
     "@mui/x-tree-view": "^7.29.10",
     "@reduxjs/toolkit": "^2.11.2",
     "react": "^18.3.1",
