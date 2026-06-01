@@ -201,12 +201,12 @@ function PaletteGrid(props: { togglePalette: any }) {
       <Grid container spacing={2} rowGap={3} padding={"15px"}>
         {components.map(item => (
           <>
-            <Grid key={item.name} size={{xs: 1}}>
+            <Grid key={item.name} size={{ xs: 1 }}>
               {item.name}
             </Grid>
             <Grid
               key={item.name + "Field"}
-              size={{xs: 1}}
+              size={{ xs: 1 }}
               sx={{ justifyItems: "right" }}
             >
               <div draggable onDrag={handleDrag}>

@@ -327,12 +327,12 @@ function PropertiesGrid(props: { positionProps: any[]; widgetProps: any[] }) {
               spacing={1}
               padding={"5px 5px 5px 5px"}
             >
-              <Grid key={item.label} size={{xs: 5}}>
+              <Grid key={item.label} size={{ xs: 5 }}>
                 {item.label}
               </Grid>
               <Grid
                 key={item.label + "Field"}
-                size={{xs: 7}}
+                size={{ xs: 7 }}
                 sx={{ justifyItems: "right" }}
               >
                 {item.component}
@@ -359,12 +359,12 @@ function PropertiesGrid(props: { positionProps: any[]; widgetProps: any[] }) {
               spacing={1}
               padding={"5px 5px 5px 5px"}
             >
-              <Grid key={item.label} size={{xs: 5}}>
+              <Grid key={item.label} size={{ xs: 5 }}>
                 {item.label}
               </Grid>
               <Grid
                 key={item.label + "Field"}
-                size={{xs: 7}}
+                size={{ xs: 7 }}
                 sx={{ justifyItems: "right" }}
               >
                 {item.component}
@@ -391,12 +391,12 @@ function PropertiesGrid(props: { positionProps: any[]; widgetProps: any[] }) {
               spacing={1}
               padding={"5px 5px 5px 5px"}
             >
-              <Grid key={item.label} size={{xs: 5}}>
+              <Grid key={item.label} size={{ xs: 5 }}>
                 {item.label}
               </Grid>
               <Grid
                 key={item.label + "Field"}
-                size={{xs: 7}}
+                size={{ xs: 7 }}
                 justifyContent={"center"}
                 sx={{ display: "flex" }}
               >
@@ -424,12 +424,12 @@ function PropertiesGrid(props: { positionProps: any[]; widgetProps: any[] }) {
               spacing={1}
               padding={"5px 5px 5px 5px"}
             >
-              <Grid key={item.label} size={{xs: 5}}>
+              <Grid key={item.label} size={{ xs: 5 }}>
                 {item.label}
               </Grid>
               <Grid
                 key={item.label + "Field"}
-                size={{xs: 7}}
+                size={{ xs: 7 }}
                 justifyContent={"center"}
                 sx={{ display: "flex" }}
               >

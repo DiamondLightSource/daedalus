@@ -1,5 +1,5 @@
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
-import {Box, Paper} from "@mui/material";
+import { Box, Paper } from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
 import IconButton from "@mui/material/IconButton";

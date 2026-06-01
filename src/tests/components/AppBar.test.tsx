@@ -51,8 +51,8 @@ describe("DLSAppBar Component", () => {
 
     const settingsButton = screen.getByLabelText("open settings");
     fireEvent.click(settingsButton);
-    // this is a placeholder test for when we actually have a settings menu
-    expect(console.log).toHaveBeenCalledWith("TO DO - create settings modal");
+    expect(screen.getByRole("switch")).toBeInTheDocument();
+    expect(screen.getByText("Enable Dark Mode")).toBeInTheDocument();
   });
 
   it("renders all page navigation buttons from PageRouteInfo", () => {

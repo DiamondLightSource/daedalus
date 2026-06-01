@@ -147,7 +147,7 @@ const DLSAppBar = (props: {
           </Box>
         </Toolbar>
       </StyledAppBar>
-      <SettingsModal open={settingsOpen} setOpen={setSettingsOpen}/>
+      <SettingsModal open={settingsOpen} setOpen={setSettingsOpen} />
     </>
   );
 };

@@ -25,23 +25,23 @@ export const diamondTheme = createTheme({
       }
     },
     dark: {
-       palette: {
+      palette: {
         primary: {
           main: "#202740",
           light: "#3b4c8c",
-          dark: "#435184", 
-          contrastText: "#ffffff",
+          dark: "#435184",
+          contrastText: "#ffffff"
         },
         secondary: {
           main: "#facf07",
-          light: "#FBD838", 
-          dark: "#AF9004", 
-          contrastText: "#000000",
+          light: "#FBD838",
+          dark: "#AF9004",
+          contrastText: "#000000"
         },
         text: {
-          secondary: "#8090CA",
-        },
-      },
+          secondary: "#8090CA"
+        }
+      }
     }
   },
   typography: {

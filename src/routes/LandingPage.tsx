@@ -37,19 +37,19 @@ export function LandingPage() {
             You can explore the demos below.
           </Typography>
           <Grid sx={{ marginTop: "3%", width: "85%" }} container>
-            <Grid size={{md: 3, sm: 0}} />
-            <Grid size={{md: 6, sm: 12}}>
+            <Grid size={{ md: 3, sm: 0 }} />
+            <Grid size={{ md: 6, sm: 12 }}>
               <Grid container spacing={2}>
                 {PageRouteInfo.filter(card => card.showCard).map(card => {
                   return (
-                    <Grid key={card.name} size={{xs: 12, sm: 6}}>
+                    <Grid key={card.name} size={{ xs: 12, sm: 6 }}>
                       <LinkCard info={card} />
                     </Grid>
                   );
                 })}
               </Grid>
             </Grid>
-            <Grid size={{md: 3, sm: 0}} />
+            <Grid size={{ md: 3, sm: 0 }} />
           </Grid>
         </Stack>
       </Box>
