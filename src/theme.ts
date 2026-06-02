@@ -1,21 +1,47 @@
 import { createTheme } from "@mui/material/styles";
 
 export const diamondTheme = createTheme({
-  palette: {
-    primary: {
-      main: "#1d2945"
+  colorSchemes: {
+    light: {
+      palette: {
+        primary: {
+          main: "#202740",
+          light: "#4C5266",
+          dark: "#161B2C",
+          contrastText: "#ffffff"
+        },
+        secondary: {
+          main: "#ffffff"
+        },
+        error: {
+          main: "#ea0b16"
+        },
+        warning: {
+          main: "#ffe51d"
+        },
+        success: {
+          main: "#38ce38"
+        }
+      }
     },
-    secondary: {
-      main: "#ffffff"
-    },
-    error: {
-      main: "#ea0b16"
-    },
-    warning: {
-      main: "#ffe51d"
-    },
-    success: {
-      main: "#38ce38"
+    dark: {
+      palette: {
+        primary: {
+          main: "#202740",
+          light: "#3b4c8c",
+          dark: "#435184",
+          contrastText: "#ffffff"
+        },
+        secondary: {
+          main: "#facf07",
+          light: "#FBD838",
+          dark: "#AF9004",
+          contrastText: "#000000"
+        },
+        text: {
+          secondary: "#8090CA"
+        }
+      }
     }
   },
   typography: {

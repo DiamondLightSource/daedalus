@@ -162,7 +162,7 @@ export default function PropertiesSideBar(props: { properties: WidgetProps }) {
         }}
       >
         <MenuBarHeader sx={{ textAlign: "center", justifyContent: "Center" }}>
-          <Typography variant="h1" sx={{ alignContent: "Center" }}>
+          <Typography variant="h4" sx={{ alignContent: "Center" }}>
             Widget Properties
           </Typography>
         </MenuBarHeader>
@@ -309,12 +309,12 @@ function PropertiesGrid(props: { positionProps: any[]; widgetProps: any[] }) {
     <>
       <Box sx={{ flexGrow: 1 }}>
         <Typography
-          variant="h3"
           sx={{
             margin: "10px 0px 10px 0px",
             color: "black",
             backgroundColor: "#ffe4b5",
-            paddingLeft: "5px"
+            paddingLeft: "5px",
+            fontWeight: "bold"
           }}
         >
           Widget
@@ -327,13 +327,12 @@ function PropertiesGrid(props: { positionProps: any[]; widgetProps: any[] }) {
               spacing={1}
               padding={"5px 5px 5px 5px"}
             >
-              <Grid key={item.label} item xs={5}>
+              <Grid key={item.label} size={{ xs: 5 }}>
                 {item.label}
               </Grid>
               <Grid
                 key={item.label + "Field"}
-                item
-                xs={7}
+                size={{ xs: 7 }}
                 sx={{ justifyItems: "right" }}
               >
                 {item.component}
@@ -342,12 +341,12 @@ function PropertiesGrid(props: { positionProps: any[]; widgetProps: any[] }) {
           ))}
         </Box>
         <Typography
-          variant="h3"
           sx={{
             margin: "10px 0px 10px 0px",
             color: "black",
             backgroundColor: "#ffe4b5",
-            paddingLeft: "5px"
+            paddingLeft: "5px",
+            fontWeight: "bold"
           }}
         >
           Position
@@ -360,13 +359,12 @@ function PropertiesGrid(props: { positionProps: any[]; widgetProps: any[] }) {
               spacing={1}
               padding={"5px 5px 5px 5px"}
             >
-              <Grid key={item.label} item xs={5}>
+              <Grid key={item.label} size={{ xs: 5 }}>
                 {item.label}
               </Grid>
               <Grid
                 key={item.label + "Field"}
-                item
-                xs={7}
+                size={{ xs: 7 }}
                 sx={{ justifyItems: "right" }}
               >
                 {item.component}
@@ -375,12 +373,12 @@ function PropertiesGrid(props: { positionProps: any[]; widgetProps: any[] }) {
           ))}
         </Box>
         <Typography
-          variant="h3"
           sx={{
             margin: "10px 0px 10px 0px",
             color: "black",
             backgroundColor: "#ffe4b5",
-            paddingLeft: "5px"
+            paddingLeft: "5px",
+            fontWeight: "bold"
           }}
         >
           Display
@@ -393,13 +391,12 @@ function PropertiesGrid(props: { positionProps: any[]; widgetProps: any[] }) {
               spacing={1}
               padding={"5px 5px 5px 5px"}
             >
-              <Grid key={item.label} item xs={5}>
+              <Grid key={item.label} size={{ xs: 5 }}>
                 {item.label}
               </Grid>
               <Grid
                 key={item.label + "Field"}
-                item
-                xs={7}
+                size={{ xs: 7 }}
                 justifyContent={"center"}
                 sx={{ display: "flex" }}
               >
@@ -409,12 +406,12 @@ function PropertiesGrid(props: { positionProps: any[]; widgetProps: any[] }) {
           ))}
         </Box>
         <Typography
-          variant="h3"
           sx={{
             margin: "10px 0px 10px 0px",
             color: "black",
             backgroundColor: "#ffe4b5",
-            paddingLeft: "5px"
+            paddingLeft: "5px",
+            fontWeight: "bold"
           }}
         >
           Behaviour
@@ -427,13 +424,12 @@ function PropertiesGrid(props: { positionProps: any[]; widgetProps: any[] }) {
               spacing={1}
               padding={"5px 5px 5px 5px"}
             >
-              <Grid key={item.label} item xs={5}>
+              <Grid key={item.label} size={{ xs: 5 }}>
                 {item.label}
               </Grid>
               <Grid
                 key={item.label + "Field"}
-                item
-                xs={7}
+                size={{ xs: 7 }}
                 justifyContent={"center"}
                 sx={{ display: "flex" }}
               >

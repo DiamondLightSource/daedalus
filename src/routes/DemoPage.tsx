@@ -26,7 +26,7 @@ export function DemoPage() {
       <Box sx={{ flexGrow: 1 }}>
         <DLSAppBar fullScreen={true} open={false}>
           <Typography
-            variant="h1"
+            variant="h3"
             component="div"
             sx={{ flexGrow: 1, textAlign: "center" }}
           >
@@ -39,6 +39,7 @@ export function DemoPage() {
               alignItems: "center",
               position: "absolute",
               top: 80,
+              left: "0px",
               width: width,
               height: height - 80
             }}

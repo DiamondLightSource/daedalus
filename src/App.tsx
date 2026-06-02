@@ -7,7 +7,6 @@ import { createBrowserRouter, Outlet } from "react-router";
 import "./App.css";
 import { Provider } from "react-redux";
 import { ThemeProvider } from "@mui/material/styles";
-import { diamondTheme } from "./theme";
 import { DemoPage } from "./routes/DemoPage";
 import { SynopticPage } from "./routes/SynopticPage";
 import { EditorPage } from "./routes/EditorPage";
@@ -22,6 +21,7 @@ import {
 } from "./store";
 import { DaedalusConfig, loadConfig } from "./config";
 import { Box, CircularProgress, Typography } from "@mui/material";
+import { diamondTheme } from "./theme";
 
 const INITIAL_SCREEN_STATE = {
   main: {
@@ -69,7 +69,7 @@ const App = ({}) => {
 
   return (
     <Provider store={store(config)}>
-      <ThemeProvider theme={diamondTheme}>
+      <ThemeProvider theme={diamondTheme} defaultMode="light">
         <BeamlineTreeStateContext.Provider value={{ state, dispatch }}>
           <FileProvider initialPageState={INITIAL_SCREEN_STATE}>
             <>

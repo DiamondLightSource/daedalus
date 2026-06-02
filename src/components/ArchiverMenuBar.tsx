@@ -202,7 +202,7 @@ function ArchiverSearchGrid(props: { children: React.ReactNode }) {
   return (
     <div>
       <Grid container spacing={1} rowSpacing={1} padding={"5px"}>
-        <Grid item xs={6}>
+        <Grid size={{ xs: 6 }}>
           <Select
             id="archiver-select"
             aria-label="archiver-select"
@@ -215,13 +215,13 @@ function ArchiverSearchGrid(props: { children: React.ReactNode }) {
             <MenuItem value={"Backup"}>Backup</MenuItem>
           </Select>
         </Grid>
-        <Grid item xs={6}>
+        <Grid size={{ xs: 6 }}>
           <Select id="mode-select" value={"0"} sx={{ width: "100%" }}>
             <MenuItem value={0}>Add</MenuItem>
             <MenuItem value={1}>Other</MenuItem>
           </Select>
         </Grid>
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12 }}>
           <TextField
             onChange={handlePvMatchChange}
             variant="filled"
@@ -230,7 +230,7 @@ function ArchiverSearchGrid(props: { children: React.ReactNode }) {
             sx={{ width: "100%", textAlign: "center" }}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12 }}>
           <TableContainer component={Paper}>
             <Table aria-label="pv-table">
               <TableHead>

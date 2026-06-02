@@ -1,5 +1,5 @@
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
-import Box from "@mui/material/Box";
+import { Box, Paper } from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
 import IconButton from "@mui/material/IconButton";
@@ -39,7 +39,7 @@ const closedMixin = (theme: Theme): CSSObject => ({
   }
 });
 
-const MenuBarHeader = styled("div")(({ theme }) => ({
+const MenuBarHeader = styled(Paper)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "flex-end",
@@ -47,7 +47,7 @@ const MenuBarHeader = styled("div")(({ theme }) => ({
   position: "sticky",
   top: 0,
   zIndex: 1,
-  backgroundColor: theme.palette.background.paper,
+  elevation: 0,
   flexShrink: 0,
   // necessary for content to be below app bar
   ...theme.mixins.toolbar
@@ -137,7 +137,7 @@ export default function MiniMenuBar() {
           drawerWidth={drawerWidth}
           isResizingDrawer={isResizingDrawer}
         >
-          <MenuBarHeader>
+          <MenuBarHeader elevation={0}>
             {menuOpen ? (
               <>
                 <BeamlineSelect />

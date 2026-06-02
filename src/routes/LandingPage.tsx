@@ -23,7 +23,7 @@ export function LandingPage() {
         }}
       >
         <Stack sx={{ alignItems: "center" }}>
-          <Typography variant="h1" sx={{ margin: "10px", textAlign: "center" }}>
+          <Typography variant="h2" sx={{ margin: "10px", textAlign: "center" }}>
             Welcome to Daedalus!
           </Typography>
           <Typography variant="body1" sx={{ textAlign: "center" }}>
@@ -37,19 +37,19 @@ export function LandingPage() {
             You can explore the demos below.
           </Typography>
           <Grid sx={{ marginTop: "3%", width: "85%" }} container>
-            <Grid item md={3} sm={0} />
-            <Grid item md={6} sm={12}>
+            <Grid size={{ md: 3, sm: 0 }} />
+            <Grid size={{ md: 6, sm: 12 }}>
               <Grid container spacing={2}>
                 {PageRouteInfo.filter(card => card.showCard).map(card => {
                   return (
-                    <Grid key={card.name} item xs={12} sm={6}>
+                    <Grid key={card.name} size={{ xs: 12, sm: 6 }}>
                       <LinkCard info={card} />
                     </Grid>
                   );
                 })}
               </Grid>
             </Grid>
-            <Grid item md={3} sm={0} />
+            <Grid size={{ md: 3, sm: 0 }} />
           </Grid>
         </Stack>
       </Box>
