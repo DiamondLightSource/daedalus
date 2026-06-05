@@ -12,7 +12,15 @@
         {
             "file": "/BOBs/BLTEST/DCM_Diagram_responsive.bob",
             "displayName": "DCM Diagram responsive"
-        },        
+        },
+        {
+            "file": "/BOBs/BLTEST/DCM_Diagram_grid_auto.bob",
+            "displayName": "DCM Diagram GRID AUTO position"
+        },
+        {
+            "file": "/BOBs/BLTEST/DCM_Diagram_responsive_auto.bob",
+            "displayName": "DCM Diagram RESPONSIVE AUTO position"
+        },
         {
             "file": "/BOBs/BLTEST/SEQ1.bob"
         },
