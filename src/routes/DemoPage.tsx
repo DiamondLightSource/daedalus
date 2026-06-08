@@ -23,7 +23,10 @@ export function DemoPage() {
 
   return (
     <>
-      <Box id="DemoPage-Box" sx={{ display: "flex", height: "100dvh", width: "100%" }}>
+      <Box
+        id="DemoPage-Box"
+        sx={{ display: "flex", height: "100dvh", width: "100%" }}
+      >
         <DLSAppBar fullScreen={true} open={false}>
           <Typography
             variant="h3"
