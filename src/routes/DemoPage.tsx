@@ -23,7 +23,10 @@ export function DemoPage() {
 
   return (
     <>
-      <Box sx={{ flexGrow: 1 }}>
+      <Box
+        id="DemoPage-Box"
+        sx={{ display: "flex", height: "100dvh", width: "100%" }}
+      >
         <DLSAppBar fullScreen={true} open={false}>
           <Typography
             variant="h3"
@@ -35,6 +38,7 @@ export function DemoPage() {
         </DLSAppBar>
         <FileStateContext.Provider value={{ state, dispatch }}>
           <Stack
+            id="DemoPage-stack"
             sx={{
               alignItems: "center",
               position: "absolute",
