@@ -1,5 +1,5 @@
 
-FROM node:22.19-slim AS build
+FROM node:26.3.0-slim AS build
 ARG VITE_PROFILER_ENABLED=false
 ARG VITE_LOG_LEVEL=info
 
@@ -19,7 +19,7 @@ COPY *.json ./
 RUN npm run build:nolint
 
 # Create image for deployment
-FROM nginxinc/nginx-unprivileged:1.29.8-alpine AS deployment
+FROM nginxinc/nginx-unprivileged:1.31.2-alpine AS deployment
 
 USER nginx
 COPY nginx.conf /etc/nginx/nginx.conf
