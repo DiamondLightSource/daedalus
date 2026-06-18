@@ -88,7 +88,7 @@ export default function ScreenDisplay() {
           scroll={false}
           showCloseButton={false}
           mjpgEndpoint={beamlineState?.mjpgEndpoint}
-          widgetIdsCallback={(uuid) => {
+          widgetIdsCallback={uuid => {
             // The uuid allows the json representation of the display instance to be selected from the redux store
             displayUuidRef.current = uuid;
           }}
