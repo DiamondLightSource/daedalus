@@ -1,6 +1,5 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import {
-  Box,
   Paper as MuiPaper,
   PaperProps as MuiPaperProps,
   styled
@@ -45,6 +44,7 @@ export default function ScreenDisplay() {
   const fileContext = useContext(FileContext);
   const navigate = useNavigate();
   const location = useLocation();
+  const displayUuidRef = useRef<string>();
 
   const selectedBeamlineId = state.currentBeamline;
   const beamlineState = state.beamlines[selectedBeamlineId];
@@ -88,6 +88,10 @@ export default function ScreenDisplay() {
           scroll={false}
           showCloseButton={false}
           mjpgEndpoint={beamlineState?.mjpgEndpoint}
+          widgetIdsCallback={(uuid) => {
+            // The uuid allows the json representation of the display instance to be selected from the redux store
+            displayUuidRef.current = uuid;
+          }}
         />
       ) : (
         <></>
