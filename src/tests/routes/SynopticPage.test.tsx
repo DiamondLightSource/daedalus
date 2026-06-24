@@ -48,10 +48,12 @@ vi.mock("react-loader-spinner", () => ({
 }));
 
 const mockShowWarning = vi.fn();
-vi.mock("@diamondlightsource/cs-web-lib", async importOriginal => {
-  const actual = (await importOriginal()) as Record<string, any>;
+vi.mock("@diamondlightsource/cs-web-lib", () => {
   return {
-    ...actual,
+    FileContext: {
+      Provider: ({ children }: any) => children
+    },
+    buildUrl: (path: string) => path,
     useNotification: () => ({ showWarning: mockShowWarning })
   };
 });
@@ -131,7 +133,7 @@ describe("SynopticPage", () => {
 
     await waitFor(() => {
       expect(parser.parseScreenTree).toHaveBeenCalledWith(
-        "http://daedalus.ac.uk/entry-point"
+        "http://daedalus.ac.uk/"
       );
       expect(mockDispatch).toHaveBeenCalledWith({
         type: LOAD_SCREENS,

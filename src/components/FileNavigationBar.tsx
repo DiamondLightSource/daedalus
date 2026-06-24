@@ -17,7 +17,7 @@ export default function FileNavigationBar() {
   const { state, dispatch } = useContext(FileStateContext);
   const [alert, setAlert] = useState<any>(undefined);
 
-  function handleSubmitButtonClick(e: any) {
+  function handleSubmitButtonClick() {
     // Fetch the last loaded file info, and submit it
     // First fetch last loaded file
     if (state.nextFile.path) {

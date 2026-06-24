@@ -15,7 +15,7 @@ export default function FileInput() {
     setFilePath(e.target.value);
   }
 
-  async function handleLoadButtonClick(e: any) {
+  async function handleLoadButtonClick() {
     // Check if file exists
     // If passes all checks, we load
     // If fails, we change colour and set a popover explaining issue

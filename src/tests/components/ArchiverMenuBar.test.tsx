@@ -1,5 +1,8 @@
-import { fireEvent, render, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
+
+vi.mock("@diamondlightsource/cs-web-lib", () => ({}));
+vi.mock("react-toastify", () => ({}));
+import { fireEvent, render, within } from "@testing-library/react";
 import ArchiverMenuBar from "../../components/ArchiverMenuBar";
 import { MenuContext } from "../../routes/DataBrowserPage";
 
