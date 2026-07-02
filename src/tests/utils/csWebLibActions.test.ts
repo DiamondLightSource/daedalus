@@ -316,7 +316,7 @@ describe("executeAction: OPEN_PAGE", () => {
       const fileMetadata: FileMetadata = {
         file: "test-screen.opi",
         macros: [],
-        urlId: undefined
+        urlId: ""
       };
       const selectedBeamlineId = "beamline-1";
       const expectedUrlPath = `/synoptic/${selectedBeamlineId}`;

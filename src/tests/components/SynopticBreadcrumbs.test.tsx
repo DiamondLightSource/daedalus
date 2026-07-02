@@ -1,5 +1,17 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import React from "react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
+
+vi.mock("@diamondlightsource/cs-web-lib", () => ({
+  executeAction: vi.fn(),
+  httpRequest: vi.fn(),
+  resolveMacros: (f: string) => f,
+  buildUrl: (host: string, file: string) => `${host}${file}`,
+  FileContext: React.createContext(null)
+}));
+
+vi.mock("react-toastify", () => ({}));
+
+import { render, screen, fireEvent } from "@testing-library/react";
 import { SynopticBreadcrumbs } from "../../components/SynopticBreadcrumbs";
 import { FileContext, executeAction } from "@diamondlightsource/cs-web-lib";
 import {
@@ -9,15 +21,8 @@ import {
 } from "../../store";
 import { BeamlineTreeStateContext } from "../../App";
 
+const mockedExecuteAction = vi.mocked(executeAction);
 const EXPECTED_SEPARATOR = "/";
-
-vi.mock("@diamondlightsource/cs-web-lib", async () => {
-  const actual = await vi.importActual("@diamondlightsource/cs-web-lib");
-  return {
-    ...actual,
-    executeAction: vi.fn()
-  };
-});
 
 describe("SynopticBreadcrumbs Component", () => {
   beforeEach(() => {
@@ -122,8 +127,8 @@ describe("SynopticBreadcrumbs Component", () => {
     const link = screen.getByText("Area1");
     fireEvent.click(link);
 
-    expect(executeAction).toHaveBeenCalledTimes(1);
-    expect(executeAction).toHaveBeenCalledWith(
+    expect(mockedExecuteAction).toHaveBeenCalledTimes(1);
+    expect(mockedExecuteAction).toHaveBeenCalledWith(
       {
         type: "OPEN_PAGE",
         dynamicInfo: {
@@ -150,7 +155,7 @@ describe("SynopticBreadcrumbs Component", () => {
     const breadcrumbsContainer = screen.getByLabelText("breadcrumb");
     fireEvent.click(breadcrumbsContainer);
 
-    expect(executeAction).not.toHaveBeenCalled();
+    expect(mockedExecuteAction).not.toHaveBeenCalled();
   });
 
   it("handles multi-level breadcrumb paths correctly", () => {

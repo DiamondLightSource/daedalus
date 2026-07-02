@@ -1,4 +1,12 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
+
+const mockHttpRequest = vi.fn();
+
+vi.mock("@diamondlightsource/cs-web-lib", () => ({
+  httpRequest: (...args: any[]) => mockHttpRequest(...args),
+  resolveMacros: (file: string) => file // simple passthrough
+}));
+
 import {
   parseScreenTree,
   RecursiveTreeViewBuilder,
@@ -9,94 +17,63 @@ import { FileIDs } from "../store";
 
 const SCREEN_SEPARATOR = "/";
 
-/**
- * The next few lines are mocking global fetch. This is necessary since
- * vitest runs in the "jsdom" browser environment in order to render components
- * but this does not have fetch.
- */
-
-declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
-  namespace NodeJS {
-    interface Global {}
-  }
-}
-
-interface GlobalFetch extends NodeJS.Global {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  fetch: any;
-}
-const globalWithFetch = global as GlobalFetch;
-
-beforeEach((): void => {
-  // Ensure the fetch() function mock is always cleared.
-  vi.spyOn(globalWithFetch, "fetch").mockClear();
-});
+beforeEach((): void => {});
 
 describe("parseScreenTree()", (): void => {
-  it("successfully fetches the file", async (): Promise<void> => {
-    const mockSuccessResponse = JSON.parse(`
-    {
-      "file": "top.bob",
-      "children": [
-          {
-              "file": "middle1.bob",
-              "children": [
-                  {
-                      "file": "bottom.bob"
-                  }
-              ]
-          },
-          {
-              "file": "middle2.bob"
-          }
+  it("successfully fetches the file", async () => {
+    const mockSuccessResponse = {
+      file: "top.bob",
+      children: [
+        {
+          file: "middle1.bob",
+          children: [{ file: "bottom.bob" }]
+        },
+        {
+          file: "middle2.bob"
+        }
       ]
-    }`);
-    const mockJsonPromise = Promise.resolve(mockSuccessResponse);
-    const mockFetchPromise = Promise.resolve({
-      json: (): Promise<unknown> => mockJsonPromise
+    };
+
+    mockHttpRequest.mockResolvedValueOnce({
+      json: async () => mockSuccessResponse
     });
-    const mockFetch = (): Promise<unknown> => mockFetchPromise;
-    vi.spyOn(globalWithFetch, "fetch").mockImplementation(mockFetch);
 
     const [tree, , firstFile] = await parseScreenTree("test-map.json");
-    expect(tree.length).toEqual(1);
-    expect(firstFile).toEqual("top.bob");
+
+    expect(mockHttpRequest).toHaveBeenCalledWith("test-map.json");
+    expect(tree.length).toBe(1);
+    expect(firstFile).toBe("top.bob");
   });
 
-  it("successfully fetches the file with a display name", async (): Promise<void> => {
-    const mockSuccessResponse = JSON.parse(`
-    {
-      "file": "top.bob",
-      "displayName": "Top Synoptic",
-      "children": [
-          {
-              "file": "middle1.bob",
-              "displayName": "Middle File 1",
-              "children": [
-                  {
-                      "file": "bottom.bob",
-                      "displayName": "Bottom File"
-                  }
-              ]
-          },
-          {
-              "file": "middle2.bob",
-              "displayName": "Middle File 2"
-          }
+  it("successfully fetches with display name", async () => {
+    const mockSuccessResponse = {
+      file: "top.bob",
+      displayName: "Top Synoptic",
+      children: [
+        {
+          file: "middle1.bob",
+          displayName: "Middle File 1",
+          children: [
+            {
+              file: "bottom.bob",
+              displayName: "Bottom File"
+            }
+          ]
+        },
+        {
+          file: "middle2.bob",
+          displayName: "Middle File 2"
+        }
       ]
-    }`);
-    const mockJsonPromise = Promise.resolve(mockSuccessResponse);
-    const mockFetchPromise = Promise.resolve({
-      json: (): Promise<unknown> => mockJsonPromise
-    });
-    const mockFetch = (): Promise<unknown> => mockFetchPromise;
-    vi.spyOn(globalWithFetch, "fetch").mockImplementation(mockFetch);
+    };
 
-    const [tree, , firstFile] = await parseScreenTree("test-map.json");
-    expect(tree.length).toEqual(1);
-    expect(firstFile).toEqual("top.bob");
-    expect(tree[0].label).toEqual("Top Synoptic");
+    mockHttpRequest.mockResolvedValueOnce({
+      json: async () => mockSuccessResponse
+    });
+
+    const [tree] = await parseScreenTree("test-map.json");
+
+    expect(tree[0].label).toBe("Top Synoptic");
   });
 });
 

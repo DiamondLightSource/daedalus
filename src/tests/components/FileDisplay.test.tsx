@@ -1,19 +1,26 @@
-import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
+
+vi.mock("@diamondlightsource/cs-web-lib", () => ({
+  refreshFile: vi.fn(),
+  store: vi.fn(),
+  EmbeddedDisplay: vi.fn(),
+
+  FileContext: {
+    Provider: ({ children }: any) => children
+  },
+  newRelativePosition: () => ({
+    x: 0,
+    y: 0,
+    width: 100,
+    height: 100
+  })
+}));
+
+import { fireEvent, render, screen } from "@testing-library/react";
 import { FileContext, refreshFile } from "@diamondlightsource/cs-web-lib";
 import { FileState } from "../../store";
 import FileDisplay from "../../components/FileDisplay";
 import FileStateContext from "../../routes/DemoPage";
-
-vi.mock("@diamondlightsource/cs-web-lib", async () => {
-  const actual = await vi.importActual("@diamondlightsource/cs-web-lib");
-  return {
-    ...actual,
-    refreshFile: vi.fn(),
-    store: vi.fn(),
-    EmbeddedDisplay: vi.fn()
-  };
-});
 
 describe("FileDisplay Component", () => {
   beforeEach(() => {
