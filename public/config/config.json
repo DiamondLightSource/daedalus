@@ -8,6 +8,7 @@
   "csWebLibFeatureFlags": {
     "enableDynamicScripts": true
   },
+  "classFile": "http://localhost:5173/BOBs/dls_classes.bcf",
   "beamlines" : {
     "Example Screens": {
       "host": "",
@@ -29,12 +30,7 @@
     },
     "bl19i": {
       "pvwsHost": "pvws.diamond.ac.uk:443",
-      "host": "https://i19-opis.diamond.ac.uk/synoptic/",
-      "entryPoint": "JsonMap.json"
-    },
-    "I19-localhost": {
-      "pvwsHost": "pvws.diamond.ac.uk:443",
-      "host": "http://localhost:3000/i19-services/synoptic/",
+      "host": "https://i19-opis.diamond.ac.uk/bl19i-synoptic/",
       "entryPoint": "JsonMap.json"
     }
   }
