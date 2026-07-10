@@ -22,6 +22,7 @@ import {
 import { DaedalusConfig, loadConfig } from "./config";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { diamondTheme } from "./theme";
+import { QuickScreensPage } from "./routes/QuickScreensPage";
 
 const INITIAL_SCREEN_STATE = {
   main: {
@@ -91,7 +92,6 @@ export const appRouter = createBrowserRouter([
       { path: "/demo", element: <DemoPage /> },
       { path: "/data-browser", element: <DataBrowserPage /> },
       { path: "/editor", element: <EditorPage /> },
-
       {
         path: "/synoptic",
         children: [
@@ -100,7 +100,7 @@ export const appRouter = createBrowserRouter([
           { path: ":beamline/*", element: <SynopticPage /> }
         ]
       },
-
+      { path: "/quick-screens", element: <QuickScreensPage />},
       { index: true, element: <LandingPage /> }
     ]
   }
