@@ -29,6 +29,11 @@ const INITIAL_SCREEN_STATE = {
     path: "/json/start.json",
     macros: {},
     defaultProtocol: "ca"
+  },
+  quickScreen: {
+    path: "/BOBs/demo/quickScreens_grid_layout.bob",
+    macros: {},
+    defaultProtocol: "ca"
   }
 };
 
@@ -100,7 +105,7 @@ export const appRouter = createBrowserRouter([
           { path: ":beamline/*", element: <SynopticPage /> }
         ]
       },
-      { path: "/quick-screens", element: <QuickScreensPage />},
+      { path: "/quick-screens", element: <QuickScreensPage /> },
       { index: true, element: <LandingPage /> }
     ]
   }

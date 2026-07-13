@@ -3,7 +3,7 @@ import FlareIcon from "@mui/icons-material/Flare";
 import MonitorIcon from "@mui/icons-material/Monitor";
 import EditIcon from "@mui/icons-material/Edit";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
-import RateReviewIcon from '@mui/icons-material/RateReview';
+import RateReviewIcon from "@mui/icons-material/RateReview";
 
 export const PageRouteInfo = [
   {
@@ -31,11 +31,11 @@ export const PageRouteInfo = [
     showCard: true
   },
   {
-    name: "Editor View",
-    ariaLabel: "open screen editor",
-    route: "/editor",
-    text: "A demonstration of the Daedalus Editor functionality. This will eventually allow editing of .bob files inside the web.\n\nOpen files, view widget properties and drag-and-drop new widgets from the palette.",
-    icon: <EditIcon />,
+    name: "Quick Screens",
+    ariaLabel: "open quick screens",
+    route: "/quick-screens",
+    text: "A demonstration of the Daedalus Quick Screens functionality.\n\n This allows you to quickly pull components from existing screens to create new displays.",
+    icon: <RateReviewIcon />,
     showCard: true
   },
   {
@@ -47,11 +47,11 @@ export const PageRouteInfo = [
     showCard: true
   },
   {
-    name: "Quick Screens",
-    ariaLabel: "open quick screens",
-    route: "/quick-screens",
-    text: "A demonstration of the Daedalus Quick Screens functionality. This allows you to quickly pull components from existing screens to create new displays.",
-    icon: <RateReviewIcon />,
+    name: "Editor View",
+    ariaLabel: "open screen editor",
+    route: "/editor",
+    text: "A demonstration of the Daedalus Editor functionality. This will eventually allow editing of .bob files inside the web.\n\nOpen files, view widget properties and drag-and-drop new widgets from the palette.",
+    icon: <EditIcon />,
     showCard: true
   }
 ];

@@ -1,10 +1,6 @@
+import { CssBaseline, Paper as MuiPaper, styled } from "@mui/material";
 import {
-  CssBaseline,
-  Paper as MuiPaper,
-  styled
-} from "@mui/material";
-import {
-  EmbeddedDisplay,
+  DynamicPageWidget,
   newRelativePosition
 } from "@diamondlightsource/cs-web-lib";
 import {
@@ -13,29 +9,32 @@ import {
   useWindowHeight
 } from "../utils/helper";
 import DLSAppBar from "./AppBar";
+import { useRef } from "react";
 
 const Paper = styled(MuiPaper)(({ theme }) => ({
-  height: `calc(${useWindowHeight()}px - 30px - ${theme.spacing(7)})`,
-  width: `calc(${useWindowWidth()}px - ${theme.spacing(7)})`,
-  margin: `calc(${APP_BAR_HEIGHT}px + 20px) 5px 5px 5px`
+  height: `calc(${useWindowHeight()}px - ${APP_BAR_HEIGHT}px - 10px)`,
+  margin: `calc(${APP_BAR_HEIGHT}px + 5px) 5px 5px 5px`,
+  width: `calc(${useWindowWidth()}px - 10px - ${theme.spacing(7)} - 8px)`
 }));
 
 export default function QuickScreens() {
+  const displayUuidRef = useRef<string>();
 
   return (
     <>
       <CssBaseline />
       <DLSAppBar fullScreen={true} open={true} />
-      <Paper elevation={12}>
-            <EmbeddedDisplay
-              file={{
-                path: "/BOBs/demo/quickScreens_grid_layout.bob",
-                defaultProtocol: "ca",
-                macros: {}
-              }}
-              position={newRelativePosition()}
-              scroll={false}
-            />
+      <Paper>
+        <DynamicPageWidget
+          location={"quickScreen"}
+          position={newRelativePosition(undefined, undefined, "100%", "100%")}
+          scroll={false}
+          showCloseButton={false}
+          widgetIdsCallback={uuid => {
+            // The uuid allows the json representation of the display instance to be selected from the redux store
+            displayUuidRef.current = uuid;
+          }}
+        />
       </Paper>
     </>
   );

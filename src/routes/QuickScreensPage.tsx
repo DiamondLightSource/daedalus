@@ -1,10 +1,6 @@
 import { Box } from "@mui/material";
 import { useCallback, useContext, useEffect, useReducer } from "react";
-import {
-  initialState,
-  LOAD_SCREENS,
-  reducer
-} from "../store";
+import { initialState, LOAD_SCREENS, reducer } from "../store";
 import { parseScreenTree } from "../utils/parser";
 import { FileContext } from "@diamondlightsource/cs-web-lib";
 import { useParams } from "react-router";

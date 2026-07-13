@@ -1,8 +1,11 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef } from "react";
 import {
+  IconButton,
   Paper as MuiPaper,
   PaperProps as MuiPaperProps,
-  styled
+  styled,
+  Tooltip,
+  useTheme
 } from "@mui/material";
 import {
   DynamicPageWidget,
@@ -19,6 +22,7 @@ import { BeamlineTreeStateContext } from "../App";
 import { MenuContext } from "../routes/SynopticPage";
 import { useLocation, useNavigate } from "react-router";
 import { selectFileMetadataByFilePathAndMacros } from "../utils/parser";
+import RateReviewIcon from "@mui/icons-material/RateReview";
 
 interface PaperProps extends MuiPaperProps {
   open?: boolean;
@@ -39,6 +43,7 @@ const Paper = styled(MuiPaper, {
 }));
 
 export default function ScreenDisplay() {
+  const theme = useTheme();
   const { state } = useContext(BeamlineTreeStateContext);
   const { menuOpen, drawerWidth } = useContext(MenuContext);
   const fileContext = useContext(FileContext);
@@ -79,6 +84,13 @@ export default function ScreenDisplay() {
     }
   }, [fileContext.pageState.main]);
 
+  const handleQuickScreenClick = () => {
+    // Opens new quick screen page, passing current file state
+    navigate("/quick-screens/", {
+      state: { pageState: { quickScreen: location.state.pageState.main } }
+    });
+  };
+
   return (
     <Paper component="main" open={menuOpen} drawerWidth={drawerWidth}>
       {state.currentBeamline && state.currentScreenUrlId ? (
@@ -96,6 +108,21 @@ export default function ScreenDisplay() {
       ) : (
         <></>
       )}
+      <Tooltip title="Edit .bob file in Quick Screens view">
+        <IconButton
+          color="inherit"
+          sx={{ zIndex: 10, top: "93%", left: "95%", position: "absolute" }}
+          onClick={handleQuickScreenClick}
+        >
+          <RateReviewIcon
+            sx={{
+              width: "36px",
+              height: "36px",
+              color: theme.palette.primary.main
+            }}
+          />
+        </IconButton>
+      </Tooltip>
     </Paper>
   );
 }
