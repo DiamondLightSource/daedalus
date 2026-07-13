@@ -94,35 +94,37 @@ export default function ScreenDisplay() {
   return (
     <Paper component="main" open={menuOpen} drawerWidth={drawerWidth}>
       {state.currentBeamline && state.currentScreenUrlId ? (
-        <DynamicPageWidget
-          location={"main"}
-          position={newRelativePosition(undefined, undefined, "100%", "100%")}
-          scroll={false}
-          showCloseButton={false}
-          mjpgEndpoint={beamlineState?.mjpgEndpoint}
-          widgetIdsCallback={uuid => {
-            // The uuid allows the json representation of the display instance to be selected from the redux store
-            displayUuidRef.current = uuid;
-          }}
-        />
+        <>
+          <DynamicPageWidget
+            location={"main"}
+            position={newRelativePosition(undefined, undefined, "100%", "100%")}
+            scroll={false}
+            showCloseButton={false}
+            mjpgEndpoint={beamlineState?.mjpgEndpoint}
+            widgetIdsCallback={uuid => {
+              // The uuid allows the json representation of the display instance to be selected from the redux store
+              displayUuidRef.current = uuid;
+            }}
+          />
+          <Tooltip title="Edit .bob file in Quick Screens view">
+            <IconButton
+              color="inherit"
+              sx={{ zIndex: 10, top: "93%", left: "95%", position: "absolute" }}
+              onClick={handleQuickScreenClick}
+            >
+              <RateReviewIcon
+                sx={{
+                  width: "36px",
+                  height: "36px",
+                  color: theme.palette.primary.main
+                }}
+              />
+            </IconButton>
+          </Tooltip>
+        </>
       ) : (
         <></>
       )}
-      <Tooltip title="Edit .bob file in Quick Screens view">
-        <IconButton
-          color="inherit"
-          sx={{ zIndex: 10, top: "93%", left: "95%", position: "absolute" }}
-          onClick={handleQuickScreenClick}
-        >
-          <RateReviewIcon
-            sx={{
-              width: "36px",
-              height: "36px",
-              color: theme.palette.primary.main
-            }}
-          />
-        </IconButton>
-      </Tooltip>
     </Paper>
   );
 }
