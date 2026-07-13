@@ -8,7 +8,6 @@
   "csWebLibFeatureFlags": {
     "enableDynamicScripts": true
   },
-  "classFile": "http://localhost:5173/BOBs/dls_classes.bcf",
   "beamlines" : {
     "Example Screens": {
       "host": "",
