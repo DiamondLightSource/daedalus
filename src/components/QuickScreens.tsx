@@ -13,8 +13,8 @@ import QuickScreenSettings from "./QuickScreenSettings";
 import { useLocation } from "react-router";
 
 const Paper = styled(MuiPaper)(({ theme }) => ({
-  height: `calc(${useWindowHeight()}px - ${APP_BAR_HEIGHT}px - 30px)`,
-  margin: `calc(${APP_BAR_HEIGHT}px + 30px) 5px 5px 5px`,
+  height: `calc(${useWindowHeight()}px - ${APP_BAR_HEIGHT}px - 50px)`,
+  margin: `calc(${APP_BAR_HEIGHT}px + 15px) 5px 5px 5px`,
   width: `calc(${useWindowWidth()}px - 10px - ${theme.spacing(7)} - 8px)`
 }));
 

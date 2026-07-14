@@ -80,7 +80,7 @@ export default function QuickScreenSettings() {
     },
     {
       name: "Add",
-      text: "Add a Quick Screen to the view",
+      text: "Add a .bob file to the view",
       icon: <LibraryAddIcon />,
       onClick: onClickAdd
     },
