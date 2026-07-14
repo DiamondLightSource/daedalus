@@ -8,7 +8,7 @@ import AddIcon from "@mui/icons-material/Add";
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 import SaveIcon from "@mui/icons-material/Save";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteIcon from "@mui/icons-material/Delete";
 import { ListItemText, Tooltip } from "@mui/material";
 import { useNavigate } from "react-router";
 
