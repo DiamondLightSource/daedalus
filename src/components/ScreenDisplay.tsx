@@ -10,7 +10,8 @@ import {
 import {
   DynamicPageWidget,
   FileContext,
-  newRelativePosition
+  newRelativePosition,
+  useNotification
 } from "@diamondlightsource/cs-web-lib";
 import {
   useWindowWidth,
@@ -50,6 +51,7 @@ export default function ScreenDisplay() {
   const navigate = useNavigate();
   const location = useLocation();
   const displayUuidRef = useRef<string>();
+  const { showWarning } = useNotification();
 
   const selectedBeamlineId = state.currentBeamline;
   const beamlineState = state.beamlines[selectedBeamlineId];
@@ -85,10 +87,16 @@ export default function ScreenDisplay() {
   }, [fileContext.pageState.main]);
 
   const handleQuickScreenClick = () => {
-    // Opens new quick screen page, passing current file state
-    navigate("/quick-screens/", {
-      state: { pageState: { quickScreen: location.state.pageState.main } }
-    });
+    try {
+      // Opens new quick screen page, passing current file state
+      navigate("/quick-screens/", {
+        state: { pageState: { quickScreen: location.state.pageState.main } }
+      });
+    } catch (e) {
+      showWarning(
+        "Failed to convert .bob to Quick Screen. Please check the .bob file is loaded correctly."
+      );
+    }
   };
 
   return (

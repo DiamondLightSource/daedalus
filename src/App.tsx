@@ -29,11 +29,6 @@ const INITIAL_SCREEN_STATE = {
     path: "/json/start.json",
     macros: {},
     defaultProtocol: "ca"
-  },
-  quickScreen: {
-    path: "/BOBs/demo/quickScreens_grid_layout.bob",
-    macros: {},
-    defaultProtocol: "ca"
   }
 };
 
