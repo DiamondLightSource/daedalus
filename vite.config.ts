@@ -10,12 +10,17 @@ export default defineConfig(({ command, mode }) => {
       dedupe: ['react', 'react-dom'],
     },
     test: {
-            environment: 'jsdom',
-            include: ['**/*.test.ts', '**/*.test.tsx'],
-            globals: true,
-            setupFiles: 'src/setupTests.tsx',
-            css: true,
-        },
+      server: {
+        deps: {
+          inline: ["@diamondlightsource/cs-web-lib"]
+        }
+      },
+      environment: 'jsdom',
+      include: ['**/*.test.ts', '**/*.test.tsx'],
+      globals: true,
+      setupFiles: 'src/setupTests.tsx',
+      css: true,
+    },
     define: {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
     },
