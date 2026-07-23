@@ -121,7 +121,6 @@ export default function QuickScreenSettings() {
                   sx={{
                     minWidth: 0,
                     justifyContent: "center",
-                    mr: "auto",
                     color: theme.palette.primary.main
                   }}
                 >
