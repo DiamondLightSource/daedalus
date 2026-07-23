@@ -21,13 +21,13 @@ const Paper = styled(MuiPaper)(({ theme }) => ({
 export default function QuickScreens() {
   const displayUuidRef = useRef<string>();
   const location = useLocation();
-  const screenOpen = location.state ? true : false;
+  const quickScreen = location.state?.pageState?.quickScreen;
 
   return (
     <Paper elevation={12}>
       <Box sx={{ display: "flex", height: "100%" }}>
         <QuickScreenSettings />
-        {screenOpen ? (
+        {quickScreen ? (
           <DynamicPageWidget
             location={"quickScreen"}
             position={newRelativePosition(undefined, undefined, "100%", "100%")}
@@ -37,13 +37,14 @@ export default function QuickScreens() {
               // The uuid allows the json representation of the display instance to be selected from the redux store
               displayUuidRef.current = uuid;
             }}
+            targetDisplayType="displayGridLayout"
           />
         ) : (
           <Typography
             align="center"
             sx={{ marginTop: "20%", width: "100%", height: "100%" }}
           >
-            No Quick Screen loaded
+            No Quick Screen Loaded
           </Typography>
         )}
       </Box>

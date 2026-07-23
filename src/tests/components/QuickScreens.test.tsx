@@ -30,7 +30,7 @@ describe("<QuickScreens />", () => {
 
     const { getByText } = renderComponent();
 
-    expect(getByText("No Quick Screen loaded")).toBeInTheDocument();
+    expect(getByText("No Quick Screen Loaded")).toBeInTheDocument();
   });
 
   it("renders a dynamic page view when location.state exists", () => {
