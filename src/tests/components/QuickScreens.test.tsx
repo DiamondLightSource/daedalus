@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import QuickScreens from "../../components/QuickScreens";
+import QuickScreens from "../../components/QuickScreens/Display";
 
 const renderComponent = () => {
   return render(<QuickScreens />);

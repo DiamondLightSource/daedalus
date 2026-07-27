@@ -1,6 +1,6 @@
 import { fireEvent, render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import QuickScreenSettings from "../../components/QuickScreenSettings";
+import QuickScreenSettings from "../../components/QuickScreens/Settings";
 
 const renderComponent = () => {
   return render(<QuickScreenSettings />);
