@@ -28,10 +28,13 @@ const Drawer = styled(MuiDrawer)(() => ({
   }
 }));
 
-export default function QuickScreenSettings() {
+interface Props {
+  onAdd: () => void;
+}
+
+export default function QuickScreenSettings({onAdd}: Props) {
   const theme = useTheme();
   const navigate = useNavigate();
-
   /**
    * Loads a new blank quick screen
    */
@@ -47,7 +50,7 @@ export default function QuickScreenSettings() {
    * Adds a new screen to the current view to draw components from
    */
   const onClickAdd = () => {
-    console.log("clicked add");
+    onAdd();
   };
 
   /**
@@ -80,7 +83,7 @@ export default function QuickScreenSettings() {
     },
     {
       name: "Add",
-      text: "Add a .bob file to the view",
+      text: "Open a screen to add to the current Quick Screen",
       icon: <LibraryAddIcon />,
       onClick: onClickAdd
     },

@@ -11,22 +11,31 @@ import {
 import { useRef } from "react";
 import QuickScreenSettings from "./QuickScreenSettings";
 import { useLocation } from "react-router";
+import {useState} from "react";
+import SourcePanel from "./SourcePanel";
 
 const Paper = styled(MuiPaper)(({ theme }) => ({
   height: `calc(${useWindowHeight()}px - ${APP_BAR_HEIGHT}px - 50px)`,
   margin: `calc(${APP_BAR_HEIGHT}px + 15px) 5px 5px 5px`,
-  width: `calc(${useWindowWidth()}px - 10px - ${theme.spacing(7)} - 8px)`
+  width: `calc(${useWindowWidth()}px - 10px - ${theme.spacing(7)} - 8px)`,
+  overflow: "hidden"
 }));
 
 export default function QuickScreens() {
   const displayUuidRef = useRef<string>();
   const location = useLocation();
   const quickScreen = location.state?.pageState?.quickScreen;
+  const [showSourcePanel, setShowSourcePanel] = useState(false);
 
   return (
     <Paper elevation={12}>
-      <Box sx={{ display: "flex", height: "100%" }}>
-        <QuickScreenSettings />
+      <Box sx={{ display: "flex", height: "100%", overflow: "hidden" }}>
+        <QuickScreenSettings onAdd = {() => setShowSourcePanel(true)}/>
+        {showSourcePanel && (
+          <SourcePanel
+            onScreenSelected={() => {}}
+          />
+        )}
         {quickScreen ? (
           <DynamicPageWidget
             location={"quickScreen"}

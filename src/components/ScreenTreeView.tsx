@@ -3,13 +3,15 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { TreeViewBaseItem, TreeViewItemId } from "@mui/x-tree-view";
 import { FileContext } from "@diamondlightsource/cs-web-lib";
 import { BeamlineTreeStateContext } from "../App";
-import { MenuContext } from "../routes/SynopticPage";
 import { executeOpenPageActionWithFileGuid } from "../utils/csWebLibActions";
-import { FileIDs } from "../store";
+import { FileIDs, FileMetadata } from "../store";
 
-export default function ScreenTreeView() {
+interface ScreenTreeViewProps {
+  onScreenSelected?: (file: FileMetadata) => void;
+}
+
+export default function ScreenTreeView({onScreenSelected}: ScreenTreeViewProps) {
   const { state } = useContext(BeamlineTreeStateContext);
-  const { menuOpen } = useContext(MenuContext);
   const fileContext = useContext(FileContext);
   const [expandedScreens, setExpandedScreens] = useState<string[]>([]);
 
@@ -18,6 +20,22 @@ export default function ScreenTreeView() {
   };
 
   const handleClick = (itemId: string) => {
+    if (onScreenSelected) {
+        const metadata = currentFileMetadata[itemId];
+
+        if (!metadata || metadata.exists === false) {
+            console.warn(`No metadata found for itemId: ${itemId}`);
+            return;
+        }
+
+        if (onScreenSelected) {
+        onScreenSelected(metadata);
+        return;
+        }
+
+        return;
+    }
+
     const selectedBeamlineId = state.currentBeamline;
     const beamlineState = state.beamlines[selectedBeamlineId];
 
@@ -62,8 +80,6 @@ export default function ScreenTreeView() {
   }, [state.currentBeamline, state.beamlines, currentScreenTree]);
 
   return (
-    <>
-      {menuOpen ? (
         <RichTreeView
           items={currentScreenTree}
           selectedItems={state.currentScreenId}
@@ -82,9 +98,5 @@ export default function ScreenTreeView() {
             currentFileMetadata[item.id]?.exists === false
           }
         />
-      ) : (
-        <></>
-      )}
-    </>
   );
 }
