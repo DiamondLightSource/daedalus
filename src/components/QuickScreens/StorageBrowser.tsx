@@ -23,7 +23,7 @@ import {
   useNotification
 } from "@diamondlightsource/cs-web-lib";
 import { StorageContext } from "./Display";
-import { getAllScreensWithChildrenItemIds } from "../utils";
+import { findNodeById, getAllScreensWithChildrenItemIds } from "../utils";
 import FolderIcon from "@mui/icons-material/Folder";
 import FolderOpenIcon from "@mui/icons-material/FolderOpen";
 import SubdirectoryArrowRightIcon from "@mui/icons-material/SubdirectoryArrowRight";
@@ -63,7 +63,7 @@ function QuickScreenTreeItem(props: TreeItem2Props) {
  * converts them to Tree View Items
  * @returns
  */
-function getQuickScreens(): TreeViewBaseItem[] {
+export function getQuickScreens(): TreeViewBaseItem[] {
   const tree: TreeViewBaseItem[] = [];
 
   for (let i = 0; i < localStorage.length; i++) {
@@ -114,30 +114,6 @@ function getQuickScreens(): TreeViewBaseItem[] {
   sortTree(tree);
   return tree;
 }
-
-/**
- * Find a node in the treeview when given its id
- * @param items
- * @param id
- * @returns
- */
-const findNodeById = (
-  items: TreeViewBaseItem[],
-  id: string
-): TreeViewBaseItem | undefined => {
-  for (const item of items) {
-    if (item.id === id) {
-      return item;
-    }
-    if (item.children) {
-      const found = findNodeById(item.children, id);
-      if (found) {
-        return found;
-      }
-    }
-  }
-  return undefined;
-};
 
 export default function LocalStorageBrowser(props: { setModalOpen: any }) {
   const [quickScreens, setQuickScreens] = useState<TreeViewBaseItem[]>([]);
@@ -232,8 +208,8 @@ export default function LocalStorageBrowser(props: { setModalOpen: any }) {
           onChange={e => {
             const selectedNode = findNodeById(quickScreens, e.target.value);
             setSelectedIsFolder(!!selectedNode?.children?.length);
-            setQuickScreenName(e.target.value)
-        }}
+            setQuickScreenName(e.target.value);
+          }}
           fullWidth
         />
         <Button
