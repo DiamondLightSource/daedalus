@@ -6,16 +6,13 @@ import { BeamlineTreeStateContext } from "../App";
 import { MenuContext } from "../routes/SynopticPage";
 import { executeOpenPageActionWithFileGuid } from "../utils/csWebLibActions";
 import { FileIDs } from "../store";
+import { getAllScreensWithChildrenItemIds } from "./utils";
 
 export default function ScreenTreeView() {
   const { state } = useContext(BeamlineTreeStateContext);
   const { menuOpen } = useContext(MenuContext);
   const fileContext = useContext(FileContext);
-  const [expandedScreens, setExpandedScreens] = useState<string[]>([]);
-
-  const handleExpandedScreensChange = (screenIds: string[]) => {
-    setExpandedScreens(screenIds);
-  };
+  const [expandedScreens, setExpandedScreens] = useState<TreeViewItemId[]>([]);
 
   const handleClick = (itemId: string) => {
     const selectedBeamlineId = state.currentBeamline;
@@ -41,24 +38,7 @@ export default function ScreenTreeView() {
 
   // When beamline is updated, trigger refresh of expanded screens to fully expand all
   useEffect(() => {
-    const getAllScreensWithChildrenItemIds = async (
-      screenTree: TreeViewBaseItem[]
-    ) => {
-      const screenIds: TreeViewItemId[] = [];
-
-      const registerScreenId = (item: TreeViewBaseItem): void => {
-        if (item.children?.length) {
-          screenIds.push(item.id);
-          (item.children as TreeViewBaseItem[]).forEach(registerScreenId);
-        }
-      };
-
-      for (const screen of screenTree) {
-        await registerScreenId(screen);
-      }
-      setExpandedScreens(screenIds);
-    };
-    getAllScreensWithChildrenItemIds(currentScreenTree);
+    getAllScreensWithChildrenItemIds(currentScreenTree, setExpandedScreens);
   }, [state.currentBeamline, state.beamlines, currentScreenTree]);
 
   return (
@@ -69,7 +49,7 @@ export default function ScreenTreeView() {
           selectedItems={state.currentScreenId}
           expandedItems={expandedScreens}
           onExpandedItemsChange={(_event, itemIds) =>
-            handleExpandedScreensChange(itemIds)
+            setExpandedScreens(itemIds)
           }
           onItemClick={(_event, itemId) => {
             if (!itemId || currentFileMetadata[itemId]?.exists === false) {

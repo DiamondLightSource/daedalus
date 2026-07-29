@@ -1,6 +1,6 @@
 import { Box, CssBaseline } from "@mui/material";
 import { useEffect } from "react";
-import QuickScreens from "../components/QuickScreens";
+import QuickScreenDisplay from "../components/QuickScreens/Display";
 import DLSAppBar from "../components/AppBar";
 
 /**
@@ -17,7 +17,7 @@ export function QuickScreensPage() {
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
         <DLSAppBar fullScreen={true} open={true} />
-        <QuickScreens />
+        <QuickScreenDisplay />
       </Box>
     </>
   );
