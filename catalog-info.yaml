@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: Daedalus
+  title: Daedalus
+  description: An EPICS Control System for the web
+spec:
+  type: service
+  lifecycle: experimental
+  owner: group:default/sscc
