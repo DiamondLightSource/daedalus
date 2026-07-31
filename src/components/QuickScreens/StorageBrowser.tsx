@@ -1,33 +1,22 @@
 import { RichTreeView } from "@mui/x-tree-view/RichTreeView";
-import { useContext, useEffect, useState } from "react";
-import {
-  TreeItem2,
-  TreeItem2Props,
-  TreeViewBaseItem,
-  TreeViewItemId,
-  useTreeItem2
-} from "@mui/x-tree-view";
+import { useContext, useMemo, useState } from "react";
+import { TreeItem2, TreeItem2Props, TreeViewItemId, useTreeItem2 } from "@mui/x-tree-view";
 import {
   Box,
   Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
   Stack,
   TextField
 } from "@mui/material";
 import {
-  useDisplayInstance,
-  useNotification
+  useDisplayInstance
 } from "@diamondlightsource/cs-web-lib";
 import { StorageContext } from "./Display";
-import { findNodeById, getAllScreensWithChildrenItemIds } from "../utils";
+import { findNodeById } from "../utils";
+import { useQuickScreens } from "../../hooks/useQuickScreens";
+import OverwriteDialog from "./OverwriteDialog";
 import FolderIcon from "@mui/icons-material/Folder";
 import FolderOpenIcon from "@mui/icons-material/FolderOpen";
 import SubdirectoryArrowRightIcon from "@mui/icons-material/SubdirectoryArrowRight";
-import { useNavigate } from "react-router";
 
 /**
  * Custom Tree Item that lets us change icon
@@ -59,145 +48,34 @@ function QuickScreenTreeItem(props: TreeItem2Props) {
   );
 }
 
-/**
- * Gets all Quick Screens currently in local storage and
- * converts them to Tree View Items
- * @returns
- */
-export function getQuickScreens(): TreeViewBaseItem[] {
-  const tree: TreeViewBaseItem[] = [];
-
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i)!;
-
-    // Check the item is part of Quick Screens
-    if (!key || !key.startsWith("quickScreens/")) continue;
-    // Fetch content
-    const screenName = key.substring("quickScreens/".length);
-    const parts = screenName.split("/");
-    // Check if screen is in folder
-    let currentLevel = tree;
-    // For each folder, create child file labels/folders
-    for (let j = 0; j < parts.length; j++) {
-      const part = parts[j];
-      const id = parts.slice(0, j + 1).join("/");
-
-      let branch = currentLevel.find(item => item.id === id);
-      const isFolder = j < parts.length - 1;
-
-      // Create new branch
-      if (!branch) {
-        branch = {
-          id,
-          label: part,
-          ...(isFolder ? { children: [] } : {})
-        };
-
-        currentLevel.push(branch);
-      }
-
-      if (branch.children) {
-        currentLevel = branch.children;
-      }
-    }
-  }
-
-  // Recursively sort tree alphabetically
-  const sortTree = (items: TreeViewBaseItem[]) => {
-    items.sort((a, b) => a.label.localeCompare(b.label));
-
-    for (const item of items) {
-      if (item.children) {
-        sortTree(item.children);
-      }
-    }
-  };
-  sortTree(tree);
-  return tree;
-}
 
 export default function LocalStorageBrowser(props: { setModalOpen: any }) {
-  const navigate = useNavigate();
-  const [quickScreens, setQuickScreens] = useState<TreeViewBaseItem[]>([]);
-  const [selectedKey, setSelectedKey] = useState("");
+  const storage = useContext(StorageContext);
   const [quickScreenName, setQuickScreenName] = useState("");
-  const [selectedIsFolder, setSelectedIsFolder] = useState(false);
-  const [expandedScreens, setExpandedScreens] = useState<TreeViewItemId[]>([]);
-  const [confirmOverwrite, setConfirmOverwrite] = useState(false);
-  const quickScreenStorage = useContext(StorageContext);
-  const {getDisplayInstanceById, addDisplayInstanceByDescription} = useDisplayInstance();
-  const fileContent = getDisplayInstanceById(quickScreenStorage.bobDisplayUuid!)
-  const { showWarning, showError } = useNotification();
+  const { displayInstance, addDisplayInstanceByDescription } =
+    useDisplayInstance(storage.bobDisplayUuid!);
 
-  useEffect(() => {
-    const screens = getQuickScreens();
-    setQuickScreens(screens);
-    // Set list of expanded screens
-    getAllScreensWithChildrenItemIds(screens, setExpandedScreens);
-  }, []);
+  const {
+    tree,
+    expanded,
+    setExpanded,
+    save,
+    load,
+    pendingOverwrite,
+    confirmOverwrite,
+    cancelOverwrite
+  } = useQuickScreens({
+    displayInstance,
+    addDisplayInstanceByDescription,
+    onCompleted: () => props.setModalOpen(false)
+  });
 
-  const handleSelection = (_: any, itemId: any) => {
-    setSelectedKey(itemId);
-    setQuickScreenName(itemId);
-    // Check if the item selected is a folder
-    const selectedNode = findNodeById(quickScreens, itemId);
-    setSelectedIsFolder(!!selectedNode?.children?.length);
-  };
+  const selectedNode = useMemo(
+    () => findNodeById(tree, quickScreenName),
+    [tree, quickScreenName]
+  );
 
-  const handleSave = () => {
-    // If no file name or file content, show notification
-    if (!quickScreenName.trim() || !fileContent) {
-      if (!quickScreenName.trim())
-        showWarning("Unable to save: no Quick Screen name given.");
-      if (!fileContent)
-        showError("Unable to save: no Quick Screen content found.");
-      return;
-    }
-    // Check if user is trying to save as folder and prevent
-    const oldScreen = localStorage.getItem(`quickScreens/${quickScreenName}`);
-    const newScreen = createNewScreen();
-    // Check if content already exists for this name
-    if (oldScreen && oldScreen !== newScreen) {
-      // User confirmation to overwrite
-      setConfirmOverwrite(true);
-      return;
-    }
-    saveQuickScreen();
-  };
-
-  const handleLoad = () => {
-    const storedScreen = localStorage.getItem(`quickScreens/${quickScreenName}`)
-    // If no file name or file content, show notification
-    if (!quickScreenName.trim() || !storedScreen) {
-      showWarning("Unable to load: no Quick Screen found.");
-      return;
-    }
-    // Create a display instance for this screen
-    const loadedScreen = JSON.parse(storedScreen);
-    addDisplayInstanceByDescription(quickScreenName, loadedScreen.macros, loadedScreen.description)
-    // get the uuid
-    navigate("/quick-screens/", {
-        state: { pageState: { quickScreen: {path: quickScreenName, macros: loadedScreen.macros, defaultProtocol: "ca"} } }
-      });
-  };
-
-  /**
-   * Creates the new Quick Screen instance
-   */
-  const createNewScreen = () =>
-    JSON.stringify({
-      macros: fileContent?.macros ?? {},
-      description: fileContent?.description
-    });
-
-  /**
-   * Save the Quick Screen to local storage
-   */
-  const saveQuickScreen = () => {
-    const newScreen = createNewScreen();
-    localStorage.setItem(`quickScreens/${quickScreenName}`, newScreen);
-    props.setModalOpen(false);
-  };
+  const selectedIsFolder = !!selectedNode?.children?.length;
 
   return (
     <Stack spacing={2}>
@@ -210,12 +88,14 @@ export default function LocalStorageBrowser(props: { setModalOpen: any }) {
         }}
       >
         <RichTreeView
-          items={quickScreens}
-          onSelectedItemsChange={handleSelection}
-          selectedItems={selectedKey}
-          expandedItems={expandedScreens}
-          onExpandedItemsChange={(_event, _itemIds) =>
-            getAllScreensWithChildrenItemIds(quickScreens, setExpandedScreens)
+          items={tree}
+          onSelectedItemsChange={(_, id) =>
+            setQuickScreenName(id as string)
+          }
+          selectedItems={quickScreenName}
+          expandedItems={expanded}
+          onExpandedItemsChange={(_, ids) =>
+            setExpanded(ids as TreeViewItemId[])
           }
           slots={{ item: QuickScreenTreeItem }}
         />
@@ -224,47 +104,23 @@ export default function LocalStorageBrowser(props: { setModalOpen: any }) {
         <TextField
           label="Quick Screen Name"
           value={quickScreenName}
-          onChange={e => {
-            const selectedNode = findNodeById(quickScreens, e.target.value);
-            setSelectedIsFolder(!!selectedNode?.children?.length);
-            setQuickScreenName(e.target.value);
-          }}
+          onChange={ e => setQuickScreenName(e.target.value)}
           fullWidth
         />
         <Button
           variant="contained"
-          onClick={quickScreenStorage.browsingMode === "Save" ? handleSave : handleLoad}
-          disabled={quickScreenName === "" || selectedIsFolder}
+          onClick={() => storage.browsingMode === "Save" ? save(quickScreenName) : load(quickScreenName)}
+          disabled={!quickScreenName || selectedIsFolder}
         >
-          {quickScreenStorage.browsingMode}
+          {storage.browsingMode}
         </Button>
       </Stack>
-      <Dialog
-        open={confirmOverwrite}
-        onClose={() => setConfirmOverwrite(false)}
-      >
-        <DialogTitle>Overwrite Quick Screen?</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            A Quick Screen named <strong>{quickScreenName}</strong> already
-            exists. Saving will replace the existing content. Are you sure you
-            want to continue?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setConfirmOverwrite(false)}>Cancel</Button>
-          <Button
-            variant="contained"
-            color="warning"
-            onClick={() => {
-              setConfirmOverwrite(false);
-              saveQuickScreen();
-            }}
-          >
-            Save and overwrite
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <OverwriteDialog
+        open={pendingOverwrite !== null}
+        filename={pendingOverwrite ?? ""}
+        onCancel={cancelOverwrite}
+        onConfirm={confirmOverwrite}
+      />
     </Stack>
   );
 }
