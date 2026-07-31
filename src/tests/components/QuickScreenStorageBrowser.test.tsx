@@ -4,6 +4,14 @@ import { StorageContext } from "../../components/QuickScreens/Display";
 import LocalStorageBrowser, {
   getQuickScreens
 } from "../../components/QuickScreens/StorageBrowser";
+import { configureStore } from "@reduxjs/toolkit";
+import { Provider } from "react-redux";
+
+const testStore = configureStore({
+  reducer: {
+    theme: (state = { currentClass: "DEFAULT" }) => state
+  }
+});
 
 const mockSetModalOpen = vi.fn();
 const mockShowWarning = vi.fn();
@@ -32,9 +40,11 @@ vi.mock("../utils", () => ({
 
 const renderComponent = () =>
   render(
-    <StorageContext.Provider value={{ bobDisplayUuid: "test" } as any}>
-      <LocalStorageBrowser setModalOpen={mockSetModalOpen} />
-    </StorageContext.Provider>
+    <Provider store={testStore}>
+      <StorageContext.Provider value={{ bobDisplayUuid: "test" } as any}>
+        <LocalStorageBrowser setModalOpen={mockSetModalOpen} />
+      </StorageContext.Provider>
+    </Provider>
   );
 
 describe("LocalStorageBrowser", () => {
