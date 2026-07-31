@@ -21,8 +21,9 @@ import {
   Tooltip
 } from "@mui/material";
 import { useNavigate } from "react-router";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import LocalStorageBrowser from "./StorageBrowser";
+import { StorageContext } from "./Display";
 
 const NEW_QUICK_SCREEN = {
   path: "/new.bob",
@@ -53,6 +54,7 @@ export default function QuickScreenSettings() {
   const theme = useTheme();
   const navigate = useNavigate();
   const [storageModalOpen, setStorageModalOpen] = useState(false);
+  const quickScreenStorage = useContext(StorageContext);
 
   const handleCloseModal = (_event: any) => {
     setStorageModalOpen(false);
@@ -81,13 +83,15 @@ export default function QuickScreenSettings() {
    */
   const onClickSave = () => {
     setStorageModalOpen(true);
+    quickScreenStorage.setBrowsingMode("Save");
   };
 
   /**
    * Loads a quick screen from local storage
    */
   const onClickLoad = () => {
-    console.log("clicked load");
+    setStorageModalOpen(true);
+    quickScreenStorage.setBrowsingMode("Load");
   };
 
   /**
@@ -95,6 +99,7 @@ export default function QuickScreenSettings() {
    */
   const onClickDelete = () => {
     console.log("clicked delete");
+    quickScreenStorage.setBrowsingMode("Delete");
   };
 
   const SETTINGS_LIST = [

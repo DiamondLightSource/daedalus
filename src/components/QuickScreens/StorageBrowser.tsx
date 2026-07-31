@@ -27,6 +27,7 @@ import { findNodeById, getAllScreensWithChildrenItemIds } from "../utils";
 import FolderIcon from "@mui/icons-material/Folder";
 import FolderOpenIcon from "@mui/icons-material/FolderOpen";
 import SubdirectoryArrowRightIcon from "@mui/icons-material/SubdirectoryArrowRight";
+import { useNavigate } from "react-router";
 
 /**
  * Custom Tree Item that lets us change icon
@@ -116,6 +117,7 @@ export function getQuickScreens(): TreeViewBaseItem[] {
 }
 
 export default function LocalStorageBrowser(props: { setModalOpen: any }) {
+  const navigate = useNavigate();
   const [quickScreens, setQuickScreens] = useState<TreeViewBaseItem[]>([]);
   const [selectedKey, setSelectedKey] = useState("");
   const [quickScreenName, setQuickScreenName] = useState("");
@@ -123,7 +125,8 @@ export default function LocalStorageBrowser(props: { setModalOpen: any }) {
   const [expandedScreens, setExpandedScreens] = useState<TreeViewItemId[]>([]);
   const [confirmOverwrite, setConfirmOverwrite] = useState(false);
   const quickScreenStorage = useContext(StorageContext);
-  const fileContent = useDisplayInstance(quickScreenStorage.bobDisplayUuid!);
+  const {getDisplayInstanceById, addDisplayInstanceByDescription} = useDisplayInstance();
+  const fileContent = getDisplayInstanceById(quickScreenStorage.bobDisplayUuid!)
   const { showWarning, showError } = useNotification();
 
   useEffect(() => {
@@ -160,6 +163,22 @@ export default function LocalStorageBrowser(props: { setModalOpen: any }) {
       return;
     }
     saveQuickScreen();
+  };
+
+  const handleLoad = () => {
+    const storedScreen = localStorage.getItem(`quickScreens/${quickScreenName}`)
+    // If no file name or file content, show notification
+    if (!quickScreenName.trim() || !storedScreen) {
+      showWarning("Unable to load: no Quick Screen found.");
+      return;
+    }
+    // Create a display instance for this screen
+    const loadedScreen = JSON.parse(storedScreen);
+    addDisplayInstanceByDescription(quickScreenName, loadedScreen.macros, loadedScreen.description)
+    // get the uuid
+    navigate("/quick-screens/", {
+        state: { pageState: { quickScreen: {path: quickScreenName, macros: loadedScreen.macros, defaultProtocol: "ca"} } }
+      });
   };
 
   /**
@@ -214,10 +233,10 @@ export default function LocalStorageBrowser(props: { setModalOpen: any }) {
         />
         <Button
           variant="contained"
-          onClick={handleSave}
+          onClick={quickScreenStorage.browsingMode === "Save" ? handleSave : handleLoad}
           disabled={quickScreenName === "" || selectedIsFolder}
         >
-          Save
+          {quickScreenStorage.browsingMode}
         </Button>
       </Stack>
       <Dialog
