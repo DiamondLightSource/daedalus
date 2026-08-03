@@ -1,15 +1,13 @@
 import { RichTreeView } from "@mui/x-tree-view/RichTreeView";
 import { useContext, useMemo, useState } from "react";
-import { TreeItem2, TreeItem2Props, TreeViewItemId, useTreeItem2 } from "@mui/x-tree-view";
 import {
-  Box,
-  Button,
-  Stack,
-  TextField
-} from "@mui/material";
-import {
-  useDisplayInstance
-} from "@diamondlightsource/cs-web-lib";
+  TreeItem2,
+  TreeItem2Props,
+  TreeViewItemId,
+  useTreeItem2
+} from "@mui/x-tree-view";
+import { Box, Button, Stack, TextField } from "@mui/material";
+import { useDisplayInstance } from "@diamondlightsource/cs-web-lib";
 import { StorageContext } from "./Display";
 import { findNodeById } from "../utils";
 import { useQuickScreens } from "../../hooks/useQuickScreens";
@@ -47,7 +45,6 @@ function QuickScreenTreeItem(props: TreeItem2Props) {
     />
   );
 }
-
 
 export default function LocalStorageBrowser(props: { setModalOpen: any }) {
   const storage = useContext(StorageContext);
@@ -89,9 +86,7 @@ export default function LocalStorageBrowser(props: { setModalOpen: any }) {
       >
         <RichTreeView
           items={tree}
-          onSelectedItemsChange={(_, id) =>
-            setQuickScreenName(id as string)
-          }
+          onSelectedItemsChange={(_, id) => setQuickScreenName(id as string)}
           selectedItems={quickScreenName}
           expandedItems={expanded}
           onExpandedItemsChange={(_, ids) =>
@@ -104,12 +99,16 @@ export default function LocalStorageBrowser(props: { setModalOpen: any }) {
         <TextField
           label="Quick Screen Name"
           value={quickScreenName}
-          onChange={ e => setQuickScreenName(e.target.value)}
+          onChange={e => setQuickScreenName(e.target.value)}
           fullWidth
         />
         <Button
           variant="contained"
-          onClick={() => storage.browsingMode === "Save" ? save(quickScreenName) : load(quickScreenName)}
+          onClick={() =>
+            storage.browsingMode === "Save"
+              ? save(quickScreenName)
+              : load(quickScreenName)
+          }
           disabled={!quickScreenName || selectedIsFolder}
         >
           {storage.browsingMode}

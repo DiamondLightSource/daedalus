@@ -12,14 +12,18 @@ import { createContext, useState } from "react";
 import QuickScreenSettings from "./Settings";
 import { useLocation } from "react-router";
 
-
 // Local quick screen storage handler
 export const StorageContext = createContext<{
   bobDisplayUuid?: string;
   setBobDisplayUuid: any;
-  browsingMode?: string,
-  setBrowsingMode: any
-}>({ bobDisplayUuid: "", setBobDisplayUuid: () => null, browsingMode: "Load", setBrowsingMode: () => null });
+  browsingMode?: string;
+  setBrowsingMode: any;
+}>({
+  bobDisplayUuid: "",
+  setBobDisplayUuid: () => null,
+  browsingMode: "Load",
+  setBrowsingMode: () => null
+});
 
 const Paper = styled(MuiPaper)(({ theme }) => ({
   height: `calc(${useWindowHeight()}px - ${APP_BAR_HEIGHT}px - 50px)`,
@@ -36,7 +40,14 @@ export default function QuickScreenDisplay() {
   return (
     <Paper elevation={12}>
       <Box sx={{ display: "flex", height: "100%" }}>
-        <StorageContext.Provider value={{ bobDisplayUuid, setBobDisplayUuid, browsingMode, setBrowsingMode }}>
+        <StorageContext.Provider
+          value={{
+            bobDisplayUuid,
+            setBobDisplayUuid,
+            browsingMode,
+            setBrowsingMode
+          }}
+        >
           <QuickScreenSettings />
           {quickScreen ? (
             <DynamicPageWidget

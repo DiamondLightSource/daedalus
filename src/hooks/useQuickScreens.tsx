@@ -16,8 +16,10 @@ interface UseQuickScreensProps {
 
 /**
  * Hook for loading and parsing Quick Screens from the local storage tree
- * @param param0 
- * @returns 
+ * @param displayInstance
+ * @param addDisplayInstanceByDescription
+ * @param onCompleted
+ * @returns
  */
 export function useQuickScreens({
   displayInstance,
@@ -87,10 +89,8 @@ export function useQuickScreens({
   const confirmOverwrite = useCallback(() => {
     if (!pendingOverwrite) return;
 
-    localStorage.setItem(
-        `quickScreens/${pendingOverwrite}`,
-        createScreen()
-    );
+    // Add quickScreens at start to put in correct storage location
+    localStorage.setItem(`quickScreens/${pendingOverwrite}`, createScreen());
 
     setPendingOverwrite(null);
     refreshTree();
@@ -112,11 +112,7 @@ export function useQuickScreens({
       }
 
       const screen = JSON.parse(stored);
-      addDisplayInstanceByDescription(
-        name,
-        screen.macros,
-        screen.description
-      );
+      addDisplayInstanceByDescription(name, screen.macros, screen.description);
 
       navigate("/quick-screens/", {
         state: {
