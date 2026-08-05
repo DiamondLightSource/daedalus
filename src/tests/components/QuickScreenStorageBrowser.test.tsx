@@ -47,12 +47,15 @@ const renderComponent = (browsingMode?: string) =>
   render(
     <Provider store={testStore}>
       <StorageContext.Provider
-      value={
-        { bobDisplayUuid: "test", browsingMode: browsingMode ?? "Save" } as any
-      }
-    >
-      <LocalStorageBrowser setModalOpen={mockSetModalOpen} />
-    </StorageContext.Provider>
+        value={
+          {
+            bobDisplayUuid: "test",
+            browsingMode: browsingMode ?? "Save"
+          } as any
+        }
+      >
+        <LocalStorageBrowser setModalOpen={mockSetModalOpen} />
+      </StorageContext.Provider>
     </Provider>
   );
 
