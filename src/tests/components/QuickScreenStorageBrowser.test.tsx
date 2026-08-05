@@ -9,7 +9,7 @@ import { Provider } from "react-redux";
 
 const testStore = configureStore({
   reducer: {
-    theme: (state = { currentClass: "DEFAULT" }) => state
+    style: (state = { classes: {}, currentClass: "DEFAULT" }) => state
   }
 });
 

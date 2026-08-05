@@ -11,7 +11,7 @@ import { configureStore } from "@reduxjs/toolkit";
 
 const testStore = configureStore({
   reducer: {
-    theme: (state = { currentClass: "DEFAULT" }, _action) => state
+    style: (state = { classes: {}, currentClass: "DEFAULT" }, _action) => state
   }
 });
 
