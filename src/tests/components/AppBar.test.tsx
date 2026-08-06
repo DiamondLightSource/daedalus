@@ -6,6 +6,14 @@ import { PageRouteInfo } from "../../routes/PageRouteInfo";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { DRAWER_WIDTH } from "../../utils/helper";
 import { MemoryRouter } from "react-router";
+import { Provider } from "react-redux";
+import { configureStore } from "@reduxjs/toolkit";
+
+const testStore = configureStore({
+  reducer: {
+    style: (state = { classes: {}, currentClass: "DEFAULT" }, _action) => state
+  }
+});
 
 console.log = vi.fn();
 
@@ -25,9 +33,11 @@ describe("DLSAppBar Component", () => {
 
   const renderComponent = (fullScreen = false, children: ReactNode = null) => {
     return render(
-      <MemoryRouter initialEntries={["/"]}>
-        <DLSAppBar fullScreen={fullScreen}>{children}</DLSAppBar>
-      </MemoryRouter>
+      <Provider store={testStore}>
+        <MemoryRouter initialEntries={["/"]}>
+          <DLSAppBar fullScreen={fullScreen}>{children}</DLSAppBar>
+        </MemoryRouter>
+      </Provider>
     );
   };
 

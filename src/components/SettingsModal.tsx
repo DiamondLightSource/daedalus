@@ -10,6 +10,9 @@ import {
   Grid,
   Stack
 } from "@mui/material";
+import { setCurrentClass } from "@diamondlightsource/cs-web-lib";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 const Dialog = styled(MuiDialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -21,14 +24,23 @@ const Dialog = styled(MuiDialog)(({ theme }) => ({
 }));
 
 export default function SettingsModal(props: { open: boolean; setOpen: any }) {
+  const dispatch = useDispatch();
   const { mode, setMode } = useColorScheme();
 
   const handleClose = (_event: any) => {
     props.setOpen(false);
   };
 
-  const handleChange = (_event: any) => {
-    setMode(mode === "dark" ? "light" : "dark");
+  useEffect(() => {
+    if (!mode) {
+      return;
+    }
+
+    dispatch(setCurrentClass(mode === "dark" ? "DARKMODE" : "DEFAULT"));
+  }, [mode, dispatch]);
+
+  const handleChange = (_event: any, checked: boolean) => {
+    setMode(checked ? "dark" : "light");
   };
 
   return (
