@@ -37,7 +37,8 @@ export function useQuickScreens({
   const refreshTree = useCallback(() => {
     const screens = getQuickScreens();
     setTree(screens);
-    getAllScreensWithChildrenItemIds(screens, setExpanded);
+    const allScreens = getAllScreensWithChildrenItemIds(screens);
+    setExpanded(allScreens);
   }, []);
 
   useEffect(() => {

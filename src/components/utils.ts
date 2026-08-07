@@ -1,28 +1,26 @@
-import { TreeViewBaseItem, TreeViewItemId } from "@mui/x-tree-view";
-import { Dispatch, SetStateAction } from "react";
+import { TreeViewItemId } from "@mui/x-tree-view";
+import { ScreenTreeViewBaseItem } from "../utils/parser";
 
 /**
  * Sets the list of all tree items with children that should be expanded
  * @param screenTree
- * @param setExpandedScreens
  */
 export const getAllScreensWithChildrenItemIds = (
-  screenTree: TreeViewBaseItem[],
-  setExpandedScreens: Dispatch<SetStateAction<TreeViewItemId[]>>
-) => {
+  screenTree: ScreenTreeViewBaseItem[]
+): TreeViewItemId[] => {
   const screenIds: TreeViewItemId[] = [];
 
-  const registerScreenId = (item: TreeViewBaseItem): void => {
+  const registerScreenId = (item: ScreenTreeViewBaseItem): void => {
     if (item.children?.length) {
       screenIds.push(item.id);
-      (item.children as TreeViewBaseItem[]).forEach(registerScreenId);
+      (item.children as ScreenTreeViewBaseItem[]).forEach(registerScreenId);
     }
   };
 
   for (const screen of screenTree) {
     registerScreenId(screen);
   }
-  setExpandedScreens(screenIds);
+  return screenIds;
 };
 
 /**
@@ -32,9 +30,9 @@ export const getAllScreensWithChildrenItemIds = (
  * @returns a TreeViewBaseItem of the match, or undefined if none
  */
 export const findNodeById = (
-  items: TreeViewBaseItem[],
+  items: ScreenTreeViewBaseItem[],
   id: string
-): TreeViewBaseItem | undefined => {
+): ScreenTreeViewBaseItem | undefined => {
   for (const item of items) {
     if (item.id === id) {
       return item;

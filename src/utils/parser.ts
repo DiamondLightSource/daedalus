@@ -7,6 +7,11 @@ import {
 } from "@diamondlightsource/cs-web-lib";
 import { buildUrlId } from "./screenUrlIdUtils";
 
+// Custom Tree Item to keep track of beamline
+export type ScreenTreeViewBaseItem = TreeViewBaseItem & {
+  beamline?: string;
+};
+
 /**
  * Select a file metadata record from a set of records, using the file path and the macro set
  * to identify the record.
@@ -57,8 +62,9 @@ export const selectFileMetadataByFilePathAndMacros = (
  * @param filepath toplevel screen that links others together
  */
 export async function parseScreenTree(
-  filepath: string
-): Promise<[TreeViewBaseItem[], FileIDs, string]> {
+  filepath: string,
+  beamline?: string
+): Promise<[ScreenTreeViewBaseItem[], FileIDs, string]> {
   try {
     const response = await httpRequest(filepath);
     const json = await response.json();
@@ -72,7 +78,8 @@ export async function parseScreenTree(
     // Process the child items
     const { fileMap, treeViewItems } = RecursiveTreeViewBuilder(
       json.children,
-      topLevelScreen
+      topLevelScreen,
+      beamline
     );
 
     // Using a GUID guarantees that each TreeeViewItem has a unique id.
@@ -102,10 +109,11 @@ export async function parseScreenTree(
       }
     });
 
-    const parentScreen: TreeViewBaseItem = {
+    const parentScreen: ScreenTreeViewBaseItem = {
       id: guid,
       label: topLevelScreen,
-      children: treeViewItems
+      children: treeViewItems,
+      beamline: beamline
     };
 
     return [[parentScreen], fileMap, json.file];
@@ -129,10 +137,11 @@ export async function parseScreenTree(
  */
 export const RecursiveTreeViewBuilder = (
   jsonSiblings: any[],
-  idPrefix: string
-): { fileMap: FileIDs; treeViewItems: TreeViewBaseItem[] } => {
+  idPrefix: string,
+  beamline?: string
+): { fileMap: FileIDs; treeViewItems: ScreenTreeViewBaseItem[] } => {
   let fileMap: FileIDs = {};
-  const treeViewItems: TreeViewBaseItem[] = [];
+  const treeViewItems: ScreenTreeViewBaseItem[] = [];
 
   if (!jsonSiblings) {
     return { fileMap, treeViewItems };
@@ -146,10 +155,11 @@ export const RecursiveTreeViewBuilder = (
     );
     const guid = crypto.randomUUID();
 
-    const treeViewItem: TreeViewBaseItem = {
+    const treeViewItem: ScreenTreeViewBaseItem = {
       id: guid,
       label: fileLabel,
-      children: []
+      children: [],
+      beamline: beamline
     };
 
     if (!sibling.duplicate) {
@@ -164,7 +174,7 @@ export const RecursiveTreeViewBuilder = (
       if (sibling.children) {
         // If it has children make recursive call
         const { fileMap: childFileMap, treeViewItems: childTreeViewItems } =
-          RecursiveTreeViewBuilder(sibling.children, urlId);
+          RecursiveTreeViewBuilder(sibling.children, urlId, beamline);
 
         fileMap = { ...fileMap, ...childFileMap };
         treeViewItem.children = childTreeViewItems;

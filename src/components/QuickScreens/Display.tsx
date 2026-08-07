@@ -36,6 +36,10 @@ export default function QuickScreenDisplay() {
   const [browsingMode, setBrowsingMode] = useState<string>();
   const location = useLocation();
   const quickScreen = location.state?.pageState?.quickScreen;
+  const bobQuickScreen = location.state?.pageState?.bobQuickScreen;
+
+  const hasQuickScreen = !!quickScreen;
+  const hasBobQuickScreen = !!bobQuickScreen;
 
   return (
     <Paper elevation={12}>
@@ -49,31 +53,82 @@ export default function QuickScreenDisplay() {
           }}
         >
           <QuickScreenSettings />
-          {quickScreen ? (
-            <DynamicPageWidget
-              location={"quickScreen"}
-              position={newRelativePosition(
-                undefined,
-                undefined,
-                "100%",
-                "100%"
-              )}
-              scroll={false}
-              showCloseButton={false}
-              widgetIdsCallback={uuid => {
-                // The uuid allows the json representation of the display instance to be selected from the redux store
-                setBobDisplayUuid(uuid);
-              }}
-              targetDisplayType="displayGridLayout"
-            />
-          ) : (
-            <Typography
-              align="center"
-              sx={{ marginTop: "20%", width: "100%", height: "100%" }}
-            >
-              No Quick Screen Loaded
-            </Typography>
-          )}
+
+          <Box
+            sx={{
+              flex: 1,
+              display: "flex",
+              flexDirection: "row",
+              gap: 1,
+              p: 1
+            }}
+          >
+            {hasQuickScreen && (
+              <MuiPaper
+                elevation={3}
+                sx={{
+                  flex: 1,
+                  position: "relative",
+                  overflow: "hidden"
+                }}
+              >
+                <DynamicPageWidget
+                  location="quickScreen"
+                  position={newRelativePosition(
+                    undefined,
+                    undefined,
+                    "100%",
+                    "100%"
+                  )}
+                  scroll={false}
+                  showCloseButton={false}
+                  widgetIdsCallback={uuid => {
+                    setBobDisplayUuid(uuid);
+                  }}
+                  targetDisplayType="displayGridLayout"
+                />
+              </MuiPaper>
+            )}
+
+            {hasBobQuickScreen && (
+              <MuiPaper
+                elevation={3}
+                sx={{
+                  flex: 1,
+                  position: "relative",
+                  overflow: "hidden"
+                }}
+              >
+                <DynamicPageWidget
+                  location="bobQuickScreen"
+                  position={newRelativePosition(
+                    undefined,
+                    undefined,
+                    "100%",
+                    "100%"
+                  )}
+                  scroll={false}
+                  showCloseButton={false}
+                  targetDisplayType="displayGridLayout"
+                />
+              </MuiPaper>
+            )}
+
+            {!hasQuickScreen && !hasBobQuickScreen && (
+              <Typography
+                align="center"
+                sx={{
+                  width: "100%",
+                  height: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                No Quick Screen Loaded
+              </Typography>
+            )}
+          </Box>
         </StorageContext.Provider>
       </Box>
     </Paper>

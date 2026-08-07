@@ -24,6 +24,7 @@ import { useNavigate } from "react-router";
 import { useContext, useState } from "react";
 import LocalStorageBrowser from "./StorageBrowser";
 import { StorageContext } from "./Display";
+import BobFileBrowser from "./FileBrowser";
 
 const NEW_QUICK_SCREEN = {
   path: "/new.bob",
@@ -54,10 +55,12 @@ export default function QuickScreenSettings() {
   const theme = useTheme();
   const navigate = useNavigate();
   const [storageModalOpen, setStorageModalOpen] = useState(false);
+  const [bobModalOpen, setBobModalOpen] = useState(false);
   const quickScreenStorage = useContext(StorageContext);
 
   const handleCloseModal = (_event: any) => {
     setStorageModalOpen(false);
+    setBobModalOpen(false);
   };
 
   /**
@@ -75,7 +78,7 @@ export default function QuickScreenSettings() {
    * Adds a new screen to the current view to draw components from
    */
   const onClickAdd = () => {
-    console.log("clicked add");
+    setBobModalOpen(true);
   };
 
   /**
@@ -193,6 +196,43 @@ export default function QuickScreenSettings() {
               }}
             >
               <LocalStorageBrowser setModalOpen={setStorageModalOpen} />
+            </Stack>
+          </Grid>
+        </DialogContent>
+        <IconButton
+          aria-label="close"
+          onClick={handleCloseModal}
+          sx={theme => ({
+            position: "absolute",
+            right: 8,
+            top: 8,
+            color: theme.palette.primary.main
+          })}
+        >
+          <CloseIcon />
+        </IconButton>
+      </Dialog>
+      <Dialog
+        onClose={handleCloseModal}
+        aria-labelledby="bob-file-browser"
+        open={bobModalOpen}
+        fullWidth={true}
+      >
+        <DialogTitle sx={{ m: 0, p: 2 }} id="settings-menu-title">
+          Bob File Browser
+        </DialogTitle>
+        <DialogContent dividers>
+          <Grid container>
+            <Stack
+              direction="row"
+              spacing={2}
+              sx={{
+                width: "100%",
+                alignItems: "center",
+                justifyContent: "center"
+              }}
+            >
+              <BobFileBrowser />
             </Stack>
           </Grid>
         </DialogContent>

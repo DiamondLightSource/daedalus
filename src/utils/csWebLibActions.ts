@@ -5,14 +5,16 @@ export const executeOpenPageActionWithFileGuid = (
   beamlineState: BeamlineStateProperties,
   fileGuid: string,
   selectedBeamlineId: string,
-  fileContext: any
+  fileContext: any,
+  page?: string
 ) => {
   const fileMetadata = beamlineState.filePathIds[fileGuid];
   executeOpenPageActionWithFileMetadata(
     beamlineState,
     fileMetadata,
     selectedBeamlineId,
-    fileContext
+    fileContext,
+    page
   );
 };
 
@@ -21,6 +23,7 @@ export const executeOpenPageActionWithUrlId = (
   urlId: string | undefined,
   selectedBeamlineId: string,
   fileContext: any,
+  page?: string,
   extraMacros?: MacroMap
 ) => {
   const fileMetadata = Object.values(beamlineState.filePathIds).find(
@@ -32,6 +35,7 @@ export const executeOpenPageActionWithUrlId = (
     fileMetadata,
     selectedBeamlineId,
     fileContext,
+    page,
     extraMacros
   );
 };
@@ -41,6 +45,7 @@ export const executeOpenPageActionWithFileMetadata = (
   fileMetadata: FileMetadata | undefined,
   selectedBeamlineId: string,
   fileContext: any,
+  page?: string,
   overrideMacros?: MacroMap
 ) => {
   const newScreen = buildUrl(
@@ -60,7 +65,7 @@ export const executeOpenPageActionWithFileMetadata = (
 
   const beamlineUrlId = `/synoptic/${selectedBeamlineId}`;
 
-  const urlPath = fileMetadata?.urlId
+  const urlPath = page ? "/quick-screens" : fileMetadata?.urlId
     ? `${beamlineUrlId}/${fileMetadata.urlId}`
     : beamlineUrlId;
 
@@ -72,7 +77,8 @@ export const executeOpenPageActionWithFileMetadata = (
     protocol,
     fileContext,
     urlPath,
-    beamlineState.pvwsHost
+    page,
+    beamlineState.pvwsHost,
   );
 };
 
@@ -82,6 +88,7 @@ export const executeOpenPageAction = (
   protocol: string,
   fileContext: any,
   browserUrl: string,
+  page?: string,
   pvwsHost?: string
 ) => {
   executeAction(
@@ -89,7 +96,7 @@ export const executeOpenPageAction = (
       type: "OPEN_PAGE",
       dynamicInfo: {
         name: screenFileUrl,
-        location: "main",
+        location: page || "main",
         description: undefined,
         pvwsHost,
         file: {
