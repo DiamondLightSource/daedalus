@@ -10,9 +10,15 @@ import {
   Grid,
   Stack
 } from "@mui/material";
-import { setCurrentClass } from "@diamondlightsource/cs-web-lib";
+import {
+  setCurrentClass,
+  CS_WEB_LIB_VERSION
+} from "@diamondlightsource/cs-web-lib";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
+import pkg from "../../package.json" with { type: "json" };
+
+const DAEDALUS_VERSION = pkg.version;
 
 const Dialog = styled(MuiDialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -53,7 +59,7 @@ export default function SettingsModal(props: { open: boolean; setOpen: any }) {
       <DialogTitle sx={{ m: 0, p: 2 }} id="settings-menu-title">
         Settings
       </DialogTitle>
-      <DialogContent dividers>
+      <DialogContent dividers sx={{ position: "relative", pb: 5 }}>
         <Grid container>
           <Stack
             direction="row"
@@ -80,6 +86,20 @@ export default function SettingsModal(props: { open: boolean; setOpen: any }) {
             />
           </Stack>
         </Grid>
+        <Typography
+          variant="caption"
+          color="text.secondary"
+          sx={{
+            position: "absolute",
+            right: 16,
+            bottom: 8,
+            textAlign: "right"
+          }}
+        >
+          Daedalus: v{DAEDALUS_VERSION}
+          <br />
+          cs-web-lib: v{CS_WEB_LIB_VERSION}
+        </Typography>
       </DialogContent>
       <IconButton
         aria-label="close"
