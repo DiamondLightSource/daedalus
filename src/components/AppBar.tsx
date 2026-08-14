@@ -9,7 +9,7 @@ import { APP_BAR_HEIGHT, DRAWER_WIDTH } from "../utils/helper";
 import { Box, Tooltip } from "@mui/material";
 import DiamondLogo from "../assets/DiamondLogoWhite.svg";
 import { PageRouteInfo } from "../routes/PageRouteInfo";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import SettingsModal from "./SettingsModal";
 
 interface AppBarProps extends MuiAppBarProps {
@@ -57,6 +57,7 @@ const DLSAppBar = (props: {
   children?: React.ReactNode;
 }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const {
     fullScreen,
     open,
@@ -126,7 +127,9 @@ const DLSAppBar = (props: {
                       color="inherit"
                       aria-label={page.ariaLabel}
                       size="small"
-                      onClick={() => navigate(page.route)}
+                      onClick={() =>
+                        navigate(page.route, { state: location.state })
+                      }
                     >
                       {page.icon}
                     </IconButton>

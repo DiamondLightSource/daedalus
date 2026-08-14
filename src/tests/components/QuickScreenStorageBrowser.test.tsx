@@ -12,9 +12,13 @@ const testStore = configureStore({
   }
 });
 
-vi.mock("react-router", () => ({
-  useNavigate: () => vi.fn()
-}));
+vi.mock("react-router", async () => {
+  const actual = await vi.importActual("react-router");
+  return {
+    ...actual,
+    useNavigate: () => vi.fn()
+  };
+});
 
 vi.mock("../../hooks/useQuickScreens", () => ({
   useQuickScreens: vi.fn()

@@ -11,12 +11,15 @@ import FolderOpenIcon from "@mui/icons-material/FolderOpen";
 import { BeamlineTreeStateContext } from "../../App";
 import { Stack, Box, TextField, Button } from "@mui/material";
 import { findNodeById, getAllScreensWithChildrenItemIds } from "../utils";
-import { buildUrl, FileContext, useNotification } from "@diamondlightsource/cs-web-lib";
+import {
+  buildUrl,
+  FileContext,
+  useNotification
+} from "@diamondlightsource/cs-web-lib";
 import { LOAD_SCREENS } from "../../store";
 import { parseScreenTree, ScreenTreeViewBaseItem } from "../../utils/parser";
 import { useDispatch } from "react-redux";
 import { executeOpenPageActionWithFileGuid } from "../../utils/csWebLibActions";
-
 
 /**
  * Custom Tree Item that lets us change icon
@@ -58,10 +61,11 @@ export default function BobFileBrowser() {
   const [bobFileTree, setBobFileTree] = useState<ScreenTreeViewBaseItem[]>([]);
   const [selectedItemId, setSelectedItemId] = useState<string>("");
   const [selectedLabel, setSelectedLabel] = useState<string>("");
-  const [selectedBeamline, setSelectedBeamline] = useState<string | undefined>("");
+  const [selectedBeamline, setSelectedBeamline] = useState<string | undefined>(
+    ""
+  );
   const [expanded, setExpanded] = useState<TreeViewItemId[]>([]);
 
-  console.log(state);
   const isBeamlineSelected =
     !!selectedItemId && selectedItemId in state.beamlines;
 
@@ -101,9 +105,9 @@ export default function BobFileBrowser() {
     const newBeamlines = { ...state.beamlines };
     for (const [newBeamline, item] of Object.entries(newBeamlines)) {
       try {
-        console.log(newBeamline)
         const [tree, fileIDs, firstFile] = await parseScreenTree(
-          buildUrl(item.host, item.entryPoint), newBeamline
+          buildUrl(item.host, item.entryPoint),
+          newBeamline
         );
         item.screenTree = tree;
         item.filePathIds = fileIDs;
@@ -111,10 +115,10 @@ export default function BobFileBrowser() {
         item.loaded = true;
       } catch (e) {
         showWarning(
-          `Unable to process the beamline: ${newBeamline}. JsonMap file is not found where expected: ${item.host + item.entryPoint}.`
+          `Unable to process the beamline: ${newBeamline}. JsonMap file is not found where expected: ${buildUrl(item.host, item.entryPoint)}.`
         );
         console.error(
-          `Unable to process JSON map for ${newBeamline}. Check file is available at ${item.host + item.entryPoint} and reload.`
+          `Unable to process JSON map for ${newBeamline}. Check file is available at ${buildUrl(item.host, item.entryPoint)} and reload.`
         );
         console.error(e);
       }
@@ -132,11 +136,11 @@ export default function BobFileBrowser() {
       tree.push({
         id: beamline,
         label: beamline,
-        children: beamlineState.screenTree,
+        children: beamlineState.screenTree
       });
     }
     setBobFileTree(tree);
-  }, []);
+  }, [state.beamlines, showWarning, dispatch]);
 
   useEffect(() => {
     // On change of beamlines, reload

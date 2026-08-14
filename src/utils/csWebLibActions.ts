@@ -65,9 +65,11 @@ export const executeOpenPageActionWithFileMetadata = (
 
   const beamlineUrlId = `/synoptic/${selectedBeamlineId}`;
 
-  const urlPath = page ? "/quick-screens" : fileMetadata?.urlId
-    ? `${beamlineUrlId}/${fileMetadata.urlId}`
-    : beamlineUrlId;
+  const urlPath = page
+    ? "/quick-screens"
+    : fileMetadata?.urlId
+      ? `${beamlineUrlId}/${fileMetadata.urlId}`
+      : beamlineUrlId;
 
   const protocol = "ca";
 
@@ -78,7 +80,7 @@ export const executeOpenPageActionWithFileMetadata = (
     fileContext,
     urlPath,
     page,
-    beamlineState.pvwsHost,
+    beamlineState.pvwsHost
   );
 };
 

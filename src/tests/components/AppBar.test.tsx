@@ -79,7 +79,9 @@ describe("DLSAppBar Component", () => {
     const firstPageButton = screen.getByLabelText(PageRouteInfo[0].ariaLabel);
     fireEvent.click(firstPageButton);
 
-    expect(mockHistoryPush).toHaveBeenCalledWith(PageRouteInfo[0].route);
+    expect(mockHistoryPush).toHaveBeenCalledWith(PageRouteInfo[0].route, {
+      state: null
+    });
   });
 
   it("applies correct styling when fullScreen is true", () => {

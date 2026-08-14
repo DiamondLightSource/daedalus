@@ -7,10 +7,16 @@ const renderComponent = () => {
 };
 
 const mockNavigate = vi.fn();
+const mockLocation = vi.fn();
 
-vi.mock("react-router", () => ({
-  useNavigate: vi.fn(() => mockNavigate)
-}));
+vi.mock("react-router", async () => {
+  const actual = await vi.importActual("react-router");
+  return {
+    ...actual,
+    useNavigate: () => mockNavigate,
+    useLocation: () => mockLocation()
+  };
+});
 
 describe("<QuickScreenSettings />", () => {
   it("renders all buttons", () => {
@@ -27,6 +33,11 @@ describe("<QuickScreenSettings />", () => {
   });
 
   it("loads a blank quick screen when new button clicked", () => {
+    mockLocation.mockReturnValue({
+      state: {
+        pageState: {}
+      }
+    });
     const { getByRole } = renderComponent();
     const button = getByRole("button", { name: /new/i });
     fireEvent.click(button);

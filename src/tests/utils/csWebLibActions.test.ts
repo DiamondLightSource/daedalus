@@ -22,6 +22,7 @@ describe("executeAction: OPEN_PAGE", () => {
     mockBeamlineState = {
       host: "http://example.com",
       topLevelScreen: "default-screen",
+      pvwsHost: "ws://pvws.diamond.ac.uk",
       filePathIds: {
         "guid-1": {
           file: "screen1.opi",
@@ -200,6 +201,7 @@ describe("executeAction: OPEN_PAGE", () => {
           dynamicInfo: {
             name: expectedUrl,
             location: "main",
+            pvwsHost: "ws://pvws.diamond.ac.uk",
             description: undefined,
             file: {
               path: expectedUrl,
@@ -238,6 +240,7 @@ describe("executeAction: OPEN_PAGE", () => {
           dynamicInfo: {
             name: expectedUrl,
             location: "main",
+            pvwsHost: "ws://pvws.diamond.ac.uk",
             description: undefined,
             file: {
               path: expectedUrl,
@@ -336,5 +339,68 @@ describe("executeAction: OPEN_PAGE", () => {
         expectedUrlPath
       );
     });
+
+    it("should prefer overrideMacros over file metadata macros", () => {
+      const fileMetadata: FileMetadata = {
+        file: "screen.opi",
+        urlId: "screen",
+        macros: [{ original: "value" }]
+      };
+
+      executeOpenPageActionWithFileMetadata(
+        mockBeamlineState,
+        fileMetadata,
+        "beamline-1",
+        mockFileContext,
+        undefined,
+        {
+          override: "macro"
+        }
+      );
+
+      expect(executeAction).toHaveBeenCalledWith(
+        expect.objectContaining({
+          dynamicInfo: expect.objectContaining({
+            file: expect.objectContaining({
+              macros: {
+                override: "macro"
+              }
+            })
+          })
+        }),
+        mockFileContext,
+        undefined,
+        {},
+        "/synoptic/beamline-1/screen"
+      );
+    });
+  });
+
+  it("should use /quick-screens when page is supplied", () => {
+    const fileMetadata: FileMetadata = {
+      file: "screen.bob",
+      urlId: "screen",
+      macros: []
+    };
+
+    executeOpenPageActionWithFileMetadata(
+      mockBeamlineState,
+      fileMetadata,
+      "beamline-1",
+      mockFileContext,
+      "details"
+    );
+
+    expect(executeAction).toHaveBeenCalledWith(
+      expect.objectContaining({
+        dynamicInfo: expect.objectContaining({
+          location: "details"
+        })
+      }),
+      mockFileContext,
+      undefined,
+      {},
+      "/quick-screens"
+    );
   });
 });

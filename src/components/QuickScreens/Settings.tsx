@@ -20,7 +20,7 @@ import {
   Stack,
   Tooltip
 } from "@mui/material";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { useContext, useState } from "react";
 import LocalStorageBrowser from "./StorageBrowser";
 import { StorageContext } from "./Display";
@@ -54,6 +54,7 @@ const Dialog = styled(MuiDialog)(({ theme }) => ({
 export default function QuickScreenSettings() {
   const theme = useTheme();
   const navigate = useNavigate();
+  const location = useLocation();
   const [storageModalOpen, setStorageModalOpen] = useState(false);
   const [bobModalOpen, setBobModalOpen] = useState(false);
   const quickScreenStorage = useContext(StorageContext);
@@ -69,7 +70,12 @@ export default function QuickScreenSettings() {
   const onClickNew = () => {
     //Change to a blank Quick Screen
     navigate("/quick-screens/", {
-      state: { pageState: { quickScreen: NEW_QUICK_SCREEN } },
+      state: {
+        pageState: {
+          ...(location.state ? location.state.pageState : {}),
+          quickScreen: NEW_QUICK_SCREEN
+        }
+      },
       replace: true
     });
   };

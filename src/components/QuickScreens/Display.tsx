@@ -80,7 +80,7 @@ export default function QuickScreenDisplay() {
                     "100%",
                     "100%"
                   )}
-                  scroll={false}
+                  scroll={true}
                   showCloseButton={false}
                   widgetIdsCallback={uuid => {
                     setBobDisplayUuid(uuid);
@@ -107,7 +107,7 @@ export default function QuickScreenDisplay() {
                     "100%",
                     "100%"
                   )}
-                  scroll={false}
+                  scroll={true}
                   showCloseButton={false}
                   targetDisplayType="displayGridLayout"
                 />
