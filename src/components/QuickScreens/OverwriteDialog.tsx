@@ -27,7 +27,7 @@ export default function OverwriteDialog({
   const isCurrentScreen =
     location.state?.pageState?.quickScreen?.path === filename;
   return (
-    <Dialog open={open} onClose={onConfirm}>
+    <Dialog open={open} onClose={onCancel}>
       <DialogTitle>{`${isOverwrite ? "Overwrite" : "Delete"} Quick Screen?`}</DialogTitle>
       <DialogContent>
         <DialogContentText>
@@ -35,7 +35,7 @@ export default function OverwriteDialog({
             <>
               A Quick Screen named <strong>{filename}</strong> already exists.
               Saving will replace the existing content. Are you sure you want to
-              continue?`
+              continue?
             </>
           ) : (
             <>

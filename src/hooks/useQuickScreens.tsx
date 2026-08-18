@@ -154,7 +154,14 @@ export function useQuickScreens({
 
     setPendingAction(null);
     refreshTree();
-  }, [pendingAction, createScreen, onCompleted, refreshTree]);
+  }, [
+    pendingAction,
+    createScreen,
+    onCompleted,
+    refreshTree,
+    navigate,
+    location
+  ]);
 
   // Called when the user cancels the action
   const cancelPendingAction = useCallback(() => {

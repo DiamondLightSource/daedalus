@@ -16,7 +16,8 @@ vi.mock("react-router", async () => {
   const actual = await vi.importActual("react-router");
   return {
     ...actual,
-    useNavigate: () => vi.fn()
+    useNavigate: () => vi.fn(),
+    useLocation: () => vi.fn()
   };
 });
 
@@ -29,8 +30,9 @@ const mockShowWarning = vi.fn();
 const mockShowError = vi.fn();
 const mockSave = vi.fn();
 const mockLoad = vi.fn();
-const mockConfirmOverwrite = vi.fn();
-const mockCancelOverwrite = vi.fn();
+const mockRequestDelete = vi.fn();
+const mockConfirmPendingAction = vi.fn();
+const mockCancelPendingAction = vi.fn();
 
 let mockFileContent: any = {
   macros: {
@@ -80,13 +82,14 @@ describe("LocalStorageBrowser", () => {
           ]
         }
       ],
-      expanded: [],
+      expanded: ["folder"],
       setExpanded: vi.fn(),
       save: mockSave,
       load: mockLoad,
-      pendingOverwrite: null,
-      confirmOverwrite: mockConfirmOverwrite,
-      cancelOverwrite: mockCancelOverwrite
+      requestDelete: mockRequestDelete,
+      pendingAction: null,
+      confirmPendingAction: mockConfirmPendingAction,
+      cancelPendingAction: mockCancelPendingAction
     });
     mockFileContent = {
       macros: {
@@ -178,5 +181,27 @@ describe("LocalStorageBrowser", () => {
         })
       ).toBeDisabled();
     });
+  });
+
+  it("shows delete buttons for files", async () => {
+    const { queryByRole } = renderComponent();
+
+    expect(
+      queryByRole("button", {
+        name: "Delete file"
+      })
+    ).toBeInTheDocument();
+  });
+
+  it("requests deletion when the delete button is clicked", async () => {
+    const { findByRole } = renderComponent();
+
+    const deleteButton = await findByRole("button", {
+      name: "Delete file"
+    });
+
+    fireEvent.click(deleteButton);
+
+    expect(mockRequestDelete).toHaveBeenCalledWith("folder/file");
   });
 });

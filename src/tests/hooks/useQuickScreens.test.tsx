@@ -3,9 +3,10 @@ import { useQuickScreens, getQuickScreens } from "../../hooks/useQuickScreens";
 import { act, render, waitFor } from "@testing-library/react";
 
 const mockUseLocation = vi.fn();
+const mockNavigate = vi.fn();
 
 vi.mock("react-router", () => ({
-  useNavigate: () => vi.fn(),
+  useNavigate: () => mockNavigate,
   useLocation: () => mockUseLocation()
 }));
 
@@ -54,6 +55,13 @@ describe("useQuickScreens", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     localStorage.clear();
+    mockUseLocation.mockReturnValue({
+      state: {
+        pageState: {
+          bobQuickScreen: "test"
+        }
+      }
+    });
   });
 
   it("loads Quick Screens", async () => {
@@ -144,8 +152,7 @@ describe("useQuickScreens", () => {
 
     expect(localStorage.length).toBe(0);
   });
-
-  it("sets pending overwrite when user needs to confirm overwrite existing", () => {
+  it("sets pending overwrite action when user needs to confirm overwrite", () => {
     localStorage.setItem(
       "quickScreens/test identical",
       JSON.stringify({
@@ -173,7 +180,10 @@ describe("useQuickScreens", () => {
       getResult().save("test identical");
     });
 
-    expect(getResult().pendingOverwrite).toEqual("test identical");
+    expect(getResult().pendingAction).toEqual({
+      type: "overwrite",
+      name: "test identical"
+    });
   });
 
   it("confirms quick screen overwrite", () => {
@@ -195,14 +205,20 @@ describe("useQuickScreens", () => {
     act(() => {
       getResult().save("test");
     });
-    expect(getResult().pendingOverwrite).toEqual("test");
+
+    expect(getResult().pendingAction).toEqual({
+      type: "overwrite",
+      name: "test"
+    });
 
     act(() => {
-      getResult().confirmOverwrite();
+      getResult().confirmPendingAction();
     });
-    expect(getResult().pendingOverwrite).toBeNull();
+
+    expect(getResult().pendingAction).toBeNull();
 
     expect(onCompleted).toHaveBeenCalled();
+
     expect(localStorage.getItem("quickScreens/test")).toEqual(
       JSON.stringify({
         macros: {
@@ -214,6 +230,8 @@ describe("useQuickScreens", () => {
   });
 
   it("cancels quick screen overwrite", () => {
+    localStorage.setItem("quickScreens/screen", "old");
+
     const { getResult } = testRenderer({
       displayInstance: {
         macros: {},
@@ -226,11 +244,97 @@ describe("useQuickScreens", () => {
     act(() => {
       getResult().save("screen");
     });
-    act(() => {
-      getResult().cancelOverwrite();
+
+    expect(getResult().pendingAction).toEqual({
+      type: "overwrite",
+      name: "screen"
     });
 
-    expect(getResult().pendingOverwrite).toBeNull();
+    act(() => {
+      getResult().cancelPendingAction();
+    });
+
+    expect(getResult().pendingAction).toBeNull();
+  });
+
+  it("sets pending delete action when deleting a Quick Screen", () => {
+    localStorage.setItem("quickScreens/test", "content");
+
+    const { getResult } = testRenderer({
+      displayInstance: {},
+      addDisplayInstanceByDescription: vi.fn(),
+      onCompleted: vi.fn()
+    });
+
+    act(() => {
+      getResult().requestDelete("test");
+    });
+
+    expect(getResult().pendingAction).toEqual({
+      type: "delete",
+      name: "test"
+    });
+  });
+
+  it("confirms Quick Screen deletion", () => {
+    localStorage.setItem("quickScreens/test", "content");
+
+    const { getResult } = testRenderer({
+      displayInstance: {},
+      addDisplayInstanceByDescription: vi.fn(),
+      onCompleted: vi.fn()
+    });
+
+    act(() => {
+      getResult().requestDelete("test");
+    });
+
+    expect(getResult().pendingAction).toEqual({
+      type: "delete",
+      name: "test"
+    });
+
+    act(() => {
+      getResult().confirmPendingAction();
+    });
+
+    expect(localStorage.getItem("quickScreens/test")).toBeNull();
+    expect(getResult().pendingAction).toBeNull();
+
+    expect(mockNavigate).toHaveBeenCalledWith("/quick-screens/", {
+      state: {
+        pageState: {
+          bobQuickScreen: "test"
+        }
+      }
+    });
+  });
+
+  it("cancels Quick Screen deletion", () => {
+    localStorage.setItem("quickScreens/test", "content");
+
+    const { getResult } = testRenderer({
+      displayInstance: {},
+      addDisplayInstanceByDescription: vi.fn(),
+      onCompleted: vi.fn()
+    });
+
+    act(() => {
+      getResult().requestDelete("test");
+    });
+
+    expect(getResult().pendingAction).toEqual({
+      type: "delete",
+      name: "test"
+    });
+
+    act(() => {
+      getResult().cancelPendingAction();
+    });
+
+    expect(getResult().pendingAction).toBeNull();
+    expect(localStorage.getItem("quickScreens/test")).toBe("content");
+    expect(mockNavigate).not.toHaveBeenCalled();
   });
 
   it("loads an existing quick screen", () => {
