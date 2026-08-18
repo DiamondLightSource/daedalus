@@ -26,10 +26,9 @@ describe("<QuickScreenSettings />", () => {
     expect(getByText("Add")).toBeInTheDocument();
     expect(getByText("Save")).toBeInTheDocument();
     expect(getByText("Load")).toBeInTheDocument();
-    expect(getByText("Delete")).toBeInTheDocument();
 
     // Check all five icons appear
-    expect(container.querySelectorAll("svg")).toHaveLength(5);
+    expect(container.querySelectorAll("svg")).toHaveLength(4);
   });
 
   it("loads a blank quick screen when new button clicked", () => {

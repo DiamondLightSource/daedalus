@@ -14,6 +14,11 @@ interface UseQuickScreensProps {
   onCompleted: () => void;
 }
 
+type PendingAction =
+  | { type: "overwrite"; name: string }
+  | { type: "delete"; name: string }
+  | null;
+
 /**
  * Hook for loading and parsing Quick Screens from the local storage tree
  * @param displayInstance
@@ -32,7 +37,7 @@ export function useQuickScreens({
   const [tree, setTree] = useState<TreeViewBaseItem[]>([]);
   const [expanded, setExpanded] = useState<TreeViewItemId[]>([]);
   // Name of the file we are currently overwriting
-  const [pendingOverwrite, setPendingOverwrite] = useState<string | null>(null);
+  const [pendingAction, setPendingAction] = useState<PendingAction>(null);
 
   // Reloads all files in the tree
   const refreshTree = useCallback(() => {
@@ -70,7 +75,10 @@ export function useQuickScreens({
       const existing = localStorage.getItem(`quickScreens/${name}`);
       const newContent = createScreen();
       if (existing && existing !== newContent) {
-        setPendingOverwrite(name);
+        setPendingAction({
+          type: "overwrite",
+          name
+        });
         return;
       }
       localStorage.setItem(`quickScreens/${name}`, newContent);
@@ -86,23 +94,6 @@ export function useQuickScreens({
       onCompleted
     ]
   );
-
-  // Called when user has confirmed overwriting file
-  const confirmOverwrite = useCallback(() => {
-    if (!pendingOverwrite) return;
-
-    // Add quickScreens at start to put in correct storage location
-    localStorage.setItem(`quickScreens/${pendingOverwrite}`, createScreen());
-
-    setPendingOverwrite(null);
-    refreshTree();
-    onCompleted();
-  }, [pendingOverwrite, createScreen, refreshTree, onCompleted]);
-
-  // Called when user doesn't confirm overwritinf ile
-  const cancelOverwrite = useCallback(() => {
-    setPendingOverwrite(null);
-  }, []);
 
   // Loading a Quick Screen from local storage
   const load = useCallback(
@@ -131,15 +122,62 @@ export function useQuickScreens({
     [addDisplayInstanceByDescription, navigate, location, showWarning]
   );
 
+  const requestDelete = useCallback((name: string) => {
+    setPendingAction({
+      type: "delete",
+      name
+    });
+  }, []);
+
+  // Called when the user wants to do the action
+  const confirmPendingAction = useCallback(() => {
+    if (!pendingAction) return;
+
+    if (pendingAction.type === "overwrite") {
+      // Overwrite the current file
+      localStorage.setItem(
+        `quickScreens/${pendingAction.name}`,
+        createScreen()
+      );
+      onCompleted();
+    } else {
+      // Delete the current file
+      localStorage.removeItem(`quickScreens/${pendingAction.name}`);
+      navigate("/quick-screens/", {
+        state: {
+          pageState: {
+            bobQuickScreen: location.state.pageState.bobQuickScreen
+          }
+        }
+      });
+    }
+
+    setPendingAction(null);
+    refreshTree();
+  }, [
+    pendingAction,
+    createScreen,
+    onCompleted,
+    refreshTree,
+    navigate,
+    location
+  ]);
+
+  // Called when the user cancels the action
+  const cancelPendingAction = useCallback(() => {
+    setPendingAction(null);
+  }, []);
+
   return {
     tree,
     expanded,
     setExpanded,
     save,
     load,
-    pendingOverwrite,
-    confirmOverwrite,
-    cancelOverwrite
+    requestDelete,
+    pendingAction,
+    confirmPendingAction,
+    cancelPendingAction
   };
 }
 

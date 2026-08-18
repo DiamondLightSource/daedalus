@@ -6,7 +6,7 @@ import {
   TreeViewItemId,
   useTreeItem2
 } from "@mui/x-tree-view";
-import { Box, Button, Stack, TextField } from "@mui/material";
+import { Box, Button, IconButton, Stack, TextField } from "@mui/material";
 import { useDisplayInstance } from "@diamondlightsource/cs-web-lib";
 import { StorageContext } from "./Display";
 import { findNodeById } from "../utils";
@@ -15,21 +15,29 @@ import OverwriteDialog from "./OverwriteDialog";
 import FolderIcon from "@mui/icons-material/Folder";
 import FolderOpenIcon from "@mui/icons-material/FolderOpen";
 import SubdirectoryArrowRightIcon from "@mui/icons-material/SubdirectoryArrowRight";
+import DeleteIcon from "@mui/icons-material/Delete";
+
+interface QuickScreenTreeItemProps extends TreeItem2Props {
+  onDelete: (itemId: string) => void;
+}
 
 /**
  * Custom Tree Item that lets us change icon
  * @param props
  * @returns
  */
-function QuickScreenTreeItem(props: TreeItem2Props) {
+function QuickScreenTreeItem(props: QuickScreenTreeItemProps) {
+  const { onDelete, ...treeItemProps } = props;
   const { status } = useTreeItem2({
     itemId: props.itemId,
     children: props.children
   });
 
+  const isFolder = status.expandable;
+
   return (
     <TreeItem2
-      {...props}
+      {...treeItemProps}
       slots={{
         icon: () =>
           status.expandable ? (
@@ -42,6 +50,45 @@ function QuickScreenTreeItem(props: TreeItem2Props) {
             <SubdirectoryArrowRightIcon fontSize="small" />
           )
       }}
+      label={
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            width: "100%",
+            "& .quick-screen-delete": {
+              opacity: 0,
+              transition: "opacity 0.15s ease"
+            },
+
+            "&:hover .quick-screen-delete": {
+              opacity: 1
+            }
+          }}
+        >
+          <Box sx={{ flexGrow: 1 }}>{props.label}</Box>
+
+          {!isFolder && (
+            <IconButton
+              className="quick-screen-delete"
+              size="small"
+              color="error"
+              aria-label={`Delete ${props.label}`}
+              onClick={event => {
+                // Prevent expansion on click
+                event.stopPropagation();
+                onDelete(props.itemId);
+              }}
+              onMouseDown={event => {
+                // Prevent expansion on click
+                event.stopPropagation();
+              }}
+            >
+              <DeleteIcon fontSize="small" />
+            </IconButton>
+          )}
+        </Box>
+      }
     />
   );
 }
@@ -58,9 +105,10 @@ export default function LocalStorageBrowser(props: { setModalOpen: any }) {
     setExpanded,
     save,
     load,
-    pendingOverwrite,
-    confirmOverwrite,
-    cancelOverwrite
+    requestDelete,
+    pendingAction,
+    confirmPendingAction,
+    cancelPendingAction
   } = useQuickScreens({
     displayInstance,
     addDisplayInstanceByDescription,
@@ -74,6 +122,9 @@ export default function LocalStorageBrowser(props: { setModalOpen: any }) {
 
   const selectedIsFolder = !!selectedNode?.children?.length;
 
+  const QuickScreenTreeItemWithDelete = (props: TreeItem2Props) => (
+    <QuickScreenTreeItem {...props} onDelete={requestDelete} />
+  );
   return (
     <Stack spacing={2}>
       <Box
@@ -92,7 +143,7 @@ export default function LocalStorageBrowser(props: { setModalOpen: any }) {
           onExpandedItemsChange={(_, ids) =>
             setExpanded(ids as TreeViewItemId[])
           }
-          slots={{ item: QuickScreenTreeItem }}
+          slots={{ item: QuickScreenTreeItemWithDelete }}
         />
       </Box>
       <Stack direction="row" spacing={2}>
@@ -115,10 +166,11 @@ export default function LocalStorageBrowser(props: { setModalOpen: any }) {
         </Button>
       </Stack>
       <OverwriteDialog
-        open={pendingOverwrite !== null}
-        filename={pendingOverwrite ?? ""}
-        onCancel={cancelOverwrite}
-        onConfirm={confirmOverwrite}
+        open={pendingAction !== null}
+        filename={pendingAction?.name ?? ""}
+        onCancel={cancelPendingAction}
+        onConfirm={confirmPendingAction}
+        isOverwrite={pendingAction?.type === "overwrite"}
       />
     </Stack>
   );
