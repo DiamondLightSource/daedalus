@@ -8,7 +8,6 @@ import AddIcon from "@mui/icons-material/Add";
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 import SaveIcon from "@mui/icons-material/Save";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
-import DeleteIcon from "@mui/icons-material/Delete";
 import CloseIcon from "@mui/icons-material/Close";
 import {
   Dialog as MuiDialog,
@@ -103,14 +102,6 @@ export default function QuickScreenSettings() {
     quickScreenStorage.setBrowsingMode("Load");
   };
 
-  /**
-   * Loads a quick screen from local storage
-   */
-  const onClickDelete = () => {
-    console.log("clicked delete");
-    quickScreenStorage.setBrowsingMode("Delete");
-  };
-
   const SETTINGS_LIST = [
     {
       name: "New",
@@ -119,10 +110,10 @@ export default function QuickScreenSettings() {
       onClick: onClickNew
     },
     {
-      name: "Add",
-      text: "Add a .bob file to the view",
-      icon: <LibraryAddIcon />,
-      onClick: onClickAdd
+      name: "Load",
+      text: "Browse and Load Quick Screens",
+      icon: <UploadFileIcon />,
+      onClick: onClickLoad
     },
     {
       name: "Save",
@@ -131,16 +122,10 @@ export default function QuickScreenSettings() {
       onClick: onClickSave
     },
     {
-      name: "Load",
-      text: "Load a Quick Screen",
-      icon: <UploadFileIcon />,
-      onClick: onClickLoad
-    },
-    {
-      name: "Delete",
-      text: "Discard the current Quick Screen",
-      icon: <DeleteIcon />,
-      onClick: onClickDelete
+      name: "Add",
+      text: "Add a .bob file to the view",
+      icon: <LibraryAddIcon />,
+      onClick: onClickAdd
     }
   ];
 

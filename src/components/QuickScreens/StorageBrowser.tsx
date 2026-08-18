@@ -32,7 +32,7 @@ function QuickScreenTreeItem(props: QuickScreenTreeItemProps) {
     itemId: props.itemId,
     children: props.children
   });
-  
+
   const isFolder = status.expandable;
 
   return (
@@ -66,9 +66,7 @@ function QuickScreenTreeItem(props: QuickScreenTreeItemProps) {
             }
           }}
         >
-          <Box sx={{ flexGrow: 1 }}>
-            {props.label}
-          </Box>
+          <Box sx={{ flexGrow: 1 }}>{props.label}</Box>
 
           {!isFolder && (
             <IconButton
@@ -94,7 +92,6 @@ function QuickScreenTreeItem(props: QuickScreenTreeItemProps) {
     />
   );
 }
-
 
 export default function LocalStorageBrowser(props: { setModalOpen: any }) {
   const storage = useContext(StorageContext);
@@ -126,11 +123,8 @@ export default function LocalStorageBrowser(props: { setModalOpen: any }) {
   const selectedIsFolder = !!selectedNode?.children?.length;
 
   const QuickScreenTreeItemWithDelete = (props: TreeItem2Props) => (
-  <QuickScreenTreeItem
-    {...props}
-    onDelete={requestDelete}
-  />
-);
+    <QuickScreenTreeItem {...props} onDelete={requestDelete} />
+  );
   return (
     <Stack spacing={2}>
       <Box

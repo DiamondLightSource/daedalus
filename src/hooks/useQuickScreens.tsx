@@ -124,38 +124,42 @@ export function useQuickScreens({
 
   const requestDelete = useCallback((name: string) => {
     setPendingAction({
-        type: "delete",
-        name
-      });
-    }, []);
+      type: "delete",
+      name
+    });
+  }, []);
 
   // Called when the user wants to do the action
   const confirmPendingAction = useCallback(() => {
     if (!pendingAction) return;
 
     if (pendingAction.type === "overwrite") {
+      // Overwrite the current file
       localStorage.setItem(
         `quickScreens/${pendingAction.name}`,
         createScreen()
       );
       onCompleted();
     } else {
+      // Delete the current file
       localStorage.removeItem(`quickScreens/${pendingAction.name}`);
+      navigate("/quick-screens/", {
+        state: {
+          pageState: {
+            bobQuickScreen: location.state.pageState.bobQuickScreen
+          }
+        }
+      });
     }
 
     setPendingAction(null);
     refreshTree();
-  }, [
-    pendingAction,
-    createScreen,
-    onCompleted,
-    refreshTree
-  ]);
+  }, [pendingAction, createScreen, onCompleted, refreshTree]);
 
   // Called when the user cancels the action
   const cancelPendingAction = useCallback(() => {
-  setPendingAction(null);
-}, []);
+    setPendingAction(null);
+  }, []);
 
   return {
     tree,
