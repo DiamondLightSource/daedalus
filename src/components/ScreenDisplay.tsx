@@ -87,13 +87,25 @@ export default function ScreenDisplay() {
         });
       }
     }
-  }, [fileContext.pageState.main]);
+  }, [
+    fileContext.pageState.main,
+    beamlineState,
+    location,
+    navigate,
+    selectedBeamlineId
+  ]);
 
   const handleQuickScreenClick = () => {
     try {
       // Opens new quick screen page, passing current file state
+      console.log(location.state.pageState);
       navigate("/quick-screens/", {
-        state: { pageState: { quickScreen: location.state.pageState.main } }
+        state: {
+          pageState: {
+            ...location.state.pageState,
+            bobQuickScreen: location.state.pageState.main
+          }
+        }
       });
     } catch (e) {
       showWarning(

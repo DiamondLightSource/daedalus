@@ -2,8 +2,11 @@ import { describe, beforeEach, it, expect, vi } from "vitest";
 import { useQuickScreens, getQuickScreens } from "../../hooks/useQuickScreens";
 import { act, render, waitFor } from "@testing-library/react";
 
+const mockUseLocation = vi.fn();
+
 vi.mock("react-router", () => ({
-  useNavigate: () => vi.fn()
+  useNavigate: () => vi.fn(),
+  useLocation: () => mockUseLocation()
 }));
 
 vi.mock("@diamondlightsource/cs-web-lib", () => ({
@@ -231,6 +234,17 @@ describe("useQuickScreens", () => {
   });
 
   it("loads an existing quick screen", () => {
+    mockUseLocation.mockReturnValue({
+      state: {
+        pageState: {
+          quickScreen: {
+            path: "wow.bob",
+            macros: {},
+            defaultProtocol: "ca"
+          }
+        }
+      }
+    });
     const addDisplayInstanceByDescription = vi.fn();
 
     localStorage.setItem(

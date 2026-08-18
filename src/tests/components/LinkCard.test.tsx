@@ -28,6 +28,8 @@ describe("LinkCard", (): void => {
     const card = getByText("Testing");
     expect(card).toBeInTheDocument();
     await fireEvent.click(card);
-    expect(mockHistoryPush).toHaveBeenCalledExactlyOnceWith("/test");
+    expect(mockHistoryPush).toHaveBeenCalledExactlyOnceWith("/test", {
+      state: null
+    });
   });
 });

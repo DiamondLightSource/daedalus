@@ -23,9 +23,9 @@ describe("getAllScreensWithChildrenItemIds()", () => {
       }
     ];
 
-    getAllScreensWithChildrenItemIds(tree, setExpandedScreens);
+    const ids = getAllScreensWithChildrenItemIds(tree);
 
-    expect(setExpandedScreens).toHaveBeenCalledWith([]);
+    expect(ids).toEqual([]);
   });
 
   it("returns top-level folders with children", () => {
@@ -42,9 +42,9 @@ describe("getAllScreensWithChildrenItemIds()", () => {
       }
     ];
 
-    getAllScreensWithChildrenItemIds(tree, setExpandedScreens);
+    const ids = getAllScreensWithChildrenItemIds(tree);
 
-    expect(setExpandedScreens).toHaveBeenCalledWith(["folder1"]);
+    expect(ids).toEqual(["folder1"]);
   });
 
   it("loops over nested folders", () => {
@@ -67,11 +67,9 @@ describe("getAllScreensWithChildrenItemIds()", () => {
       }
     ];
 
-    getAllScreensWithChildrenItemIds(tree, setExpandedScreens);
-    expect(setExpandedScreens).toHaveBeenCalledWith([
-      "folder 1",
-      "folder 1/subfolder"
-    ]);
+    const ids = getAllScreensWithChildrenItemIds(tree);
+    expect(ids).toContain("folder 1/subfolder");
+    expect(ids).toContain("folder 1");
   });
 
   it("does not include childless nodes", () => {
@@ -88,10 +86,9 @@ describe("getAllScreensWithChildrenItemIds()", () => {
       }
     ];
 
-    getAllScreensWithChildrenItemIds(tree, setExpandedScreens);
-    const expandedIds = setExpandedScreens.mock.calls[0][0];
-    expect(expandedIds).not.toContain("screen");
-    expect(expandedIds).toContain("folder");
+    const ids = getAllScreensWithChildrenItemIds(tree);
+    expect(ids).not.toContain("screen");
+    expect(ids).toContain("folder");
   });
 });
 

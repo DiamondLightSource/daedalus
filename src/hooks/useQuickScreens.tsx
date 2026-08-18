@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { TreeViewBaseItem, TreeViewItemId } from "@mui/x-tree-view";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { useNotification } from "@diamondlightsource/cs-web-lib";
 import { getAllScreensWithChildrenItemIds } from "../components/utils";
 
@@ -27,6 +27,7 @@ export function useQuickScreens({
   onCompleted
 }: UseQuickScreensProps) {
   const navigate = useNavigate();
+  const location = useLocation();
   const { showWarning, showError } = useNotification();
   const [tree, setTree] = useState<TreeViewBaseItem[]>([]);
   const [expanded, setExpanded] = useState<TreeViewItemId[]>([]);
@@ -37,7 +38,8 @@ export function useQuickScreens({
   const refreshTree = useCallback(() => {
     const screens = getQuickScreens();
     setTree(screens);
-    getAllScreensWithChildrenItemIds(screens, setExpanded);
+    const allScreens = getAllScreensWithChildrenItemIds(screens);
+    setExpanded(allScreens);
   }, []);
 
   useEffect(() => {
@@ -113,10 +115,10 @@ export function useQuickScreens({
 
       const screen = JSON.parse(stored);
       addDisplayInstanceByDescription(name, screen.macros, screen.description);
-
       navigate("/quick-screens/", {
         state: {
           pageState: {
+            ...location.state.pageState,
             quickScreen: {
               path: name,
               macros: screen.macros,
@@ -126,7 +128,7 @@ export function useQuickScreens({
         }
       });
     },
-    [addDisplayInstanceByDescription, navigate, showWarning]
+    [addDisplayInstanceByDescription, navigate, location, showWarning]
   );
 
   return {

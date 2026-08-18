@@ -6,7 +6,7 @@ import {
   CardActionArea,
   useTheme
 } from "@mui/material";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 interface LinkCardProps extends CardProps {
   info: {
     name: string;
@@ -18,11 +18,12 @@ interface LinkCardProps extends CardProps {
 export default function LinkCard(props: LinkCardProps) {
   const theme = useTheme();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { info } = props;
 
   const handleCardClick = (route: string) => {
-    navigate(route);
+    navigate(route, { state: location.state });
   };
 
   return (

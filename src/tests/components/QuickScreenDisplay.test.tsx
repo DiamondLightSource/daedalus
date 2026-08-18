@@ -8,10 +8,14 @@ const renderComponent = () => {
 
 const mockUseLocation = vi.fn();
 
-vi.mock("react-router", () => ({
-  useLocation: () => mockUseLocation(),
-  useNavigate: () => vi.fn()
-}));
+vi.mock("react-router", async () => {
+  const actual = await vi.importActual("react-router");
+  return {
+    ...actual,
+    useLocation: () => mockUseLocation(),
+    useNavigate: () => vi.fn()
+  };
+});
 
 vi.mock("@diamondlightsource/cs-web-lib", async () => {
   const actual = await vi.importActual("@diamondlightsource/cs-web-lib");

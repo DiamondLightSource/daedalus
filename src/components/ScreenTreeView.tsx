@@ -38,7 +38,8 @@ export default function ScreenTreeView() {
 
   // When beamline is updated, trigger refresh of expanded screens to fully expand all
   useEffect(() => {
-    getAllScreensWithChildrenItemIds(currentScreenTree, setExpandedScreens);
+    const allScreens = getAllScreensWithChildrenItemIds(currentScreenTree);
+    setExpandedScreens(allScreens);
   }, [state.currentBeamline, state.beamlines, currentScreenTree]);
 
   return (
