@@ -12,28 +12,31 @@ interface OverwriteDialogProps {
   filename: string;
   onCancel: () => void;
   onConfirm: () => void;
+  isOverwrite: boolean;
 }
 
 export default function OverwriteDialog({
   open,
   filename,
   onCancel,
-  onConfirm
+  onConfirm,
+  isOverwrite
 }: OverwriteDialogProps) {
   return (
     <Dialog open={open} onClose={onConfirm}>
-      <DialogTitle>Overwrite Quick Screen?</DialogTitle>
+      <DialogTitle>{`${isOverwrite ? "Overwrite" : "Delete"} Quick Screen?`}</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          A Quick Screen named <strong>{filename}</strong> already exists.
-          Saving will replace the existing content. Are you sure you want to
-          continue?
+          {isOverwrite ? (<>A Quick Screen named <strong>{filename}</strong> already exists.
+          Saving will replace the existing content. Are you sure you want to continue?`</>) : 
+          (<>You're about to delete the Quick Screen <strong>{filename}</strong>. 
+          This action cannot be undone, and all data will be lost. Are you sure you want to continue?</>)}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={onCancel}>Cancel</Button>
         <Button variant="contained" color="warning" onClick={onConfirm}>
-          Save and overwrite
+          {isOverwrite ? "Save and overwrite" : "Confirm and delete"}
         </Button>
       </DialogActions>
     </Dialog>
