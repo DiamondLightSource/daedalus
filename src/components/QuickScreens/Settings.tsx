@@ -53,7 +53,7 @@ const Dialog = styled(MuiDialog)(({ theme }) => ({
 
 export default function QuickScreenSettings() {
   const theme = useTheme();
-  const fileContext = useContext(FileContext)
+  const fileContext = useContext(FileContext);
   const [storageModalOpen, setStorageModalOpen] = useState(false);
   const [bobModalOpen, setBobModalOpen] = useState(false);
   const quickScreenStorage = useContext(StorageContext);

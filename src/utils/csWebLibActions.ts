@@ -71,7 +71,9 @@ export const executeOpenPageActionWithFileMetadata = (
 
   const beamlineUrlId = `/synoptic/${selectedBeamlineId}`;
 
-  const urlPath = path ? "/quick-screens" : fileMetadata?.urlId
+  const urlPath = path
+    ? "/quick-screens"
+    : fileMetadata?.urlId
       ? `${beamlineUrlId}/${fileMetadata.urlId}`
       : beamlineUrlId;
 
@@ -104,7 +106,7 @@ export const executeOpenPageAction = (
       type: "OPEN_PAGE",
       dynamicInfo: {
         name: screenFileUrl,
-        location: path ?? "main",
+        location: path || "main",
         description: undefined,
         pvwsHost,
         file: {
@@ -178,4 +180,3 @@ export const executeCloseQuickScreen = (
     true
   );
 };
-

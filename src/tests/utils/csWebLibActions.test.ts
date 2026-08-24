@@ -75,7 +75,27 @@ describe("executeAction: OPEN_PAGE", () => {
         mockFileContext,
         undefined,
         {},
-        `/synoptic/${selectedBeamlineId}/screen1`
+        `/synoptic/${selectedBeamlineId}/screen1`,
+        undefined
+      );
+    });
+
+    it("should use replace=false when replace is not supplied", () => {
+      executeOpenPageActionWithFileGuid(
+        mockBeamlineState,
+        "guid-1",
+        "beamline-1",
+        mockFileContext,
+        "details"
+      );
+
+      expect(executeAction).toHaveBeenCalledWith(
+        expect.anything(),
+        mockFileContext,
+        undefined,
+        {},
+        "/quick-screens",
+        undefined
       );
     });
   });
@@ -110,14 +130,15 @@ describe("executeAction: OPEN_PAGE", () => {
         mockFileContext,
         undefined,
         {},
-        `/synoptic/${selectedBeamlineId}/screen2`
+        `/synoptic/${selectedBeamlineId}/screen2`,
+        undefined
       );
     });
 
     it('should default to "index" when urlId is undefined', () => {
       const urlId = undefined;
       const selectedBeamlineId = "beamline-1";
-      const expectedFileMetadata = mockBeamlineState.filePathIds["guid-3"]; // The one with urlId 'index'
+      const expectedFileMetadata = mockBeamlineState.filePathIds["guid-3"];
 
       executeOpenPageActionWithUrlId(
         mockBeamlineState,
@@ -136,7 +157,8 @@ describe("executeAction: OPEN_PAGE", () => {
         mockFileContext,
         undefined,
         {},
-        `/synoptic/${selectedBeamlineId}/index`
+        `/synoptic/${selectedBeamlineId}/index`,
+        undefined
       );
     });
 
@@ -168,7 +190,8 @@ describe("executeAction: OPEN_PAGE", () => {
         mockFileContext,
         undefined,
         {},
-        `/synoptic/${selectedBeamlineId}`
+        `/synoptic/${selectedBeamlineId}`,
+        undefined
       );
     });
   });
@@ -213,7 +236,8 @@ describe("executeAction: OPEN_PAGE", () => {
         mockFileContext,
         undefined,
         {},
-        `/synoptic/${selectedBeamlineId}/test-screen`
+        `/synoptic/${selectedBeamlineId}/test-screen`,
+        undefined
       );
     });
 
@@ -252,7 +276,8 @@ describe("executeAction: OPEN_PAGE", () => {
         mockFileContext,
         undefined,
         {},
-        `/synoptic/${selectedBeamlineId}`
+        `/synoptic/${selectedBeamlineId}`,
+        undefined
       );
     });
 
@@ -282,7 +307,8 @@ describe("executeAction: OPEN_PAGE", () => {
         mockFileContext,
         undefined,
         {},
-        `/synoptic/${selectedBeamlineId}/test-screen`
+        `/synoptic/${selectedBeamlineId}/test-screen`,
+        undefined
       );
     });
 
@@ -311,11 +337,12 @@ describe("executeAction: OPEN_PAGE", () => {
         mockFileContext,
         undefined,
         {},
-        `/synoptic/${selectedBeamlineId}/test-screen`
+        `/synoptic/${selectedBeamlineId}/test-screen`,
+        undefined
       );
     });
 
-    it("should use beamlineUrlId when fileMetadata.urlId is undefined", () => {
+    it("should use beamlineUrlId when fileMetadata.urlId is undefined or empty", () => {
       const fileMetadata: FileMetadata = {
         file: "test-screen.opi",
         macros: [],
@@ -336,7 +363,8 @@ describe("executeAction: OPEN_PAGE", () => {
         mockFileContext,
         undefined,
         {},
-        expectedUrlPath
+        expectedUrlPath,
+        undefined
       );
     });
 
@@ -352,7 +380,6 @@ describe("executeAction: OPEN_PAGE", () => {
         fileMetadata,
         "beamline-1",
         mockFileContext,
-        undefined,
         {
           override: "macro"
         }
@@ -371,36 +398,97 @@ describe("executeAction: OPEN_PAGE", () => {
         mockFileContext,
         undefined,
         {},
-        "/synoptic/beamline-1/screen"
+        "/synoptic/beamline-1/screen",
+        undefined
       );
     });
-  });
 
-  it("should use /quick-screens when page is supplied", () => {
-    const fileMetadata: FileMetadata = {
-      file: "screen.bob",
-      urlId: "screen",
-      macros: []
-    };
+    it("should use /quick-screens when page is supplied", () => {
+      const fileMetadata: FileMetadata = {
+        file: "screen.bob",
+        urlId: "screen",
+        macros: []
+      };
 
-    executeOpenPageActionWithFileMetadata(
-      mockBeamlineState,
-      fileMetadata,
-      "beamline-1",
-      mockFileContext,
-      "details"
-    );
+      executeOpenPageActionWithFileMetadata(
+        mockBeamlineState,
+        fileMetadata,
+        "beamline-1",
+        mockFileContext,
+        undefined,
+        "details"
+      );
 
-    expect(executeAction).toHaveBeenCalledWith(
-      expect.objectContaining({
-        dynamicInfo: expect.objectContaining({
-          location: "details"
-        })
-      }),
-      mockFileContext,
-      undefined,
-      {},
-      "/quick-screens"
-    );
+      expect(executeAction).toHaveBeenCalledWith(
+        expect.objectContaining({
+          type: "OPEN_PAGE",
+          dynamicInfo: expect.objectContaining({
+            location: "details"
+          })
+        }),
+        mockFileContext,
+        undefined,
+        {},
+        "/quick-screens",
+        undefined
+      );
+    });
+
+    it("should use main as the location when path is not supplied", () => {
+      const fileMetadata: FileMetadata = {
+        file: "screen.bob",
+        urlId: "screen",
+        macros: []
+      };
+
+      executeOpenPageActionWithFileMetadata(
+        mockBeamlineState,
+        fileMetadata,
+        "beamline-1",
+        mockFileContext,
+        undefined,
+        undefined,
+        true
+      );
+
+      expect(executeAction).toHaveBeenCalledWith(
+        expect.objectContaining({
+          dynamicInfo: expect.objectContaining({
+            location: "main"
+          })
+        }),
+        mockFileContext,
+        undefined,
+        {},
+        "/synoptic/beamline-1/screen",
+        true
+      );
+    });
+
+    it("should use /quick-screens when path is an empty string", () => {
+      const fileMetadata: FileMetadata = {
+        file: "screen.bob",
+        urlId: "screen",
+        macros: []
+      };
+
+      executeOpenPageActionWithFileMetadata(
+        mockBeamlineState,
+        fileMetadata,
+        "beamline-1",
+        mockFileContext,
+        undefined,
+        ""
+      );
+
+      expect(executeAction).toHaveBeenCalledWith(
+        expect.anything(),
+        mockFileContext,
+        undefined,
+        {},
+        "/synoptic/beamline-1/screen",
+        undefined
+      );
+    });
   });
 });
