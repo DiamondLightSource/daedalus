@@ -2,22 +2,52 @@ import { describe, beforeEach, it, expect, vi } from "vitest";
 import { useQuickScreens, getQuickScreens } from "../../hooks/useQuickScreens";
 import { act, render, waitFor } from "@testing-library/react";
 
-const mockUseLocation = vi.fn();
-const mockNavigate = vi.fn();
+const {
+  mockExecuteOpenQuickScreen,
+  mockExecuteCloseQuickScreen,
+  mockShowWarning,
+  mockShowError
+} = vi.hoisted(() => ({
+  mockExecuteOpenQuickScreen: vi.fn(),
+  mockExecuteCloseQuickScreen: vi.fn(),
+  mockShowWarning: vi.fn(),
+  mockShowError: vi.fn()
+}));
 
-vi.mock("react-router", () => ({
-  useNavigate: () => mockNavigate,
-  useLocation: () => mockUseLocation()
+vi.mock("../../utils/csWebLibActions", () => ({
+  executeOpenQuickScreen: mockExecuteOpenQuickScreen,
+  executeCloseQuickScreen: mockExecuteCloseQuickScreen
 }));
 
 vi.mock("@diamondlightsource/cs-web-lib", () => ({
+  FileContext: {
+    Provider: ({ children }: { children: React.ReactNode }) => children
+  },
   useNotification: () => ({
-    showWarning: vi.fn(),
-    showError: vi.fn()
+    showWarning: mockShowWarning,
+    showError: mockShowError
   })
 }));
 
-const onCompleted = vi.fn();
+vi.mock("react-router", () => ({
+  useLocation: () => ({
+    state: {
+      pageState: {
+        bobQuickScreen: "test"
+      }
+    }
+  })
+}));
+
+vi.mock("@diamondlightsource/cs-web-lib", () => ({
+  FileContext: {
+    Provider: ({ children }: { children: React.ReactNode }) => children
+  },
+  useNotification: () => ({
+    showWarning: mockShowWarning,
+    showError: mockShowError
+  })
+}));
 
 function testRenderer({
   displayInstance,
@@ -55,13 +85,6 @@ describe("useQuickScreens", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     localStorage.clear();
-    mockUseLocation.mockReturnValue({
-      state: {
-        pageState: {
-          bobQuickScreen: "test"
-        }
-      }
-    });
   });
 
   it("loads Quick Screens", async () => {
@@ -88,7 +111,75 @@ describe("useQuickScreens", () => {
     });
   });
 
+  it("loads an existing Quick Screen", () => {
+    const addDisplayInstanceByDescription = vi.fn();
+
+    localStorage.setItem(
+      "quickScreens/example",
+      JSON.stringify({
+        macros: {
+          A: "B"
+        },
+        description: {
+          type: "displayGridLayout"
+        }
+      })
+    );
+
+    const { getResult } = testRenderer({
+      displayInstance: {},
+      addDisplayInstanceByDescription,
+      onCompleted: vi.fn()
+    });
+
+    act(() => {
+      getResult().load("example");
+    });
+
+    expect(addDisplayInstanceByDescription).toHaveBeenCalledWith(
+      "example",
+      {
+        A: "B"
+      },
+      {
+        type: "displayGridLayout"
+      }
+    );
+
+    expect(mockExecuteOpenQuickScreen).toHaveBeenCalledWith(
+      "example",
+      "quickScreen",
+      {
+        A: "B"
+      },
+      undefined,
+      ""
+    );
+  });
+
+  it("does nothing when it cannot find a Quick Screen to load", () => {
+    const addDisplayInstanceByDescription = vi.fn();
+
+    const { getResult } = testRenderer({
+      displayInstance: {},
+      addDisplayInstanceByDescription,
+      onCompleted: vi.fn()
+    });
+
+    act(() => {
+      getResult().load("nonexistent");
+    });
+
+    expect(addDisplayInstanceByDescription).not.toHaveBeenCalled();
+    expect(mockExecuteOpenQuickScreen).not.toHaveBeenCalled();
+    expect(mockShowWarning).toHaveBeenCalledWith(
+      "Unable to load: no Quick Screen found."
+    );
+  });
+
   it("saves a new Quick Screen", () => {
+    const onCompleted = vi.fn();
+
     const { getResult } = testRenderer({
       displayInstance: {
         macros: {
@@ -137,9 +228,32 @@ describe("useQuickScreens", () => {
     });
 
     expect(localStorage.length).toBe(0);
+    expect(mockShowWarning).toHaveBeenCalledWith(
+      "Unable to save: no Quick Screen name given."
+    );
   });
 
   it("fails to save if no quick screen content", () => {
+    const { getResult } = testRenderer({
+      displayInstance: {
+        macros: {},
+        description: {}
+      },
+      addDisplayInstanceByDescription: vi.fn(),
+      onCompleted: vi.fn()
+    });
+
+    act(() => {
+      getResult().save("   ");
+    });
+
+    expect(localStorage.length).toBe(0);
+    expect(mockShowWarning).toHaveBeenCalledWith(
+      "Unable to save: no Quick Screen name given."
+    );
+  });
+
+  it("fails to save if there is no Quick Screen content", () => {
     const { getResult } = testRenderer({
       displayInstance: undefined,
       addDisplayInstanceByDescription: vi.fn(),
@@ -151,6 +265,9 @@ describe("useQuickScreens", () => {
     });
 
     expect(localStorage.length).toBe(0);
+    expect(mockShowError).toHaveBeenCalledWith(
+      "Unable to save: no Quick Screen content found."
+    );
   });
   it("sets pending overwrite action when user needs to confirm overwrite", () => {
     localStorage.setItem(
@@ -255,10 +372,17 @@ describe("useQuickScreens", () => {
     });
 
     expect(getResult().pendingAction).toBeNull();
+    expect(localStorage.getItem("quickScreens/screen")).toBe("old");
   });
 
   it("sets pending delete action when deleting a Quick Screen", () => {
-    localStorage.setItem("quickScreens/test", "content");
+    localStorage.setItem(
+      "quickScreens/test",
+      JSON.stringify({
+        macros: {},
+        description: {}
+      })
+    );
 
     const { getResult } = testRenderer({
       displayInstance: {},
@@ -277,7 +401,17 @@ describe("useQuickScreens", () => {
   });
 
   it("confirms Quick Screen deletion", () => {
-    localStorage.setItem("quickScreens/test", "content");
+    localStorage.setItem(
+      "quickScreens/test",
+      JSON.stringify({
+        macros: {
+          TEST: "value"
+        },
+        description: {
+          type: "displayGridLayout"
+        }
+      })
+    );
 
     const { getResult } = testRenderer({
       displayInstance: {},
@@ -301,17 +435,25 @@ describe("useQuickScreens", () => {
     expect(localStorage.getItem("quickScreens/test")).toBeNull();
     expect(getResult().pendingAction).toBeNull();
 
-    expect(mockNavigate).toHaveBeenCalledWith("/quick-screens/", {
-      state: {
-        pageState: {
-          bobQuickScreen: "test"
-        }
-      }
-    });
+    expect(mockExecuteCloseQuickScreen).toHaveBeenCalledWith(
+      "test",
+      "quickScreen",
+      {
+        TEST: "value"
+      },
+      undefined
+    );
   });
 
   it("cancels Quick Screen deletion", () => {
-    localStorage.setItem("quickScreens/test", "content");
+    const content = JSON.stringify({
+      macros: {},
+      description: {
+        type: "displayGridLayout"
+      }
+    });
+
+    localStorage.setItem("quickScreens/test", content);
 
     const { getResult } = testRenderer({
       displayInstance: {},
@@ -333,69 +475,8 @@ describe("useQuickScreens", () => {
     });
 
     expect(getResult().pendingAction).toBeNull();
-    expect(localStorage.getItem("quickScreens/test")).toBe("content");
-    expect(mockNavigate).not.toHaveBeenCalled();
-  });
-
-  it("loads an existing quick screen", () => {
-    mockUseLocation.mockReturnValue({
-      state: {
-        pageState: {
-          quickScreen: {
-            path: "wow.bob",
-            macros: {},
-            defaultProtocol: "ca"
-          }
-        }
-      }
-    });
-    const addDisplayInstanceByDescription = vi.fn();
-
-    localStorage.setItem(
-      "quickScreens/example",
-      JSON.stringify({
-        macros: {
-          A: "B"
-        },
-        description: {
-          type: "displayGridLayout"
-        }
-      })
-    );
-
-    const { getResult } = testRenderer({
-      displayInstance: {},
-      addDisplayInstanceByDescription,
-      onCompleted: vi.fn()
-    });
-
-    act(() => {
-      getResult().load("example");
-    });
-    expect(addDisplayInstanceByDescription).toHaveBeenCalledWith(
-      "example",
-      {
-        A: "B"
-      },
-      {
-        type: "displayGridLayout"
-      }
-    );
-  });
-
-  it("does nothing when cannot find quick screen to load", () => {
-    const addDisplayInstanceByDescription = vi.fn();
-
-    const { getResult } = testRenderer({
-      displayInstance: {},
-      addDisplayInstanceByDescription,
-      onCompleted: vi.fn()
-    });
-
-    act(() => {
-      getResult().load("nonexistent");
-    });
-    expect(addDisplayInstanceByDescription).not.toHaveBeenCalled();
+    expect(localStorage.getItem("quickScreens/test")).toBe(content);
+    expect(mockExecuteCloseQuickScreen).not.toHaveBeenCalled();
   });
 });
 

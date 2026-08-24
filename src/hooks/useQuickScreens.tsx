@@ -1,9 +1,11 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { TreeViewBaseItem, TreeViewItemId } from "@mui/x-tree-view";
-import { useLocation } from "react-router";
 import { FileContext, useNotification } from "@diamondlightsource/cs-web-lib";
 import { getAllScreensWithChildrenItemIds } from "../components/utils";
-import { executeCloseQuickScreen, executeOpenQuickScreen } from "../utils/csWebLibActions";
+import {
+  executeCloseQuickScreen,
+  executeOpenQuickScreen
+} from "../utils/csWebLibActions";
 
 interface UseQuickScreensProps {
   displayInstance?: any;
@@ -33,7 +35,6 @@ export function useQuickScreens({
   onCompleted
 }: UseQuickScreensProps) {
   const fileContext = useContext(FileContext);
-  const location = useLocation();
   const { showWarning, showError } = useNotification();
   const [tree, setTree] = useState<TreeViewBaseItem[]>([]);
   const [expanded, setExpanded] = useState<TreeViewItemId[]>([]);
@@ -115,10 +116,7 @@ export function useQuickScreens({
         ""
       );
     },
-    [
-      fileContext,
-      showWarning
-    ]
+    [fileContext, showWarning]
   );
 
   const requestDelete = useCallback((name: string) => {
@@ -156,13 +154,7 @@ export function useQuickScreens({
 
     setPendingAction(null);
     refreshTree();
-  }, [
-    pendingAction,
-    createScreen,
-    onCompleted,
-    refreshTree,
-    location
-  ]);
+  }, [pendingAction, createScreen, onCompleted, refreshTree]);
 
   // Called when the user cancels the action
   const cancelPendingAction = useCallback(() => {
