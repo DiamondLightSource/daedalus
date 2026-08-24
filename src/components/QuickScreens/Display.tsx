@@ -86,6 +86,7 @@ export default function QuickScreenDisplay() {
                     setBobDisplayUuid(uuid);
                   }}
                   targetDisplayType="displayGridLayout"
+                  editable={true}
                 />
               </MuiPaper>
             )}

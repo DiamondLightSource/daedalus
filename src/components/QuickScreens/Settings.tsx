@@ -19,11 +19,12 @@ import {
   Stack,
   Tooltip
 } from "@mui/material";
-import { useLocation, useNavigate } from "react-router";
 import { useContext, useState } from "react";
 import LocalStorageBrowser from "./StorageBrowser";
 import { StorageContext } from "./Display";
 import BobFileBrowser from "./FileBrowser";
+import { executeOpenQuickScreen } from "../../utils/csWebLibActions";
+import { FileContext } from "@diamondlightsource/cs-web-lib";
 
 const NEW_QUICK_SCREEN = {
   path: "/new.bob",
@@ -52,8 +53,7 @@ const Dialog = styled(MuiDialog)(({ theme }) => ({
 
 export default function QuickScreenSettings() {
   const theme = useTheme();
-  const navigate = useNavigate();
-  const location = useLocation();
+  const fileContext = useContext(FileContext)
   const [storageModalOpen, setStorageModalOpen] = useState(false);
   const [bobModalOpen, setBobModalOpen] = useState(false);
   const quickScreenStorage = useContext(StorageContext);
@@ -68,15 +68,13 @@ export default function QuickScreenSettings() {
    */
   const onClickNew = () => {
     //Change to a blank Quick Screen
-    navigate("/quick-screens/", {
-      state: {
-        pageState: {
-          ...(location.state ? location.state.pageState : {}),
-          quickScreen: NEW_QUICK_SCREEN
-        }
-      },
-      replace: true
-    });
+    executeOpenQuickScreen(
+      NEW_QUICK_SCREEN.path,
+      "quickScreen",
+      NEW_QUICK_SCREEN.macros ?? {},
+      fileContext,
+      ""
+    );
   };
 
   /**
