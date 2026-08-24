@@ -3,7 +3,7 @@ import { TreeViewBaseItem, TreeViewItemId } from "@mui/x-tree-view";
 import { useLocation } from "react-router";
 import { FileContext, useNotification } from "@diamondlightsource/cs-web-lib";
 import { getAllScreensWithChildrenItemIds } from "../components/utils";
-import { executeOpenQuickScreen } from "../utils/csWebLibActions";
+import { executeCloseQuickScreen, executeOpenQuickScreen } from "../utils/csWebLibActions";
 
 interface UseQuickScreensProps {
   displayInstance?: any;
@@ -110,7 +110,7 @@ export function useQuickScreens({
       executeOpenQuickScreen(
         name,
         "quickScreen",
-        screen.macros ?? {},
+        structuredClone(screen.macros) ?? {},
         fileContext,
         ""
       );
@@ -141,14 +141,17 @@ export function useQuickScreens({
       onCompleted();
     } else {
       // Delete the current file
-      localStorage.removeItem(`quickScreens/${pendingAction.name}`);
-      executeOpenQuickScreen(
-        pendingAction.name,
-        "bobQuickScreen",
-        {},
-        fileContext,
-        ""
-      );
+      const stored = localStorage.getItem(`quickScreens/${pendingAction.name}`);
+      if (stored) {
+        const screen = JSON.parse(stored);
+        executeCloseQuickScreen(
+          pendingAction.name,
+          "quickScreen",
+          screen.macros,
+          fileContext
+        );
+        localStorage.removeItem(`quickScreens/${pendingAction.name}`);
+      }
     }
 
     setPendingAction(null);
