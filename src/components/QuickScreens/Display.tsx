@@ -132,8 +132,8 @@ export default function QuickScreenDisplay() {
                       position: "absolute",
                       top: 5,
                       right: 5,
-                      width: 25,
-                      height: 25,
+                      width: "100px",
+                      height: "40px",
                       zIndex: 2,
                       cursor: "pointer",
                       backgroundColor: "transparent"
