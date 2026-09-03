@@ -54,7 +54,7 @@ export default function QuickScreenDisplay() {
   const location = useLocation();
   const quickScreen = location.state?.pageState?.quickScreen;
   const bobQuickScreen = location.state?.pageState?.bobQuickScreen;
-
+  console.log(bobQuickScreen, "bobQuickScreen");
   const hasQuickScreen = !!quickScreen;
   const hasBobQuickScreen = !!bobQuickScreen;
 
@@ -140,6 +140,23 @@ export default function QuickScreenDisplay() {
                     }}
                   />
                 </Box>
+                <Box
+                  role="label"
+                  aria-label="label for quick screen"
+                  sx={{
+                    position: "absolute",
+                    bottom: 0,
+                    left: 2,
+                    cursor: "pointer",
+                    backgroundColor: "transparent"
+                  }}
+                >
+                  <Typography variant="subtitle1" color="textSecondary">
+                    {quickScreen.path !== "/new.bob"
+                      ? `Quick Screen: ${quickScreen?.path}`
+                      : "Quick Screen"}
+                  </Typography>
+                </Box>
                 <Dialog
                   open={pendingCloseLocation !== null}
                   onClose={() => setPendingCloseLocation(null)}
@@ -188,6 +205,23 @@ export default function QuickScreenDisplay() {
                   showCloseButton={true}
                   targetDisplayType="displayGridLayout"
                 />
+                <Box
+                  role="label"
+                  aria-label="label for bob screen"
+                  sx={{
+                    position: "absolute",
+                    bottom: 0,
+                    left: 2,
+                    cursor: "pointer",
+                    backgroundColor: "transparent"
+                  }}
+                >
+                  <Typography variant="subtitle1" color="textSecondary">
+                    {bobQuickScreen?.macros?.label
+                      ? `Bob Screen: ${bobQuickScreen?.macros?.label}`
+                      : "Bob Screen"}
+                  </Typography>
+                </Box>
               </MuiPaper>
             )}
 
