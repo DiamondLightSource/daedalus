@@ -6,7 +6,6 @@ export function ResumeLastSession() {
 
   useEffect(() => {
     const lastSession = localStorage.getItem("lastSession");
-    console.log("lastSession", lastSession);
 
     if (!lastSession) {
       navigate("/", { replace: true });
