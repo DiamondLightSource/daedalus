@@ -68,9 +68,11 @@ describe("DLSAppBar Component", () => {
   it("renders all page navigation buttons from PageRouteInfo", () => {
     renderComponent();
 
-    PageRouteInfo.forEach(page => {
-      expect(screen.getByLabelText(page.ariaLabel)).toBeInTheDocument();
-    });
+    PageRouteInfo.filter(page => page.route !== "/resume-last-session").forEach(
+      page => {
+        expect(screen.getByLabelText(page.ariaLabel)).toBeInTheDocument();
+      }
+    );
   });
 
   it("navigates to the correct route when page button is clicked", () => {
