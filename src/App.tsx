@@ -1,5 +1,6 @@
 import {
   FileProvider,
+  FileContext,
   NotificationContainer,
   store
 } from "@diamondlightsource/cs-web-lib";
@@ -12,6 +13,7 @@ import { SynopticPage } from "./routes/SynopticPage";
 import { EditorPage } from "./routes/EditorPage";
 import { LandingPage } from "./routes/LandingPage";
 import { DataBrowserPage } from "./routes/DataBrowserPage";
+import { ResumeLastSession } from "./components/ResumeLastSession";
 import { createContext, useEffect, useReducer, useState } from "react";
 import {
   APPEND_BEAMLINES,
@@ -23,6 +25,15 @@ import { DaedalusConfig, loadConfig } from "./config";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { diamondTheme } from "./theme";
 import { QuickScreensPage } from "./routes/QuickScreensPage";
+import { useLocation } from "react-router";
+import { useContext } from "react";
+
+type SavedSession = {
+  version: 1;
+  pathname: string;
+  pageState: any;
+  tabState: any;
+};
 
 const INITIAL_SCREEN_STATE = {
   main: {
@@ -31,6 +42,28 @@ const INITIAL_SCREEN_STATE = {
     defaultProtocol: "ca"
   }
 };
+
+function SessionPersistence() {
+  const fileContext = useContext(FileContext);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === "/resume-last-session") return;
+
+    const session: SavedSession = {
+      version: 1,
+      pathname: location.pathname,
+      pageState: fileContext.pageState,
+      tabState: fileContext.tabState
+    };
+
+    if (session.pathname !== "/") {
+      localStorage.setItem("lastSession", JSON.stringify(session));
+    }
+  }, [location.pathname, fileContext.pageState, fileContext.tabState]);
+
+  return null;
+}
 
 export const BeamlineTreeStateContext = createContext<{
   state: BeamlineTreeState;
@@ -74,6 +107,7 @@ const App = ({}) => {
         <BeamlineTreeStateContext.Provider value={{ state, dispatch }}>
           <FileProvider initialPageState={INITIAL_SCREEN_STATE}>
             <>
+              <SessionPersistence />
               <NotificationContainer />
               <Outlet />
             </>
@@ -101,6 +135,7 @@ export const appRouter = createBrowserRouter([
         ]
       },
       { path: "/quick-screens", element: <QuickScreensPage /> },
+      { path: "/resume-last-session", element: <ResumeLastSession /> },
       { index: true, element: <LandingPage /> }
     ]
   }

@@ -120,7 +120,9 @@ const DLSAppBar = (props: {
                 flexGrow: 1
               }}
             >
-              {PageRouteInfo.map(page => {
+              {PageRouteInfo.filter(
+                page => page.route !== "/resume-last-session"
+              ).map(page => {
                 return (
                   <Tooltip key={`PageNavButton_${page.name}`} title={page.name}>
                     <IconButton

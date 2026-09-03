@@ -4,6 +4,7 @@ import MonitorIcon from "@mui/icons-material/Monitor";
 import EditIcon from "@mui/icons-material/Edit";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
 import RateReviewIcon from "@mui/icons-material/RateReview";
+import KeyboardReturn from "@mui/icons-material/KeyboardReturn";
 
 export const PageRouteInfo = [
   {
@@ -52,6 +53,14 @@ export const PageRouteInfo = [
     route: "/editor",
     text: "A demonstration of the Daedalus Editor functionality. This will eventually allow editing of .bob files inside the web.\n\nOpen files, view widget properties and drag-and-drop new widgets from the palette.",
     icon: <EditIcon />,
+    showCard: true
+  },
+  {
+    name: "Resume Last Session",
+    ariaLabel: "open last session",
+    route: "/resume-last-session",
+    text: "Continue from where you left off in your last session. This will restore the last open screens and their state. \n\n\n\n\n\n",
+    icon: <KeyboardReturn />,
     showCard: true
   }
 ];
