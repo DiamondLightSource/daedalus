@@ -188,6 +188,7 @@ export default function QuickScreenDisplay() {
                   scroll={true}
                   showCloseButton={true}
                   targetDisplayType="displayGridLayout"
+                  editable={false}
                 />
               </MuiPaper>
             )}
