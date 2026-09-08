@@ -20,6 +20,8 @@ import { LOAD_SCREENS } from "../../store";
 import { parseScreenTree, ScreenTreeViewBaseItem } from "../../utils/parser";
 import { useDispatch } from "react-redux";
 import { executeOpenPageActionWithFileGuid } from "../../utils/csWebLibActions";
+import { useLocation, useNavigate } from "react-router";
+import { StorageContext } from "./Display";
 
 /**
  * Custom Tree Item that lets us change icon
@@ -57,6 +59,7 @@ export default function BobFileBrowser() {
   const dispatch = useDispatch();
   const fileContext = useContext(FileContext);
   const { state } = useContext(BeamlineTreeStateContext);
+  const { setBobScreenUrlId } = useContext(StorageContext);
   const { showWarning } = useNotification();
   const [bobFileTree, setBobFileTree] = useState<ScreenTreeViewBaseItem[]>([]);
   const [selectedItemId, setSelectedItemId] = useState<string>("");
@@ -73,6 +76,10 @@ export default function BobFileBrowser() {
     if (!selectedBeamline) return;
     // Get current beamline
     const beamlineState = state.beamlines[selectedBeamline];
+    const selectedFile = beamlineState.filePathIds[selectedItemId];
+
+    setBobScreenUrlId(selectedFile?.urlId);
+
     executeOpenPageActionWithFileGuid(
       beamlineState,
       selectedItemId,
