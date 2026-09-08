@@ -20,7 +20,6 @@ import { LOAD_SCREENS } from "../../store";
 import { parseScreenTree, ScreenTreeViewBaseItem } from "../../utils/parser";
 import { useDispatch } from "react-redux";
 import { executeOpenPageActionWithFileGuid } from "../../utils/csWebLibActions";
-import { useLocation, useNavigate } from "react-router";
 import { StorageContext } from "./Display";
 
 /**
