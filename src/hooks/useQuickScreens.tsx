@@ -107,16 +107,11 @@ export function useQuickScreens({
       }
 
       const screen = JSON.parse(stored);
-      addDisplayInstanceByDescription(name, screen.macros, screen.description);
-      executeOpenQuickScreen(
-        name,
-        "quickScreen",
-        structuredClone(screen.macros) ?? {},
-        fileContext,
-        ""
-      );
+      const macros = structuredClone(screen.macros ?? {});
+      addDisplayInstanceByDescription(name, macros, screen.description);
+      executeOpenQuickScreen(name, "quickScreen", macros, fileContext, "");
     },
-    [fileContext, showWarning]
+    [fileContext, showWarning, addDisplayInstanceByDescription]
   );
 
   const requestDelete = useCallback((name: string) => {

@@ -3,7 +3,7 @@
   <name>New</name>
   <y use_class="true">0</y>
   <width>1000</width>
-  <height>520</height>
+  <height>1000</height>
   <background_color use_class="true">
     <color name="Read_Background" red="240" green="240" blue="240">
     </color>

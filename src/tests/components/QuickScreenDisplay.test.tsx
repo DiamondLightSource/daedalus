@@ -2,9 +2,28 @@ import { render } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import QuickScreens from "../../components/QuickScreens/Display";
 import { fireEvent } from "@testing-library/react";
+import { configureStore } from "@reduxjs/toolkit";
+import { Provider } from "react-redux";
+
+const testStore = configureStore({
+  reducer: {
+    style: (state = { classes: {}, currentClass: "DEFAULT" }) => state
+  }
+});
+
+let mockFileContent: any = {
+  macros: {
+    TEST: "value"
+  },
+  description: "{type: 'display', children: []}"
+};
 
 const renderComponent = () => {
-  return render(<QuickScreens />);
+  return render(
+    <Provider store={testStore}>
+      <QuickScreens />
+    </Provider>
+  );
 };
 
 const mockUseLocation = vi.fn();
@@ -57,6 +76,7 @@ vi.mock("@diamondlightsource/cs-web-lib", async () => {
   return {
     ...actual,
     FileContext: createContext(mockFileContext),
+    useDisplayInstance: () => mockFileContent,
     DynamicPageWidget: (props: any) => {
       vi.fn(props);
       return <div data-testid="dynamic-page-widget" />;

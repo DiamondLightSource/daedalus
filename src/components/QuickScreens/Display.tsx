@@ -13,7 +13,8 @@ import {
 import {
   DynamicPageWidget,
   newRelativePosition,
-  FileContext
+  FileContext,
+  useDisplayInstance
 } from "@diamondlightsource/cs-web-lib";
 import {
   useWindowWidth,
@@ -23,7 +24,7 @@ import {
 import { extractAncestorScreens } from "../../utils/screenUrlIdUtils";
 import { Breadcrumbs } from "@mui/material";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import QuickScreenSettings from "./Settings";
 import { useLocation } from "react-router";
 
@@ -68,6 +69,9 @@ export default function QuickScreenDisplay() {
   const bobBreadcrumbs = bobScreenUrlId
     ? extractAncestorScreens(bobScreenUrlId)
     : [];
+  const { addDisplayInstanceByDescription } = useDisplayInstance(
+    bobDisplayUuid!
+  );
 
   const hasQuickScreen = !!quickScreen;
   const hasBobQuickScreen = !!bobQuickScreen;
@@ -90,6 +94,24 @@ export default function QuickScreenDisplay() {
     }
     setPendingCloseLocation(null);
   };
+
+  // Simple screen reload that preserves open pages on refresh
+  useEffect(() => {
+    if (!quickScreen?.path) return;
+    const stored = localStorage.getItem(`quickScreens/${quickScreen.path}`);
+    if (!stored) return;
+
+    try {
+      const screen = JSON.parse(stored);
+      addDisplayInstanceByDescription(
+        quickScreen.path,
+        quickScreen.macros ?? {},
+        screen.description
+      );
+    } catch (error) {
+      console.error("Failed to restore Quick Screen display instance", error);
+    }
+  }, [quickScreen, addDisplayInstanceByDescription]);
 
   return (
     <Paper elevation={12}>
