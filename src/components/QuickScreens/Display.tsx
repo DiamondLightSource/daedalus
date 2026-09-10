@@ -112,19 +112,30 @@ export default function QuickScreenDisplay() {
               display: "flex",
               flexDirection: "row",
               gap: 1,
-              p: 1
+              p: 1,
+              minWidth: 0,
+              overflow: "hidden"
             }}
           >
             {hasQuickScreen && (
               <MuiPaper
                 elevation={3}
                 sx={{
-                  flex: 1,
+                  flex: "1 1 0",
                   position: "relative",
-                  overflow: "hidden"
+                  overflow: "auto",
+                  maxWidth: "100%",
+                  minWidth: 0
                 }}
               >
-                <Box sx={{ position: "relative", flex: 1 }}>
+                <Box
+                  sx={{
+                    position: "relative",
+                    width: "100%",
+                    maxWidth: "100%",
+                    minWidth: 0
+                  }}
+                >
                   <DynamicPageWidget
                     location="quickScreen"
                     position={newRelativePosition(
@@ -206,24 +217,34 @@ export default function QuickScreenDisplay() {
               <MuiPaper
                 elevation={3}
                 sx={{
-                  flex: 1,
+                  flex: "1 1 0",
                   position: "relative",
-                  overflow: "hidden"
+                  overflow: "auto",
+                  maxWidth: "100%",
+                  minWidth: 0
                 }}
               >
-                <DynamicPageWidget
-                  location="bobQuickScreen"
-                  position={newRelativePosition(
-                    undefined,
-                    undefined,
-                    "100%",
-                    "100%"
-                  )}
-                  scroll={true}
-                  showCloseButton={true}
-                  targetDisplayType="displayGridLayout"
-                  editable={false}
-                />
+                <Box
+                  sx={{
+                    width: "100%",
+                    minWidth: 0,
+                    maxWidth: "100%"
+                  }}
+                >
+                  <DynamicPageWidget
+                    location="bobQuickScreen"
+                    position={newRelativePosition(
+                      undefined,
+                      undefined,
+                      "100%",
+                      "100%"
+                    )}
+                    scroll={true}
+                    showCloseButton={true}
+                    targetDisplayType="displayGridLayout"
+                    editable={false}
+                  />
+                </Box>
                 <Box
                   role="label"
                   aria-label="label for bob screen"
