@@ -1,22 +1,30 @@
 import { fireEvent, render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import QuickScreenSettings from "../../components/QuickScreens/Settings";
+import { StorageContext } from "../../components/QuickScreens/Display";
+import { FileContext } from "@diamondlightsource/cs-web-lib";
+
+vi.mock("../../utils/csWebLibActions", () => ({
+  executeOpenQuickScreen: vi.fn()
+}));
+
+const { executeOpenQuickScreen } = await import("../../utils/csWebLibActions");
 
 const renderComponent = () => {
-  return render(<QuickScreenSettings />);
+  return render(
+    <StorageContext.Provider
+      value={
+        {
+          setBrowsingMode: vi.fn()
+        } as any
+      }
+    >
+      <FileContext.Provider value={undefined as any}>
+        <QuickScreenSettings />
+      </FileContext.Provider>
+    </StorageContext.Provider>
+  );
 };
-
-const mockNavigate = vi.fn();
-const mockLocation = vi.fn();
-
-vi.mock("react-router", async () => {
-  const actual = await vi.importActual("react-router");
-  return {
-    ...actual,
-    useNavigate: () => mockNavigate,
-    useLocation: () => mockLocation()
-  };
-});
 
 describe("<QuickScreenSettings />", () => {
   it("renders all buttons", () => {
@@ -27,32 +35,21 @@ describe("<QuickScreenSettings />", () => {
     expect(getByText("Save")).toBeInTheDocument();
     expect(getByText("Load")).toBeInTheDocument();
 
-    // Check all five icons appear
+    // Check all four icons appear
     expect(container.querySelectorAll("svg")).toHaveLength(4);
   });
 
   it("loads a blank quick screen when new button clicked", () => {
-    mockLocation.mockReturnValue({
-      state: {
-        pageState: {}
-      }
-    });
     const { getByRole } = renderComponent();
-    const button = getByRole("button", { name: /new/i });
-    fireEvent.click(button);
+    fireEvent.click(getByRole("button", { name: /new/i }));
 
-    expect(mockNavigate).toHaveBeenCalledTimes(1);
-    expect(mockNavigate).toHaveBeenCalledWith("/quick-screens/", {
-      state: {
-        pageState: {
-          quickScreen: {
-            path: "/new.bob",
-            macros: {},
-            defaultProtocol: "ca"
-          }
-        }
-      },
-      replace: true
-    });
+    expect(executeOpenQuickScreen).toHaveBeenCalledTimes(1);
+    expect(executeOpenQuickScreen).toHaveBeenCalledWith(
+      "/new.bob",
+      "quickScreen",
+      {},
+      undefined,
+      ""
+    );
   });
 });

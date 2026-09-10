@@ -78,7 +78,8 @@ export default function BobFileBrowser() {
       selectedItemId,
       selectedBeamline,
       fileContext,
-      "bobQuickScreen"
+      "bobQuickScreen",
+      true
     );
   };
 

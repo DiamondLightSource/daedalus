@@ -6,7 +6,8 @@ export const executeOpenPageActionWithFileGuid = (
   fileGuid: string,
   selectedBeamlineId: string,
   fileContext: any,
-  page?: string
+  path?: string,
+  replace?: boolean
 ) => {
   const fileMetadata = beamlineState.filePathIds[fileGuid];
   executeOpenPageActionWithFileMetadata(
@@ -14,7 +15,9 @@ export const executeOpenPageActionWithFileGuid = (
     fileMetadata,
     selectedBeamlineId,
     fileContext,
-    page
+    undefined,
+    path,
+    replace
   );
 };
 
@@ -23,8 +26,9 @@ export const executeOpenPageActionWithUrlId = (
   urlId: string | undefined,
   selectedBeamlineId: string,
   fileContext: any,
-  page?: string,
-  extraMacros?: MacroMap
+  extraMacros?: MacroMap,
+  path?: string,
+  replace?: boolean
 ) => {
   const fileMetadata = Object.values(beamlineState.filePathIds).find(
     x => x.urlId === (urlId ?? "index")
@@ -35,8 +39,9 @@ export const executeOpenPageActionWithUrlId = (
     fileMetadata,
     selectedBeamlineId,
     fileContext,
-    page,
-    extraMacros
+    extraMacros,
+    path,
+    replace
   );
 };
 
@@ -45,8 +50,9 @@ export const executeOpenPageActionWithFileMetadata = (
   fileMetadata: FileMetadata | undefined,
   selectedBeamlineId: string,
   fileContext: any,
-  page?: string,
-  overrideMacros?: MacroMap
+  overrideMacros?: MacroMap,
+  path?: string,
+  replace?: boolean
 ) => {
   const newScreen = buildUrl(
     beamlineState.host,
@@ -65,7 +71,7 @@ export const executeOpenPageActionWithFileMetadata = (
 
   const beamlineUrlId = `/synoptic/${selectedBeamlineId}`;
 
-  const urlPath = page
+  const urlPath = path
     ? "/quick-screens"
     : fileMetadata?.urlId
       ? `${beamlineUrlId}/${fileMetadata.urlId}`
@@ -79,8 +85,9 @@ export const executeOpenPageActionWithFileMetadata = (
     protocol,
     fileContext,
     urlPath,
-    page,
-    beamlineState.pvwsHost
+    beamlineState.pvwsHost,
+    path,
+    replace
   );
 };
 
@@ -90,15 +97,16 @@ export const executeOpenPageAction = (
   protocol: string,
   fileContext: any,
   browserUrl: string,
-  page?: string,
-  pvwsHost?: string
+  pvwsHost?: string,
+  path?: string,
+  replace?: boolean
 ) => {
   executeAction(
     {
       type: "OPEN_PAGE",
       dynamicInfo: {
         name: screenFileUrl,
-        location: page || "main",
+        location: path || "main",
         description: undefined,
         pvwsHost,
         file: {
@@ -111,6 +119,64 @@ export const executeOpenPageAction = (
     fileContext,
     undefined,
     {},
-    browserUrl
+    browserUrl,
+    replace
+  );
+};
+
+export const executeOpenQuickScreen = (
+  name: string,
+  location: string,
+  macros: MacroMap,
+  fileContext: any,
+  pvwsHost?: string
+) => {
+  executeAction(
+    {
+      type: "OPEN_PAGE",
+      dynamicInfo: {
+        name,
+        location: location,
+        description: undefined,
+        pvwsHost,
+        file: {
+          path: name,
+          macros: macros,
+          defaultProtocol: "ca"
+        }
+      }
+    },
+    fileContext,
+    undefined,
+    {},
+    "/quick-screens",
+    true
+  );
+};
+
+export const executeCloseQuickScreen = (
+  name: string,
+  location: string,
+  macros: MacroMap,
+  fileContext: any
+) => {
+  executeAction(
+    {
+      type: "CLOSE_PAGE",
+      dynamicInfo: {
+        name,
+        location: location,
+        file: {
+          path: name,
+          macros: macros,
+          defaultProtocol: "ca"
+        }
+      }
+    },
+    fileContext,
+    undefined,
+    {},
+    "/quick-screens",
+    true
   );
 };

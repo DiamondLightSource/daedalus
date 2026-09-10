@@ -123,6 +123,7 @@ export default function QuickScreenDisplay() {
                       setBobDisplayUuid(uuid);
                     }}
                     targetDisplayType="displayGridLayout"
+                    editable={true}
                   />
                   <Box
                     role="button"
@@ -187,6 +188,7 @@ export default function QuickScreenDisplay() {
                   scroll={true}
                   showCloseButton={true}
                   targetDisplayType="displayGridLayout"
+                  editable={false}
                 />
               </MuiPaper>
             )}

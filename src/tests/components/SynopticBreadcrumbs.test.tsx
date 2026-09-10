@@ -133,6 +133,7 @@ describe("SynopticBreadcrumbs Component", () => {
         type: "OPEN_PAGE",
         dynamicInfo: {
           name: "http://example.com/area1.opi",
+          pvwsHost: undefined,
           location: "main",
           description: undefined,
           file: {
@@ -145,7 +146,8 @@ describe("SynopticBreadcrumbs Component", () => {
       mockFileContext,
       undefined,
       {},
-      "/synoptic/BL01/Area1"
+      "/synoptic/BL01/Area1",
+      undefined
     );
   });
 

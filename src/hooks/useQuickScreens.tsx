@@ -1,8 +1,11 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { TreeViewBaseItem, TreeViewItemId } from "@mui/x-tree-view";
-import { useLocation, useNavigate } from "react-router";
-import { useNotification } from "@diamondlightsource/cs-web-lib";
+import { FileContext, useNotification } from "@diamondlightsource/cs-web-lib";
 import { getAllScreensWithChildrenItemIds } from "../components/utils";
+import {
+  executeCloseQuickScreen,
+  executeOpenQuickScreen
+} from "../utils/csWebLibActions";
 
 interface UseQuickScreensProps {
   displayInstance?: any;
@@ -31,8 +34,7 @@ export function useQuickScreens({
   addDisplayInstanceByDescription,
   onCompleted
 }: UseQuickScreensProps) {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const fileContext = useContext(FileContext);
   const { showWarning, showError } = useNotification();
   const [tree, setTree] = useState<TreeViewBaseItem[]>([]);
   const [expanded, setExpanded] = useState<TreeViewItemId[]>([]);
@@ -106,20 +108,15 @@ export function useQuickScreens({
 
       const screen = JSON.parse(stored);
       addDisplayInstanceByDescription(name, screen.macros, screen.description);
-      navigate("/quick-screens/", {
-        state: {
-          pageState: {
-            ...location.state.pageState,
-            quickScreen: {
-              path: name,
-              macros: screen.macros,
-              defaultProtocol: "ca"
-            }
-          }
-        }
-      });
+      executeOpenQuickScreen(
+        name,
+        "quickScreen",
+        structuredClone(screen.macros) ?? {},
+        fileContext,
+        ""
+      );
     },
-    [addDisplayInstanceByDescription, navigate, location, showWarning]
+    [fileContext, showWarning]
   );
 
   const requestDelete = useCallback((name: string) => {
@@ -142,26 +139,22 @@ export function useQuickScreens({
       onCompleted();
     } else {
       // Delete the current file
-      localStorage.removeItem(`quickScreens/${pendingAction.name}`);
-      navigate("/quick-screens/", {
-        state: {
-          pageState: {
-            bobQuickScreen: location.state.pageState.bobQuickScreen
-          }
-        }
-      });
+      const stored = localStorage.getItem(`quickScreens/${pendingAction.name}`);
+      if (stored) {
+        const screen = JSON.parse(stored);
+        executeCloseQuickScreen(
+          pendingAction.name,
+          "quickScreen",
+          screen.macros,
+          fileContext
+        );
+        localStorage.removeItem(`quickScreens/${pendingAction.name}`);
+      }
     }
 
     setPendingAction(null);
     refreshTree();
-  }, [
-    pendingAction,
-    createScreen,
-    onCompleted,
-    refreshTree,
-    navigate,
-    location
-  ]);
+  }, [pendingAction, createScreen, onCompleted, refreshTree]);
 
   // Called when the user cancels the action
   const cancelPendingAction = useCallback(() => {

@@ -25,6 +25,7 @@ import { useLocation, useNavigate } from "react-router";
 import { selectFileMetadataByFilePathAndMacros } from "../utils/parser";
 import RateReviewIcon from "@mui/icons-material/RateReview";
 import { FileMetadata } from "../store";
+import { executeOpenQuickScreen } from "../utils/csWebLibActions";
 
 interface PaperProps extends MuiPaperProps {
   open?: boolean;
@@ -98,15 +99,14 @@ export default function ScreenDisplay() {
   const handleQuickScreenClick = () => {
     try {
       // Opens new quick screen page, passing current file state
-      console.log(location.state.pageState);
-      navigate("/quick-screens/", {
-        state: {
-          pageState: {
-            ...location.state.pageState,
-            bobQuickScreen: location.state.pageState.main
-          }
-        }
-      });
+      const newScreen = location.state.pageState.main;
+      executeOpenQuickScreen(
+        newScreen.path,
+        "bobQuickScreen",
+        newScreen.macros ?? {},
+        fileContext,
+        ""
+      );
     } catch (e) {
       showWarning(
         "Failed to convert .bob to Quick Screen. Please check the .bob file is loaded correctly."
