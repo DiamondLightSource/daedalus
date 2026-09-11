@@ -49,6 +49,29 @@ export function useQuickScreens({
     setExpanded(allScreens);
   }, []);
 
+  // Helper to update the active quick screen name
+  const updateActiveQuickScreen = useCallback(
+    (name: string) => {
+      if (!displayInstance) return;
+
+      const macros = displayInstance.macros ?? {};
+      const description = structuredClone(displayInstance.description);
+
+      addDisplayInstanceByDescription(name, macros, description);
+
+      fileContext.updatePage(
+        "quickScreen",
+        {
+          path: name,
+          macros: displayInstance.macros ?? {},
+          defaultProtocol: "ca"
+        },
+        true
+      );
+    },
+    [displayInstance, addDisplayInstanceByDescription, fileContext]
+  );
+
   useEffect(() => {
     refreshTree();
   }, [refreshTree]);
@@ -84,6 +107,7 @@ export function useQuickScreens({
         return;
       }
       localStorage.setItem(`quickScreens/${name}`, newContent);
+      updateActiveQuickScreen(name);
       refreshTree();
       onCompleted();
     },
@@ -107,16 +131,19 @@ export function useQuickScreens({
       }
 
       const screen = JSON.parse(stored);
-      addDisplayInstanceByDescription(name, screen.macros, screen.description);
-      executeOpenQuickScreen(
-        name,
+      const macros = screen.macros ?? {};
+      addDisplayInstanceByDescription(name, macros, screen.description);
+      fileContext.updatePage(
         "quickScreen",
-        structuredClone(screen.macros) ?? {},
-        fileContext,
-        ""
+        {
+          path: name,
+          macros,
+          defaultProtocol: "ca"
+        },
+        true
       );
     },
-    [fileContext, showWarning]
+    [addDisplayInstanceByDescription, fileContext, showWarning]
   );
 
   const requestDelete = useCallback((name: string) => {
@@ -131,11 +158,13 @@ export function useQuickScreens({
     if (!pendingAction) return;
 
     if (pendingAction.type === "overwrite") {
+      const name = pendingAction.name;
       // Overwrite the current file
       localStorage.setItem(
         `quickScreens/${pendingAction.name}`,
         createScreen()
       );
+      updateActiveQuickScreen(name);
       onCompleted();
     } else {
       // Delete the current file
