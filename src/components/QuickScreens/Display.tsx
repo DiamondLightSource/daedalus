@@ -13,7 +13,8 @@ import {
 import {
   DynamicPageWidget,
   newRelativePosition,
-  FileContext
+  FileContext,
+  useDisplayInstance
 } from "@diamondlightsource/cs-web-lib";
 import {
   useWindowWidth,
@@ -23,6 +24,10 @@ import {
 import { createContext, useContext, useState } from "react";
 import QuickScreenSettings from "./Settings";
 import { useLocation } from "react-router";
+
+type DisplayDescription = {
+  gridLayout?: unknown;
+};
 
 // Local quick screen storage handler
 export const StorageContext = createContext<{
@@ -52,18 +57,44 @@ export default function QuickScreenDisplay() {
   >(null);
   const fileContext = useContext(FileContext);
   const location = useLocation();
-  const quickScreen = location.state?.pageState?.quickScreen;
+  const { displayInstance } = useDisplayInstance(bobDisplayUuid ?? "");
+  const quickScreen = fileContext.pageState?.quickScreen;
   const bobQuickScreen = location.state?.pageState?.bobQuickScreen;
 
   const hasQuickScreen = !!quickScreen;
   const hasBobQuickScreen = !!bobQuickScreen;
 
-  const handleDisplayClose = (location: string) => {
-    const isSaved =
-      !!quickScreen?.path &&
-      !!localStorage.getItem(`quickScreens/${quickScreen.path}`);
+  function isQuickScreenSaved(
+    quickScreen: { path?: string } | undefined,
+    currentDescription: DisplayDescription | undefined
+  ): boolean {
+    if (!quickScreen?.path || !currentDescription) return false;
 
-    if (isSaved) {
+    const stored = localStorage.getItem(`quickScreens/${quickScreen.path}`);
+    if (!stored) return false;
+
+    try {
+      const savedScreen = JSON.parse(stored) as {
+        description?: DisplayDescription;
+      };
+
+      return (
+        JSON.stringify(savedScreen.description?.gridLayout) ===
+        JSON.stringify(currentDescription.gridLayout)
+      );
+    } catch {
+      return false;
+    }
+  }
+
+  const handleDisplayClose = (location: string) => {
+    console.log(quickScreen.path);
+    if (
+      isQuickScreenSaved(
+        quickScreen,
+        displayInstance?.description as DisplayDescription | undefined
+      )
+    ) {
       fileContext.removePage(location);
     } else {
       setPendingCloseLocation(location);
