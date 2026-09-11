@@ -61,7 +61,9 @@ export default function QuickScreenDisplay() {
   const location = useLocation();
   const quickScreen = location.state?.pageState?.quickScreen;
   const bobQuickScreen = fileContext.pageState.bobQuickScreen;
-  const [bobScreenUrlId, setBobScreenUrlId] = useState<string>();
+  const [bobScreenUrlId, setBobScreenUrlId] = useState<string | undefined>(
+    location.state?.pageState?.bobScreenUrlId
+  );
 
   const bobBreadcrumbs = bobScreenUrlId
     ? extractAncestorScreens(bobScreenUrlId)
