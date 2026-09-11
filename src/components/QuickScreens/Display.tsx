@@ -33,6 +33,10 @@ type DisplayDescription = {
   gridLayout?: unknown;
 };
 
+type DisplayDescription = {
+  gridLayout?: unknown;
+};
+
 // Local quick screen storage handler
 export const StorageContext = createContext<{
   bobDisplayUuid?: string;
