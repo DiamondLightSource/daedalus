@@ -20,6 +20,9 @@ import {
   APP_BAR_HEIGHT,
   useWindowHeight
 } from "../../utils/helper";
+import { extractAncestorScreens } from "../../utils/screenUrlIdUtils";
+import { Breadcrumbs } from "@mui/material";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { createContext, useContext, useState } from "react";
 import QuickScreenSettings from "./Settings";
 import { useLocation } from "react-router";
@@ -30,11 +33,15 @@ export const StorageContext = createContext<{
   setBobDisplayUuid: any;
   browsingMode?: string;
   setBrowsingMode: any;
+  bobScreenUrlId?: string;
+  setBobScreenUrlId: React.Dispatch<React.SetStateAction<string | undefined>>;
 }>({
   bobDisplayUuid: "",
   setBobDisplayUuid: () => null,
   browsingMode: "Load",
-  setBrowsingMode: () => null
+  setBrowsingMode: () => null,
+  bobScreenUrlId: undefined,
+  setBobScreenUrlId: () => null
 });
 
 const Paper = styled(MuiPaper)(({ theme }) => ({
@@ -53,7 +60,14 @@ export default function QuickScreenDisplay() {
   const fileContext = useContext(FileContext);
   const location = useLocation();
   const quickScreen = location.state?.pageState?.quickScreen;
-  const bobQuickScreen = location.state?.pageState?.bobQuickScreen;
+  const bobQuickScreen = fileContext.pageState.bobQuickScreen;
+  const [bobScreenUrlId, setBobScreenUrlId] = useState<string | undefined>(
+    location.state?.pageState?.bobScreenUrlId
+  );
+
+  const bobBreadcrumbs = bobScreenUrlId
+    ? extractAncestorScreens(bobScreenUrlId)
+    : [];
 
   const hasQuickScreen = !!quickScreen;
   const hasBobQuickScreen = !!bobQuickScreen;
@@ -85,7 +99,9 @@ export default function QuickScreenDisplay() {
             bobDisplayUuid,
             setBobDisplayUuid,
             browsingMode,
-            setBrowsingMode
+            setBrowsingMode,
+            bobScreenUrlId,
+            setBobScreenUrlId
           }}
         >
           <QuickScreenSettings />
@@ -141,6 +157,24 @@ export default function QuickScreenDisplay() {
                     }}
                   />
                 </Box>
+                <Box
+                  role="label"
+                  aria-label="label for quick screen"
+                  sx={{
+                    position: "absolute",
+                    bottom: 0,
+                    left: 2,
+                    cursor: "pointer",
+                    backgroundColor: "transparent"
+                  }}
+                >
+                  <Typography variant="subtitle1" color="textSecondary">
+                    Quick Screen{" "}
+                    {quickScreen.path !== "/new.bob"
+                      ? `: ${quickScreen?.path}`
+                      : ""}
+                  </Typography>
+                </Box>
                 <Dialog
                   open={pendingCloseLocation !== null}
                   onClose={() => setPendingCloseLocation(null)}
@@ -190,6 +224,33 @@ export default function QuickScreenDisplay() {
                   targetDisplayType="displayGridLayout"
                   editable={false}
                 />
+                <Box
+                  role="label"
+                  aria-label="label for bob screen"
+                  sx={{
+                    position: "absolute",
+                    bottom: 0,
+                    left: 2,
+                    cursor: "pointer",
+                    backgroundColor: "transparent"
+                  }}
+                >
+                  <Breadcrumbs
+                    separator={<NavigateNextIcon fontSize="small" />}
+                    aria-label="Bob screen breadcrumb"
+                    sx={{ color: "text.secondary", cursor: "default" }}
+                  >
+                    {bobBreadcrumbs.map(item => (
+                      <Typography
+                        key={item.path}
+                        variant="subtitle1"
+                        color="textSecondary"
+                      >
+                        {item.displayName}
+                      </Typography>
+                    ))}
+                  </Breadcrumbs>
+                </Box>
               </MuiPaper>
             )}
 
