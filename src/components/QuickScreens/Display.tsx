@@ -150,46 +150,37 @@ export default function QuickScreenDisplay() {
                   minWidth: 0
                 }}
               >
-                <Box
-                  sx={{
-                    position: "relative",
-                    width: "100%",
-                    maxWidth: "100%",
-                    minWidth: 0
+                <DynamicPageWidget
+                  location="quickScreen"
+                  position={newRelativePosition(
+                    undefined,
+                    undefined,
+                    "100%",
+                    "100%"
+                  )}
+                  scroll={true}
+                  showCloseButton={true}
+                  widgetIdsCallback={uuid => {
+                    setBobDisplayUuid(uuid);
                   }}
-                >
-                  <DynamicPageWidget
-                    location="quickScreen"
-                    position={newRelativePosition(
-                      undefined,
-                      undefined,
-                      "100%",
-                      "100%"
-                    )}
-                    scroll={true}
-                    showCloseButton={true}
-                    widgetIdsCallback={uuid => {
-                      setBobDisplayUuid(uuid);
-                    }}
-                    targetDisplayType="displayGridLayout"
-                    editable={true}
-                  />
-                  <Box
-                    role="button"
-                    aria-label="Close quick screen"
-                    onClick={() => handleDisplayClose("quickScreen")}
-                    sx={{
-                      position: "absolute",
-                      top: 5,
-                      right: 5,
-                      width: "100px",
-                      height: "40px",
-                      zIndex: 2,
-                      cursor: "pointer",
-                      backgroundColor: "transparent"
-                    }}
-                  />
-                </Box>
+                  targetDisplayType="displayGridLayout"
+                  editable={true}
+                />
+                <Box
+                  role="button"
+                  aria-label="Close quick screen"
+                  onClick={() => handleDisplayClose("quickScreen")}
+                  sx={{
+                    position: "absolute",
+                    top: 5,
+                    right: 5,
+                    width: "100px",
+                    height: "40px",
+                    zIndex: 2,
+                    cursor: "pointer",
+                    backgroundColor: "transparent"
+                  }}
+                />
                 <Box
                   role="label"
                   aria-label="label for quick screen"
@@ -246,27 +237,19 @@ export default function QuickScreenDisplay() {
                   minWidth: 0
                 }}
               >
-                <Box
-                  sx={{
-                    width: "100%",
-                    minWidth: 0,
-                    maxWidth: "100%"
-                  }}
-                >
-                  <DynamicPageWidget
-                    location="bobQuickScreen"
-                    position={newRelativePosition(
-                      undefined,
-                      undefined,
-                      "100%",
-                      "100%"
-                    )}
-                    scroll={true}
-                    showCloseButton={true}
-                    targetDisplayType="displayGridLayout"
-                    editable={false}
-                  />
-                </Box>
+                <DynamicPageWidget
+                  location="bobQuickScreen"
+                  position={newRelativePosition(
+                    undefined,
+                    undefined,
+                    "100%",
+                    "100%"
+                  )}
+                  scroll={true}
+                  showCloseButton={true}
+                  targetDisplayType="displayGridLayout"
+                  editable={false}
+                />
                 <Box
                   role="label"
                   aria-label="label for bob screen"
