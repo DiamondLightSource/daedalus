@@ -13,7 +13,8 @@ import {
 import {
   DynamicPageWidget,
   newRelativePosition,
-  FileContext
+  FileContext,
+  useDisplayInstance
 } from "@diamondlightsource/cs-web-lib";
 import {
   useWindowWidth,
@@ -23,7 +24,7 @@ import {
 import { extractAncestorScreens } from "../../utils/screenUrlIdUtils";
 import { Breadcrumbs } from "@mui/material";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import QuickScreenSettings from "./Settings";
 import { useLocation } from "react-router";
 
@@ -68,6 +69,9 @@ export default function QuickScreenDisplay() {
   const bobBreadcrumbs = bobScreenUrlId
     ? extractAncestorScreens(bobScreenUrlId)
     : [];
+  const { addDisplayInstanceByDescription } = useDisplayInstance(
+    bobDisplayUuid!
+  );
 
   const hasQuickScreen = !!quickScreen;
   const hasBobQuickScreen = !!bobQuickScreen;
@@ -91,6 +95,24 @@ export default function QuickScreenDisplay() {
     setPendingCloseLocation(null);
   };
 
+  // Simple screen reload that preserves open pages on refresh
+  useEffect(() => {
+    if (!quickScreen?.path) return;
+    const stored = localStorage.getItem(`quickScreens/${quickScreen.path}`);
+    if (!stored) return;
+
+    try {
+      const screen = JSON.parse(stored);
+      addDisplayInstanceByDescription(
+        quickScreen.path,
+        quickScreen.macros ?? {},
+        screen.description
+      );
+    } catch (error) {
+      console.error("Failed to restore Quick Screen display instance", error);
+    }
+  }, [quickScreen, addDisplayInstanceByDescription]);
+
   return (
     <Paper elevation={12}>
       <Box sx={{ display: "flex", height: "100%" }}>
@@ -112,51 +134,53 @@ export default function QuickScreenDisplay() {
               display: "flex",
               flexDirection: "row",
               gap: 1,
-              p: 1
+              p: 1,
+              minWidth: 0,
+              overflow: "hidden"
             }}
           >
             {hasQuickScreen && (
               <MuiPaper
                 elevation={3}
                 sx={{
-                  flex: 1,
+                  flex: "1 1 0",
                   position: "relative",
-                  overflow: "hidden"
+                  overflow: "auto",
+                  maxWidth: "100%",
+                  minWidth: 0
                 }}
               >
-                <Box sx={{ position: "relative", flex: 1 }}>
-                  <DynamicPageWidget
-                    location="quickScreen"
-                    position={newRelativePosition(
-                      undefined,
-                      undefined,
-                      "100%",
-                      "100%"
-                    )}
-                    scroll={true}
-                    showCloseButton={true}
-                    widgetIdsCallback={uuid => {
-                      setBobDisplayUuid(uuid);
-                    }}
-                    targetDisplayType="displayGridLayout"
-                    editable={true}
-                  />
-                  <Box
-                    role="button"
-                    aria-label="Close quick screen"
-                    onClick={() => handleDisplayClose("quickScreen")}
-                    sx={{
-                      position: "absolute",
-                      top: 5,
-                      right: 5,
-                      width: "100px",
-                      height: "40px",
-                      zIndex: 2,
-                      cursor: "pointer",
-                      backgroundColor: "transparent"
-                    }}
-                  />
-                </Box>
+                <DynamicPageWidget
+                  location="quickScreen"
+                  position={newRelativePosition(
+                    undefined,
+                    undefined,
+                    "100%",
+                    "100%"
+                  )}
+                  scroll={true}
+                  showCloseButton={true}
+                  widgetIdsCallback={uuid => {
+                    setBobDisplayUuid(uuid);
+                  }}
+                  targetDisplayType="displayGridLayout"
+                  editable={true}
+                />
+                <Box
+                  role="button"
+                  aria-label="Close quick screen"
+                  onClick={() => handleDisplayClose("quickScreen")}
+                  sx={{
+                    position: "absolute",
+                    top: 5,
+                    right: 5,
+                    width: "100px",
+                    height: "40px",
+                    zIndex: 2,
+                    cursor: "pointer",
+                    backgroundColor: "transparent"
+                  }}
+                />
                 <Box
                   role="label"
                   aria-label="label for quick screen"
@@ -206,9 +230,11 @@ export default function QuickScreenDisplay() {
               <MuiPaper
                 elevation={3}
                 sx={{
-                  flex: 1,
+                  flex: "1 1 0",
                   position: "relative",
-                  overflow: "hidden"
+                  overflow: "auto",
+                  maxWidth: "100%",
+                  minWidth: 0
                 }}
               >
                 <DynamicPageWidget
