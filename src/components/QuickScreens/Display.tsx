@@ -70,10 +70,8 @@ export default function QuickScreenDisplay() {
     location.state?.pageState?.bobScreenUrlId
   );
 
-
   const { displayInstance, addDisplayInstanceByDescription } =
     useDisplayInstance(bobDisplayUuid ?? "");
-
 
   const hasQuickScreen = !!quickScreen;
   const hasBobQuickScreen = !!bobQuickScreen;
@@ -106,7 +104,6 @@ export default function QuickScreenDisplay() {
   }
 
   const handleDisplayClose = (location: string) => {
-    console.log(quickScreen.path);
     if (
       isQuickScreenSaved(
         quickScreen,
