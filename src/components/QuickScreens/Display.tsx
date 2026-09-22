@@ -107,7 +107,6 @@ export default function QuickScreenDisplay() {
   }
 
   const handleDisplayClose = (location: string) => {
-    console.log(quickScreen.path);
     if (
       isQuickScreenSaved(
         quickScreen,

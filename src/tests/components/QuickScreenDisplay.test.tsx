@@ -15,7 +15,13 @@ let mockFileContent: any = {
   macros: {
     TEST: "value"
   },
-  description: "{type: 'display', children: []}"
+  displayInstance: {
+    description: {
+      gridLayout: []
+    }
+  },
+  description: "{type: 'display', children: []}",
+  addDisplayInstanceByDescription: vi.fn()
 };
 
 const renderComponent = () => {
@@ -32,14 +38,15 @@ type MockBobQuickScreen = {
   path: string;
   macros: Record<string, string>;
   defaultProtocol: string;
-  saved?: boolean;
 };
 
 const mockFileContext = vi.hoisted(() => ({
   pageState: {
-    bobQuickScreen: undefined as MockBobQuickScreen | undefined
+    bobQuickScreen: undefined as MockBobQuickScreen | undefined,
+    quickScreen: undefined as MockBobQuickScreen | undefined
   },
-  removePage: vi.fn()
+  removePage: vi.fn(),
+  updatePage: vi.fn()
 }));
 
 const mockLocalStorage = {
@@ -57,7 +64,13 @@ Object.defineProperty(window, "localStorage", {
 beforeEach(() => {
   vi.clearAllMocks();
   mockLocalStorage.clear();
+
+  mockUseLocation.mockReturnValue({
+    state: undefined
+  });
+
   mockFileContext.pageState.bobQuickScreen = undefined;
+  mockFileContext.pageState.quickScreen = undefined;
 });
 
 vi.mock("react-router", async () => {
@@ -86,25 +99,19 @@ vi.mock("@diamondlightsource/cs-web-lib", async () => {
 
 describe("<QuickScreens />", () => {
   it("shows placeholder text when no Quick Screen opened", () => {
-    mockUseLocation.mockReturnValue({ state: undefined });
+    mockFileContext.pageState.quickScreen = undefined;
 
     const { getByText } = renderComponent();
 
     expect(getByText("No Quick Screen Loaded")).toBeInTheDocument();
   });
 
-  it("renders a dynamic page view when location.state exists", () => {
-    mockUseLocation.mockReturnValue({
-      state: {
-        pageState: {
-          quickScreen: {
-            path: "wow.bob",
-            macros: {},
-            defaultProtocol: "ca"
-          }
-        }
-      }
-    });
+  it("renders a dynamic page view when fileContext.state exists", () => {
+    mockFileContext.pageState.quickScreen = {
+      path: "wow.bob",
+      macros: {},
+      defaultProtocol: "ca"
+    };
 
     const { queryByText, getByTestId } = renderComponent();
 
@@ -114,17 +121,11 @@ describe("<QuickScreens />", () => {
   });
 
   it("displays a dialog box before closing on unsaved quick screen", () => {
-    mockUseLocation.mockReturnValue({
-      state: {
-        pageState: {
-          quickScreen: {
-            path: "wow.bob",
-            macros: {},
-            defaultProtocol: "ca"
-          }
-        }
-      }
-    });
+    mockFileContext.pageState.quickScreen = {
+      path: "wow.bob",
+      macros: {},
+      defaultProtocol: "ca"
+    };
 
     const { getByText, getByRole } = renderComponent();
     fireEvent.click(getByRole("button", { name: /close quick screen/i }));
@@ -136,20 +137,18 @@ describe("<QuickScreens />", () => {
   });
 
   it("doesn't display a dialog box when closing a saved quick screen", () => {
-    mockUseLocation.mockReturnValue({
-      state: {
-        pageState: {
-          quickScreen: {
-            path: "wow.bob",
-            macros: {},
-            defaultProtocol: "ca"
-          }
-        }
-      }
-    });
+    mockFileContext.pageState.quickScreen = {
+      path: "wow.bob",
+      macros: {},
+      defaultProtocol: "ca"
+    };
 
-    mockLocalStorage.getItem.mockImplementation((key: string) =>
-      key === "quickScreens/wow.bob" ? "saved" : null
+    mockLocalStorage.getItem.mockReturnValue(
+      JSON.stringify({
+        description: {
+          gridLayout: []
+        }
+      })
     );
 
     const { queryByText, getByRole } = renderComponent();
@@ -162,17 +161,11 @@ describe("<QuickScreens />", () => {
   });
 
   it("shows name of quick screen when opened", () => {
-    mockUseLocation.mockReturnValue({
-      state: {
-        pageState: {
-          quickScreen: {
-            path: "wow.bob",
-            macros: {},
-            defaultProtocol: "ca"
-          }
-        }
-      }
-    });
+    mockFileContext.pageState.quickScreen = {
+      path: "wow.bob",
+      macros: {},
+      defaultProtocol: "ca"
+    };
 
     const { getByText } = renderComponent();
 
