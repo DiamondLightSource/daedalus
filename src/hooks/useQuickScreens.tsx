@@ -2,10 +2,7 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { TreeViewBaseItem, TreeViewItemId } from "@mui/x-tree-view";
 import { FileContext, useNotification } from "@diamondlightsource/cs-web-lib";
 import { getAllScreensWithChildrenItemIds } from "../components/utils";
-import {
-  executeCloseQuickScreen,
-  executeOpenQuickScreen
-} from "../utils/csWebLibActions";
+import { executeCloseQuickScreen } from "../utils/csWebLibActions";
 
 interface UseQuickScreensProps {
   displayInstance?: any;
@@ -49,6 +46,29 @@ export function useQuickScreens({
     setExpanded(allScreens);
   }, []);
 
+  // Helper to update the active quick screen name
+  const updateActiveQuickScreen = useCallback(
+    (name: string) => {
+      if (!displayInstance) return;
+
+      const macros = displayInstance.macros ?? {};
+      const description = structuredClone(displayInstance.description);
+
+      addDisplayInstanceByDescription(name, macros, description);
+
+      fileContext.updatePage(
+        "quickScreen",
+        {
+          path: name,
+          macros: displayInstance.macros ?? {},
+          defaultProtocol: "ca"
+        },
+        true
+      );
+    },
+    [displayInstance, addDisplayInstanceByDescription, fileContext]
+  );
+
   useEffect(() => {
     refreshTree();
   }, [refreshTree]);
@@ -84,6 +104,7 @@ export function useQuickScreens({
         return;
       }
       localStorage.setItem(`quickScreens/${name}`, newContent);
+      updateActiveQuickScreen(name);
       refreshTree();
       onCompleted();
     },
@@ -108,10 +129,18 @@ export function useQuickScreens({
 
       const screen = JSON.parse(stored);
       const macros = structuredClone(screen.macros ?? {});
-      addDisplayInstanceByDescription(name, macros, screen.description);
-      executeOpenQuickScreen(name, "quickScreen", macros, fileContext, "");
+
+      fileContext.updatePage(
+        "quickScreen",
+        {
+          path: name,
+          macros,
+          defaultProtocol: "ca"
+        },
+        true
+      );
     },
-    [fileContext, showWarning, addDisplayInstanceByDescription]
+    [addDisplayInstanceByDescription, fileContext, showWarning]
   );
 
   const requestDelete = useCallback((name: string) => {
@@ -126,11 +155,13 @@ export function useQuickScreens({
     if (!pendingAction) return;
 
     if (pendingAction.type === "overwrite") {
+      const name = pendingAction.name;
       // Overwrite the current file
       localStorage.setItem(
         `quickScreens/${pendingAction.name}`,
         createScreen()
       );
+      updateActiveQuickScreen(name);
       onCompleted();
     } else {
       // Delete the current file
