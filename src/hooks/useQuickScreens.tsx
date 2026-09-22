@@ -11,6 +11,7 @@ interface UseQuickScreensProps {
     macros: any,
     description: any
   ) => void;
+  removeDisplayInstance: (file: string) => void;
   onCompleted: () => void;
 }
 
@@ -29,6 +30,7 @@ type PendingAction =
 export function useQuickScreens({
   displayInstance,
   addDisplayInstanceByDescription,
+  removeDisplayInstance,
   onCompleted
 }: UseQuickScreensProps) {
   const fileContext = useContext(FileContext);
@@ -128,6 +130,7 @@ export function useQuickScreens({
       }
 
       const screen = JSON.parse(stored);
+      removeDisplayInstance(name);
       const macros = structuredClone(screen.macros ?? {});
 
       fileContext.updatePage(
