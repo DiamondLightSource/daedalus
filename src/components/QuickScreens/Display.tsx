@@ -73,7 +73,7 @@ export default function QuickScreenDisplay() {
     location.state?.pageState?.bobScreenUrlId
   );
 
-  const { displayInstance, addDisplayInstanceByDescription } =
+  const { displayInstance, addDisplayInstanceByDescription, removeDisplayInstance } =
     useDisplayInstance(bobDisplayUuid ?? "");
 
   const hasQuickScreen = !!quickScreen;
@@ -114,6 +114,7 @@ export default function QuickScreenDisplay() {
       )
     ) {
       fileContext.removePage(location);
+      if (quickScreen?.path) removeDisplayInstance(quickScreen.path);
     } else {
       setPendingCloseLocation(location);
     }
@@ -122,6 +123,7 @@ export default function QuickScreenDisplay() {
   const confirmDisplayClose = () => {
     if (pendingCloseLocation) {
       fileContext.removePage(pendingCloseLocation);
+      if (quickScreen?.path) removeDisplayInstance(quickScreen.path);
     }
     setPendingCloseLocation(null);
   };
