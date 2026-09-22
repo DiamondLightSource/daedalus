@@ -2,9 +2,7 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { TreeViewBaseItem, TreeViewItemId } from "@mui/x-tree-view";
 import { FileContext, useNotification } from "@diamondlightsource/cs-web-lib";
 import { getAllScreensWithChildrenItemIds } from "../components/utils";
-import {
-  executeCloseQuickScreen
-} from "../utils/csWebLibActions";
+import { executeCloseQuickScreen } from "../utils/csWebLibActions";
 
 interface UseQuickScreensProps {
   displayInstance?: any;
