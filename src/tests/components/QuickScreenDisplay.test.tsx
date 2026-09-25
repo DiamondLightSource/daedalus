@@ -21,7 +21,8 @@ let mockFileContent: any = {
     }
   },
   description: "{type: 'display', children: []}",
-  addDisplayInstanceByDescription: vi.fn()
+  addDisplayInstanceByDescription: vi.fn(),
+  removeDisplayInstance: vi.fn()
 };
 
 const renderComponent = () => {
