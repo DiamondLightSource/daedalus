@@ -116,7 +116,8 @@ export function useQuickScreens({
       refreshTree,
       showError,
       showWarning,
-      onCompleted
+      onCompleted,
+      updateActiveQuickScreen
     ]
   );
 
@@ -143,7 +144,7 @@ export function useQuickScreens({
         true
       );
     },
-    [addDisplayInstanceByDescription, fileContext, showWarning]
+    [removeDisplayInstance, fileContext, showWarning]
   );
 
   const requestDelete = useCallback((name: string) => {
@@ -183,7 +184,14 @@ export function useQuickScreens({
 
     setPendingAction(null);
     refreshTree();
-  }, [pendingAction, createScreen, onCompleted, refreshTree]);
+  }, [
+    pendingAction,
+    createScreen,
+    onCompleted,
+    refreshTree,
+    fileContext,
+    updateActiveQuickScreen
+  ]);
 
   // Called when the user cancels the action
   const cancelPendingAction = useCallback(() => {

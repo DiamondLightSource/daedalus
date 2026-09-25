@@ -34,6 +34,7 @@ describe("FileDisplay Component", () => {
     tabState: {},
     addPage: vi.fn(),
     removePage: vi.fn(),
+    updatePage: vi.fn(),
     addTab: vi.fn(),
     removeTab: vi.fn(),
     selectTab: vi.fn()

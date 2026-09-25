@@ -70,8 +70,11 @@ export default function QuickScreenDisplay() {
     location.state?.pageState?.bobScreenUrlId
   );
 
-  const { displayInstance, addDisplayInstanceByDescription, removeDisplayInstance } =
-    useDisplayInstance(bobDisplayUuid ?? "");
+  const {
+    displayInstance,
+    addDisplayInstanceByDescription,
+    removeDisplayInstance
+  } = useDisplayInstance(bobDisplayUuid ?? "");
 
   const hasQuickScreen = !!quickScreen;
   const hasBobQuickScreen = !!bobQuickScreen;
