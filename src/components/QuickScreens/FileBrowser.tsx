@@ -152,7 +152,7 @@ export default function BobFileBrowser() {
   useEffect(() => {
     // On change of beamlines, reload
     loadScreens();
-  }, [state.beamlines, loadScreens]);
+  }, [state.beamlines]);
 
   return (
     <Stack spacing={2}>
