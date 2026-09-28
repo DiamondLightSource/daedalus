@@ -69,9 +69,8 @@ export default function QuickScreenDisplay() {
   const bobBreadcrumbs = bobScreenUrlId
     ? extractAncestorScreens(bobScreenUrlId)
     : [];
-  const { addDisplayInstanceByDescription } = useDisplayInstance(
-    bobDisplayUuid!
-  );
+  const { displayInstance, addDisplayInstanceByDescription } =
+    useDisplayInstance(bobDisplayUuid!);
 
   const hasQuickScreen = !!quickScreen;
   const hasBobQuickScreen = !!bobQuickScreen;
@@ -112,6 +111,23 @@ export default function QuickScreenDisplay() {
       console.error("Failed to restore Quick Screen display instance", error);
     }
   }, [quickScreen, addDisplayInstanceByDescription]);
+
+  useEffect(() => {
+    if (!displayInstance?.description) return;
+
+    localStorage.setItem(
+      "quickScreenSession",
+      JSON.stringify({
+        path: quickScreen?.path,
+        macros: displayInstance.macros ?? {},
+        description: displayInstance.description
+      })
+    );
+  }, [
+    quickScreen?.path,
+    displayInstance?.description,
+    displayInstance?.macros
+  ]);
 
   return (
     <Paper elevation={12}>

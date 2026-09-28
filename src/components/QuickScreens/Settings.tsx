@@ -9,6 +9,7 @@ import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 import SaveIcon from "@mui/icons-material/Save";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import CloseIcon from "@mui/icons-material/Close";
+import ReplayIcon from "@mui/icons-material/Replay";
 import {
   Dialog as MuiDialog,
   DialogContent,
@@ -24,7 +25,10 @@ import LocalStorageBrowser from "./StorageBrowser";
 import { StorageContext } from "./Display";
 import BobFileBrowser from "./FileBrowser";
 import { executeOpenQuickScreen } from "../../utils/csWebLibActions";
-import { FileContext } from "@diamondlightsource/cs-web-lib";
+import {
+  FileContext,
+  useDisplayInstance
+} from "@diamondlightsource/cs-web-lib";
 
 const NEW_QUICK_SCREEN = {
   path: "/new.bob",
@@ -57,6 +61,9 @@ export default function QuickScreenSettings() {
   const [storageModalOpen, setStorageModalOpen] = useState(false);
   const [bobModalOpen, setBobModalOpen] = useState(false);
   const quickScreenStorage = useContext(StorageContext);
+  const { addDisplayInstanceByDescription } = useDisplayInstance(
+    quickScreenStorage.bobDisplayUuid ?? ""
+  );
 
   const handleCloseModal = (_event: any) => {
     setStorageModalOpen(false);
@@ -100,6 +107,41 @@ export default function QuickScreenSettings() {
     quickScreenStorage.setBrowsingMode("Load");
   };
 
+  /**
+   * Reloads the latest autosaved quickscreen from local storage
+   */
+  const onClickRestore = () => {
+    const stored = localStorage.getItem("quickScreenSession");
+
+    if (!stored) {
+      onClickNew();
+      return;
+    }
+
+    try {
+      const session = JSON.parse(stored);
+      if (!session.path || !session.description) return;
+
+      const macros = session.macros ?? {};
+
+      addDisplayInstanceByDescription(
+        session.path,
+        macros,
+        session.description
+      );
+
+      executeOpenQuickScreen(
+        session.path,
+        "quickScreen",
+        macros,
+        fileContext,
+        ""
+      );
+    } catch (error) {
+      console.error("Failed to restore Quick Screen session", error);
+    }
+  };
+
   const SETTINGS_LIST = [
     {
       name: "New",
@@ -124,6 +166,12 @@ export default function QuickScreenSettings() {
       text: "Add a .bob file to the view",
       icon: <LibraryAddIcon />,
       onClick: onClickAdd
+    },
+    {
+      name: "Restore",
+      text: "Resume last quickScreen session",
+      icon: <ReplayIcon />,
+      onClick: onClickRestore
     }
   ];
 
