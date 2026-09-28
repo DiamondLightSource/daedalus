@@ -25,10 +25,7 @@ import LocalStorageBrowser from "./StorageBrowser";
 import { StorageContext } from "./Display";
 import BobFileBrowser from "./FileBrowser";
 import { executeOpenQuickScreen } from "../../utils/csWebLibActions";
-import {
-  FileContext,
-  useDisplayInstance
-} from "@diamondlightsource/cs-web-lib";
+import { FileContext } from "@diamondlightsource/cs-web-lib";
 
 const NEW_QUICK_SCREEN = {
   path: "/new.bob",
@@ -61,9 +58,6 @@ export default function QuickScreenSettings() {
   const [storageModalOpen, setStorageModalOpen] = useState(false);
   const [bobModalOpen, setBobModalOpen] = useState(false);
   const quickScreenStorage = useContext(StorageContext);
-  const { addDisplayInstanceByDescription } = useDisplayInstance(
-    quickScreenStorage.bobDisplayUuid ?? ""
-  );
 
   const handleCloseModal = (_event: any) => {
     setStorageModalOpen(false);
@@ -111,35 +105,7 @@ export default function QuickScreenSettings() {
    * Reloads the latest autosaved quickscreen from local storage
    */
   const onClickRestore = () => {
-    const stored = localStorage.getItem("quickScreenSession");
-
-    if (!stored) {
-      onClickNew();
-      return;
-    }
-
-    try {
-      const session = JSON.parse(stored);
-      if (!session.path || !session.description) return;
-
-      const macros = session.macros ?? {};
-
-      addDisplayInstanceByDescription(
-        session.path,
-        macros,
-        session.description
-      );
-
-      executeOpenQuickScreen(
-        session.path,
-        "quickScreen",
-        macros,
-        fileContext,
-        ""
-      );
-    } catch (error) {
-      console.error("Failed to restore Quick Screen session", error);
-    }
+    quickScreenStorage.restoreQuickScreenSession();
   };
 
   const SETTINGS_LIST = [
