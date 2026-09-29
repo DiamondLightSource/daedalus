@@ -41,13 +41,20 @@ let mockFileContent: any = {
   description: "{type: 'display', children: []}"
 };
 
-vi.mock("@diamondlightsource/cs-web-lib", () => ({
-  useDisplayInstance: () => mockFileContent,
-  useNotification: () => ({
-    showWarning: mockShowWarning,
-    showError: mockShowError
-  })
-}));
+vi.mock("@diamondlightsource/cs-web-lib", async importOriginal => {
+  const actual =
+    await importOriginal<typeof import("@diamondlightsource/cs-web-lib")>();
+
+  return {
+    ...actual,
+    useDisplayInstance: () => mockFileContent,
+    useNotification: () => ({
+      showWarning: mockShowWarning,
+      showError: mockShowError
+    })
+  };
+});
+
 
 const renderComponent = (browsingMode?: string) =>
   render(
