@@ -11,13 +11,14 @@ vi.mock("../../utils/csWebLibActions", () => ({
 const { executeOpenQuickScreen } = await import("../../utils/csWebLibActions");
 
 vi.mock("@diamondlightsource/cs-web-lib", async importOriginal => {
-  const actual = await importOriginal<typeof import("@diamondlightsource/cs-web-lib")>();
+  const actual =
+    await importOriginal<typeof import("@diamondlightsource/cs-web-lib")>();
   return {
     ...actual,
     useDisplayInstance: vi.fn(() => ({
       addDisplayInstanceByDescription: vi.fn(),
       removeDisplayInstance: vi.fn()
-    })),
+    }))
   };
 });
 
@@ -69,7 +70,7 @@ describe("<QuickScreenSettings />", () => {
     expect(executeOpenQuickScreen).toHaveBeenCalledWith(
       "",
       "quickScreen",
-      {LCID: "123"},
+      { LCID: "123" },
       undefined,
       ""
     );

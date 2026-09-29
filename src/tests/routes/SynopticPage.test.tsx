@@ -62,7 +62,6 @@ vi.mock("@diamondlightsource/cs-web-lib", async importOriginal => {
   };
 });
 
-
 describe("SynopticPage", () => {
   const mockDispatch = vi.fn();
   const mockState = {

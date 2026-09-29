@@ -26,7 +26,6 @@ vi.mock("@diamondlightsource/cs-web-lib", async importOriginal => {
   };
 });
 
-
 const mockedExecuteAction = vi.mocked(executeAction);
 const EXPECTED_SEPARATOR = "/";
 

@@ -55,7 +55,6 @@ vi.mock("@diamondlightsource/cs-web-lib", async importOriginal => {
   };
 });
 
-
 const renderComponent = (browsingMode?: string) =>
   render(
     <Provider store={testStore}>
