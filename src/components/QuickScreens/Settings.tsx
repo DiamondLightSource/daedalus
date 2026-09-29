@@ -135,7 +135,7 @@ export default function QuickScreenSettings() {
     },
     {
       name: "Restore",
-      text: "Resume last quickScreen session",
+      text: "Restore last quickScreen session",
       icon: <ReplayIcon />,
       onClick: onClickRestore
     }
