@@ -275,9 +275,7 @@ export default function QuickScreenDisplay() {
                 >
                   <Typography variant="subtitle1" color="textSecondary">
                     Quick Screen{" "}
-                    {quickScreen.path !== ""
-                      ? `: ${quickScreen?.path}`
-                      : ""}
+                    {quickScreen.path !== "" ? `: ${quickScreen?.path}` : ""}
                   </Typography>
                 </Box>
                 <Dialog
