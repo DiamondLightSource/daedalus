@@ -31,7 +31,7 @@ vi.mock("react", async importOriginal => {
   };
 });
 
-const renderComponent = () => {
+const renderComponent = (restoreQuickScreenSession = vi.fn()) => {
   return render(
     <StorageContext.Provider
       value={
@@ -47,6 +47,7 @@ const renderComponent = () => {
     </StorageContext.Provider>
   );
 };
+
 
 describe("<QuickScreenSettings />", () => {
   it("renders all buttons", () => {
