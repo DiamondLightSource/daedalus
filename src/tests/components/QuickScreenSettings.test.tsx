@@ -1,5 +1,5 @@
 import { fireEvent, render } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import QuickScreenSettings from "../../components/QuickScreens/Settings";
 import { StorageContext } from "../../components/QuickScreens/Display";
 import { FileContext } from "@diamondlightsource/cs-web-lib";
@@ -10,12 +10,13 @@ vi.mock("../../utils/csWebLibActions", () => ({
 
 const { executeOpenQuickScreen } = await import("../../utils/csWebLibActions");
 
-const renderComponent = () => {
+const renderComponent = (restoreQuickScreenSession = vi.fn()) => {
   return render(
     <StorageContext.Provider
       value={
         {
-          setBrowsingMode: vi.fn()
+          setBrowsingMode: vi.fn(),
+          restoreQuickScreenSession
         } as any
       }
     >
@@ -34,9 +35,10 @@ describe("<QuickScreenSettings />", () => {
     expect(getByText("Add")).toBeInTheDocument();
     expect(getByText("Save")).toBeInTheDocument();
     expect(getByText("Load")).toBeInTheDocument();
+    expect(getByText("Restore")).toBeInTheDocument();
 
     // Check all four icons appear
-    expect(container.querySelectorAll("svg")).toHaveLength(4);
+    expect(container.querySelectorAll("svg")).toHaveLength(5);
   });
 
   it("loads a blank quick screen when new button clicked", () => {
@@ -51,5 +53,14 @@ describe("<QuickScreenSettings />", () => {
       undefined,
       ""
     );
+  });
+
+  it("verified that the restore setting delegates to the restore callback", () => {
+    const restoreQuickScreenSession = vi.fn();
+
+    const { getByRole } = renderComponent(restoreQuickScreenSession);
+    fireEvent.click(getByRole("button", { name: /restore/i }));
+
+    expect(restoreQuickScreenSession).toHaveBeenCalledTimes(1);
   });
 });

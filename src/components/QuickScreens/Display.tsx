@@ -27,6 +27,7 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { createContext, useContext, useEffect, useState } from "react";
 import QuickScreenSettings from "./Settings";
 import { useLocation } from "react-router";
+import { executeOpenQuickScreen } from "../../utils/csWebLibActions";
 
 // Local quick screen storage handler
 export const StorageContext = createContext<{
@@ -36,13 +37,15 @@ export const StorageContext = createContext<{
   setBrowsingMode: any;
   bobScreenUrlId?: string;
   setBobScreenUrlId: React.Dispatch<React.SetStateAction<string | undefined>>;
+  restoreQuickScreenSession: () => void;
 }>({
   bobDisplayUuid: "",
   setBobDisplayUuid: () => null,
   browsingMode: "Load",
   setBrowsingMode: () => null,
   bobScreenUrlId: undefined,
-  setBobScreenUrlId: () => null
+  setBobScreenUrlId: () => null,
+  restoreQuickScreenSession: () => {}
 });
 
 const Paper = styled(MuiPaper)(({ theme }) => ({
@@ -69,9 +72,8 @@ export default function QuickScreenDisplay() {
   const bobBreadcrumbs = bobScreenUrlId
     ? extractAncestorScreens(bobScreenUrlId)
     : [];
-  const { addDisplayInstanceByDescription } = useDisplayInstance(
-    bobDisplayUuid!
-  );
+  const { displayInstance, addDisplayInstanceByDescription } =
+    useDisplayInstance(bobDisplayUuid!);
 
   const hasQuickScreen = !!quickScreen;
   const hasBobQuickScreen = !!bobQuickScreen;
@@ -113,6 +115,50 @@ export default function QuickScreenDisplay() {
     }
   }, [quickScreen, addDisplayInstanceByDescription]);
 
+  useEffect(() => {
+    if (!displayInstance?.description) return;
+
+    localStorage.setItem(
+      "quickScreenSession",
+      JSON.stringify({
+        path: quickScreen?.path,
+        macros: displayInstance.macros ?? {},
+        description: displayInstance.description
+      })
+    );
+  }, [
+    quickScreen?.path,
+    displayInstance?.description,
+    displayInstance?.macros
+  ]);
+
+  const restoreQuickScreenSession = () => {
+    const stored = localStorage.getItem("quickScreenSession");
+    if (!stored) return;
+
+    try {
+      const session = JSON.parse(stored);
+      if (!session.path || !session.description) return;
+
+      const macros = session.macros ?? {};
+
+      addDisplayInstanceByDescription(
+        session.path,
+        macros,
+        session.description
+      );
+      executeOpenQuickScreen(
+        session.path,
+        "quickScreen",
+        macros,
+        fileContext,
+        ""
+      );
+    } catch (error) {
+      console.error("Failed to restore Quick Screen session", error);
+    }
+  };
+
   return (
     <Paper elevation={12}>
       <Box sx={{ display: "flex", height: "100%" }}>
@@ -123,7 +169,8 @@ export default function QuickScreenDisplay() {
             browsingMode,
             setBrowsingMode,
             bobScreenUrlId,
-            setBobScreenUrlId
+            setBobScreenUrlId,
+            restoreQuickScreenSession
           }}
         >
           <QuickScreenSettings />

@@ -9,6 +9,7 @@ import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 import SaveIcon from "@mui/icons-material/Save";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import CloseIcon from "@mui/icons-material/Close";
+import ReplayIcon from "@mui/icons-material/Replay";
 import {
   Dialog as MuiDialog,
   DialogContent,
@@ -100,6 +101,13 @@ export default function QuickScreenSettings() {
     quickScreenStorage.setBrowsingMode("Load");
   };
 
+  /**
+   * Reloads the latest autosaved quickscreen from local storage
+   */
+  const onClickRestore = () => {
+    quickScreenStorage.restoreQuickScreenSession();
+  };
+
   const SETTINGS_LIST = [
     {
       name: "New",
@@ -124,6 +132,12 @@ export default function QuickScreenSettings() {
       text: "Add a .bob file to the view",
       icon: <LibraryAddIcon />,
       onClick: onClickAdd
+    },
+    {
+      name: "Restore",
+      text: "Restore last quickScreen session",
+      icon: <ReplayIcon />,
+      onClick: onClickRestore
     }
   ];
 
