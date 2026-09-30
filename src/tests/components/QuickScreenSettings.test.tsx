@@ -48,7 +48,6 @@ const renderComponent = (restoreQuickScreenSession = vi.fn()) => {
   );
 };
 
-
 describe("<QuickScreenSettings />", () => {
   it("renders all buttons", () => {
     const { container, getByText } = renderComponent();
