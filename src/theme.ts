@@ -6,8 +6,8 @@ export const diamondTheme = createTheme({
       palette: {
         primary: {
           main: "#202740",
-          light: "#4C5266",
-          dark: "#161B2C",
+          light: "#6a86e4",
+          dark: "#1f3d96",
           contrastText: "#ffffff"
         },
         secondary: {
@@ -27,10 +27,10 @@ export const diamondTheme = createTheme({
     dark: {
       palette: {
         primary: {
-          main: "#202740",
-          light: "#3b4c8c",
-          dark: "#435184",
-          contrastText: "#ffffff"
+          main: "#a5bcff",
+          light: "#8aa7ff",
+          dark: "#c4d4ff",
+          contrastText: "#0b1638"
         },
         secondary: {
           main: "#facf07",
