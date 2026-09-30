@@ -2,10 +2,7 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { TreeViewBaseItem, TreeViewItemId } from "@mui/x-tree-view";
 import { FileContext, useNotification } from "@diamondlightsource/cs-web-lib";
 import { getAllScreensWithChildrenItemIds } from "../components/utils";
-import {
-  executeCloseQuickScreen,
-  executeOpenQuickScreen
-} from "../utils/csWebLibActions";
+import { executeCloseQuickScreen } from "../utils/csWebLibActions";
 
 interface UseQuickScreensProps {
   displayInstance?: any;
@@ -14,6 +11,7 @@ interface UseQuickScreensProps {
     macros: any,
     description: any
   ) => void;
+  removeDisplayInstance: (file: string) => void;
   onCompleted: () => void;
 }
 
@@ -32,6 +30,7 @@ type PendingAction =
 export function useQuickScreens({
   displayInstance,
   addDisplayInstanceByDescription,
+  removeDisplayInstance,
   onCompleted
 }: UseQuickScreensProps) {
   const fileContext = useContext(FileContext);
@@ -48,6 +47,29 @@ export function useQuickScreens({
     const allScreens = getAllScreensWithChildrenItemIds(screens);
     setExpanded(allScreens);
   }, []);
+
+  // Helper to update the active quick screen name
+  const updateActiveQuickScreen = useCallback(
+    (name: string) => {
+      if (!displayInstance) return;
+
+      const macros = displayInstance.macros ?? {};
+      const description = structuredClone(displayInstance.description);
+
+      addDisplayInstanceByDescription(name, macros, description);
+
+      fileContext.updatePage(
+        "quickScreen",
+        {
+          path: name,
+          macros: displayInstance.macros ?? {},
+          defaultProtocol: "ca"
+        },
+        true
+      );
+    },
+    [displayInstance, addDisplayInstanceByDescription, fileContext]
+  );
 
   useEffect(() => {
     refreshTree();
@@ -84,6 +106,7 @@ export function useQuickScreens({
         return;
       }
       localStorage.setItem(`quickScreens/${name}`, newContent);
+      updateActiveQuickScreen(name);
       refreshTree();
       onCompleted();
     },
@@ -93,7 +116,8 @@ export function useQuickScreens({
       refreshTree,
       showError,
       showWarning,
-      onCompleted
+      onCompleted,
+      updateActiveQuickScreen
     ]
   );
 
@@ -107,11 +131,20 @@ export function useQuickScreens({
       }
 
       const screen = JSON.parse(stored);
+      removeDisplayInstance(name);
       const macros = structuredClone(screen.macros ?? {});
-      addDisplayInstanceByDescription(name, macros, screen.description);
-      executeOpenQuickScreen(name, "quickScreen", macros, fileContext, "");
+
+      fileContext.updatePage(
+        "quickScreen",
+        {
+          path: name,
+          macros,
+          defaultProtocol: "ca"
+        },
+        true
+      );
     },
-    [fileContext, showWarning, addDisplayInstanceByDescription]
+    [removeDisplayInstance, fileContext, showWarning]
   );
 
   const requestDelete = useCallback((name: string) => {
@@ -126,11 +159,13 @@ export function useQuickScreens({
     if (!pendingAction) return;
 
     if (pendingAction.type === "overwrite") {
+      const name = pendingAction.name;
       // Overwrite the current file
       localStorage.setItem(
         `quickScreens/${pendingAction.name}`,
         createScreen()
       );
+      updateActiveQuickScreen(name);
       onCompleted();
     } else {
       // Delete the current file
@@ -149,7 +184,14 @@ export function useQuickScreens({
 
     setPendingAction(null);
     refreshTree();
-  }, [pendingAction, createScreen, onCompleted, refreshTree]);
+  }, [
+    pendingAction,
+    createScreen,
+    onCompleted,
+    refreshTree,
+    fileContext,
+    updateActiveQuickScreen
+  ]);
 
   // Called when the user cancels the action
   const cancelPendingAction = useCallback(() => {

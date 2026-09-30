@@ -1,17 +1,31 @@
 import { describe, beforeEach, it, expect, vi } from "vitest";
 import { useQuickScreens, getQuickScreens } from "../../hooks/useQuickScreens";
 import { act, render, waitFor } from "@testing-library/react";
+import { FileContext } from "@diamondlightsource/cs-web-lib";
 
 const {
   mockExecuteOpenQuickScreen,
   mockExecuteCloseQuickScreen,
   mockShowWarning,
-  mockShowError
+  mockShowError,
+  mockFileContext
 } = vi.hoisted(() => ({
   mockExecuteOpenQuickScreen: vi.fn(),
   mockExecuteCloseQuickScreen: vi.fn(),
   mockShowWarning: vi.fn(),
-  mockShowError: vi.fn()
+  mockShowError: vi.fn(),
+  mockFileContext: {
+    subscribeToConnectionState: vi.fn(),
+    unsubscribeFromConnectionState: vi.fn(),
+    pageState: {},
+    tabState: {},
+    addPage: vi.fn(),
+    removePage: vi.fn(),
+    updatePage: vi.fn(),
+    addTab: vi.fn(),
+    removeTab: vi.fn(),
+    selectTab: vi.fn()
+  }
 }));
 
 vi.mock("../../utils/csWebLibActions", () => ({
@@ -19,15 +33,16 @@ vi.mock("../../utils/csWebLibActions", () => ({
   executeCloseQuickScreen: mockExecuteCloseQuickScreen
 }));
 
-vi.mock("@diamondlightsource/cs-web-lib", () => ({
-  FileContext: {
-    Provider: ({ children }: { children: React.ReactNode }) => children
-  },
-  useNotification: () => ({
-    showWarning: mockShowWarning,
-    showError: mockShowError
-  })
-}));
+vi.mock("@diamondlightsource/cs-web-lib", async () => {
+  const { createContext } = await import("react");
+  return {
+    FileContext: createContext(mockFileContext),
+    useNotification: () => ({
+      showWarning: mockShowWarning,
+      showError: mockShowError
+    })
+  };
+});
 
 vi.mock("react-router", () => ({
   useLocation: () => ({
@@ -39,19 +54,10 @@ vi.mock("react-router", () => ({
   })
 }));
 
-vi.mock("@diamondlightsource/cs-web-lib", () => ({
-  FileContext: {
-    Provider: ({ children }: { children: React.ReactNode }) => children
-  },
-  useNotification: () => ({
-    showWarning: mockShowWarning,
-    showError: mockShowError
-  })
-}));
-
 function testRenderer({
   displayInstance,
   addDisplayInstanceByDescription,
+  removeDisplayInstance,
   onCompleted
 }: {
   displayInstance?: any;
@@ -60,6 +66,7 @@ function testRenderer({
     macros: any,
     description: any
   ) => void;
+  removeDisplayInstance: (file: string) => void;
   onCompleted: () => void;
 }) {
   let result: any;
@@ -68,13 +75,18 @@ function testRenderer({
     result = useQuickScreens({
       displayInstance,
       addDisplayInstanceByDescription,
+      removeDisplayInstance,
       onCompleted
     });
 
     return <div />;
   }
 
-  render(<TestComponent />);
+  render(
+    <FileContext.Provider value={mockFileContext}>
+      <TestComponent />
+    </FileContext.Provider>
+  );
 
   return {
     getResult: () => result
@@ -98,6 +110,7 @@ describe("useQuickScreens", () => {
         description: { type: "displayGridLayout", children: [] }
       },
       addDisplayInstanceByDescription: vi.fn(),
+      removeDisplayInstance: vi.fn(),
       onCompleted: vi.fn()
     });
 
@@ -112,7 +125,7 @@ describe("useQuickScreens", () => {
   });
 
   it("loads an existing Quick Screen", () => {
-    const addDisplayInstanceByDescription = vi.fn();
+    const removeDisplayInstance = vi.fn();
 
     localStorage.setItem(
       "quickScreens/example",
@@ -128,7 +141,8 @@ describe("useQuickScreens", () => {
 
     const { getResult } = testRenderer({
       displayInstance: {},
-      addDisplayInstanceByDescription,
+      addDisplayInstanceByDescription: vi.fn(),
+      removeDisplayInstance,
       onCompleted: vi.fn()
     });
 
@@ -136,24 +150,18 @@ describe("useQuickScreens", () => {
       getResult().load("example");
     });
 
-    expect(addDisplayInstanceByDescription).toHaveBeenCalledWith(
-      "example",
-      {
-        A: "B"
-      },
-      {
-        type: "displayGridLayout"
-      }
-    );
+    expect(removeDisplayInstance).toHaveBeenCalledWith("example");
 
-    expect(mockExecuteOpenQuickScreen).toHaveBeenCalledWith(
-      "example",
+    expect(mockFileContext.updatePage).toHaveBeenCalledWith(
       "quickScreen",
       {
-        A: "B"
+        path: "example",
+        macros: {
+          A: "B"
+        },
+        defaultProtocol: "ca"
       },
-      undefined,
-      ""
+      true
     );
   });
 
@@ -163,6 +171,7 @@ describe("useQuickScreens", () => {
     const { getResult } = testRenderer({
       displayInstance: {},
       addDisplayInstanceByDescription,
+      removeDisplayInstance: vi.fn(),
       onCompleted: vi.fn()
     });
 
@@ -191,6 +200,7 @@ describe("useQuickScreens", () => {
         }
       },
       addDisplayInstanceByDescription: vi.fn(),
+      removeDisplayInstance: vi.fn(),
       onCompleted
     });
 
@@ -220,6 +230,7 @@ describe("useQuickScreens", () => {
         description: {}
       },
       addDisplayInstanceByDescription: vi.fn(),
+      removeDisplayInstance: vi.fn(),
       onCompleted: vi.fn()
     });
 
@@ -240,6 +251,7 @@ describe("useQuickScreens", () => {
         description: {}
       },
       addDisplayInstanceByDescription: vi.fn(),
+      removeDisplayInstance: vi.fn(),
       onCompleted: vi.fn()
     });
 
@@ -257,6 +269,7 @@ describe("useQuickScreens", () => {
     const { getResult } = testRenderer({
       displayInstance: undefined,
       addDisplayInstanceByDescription: vi.fn(),
+      removeDisplayInstance: vi.fn(),
       onCompleted: vi.fn()
     });
 
@@ -290,6 +303,7 @@ describe("useQuickScreens", () => {
         }
       },
       addDisplayInstanceByDescription: vi.fn(),
+      removeDisplayInstance: vi.fn(),
       onCompleted: vi.fn()
     });
 
@@ -316,6 +330,7 @@ describe("useQuickScreens", () => {
         description: { type: "displayGridLayout" }
       },
       addDisplayInstanceByDescription: vi.fn(),
+      removeDisplayInstance: vi.fn(),
       onCompleted
     });
 
@@ -355,6 +370,7 @@ describe("useQuickScreens", () => {
         description: { type: "displayGridLayout" }
       },
       addDisplayInstanceByDescription: vi.fn(),
+      removeDisplayInstance: vi.fn(),
       onCompleted: vi.fn()
     });
 
@@ -387,6 +403,7 @@ describe("useQuickScreens", () => {
     const { getResult } = testRenderer({
       displayInstance: {},
       addDisplayInstanceByDescription: vi.fn(),
+      removeDisplayInstance: vi.fn(),
       onCompleted: vi.fn()
     });
 
@@ -416,6 +433,7 @@ describe("useQuickScreens", () => {
     const { getResult } = testRenderer({
       displayInstance: {},
       addDisplayInstanceByDescription: vi.fn(),
+      removeDisplayInstance: vi.fn(),
       onCompleted: vi.fn()
     });
 
@@ -441,7 +459,7 @@ describe("useQuickScreens", () => {
       {
         TEST: "value"
       },
-      undefined
+      mockFileContext
     );
   });
 
@@ -458,6 +476,7 @@ describe("useQuickScreens", () => {
     const { getResult } = testRenderer({
       displayInstance: {},
       addDisplayInstanceByDescription: vi.fn(),
+      removeDisplayInstance: vi.fn(),
       onCompleted: vi.fn()
     });
 

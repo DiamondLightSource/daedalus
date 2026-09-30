@@ -29,6 +29,10 @@ import QuickScreenSettings from "./Settings";
 import { useLocation } from "react-router";
 import { executeOpenQuickScreen } from "../../utils/csWebLibActions";
 
+type DisplayDescription = {
+  gridLayout?: unknown;
+};
+
 // Local quick screen storage handler
 export const StorageContext = createContext<{
   bobDisplayUuid?: string;
@@ -63,28 +67,57 @@ export default function QuickScreenDisplay() {
   >(null);
   const fileContext = useContext(FileContext);
   const location = useLocation();
-  const quickScreen = location.state?.pageState?.quickScreen;
+  const quickScreen = fileContext.pageState?.quickScreen;
   const bobQuickScreen = fileContext.pageState.bobQuickScreen;
   const [bobScreenUrlId, setBobScreenUrlId] = useState<string | undefined>(
     location.state?.pageState?.bobScreenUrlId
   );
 
-  const bobBreadcrumbs = bobScreenUrlId
-    ? extractAncestorScreens(bobScreenUrlId)
-    : [];
-  const { displayInstance, addDisplayInstanceByDescription } =
-    useDisplayInstance(bobDisplayUuid!);
+  const {
+    displayInstance,
+    addDisplayInstanceByDescription,
+    removeDisplayInstance
+  } = useDisplayInstance(bobDisplayUuid ?? "");
 
   const hasQuickScreen = !!quickScreen;
   const hasBobQuickScreen = !!bobQuickScreen;
 
-  const handleDisplayClose = (location: string) => {
-    const isSaved =
-      !!quickScreen?.path &&
-      !!localStorage.getItem(`quickScreens/${quickScreen.path}`);
+  const bobBreadcrumbs = bobScreenUrlId
+    ? extractAncestorScreens(bobScreenUrlId)
+    : [];
 
-    if (isSaved) {
+  function isQuickScreenSaved(
+    quickScreen: { path?: string } | undefined,
+    currentDescription: DisplayDescription | undefined
+  ): boolean {
+    if (!quickScreen?.path || !currentDescription) return false;
+
+    const stored = localStorage.getItem(`quickScreens/${quickScreen.path}`);
+    if (!stored) return false;
+
+    try {
+      const savedScreen = JSON.parse(stored) as {
+        description?: DisplayDescription;
+      };
+
+      return (
+        JSON.stringify(savedScreen.description?.gridLayout) ===
+        JSON.stringify(currentDescription.gridLayout)
+      );
+    } catch {
+      return false;
+    }
+  }
+
+  const handleDisplayClose = (location: string) => {
+    if (
+      isQuickScreenSaved(
+        quickScreen,
+        displayInstance?.description as DisplayDescription | undefined
+      )
+    ) {
       fileContext.removePage(location);
+      if (quickScreen?.path) removeDisplayInstance(quickScreen.path);
     } else {
       setPendingCloseLocation(location);
     }
@@ -93,6 +126,7 @@ export default function QuickScreenDisplay() {
   const confirmDisplayClose = () => {
     if (pendingCloseLocation) {
       fileContext.removePage(pendingCloseLocation);
+      if (quickScreen?.path) removeDisplayInstance(quickScreen.path);
     }
     setPendingCloseLocation(null);
   };

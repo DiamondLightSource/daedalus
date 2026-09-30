@@ -96,8 +96,11 @@ function QuickScreenTreeItem(props: QuickScreenTreeItemProps) {
 export default function LocalStorageBrowser(props: { setModalOpen: any }) {
   const storage = useContext(StorageContext);
   const [quickScreenName, setQuickScreenName] = useState("");
-  const { displayInstance, addDisplayInstanceByDescription } =
-    useDisplayInstance(storage.bobDisplayUuid!);
+  const {
+    displayInstance,
+    addDisplayInstanceByDescription,
+    removeDisplayInstance
+  } = useDisplayInstance(storage.bobDisplayUuid!);
 
   const {
     tree,
@@ -112,6 +115,7 @@ export default function LocalStorageBrowser(props: { setModalOpen: any }) {
   } = useQuickScreens({
     displayInstance,
     addDisplayInstanceByDescription,
+    removeDisplayInstance,
     onCompleted: () => props.setModalOpen(false)
   });
 
