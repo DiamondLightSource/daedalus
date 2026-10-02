@@ -10,6 +10,27 @@ vi.mock("../../utils/csWebLibActions", () => ({
 
 const { executeOpenQuickScreen } = await import("../../utils/csWebLibActions");
 
+vi.mock("@diamondlightsource/cs-web-lib", async importOriginal => {
+  const actual =
+    await importOriginal<typeof import("@diamondlightsource/cs-web-lib")>();
+  return {
+    ...actual,
+    useDisplayInstance: vi.fn(() => ({
+      addDisplayInstanceByDescription: vi.fn(),
+      removeDisplayInstance: vi.fn()
+    }))
+  };
+});
+
+vi.mock("react", async importOriginal => {
+  const actual = await importOriginal<typeof import("react")>();
+
+  return {
+    ...actual,
+    useId: vi.fn(() => "123")
+  };
+});
+
 const renderComponent = (restoreQuickScreenSession = vi.fn()) => {
   return render(
     <StorageContext.Provider
@@ -47,9 +68,9 @@ describe("<QuickScreenSettings />", () => {
 
     expect(executeOpenQuickScreen).toHaveBeenCalledTimes(1);
     expect(executeOpenQuickScreen).toHaveBeenCalledWith(
-      "/new.bob",
+      "",
       "quickScreen",
-      {},
+      { LCID: "123" },
       undefined,
       ""
     );

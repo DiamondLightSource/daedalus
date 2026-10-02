@@ -20,17 +20,32 @@ import {
   Stack,
   Tooltip
 } from "@mui/material";
-import { useContext, useState } from "react";
+import { useContext, useId, useState } from "react";
 import LocalStorageBrowser from "./StorageBrowser";
 import { StorageContext } from "./Display";
 import BobFileBrowser from "./FileBrowser";
 import { executeOpenQuickScreen } from "../../utils/csWebLibActions";
-import { FileContext } from "@diamondlightsource/cs-web-lib";
+import {
+  FileContext,
+  newRelativePosition,
+  useDisplayInstance
+} from "@diamondlightsource/cs-web-lib";
 
+// Template for new quick scree
+// This might allow us to modify props in future
 const NEW_QUICK_SCREEN = {
-  path: "/new.bob",
-  macros: {},
-  defaultProtocol: "ca"
+  type: "displayGridLayout",
+  position: newRelativePosition(0, 0, "100%", "100%"),
+  children: [],
+  editable: true,
+  fileId: "",
+  name: "",
+  id: "displayGridLayout",
+  backgroundColor: { colorString: "rgba(240, 240, 240, 1)" },
+  border: { style: "None", width: 0, color: { colorString: "rgba(0,0,0,1)" } },
+  actions: { actions: [] },
+  rules: [],
+  scripts: []
 };
 
 const Drawer = styled(MuiDrawer)(() => ({
@@ -58,6 +73,9 @@ export default function QuickScreenSettings() {
   const [storageModalOpen, setStorageModalOpen] = useState(false);
   const [bobModalOpen, setBobModalOpen] = useState(false);
   const quickScreenStorage = useContext(StorageContext);
+  const { addDisplayInstanceByDescription, removeDisplayInstance } =
+    useDisplayInstance("");
+  const id = useId();
 
   const handleCloseModal = (_event: any) => {
     setStorageModalOpen(false);
@@ -68,14 +86,12 @@ export default function QuickScreenSettings() {
    * Loads a new blank quick screen
    */
   const onClickNew = () => {
-    //Change to a blank Quick Screen
-    executeOpenQuickScreen(
-      NEW_QUICK_SCREEN.path,
-      "quickScreen",
-      NEW_QUICK_SCREEN.macros ?? {},
-      fileContext,
-      ""
-    );
+    const macros = { LCID: id };
+    // Add new display, use default width for now
+    // Use empty string for name, so user has to name to save
+    removeDisplayInstance("");
+    addDisplayInstanceByDescription("", macros, NEW_QUICK_SCREEN);
+    executeOpenQuickScreen("", "quickScreen", macros, fileContext, "");
   };
 
   /**

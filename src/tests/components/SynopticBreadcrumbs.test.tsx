@@ -1,14 +1,5 @@
 import React from "react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
-
-vi.mock("@diamondlightsource/cs-web-lib", () => ({
-  executeAction: vi.fn(),
-  httpRequest: vi.fn(),
-  resolveMacros: (f: string) => f,
-  buildUrl: (host: string, file: string) => `${host}${file}`,
-  FileContext: React.createContext(null)
-}));
-
 vi.mock("react-toastify", () => ({}));
 
 import { render, screen, fireEvent } from "@testing-library/react";
@@ -20,6 +11,20 @@ import {
   BeamlineTreeState
 } from "../../store";
 import { BeamlineTreeStateContext } from "../../App";
+
+vi.mock("@diamondlightsource/cs-web-lib", async importOriginal => {
+  const actual =
+    await importOriginal<typeof import("@diamondlightsource/cs-web-lib")>();
+
+  return {
+    ...actual,
+    executeAction: vi.fn(),
+    httpRequest: vi.fn(),
+    resolveMacros: (f: string) => f,
+    buildUrl: (host: string, file: string) => `${host}${file}`,
+    FileContext: React.createContext(null)
+  };
+});
 
 const mockedExecuteAction = vi.mocked(executeAction);
 const EXPECTED_SEPARATOR = "/";

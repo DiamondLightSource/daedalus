@@ -48,8 +48,12 @@ vi.mock("react-loader-spinner", () => ({
 }));
 
 const mockShowWarning = vi.fn();
-vi.mock("@diamondlightsource/cs-web-lib", () => {
+vi.mock("@diamondlightsource/cs-web-lib", async importOriginal => {
+  const actual =
+    await importOriginal<typeof import("@diamondlightsource/cs-web-lib")>();
+
   return {
+    ...actual,
     FileContext: {
       Provider: ({ children }: any) => children
     },
