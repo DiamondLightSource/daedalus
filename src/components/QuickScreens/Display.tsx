@@ -8,6 +8,7 @@ import {
   DialogTitle,
   Paper as MuiPaper,
   styled,
+  Tooltip,
   Typography
 } from "@mui/material";
 import {
@@ -23,7 +24,7 @@ import {
 } from "../../utils/helper";
 import { extractAncestorScreens } from "../../utils/screenUrlIdUtils";
 import { Breadcrumbs } from "@mui/material";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import { NavigateNext, Lock, LockOpen } from "@mui/icons-material";
 import { createContext, useContext, useEffect, useState } from "react";
 import QuickScreenSettings from "./Settings";
 import { useLocation } from "react-router";
@@ -65,6 +66,7 @@ export default function QuickScreenDisplay() {
   const [pendingCloseLocation, setPendingCloseLocation] = useState<
     string | null
   >(null);
+  const [quickScreenEditable, setQuickScreenEditable] = useState(false);
   const fileContext = useContext(FileContext);
   const location = useLocation();
   const quickScreen = fileContext.pageState?.quickScreen;
@@ -245,7 +247,11 @@ export default function QuickScreenDisplay() {
                     setBobDisplayUuid(uuid);
                   }}
                   targetDisplayType="displayGridLayout"
-                  editable={true}
+                  interactivity={{
+                    editable: quickScreenEditable,
+                    crossGridDragEnabled: false,
+                    crossGridDropEnabled: true
+                  }}
                 />
                 <Box
                   role="button"
@@ -263,22 +269,43 @@ export default function QuickScreenDisplay() {
                   }}
                 />
                 <Box
-                  role="label"
-                  aria-label="label for quick screen"
                   sx={{
                     position: "absolute",
-                    bottom: 0,
+                    bottom: 4,
                     left: 2,
-                    cursor: "pointer",
-                    backgroundColor: "transparent"
+                    right: 4,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between"
                   }}
                 >
-                  <Typography variant="subtitle1" color="textSecondary">
+                  <Typography
+                    aria-label="quick screen label"
+                    variant="subtitle1"
+                    color="textSecondary"
+                  >
                     Quick Screen{" "}
                     {quickScreen.path !== "/new.bob"
                       ? `: ${quickScreen?.path}`
                       : ""}
                   </Typography>
+                  <Tooltip
+                    title={`${quickScreenEditable ? "Lock" : "Unlock"} Quick Screen for editing`}
+                  >
+                    <Button
+                      aria-label={`${quickScreenEditable ? "Lock" : "Unlock"} Quick Screen`}
+                      onClick={() =>
+                        setQuickScreenEditable(current => !current)
+                      }
+                      sx={{
+                        minWidth: 40,
+                        width: 40,
+                        height: 40
+                      }}
+                    >
+                      {quickScreenEditable ? <LockOpen /> : <Lock />}
+                    </Button>
+                  </Tooltip>
                 </Box>
                 <Dialog
                   open={pendingCloseLocation !== null}
@@ -329,7 +356,11 @@ export default function QuickScreenDisplay() {
                   scroll={true}
                   showCloseButton={true}
                   targetDisplayType="displayGridLayout"
-                  editable={false}
+                  interactivity={{
+                    editable: false,
+                    crossGridDragEnabled: true,
+                    crossGridDropEnabled: false
+                  }}
                 />
                 <Box
                   role="label"
@@ -343,7 +374,7 @@ export default function QuickScreenDisplay() {
                   }}
                 >
                   <Breadcrumbs
-                    separator={<NavigateNextIcon fontSize="small" />}
+                    separator={<NavigateNext fontSize="small" />}
                     aria-label="Bob screen breadcrumb"
                     sx={{ color: "text.secondary", cursor: "default" }}
                   >

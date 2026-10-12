@@ -136,7 +136,8 @@ export default function LocalStorageBrowser(props: { setModalOpen: any }) {
           border: "1px solid",
           borderColor: "divider",
           borderRadius: 1,
-          height: 300
+          height: 300,
+          overflow: "scroll"
         }}
       >
         <RichTreeView
