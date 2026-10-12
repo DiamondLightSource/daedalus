@@ -11,6 +11,7 @@ export type BeamlinesConfig = {
 
 export type DaedalusConfig = CsWebLibConfig & {
   beamlines?: BeamlinesConfig;
+  siteLogo?: string;
 };
 
 let config: DaedalusConfig | null = null;
@@ -34,7 +35,8 @@ export const loadConfig = async (): Promise<DaedalusConfig> => {
       csWebLibFeatureFlags: {
         enableDynamicScripts: false
       },
-      beamlines: {}
+      beamlines: {},
+      siteLogo: ""
     };
   }
 
