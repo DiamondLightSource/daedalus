@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -11,6 +11,7 @@ import DiamondLogo from "../assets/DiamondLogoWhite.svg";
 import { PageRouteInfo } from "../routes/PageRouteInfo";
 import { useLocation, useNavigate } from "react-router";
 import SettingsModal from "./SettingsModal";
+import { DaedalusConfig, loadConfig } from "../config";
 
 interface AppBarProps extends MuiAppBarProps {
   fullscreen: number;
@@ -68,6 +69,13 @@ const DLSAppBar = (props: {
   const handleOpenSettings = () => {
     setSettingsOpen(true);
   };
+  const [config, setConfig] = useState<DaedalusConfig | null>(null);
+
+  useEffect(() => {
+    loadConfig().then(config => {
+      setConfig(config);
+    });
+  }, []);
 
   return (
     <>
@@ -106,7 +114,7 @@ const DLSAppBar = (props: {
               width: "110px"
             }}
           >
-            <img src={DiamondLogo} />
+            <img src={config?.siteLogo ?? DiamondLogo} />
           </Box>
           <Box
             sx={{ pl: 1, display: "flex", flexDirection: "row", flexGrow: 1 }}

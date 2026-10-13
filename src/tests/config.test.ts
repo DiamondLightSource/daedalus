@@ -18,6 +18,7 @@ const buildMockConfig = (): DaedalusConfig =>
     PVWS_SOCKET: "ws://pvws.example.org",
     PVWS_SSL: false,
     THROTTLE_PERIOD: 100,
+    siteLogo: "this.png",
     beamlines: {
       B23: {
         host: "B23.example.org",
@@ -81,7 +82,8 @@ describe("Configuration Module", () => {
           enableDynamicScripts: false
         },
         defaultMjpgEndpoint: undefined,
-        storeMode: undefined
+        storeMode: undefined,
+        siteLogo: ""
       });
     });
 
@@ -103,7 +105,8 @@ describe("Configuration Module", () => {
           enableDynamicScripts: false
         },
         defaultMjpgEndpoint: undefined,
-        storeMode: undefined
+        storeMode: undefined,
+        siteLogo: ""
       });
     });
   });
