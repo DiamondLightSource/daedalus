@@ -1,5 +1,5 @@
 import { fireEvent, render } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import QuickScreenSettings from "../../components/QuickScreens/Settings";
 import { StorageContext } from "../../components/QuickScreens/Display";
 import { FileContext } from "@diamondlightsource/cs-web-lib";

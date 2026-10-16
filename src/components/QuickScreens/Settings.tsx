@@ -50,8 +50,8 @@ const NEW_QUICK_SCREEN = {
 
 const Drawer = styled(MuiDrawer)(() => ({
   overflowX: "hidden",
-  width: "3%",
-  minWidth: "50px",
+  width: "4%",
+  minWidth: "65px",
   "& .MuiPaper-root": {
     position: "relative",
     overflowX: "hidden"
