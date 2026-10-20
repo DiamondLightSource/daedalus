@@ -1,7 +1,7 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { TreeViewBaseItem, TreeViewItemId } from "@mui/x-tree-view";
 import { FileContext, useNotification } from "@diamondlightsource/cs-web-lib";
-import { getAllScreensWithChildrenItemIds } from "../components/utils";
+import { getTopLevelChildIds } from "../components/utils";
 import { executeCloseQuickScreen } from "../utils/csWebLibActions";
 
 interface UseQuickScreensProps {
@@ -44,7 +44,7 @@ export function useQuickScreens({
   const refreshTree = useCallback(() => {
     const screens = getQuickScreens();
     setTree(screens);
-    const allScreens = getAllScreensWithChildrenItemIds(screens);
+    const allScreens = getTopLevelChildIds(screens);
     setExpanded(allScreens);
   }, []);
 
