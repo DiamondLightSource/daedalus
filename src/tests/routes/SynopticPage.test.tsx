@@ -57,14 +57,13 @@ vi.mock("@diamondlightsource/cs-web-lib", async importOriginal => {
     FileContext: {
       Provider: ({ children }: any) => children
     },
-    buildUrl: (path: string) => path,
+    buildUrl: (host: string, path: string) => `${host}${path}`,
     useNotification: () => ({ showWarning: mockShowWarning })
   };
 });
 
-describe("SynopticPage", () => {
-  const mockDispatch = vi.fn();
-  const mockState = {
+const createMockState = (): BeamlineTreeState =>
+  ({
     filesLoaded: false,
     beamlines: {
       bl01: {
@@ -78,7 +77,10 @@ describe("SynopticPage", () => {
     } as Partial<BeamlineState> as BeamlineState,
     currentBeamline: "bl01",
     currentScreenUrlId: "screen1"
-  } as Partial<BeamlineTreeState> as BeamlineTreeState;
+  }) as Partial<BeamlineTreeState> as BeamlineTreeState;
+
+describe("SynopticPage", () => {
+  const mockDispatch = vi.fn();
 
   const mockFileContext = {
     addTab: vi.fn(),
@@ -107,6 +109,7 @@ describe("SynopticPage", () => {
   });
 
   it("renders loading spinner when files are not loaded", () => {
+    const mockState = createMockState();
     render(
       <BeamlineTreeStateContext.Provider
         value={{ state: mockState, dispatch: mockDispatch }}
@@ -123,6 +126,7 @@ describe("SynopticPage", () => {
   });
 
   it("loads screens on mount", async () => {
+    const mockState = createMockState();
     render(
       <BeamlineTreeStateContext.Provider
         value={{ state: mockState, dispatch: mockDispatch }}
@@ -137,7 +141,7 @@ describe("SynopticPage", () => {
 
     await waitFor(() => {
       expect(parser.parseScreenTree).toHaveBeenCalledWith(
-        "http://daedalus.ac.uk/"
+        "http://daedalus.ac.uk/entry-point"
       );
       expect(mockDispatch).toHaveBeenCalledWith({
         type: LOAD_SCREENS,
@@ -151,6 +155,7 @@ describe("SynopticPage", () => {
   });
 
   it("calls showWarning when parseScreenTree throws", async () => {
+    const mockState = createMockState();
     vi.spyOn(parser, "parseScreenTree").mockRejectedValue(new Error("Boom"));
 
     render(

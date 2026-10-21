@@ -10,7 +10,7 @@ import FolderIcon from "@mui/icons-material/Folder";
 import FolderOpenIcon from "@mui/icons-material/FolderOpen";
 import { BeamlineTreeStateContext } from "../../App";
 import { Stack, Box, TextField, Button } from "@mui/material";
-import { findNodeById, getAllScreensWithChildrenItemIds } from "../utils";
+import { findNodeById, getTopLevelChildIds } from "../utils";
 import {
   buildUrl,
   FileContext,
@@ -97,9 +97,7 @@ export default function BobFileBrowser() {
     for (const beamline of bobFileTree) {
       if (ids.includes(beamline.id)) {
         expandedIds.push(
-          ...getAllScreensWithChildrenItemIds(
-            beamline.children as ScreenTreeViewBaseItem[]
-          )
+          ...getTopLevelChildIds(beamline.children as ScreenTreeViewBaseItem[])
         );
       }
     }

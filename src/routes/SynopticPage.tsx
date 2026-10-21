@@ -93,6 +93,8 @@ export function SynopticPage() {
   const loadScreens = useCallback(async () => {
     const newBeamlines = { ...state.beamlines };
     for (const [newBeamline, item] of Object.entries(newBeamlines)) {
+      if (item.loaded) continue;
+
       try {
         const [tree, fileIDs, firstFile] = await parseScreenTree(
           buildUrl(item.host, item.entryPoint)

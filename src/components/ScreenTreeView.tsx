@@ -6,7 +6,7 @@ import { BeamlineTreeStateContext } from "../App";
 import { MenuContext } from "../routes/SynopticPage";
 import { executeOpenPageActionWithFileGuid } from "../utils/csWebLibActions";
 import { FileIDs } from "../store";
-import { getAllScreensWithChildrenItemIds } from "./utils";
+import { getTopLevelChildIds, getParentIds } from "./utils";
 
 export default function ScreenTreeView() {
   const { state } = useContext(BeamlineTreeStateContext);
@@ -36,11 +36,16 @@ export default function ScreenTreeView() {
     return currentBeamline?.filePathIds ?? [];
   }, [state.currentBeamline, state.beamlines]);
 
-  // When beamline is updated, trigger refresh of expanded screens to fully expand all
+  // When beamline is updated, trigger refresh of expanded screens
+  // to expand the chosen screen
   useEffect(() => {
-    const allScreens = getAllScreensWithChildrenItemIds(currentScreenTree);
-    setExpandedScreens(allScreens);
-  }, [state.currentBeamline, state.beamlines, currentScreenTree]);
+    const topLevelScreens = getTopLevelChildIds(currentScreenTree);
+    const currentExpandedScreens = getParentIds(
+      currentScreenTree,
+      state.currentScreenId
+    );
+    setExpandedScreens([...topLevelScreens, ...currentExpandedScreens]);
+  }, [state.beamlines, state.currentBeamline, currentScreenTree]);
 
   return (
     <>
