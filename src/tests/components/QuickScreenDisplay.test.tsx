@@ -57,6 +57,8 @@ const mockLocalStorage = {
   clear: vi.fn()
 };
 
+const mockDynamicPageWidget = vi.fn();
+
 Object.defineProperty(window, "localStorage", {
   value: mockLocalStorage,
   writable: true
@@ -92,7 +94,7 @@ vi.mock("@diamondlightsource/cs-web-lib", async () => {
     FileContext: createContext(mockFileContext),
     useDisplayInstance: () => mockFileContent,
     DynamicPageWidget: (props: any) => {
-      vi.fn(props);
+      mockDynamicPageWidget(props);
       return <div data-testid="dynamic-page-widget" />;
     }
   };
@@ -193,5 +195,69 @@ describe("<QuickScreens />", () => {
     expect(getByText("Page 1")).toBeInTheDocument();
     expect(getByText("Page 2")).toBeInTheDocument();
     expect(getByText("Motor X")).toBeInTheDocument();
+  });
+
+  it("renders the Quick Screen locked by default", () => {
+    mockFileContext.pageState.quickScreen = {
+      path: "wow.bob",
+      macros: {},
+      defaultProtocol: "ca"
+    };
+
+    const { getByRole } = renderComponent();
+
+    expect(
+      getByRole("button", { name: "Unlock Quick Screen" })
+    ).toBeInTheDocument();
+    expect(getByRole("button", { name: "Unlock Quick Screen" })).toBeEnabled();
+    expect(mockDynamicPageWidget).toHaveBeenCalledWith(
+      expect.objectContaining({
+        interactivity: expect.objectContaining({
+          editable: false,
+          crossGridDragEnabled: false,
+          crossGridDropEnabled: true
+        })
+      })
+    );
+  });
+
+  it("unlocks the Quick Screen when the unlock button is clicked", () => {
+    mockFileContext.pageState.quickScreen = {
+      path: "wow.bob",
+      macros: {},
+      defaultProtocol: "ca"
+    };
+
+    const { getByRole } = renderComponent();
+
+    fireEvent.click(getByRole("button", { name: "Unlock Quick Screen" }));
+    expect(
+      getByRole("button", { name: "Lock Quick Screen" })
+    ).toBeInTheDocument();
+    expect(mockDynamicPageWidget).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        interactivity: expect.objectContaining({
+          editable: true,
+          crossGridDragEnabled: false,
+          crossGridDropEnabled: true
+        })
+      })
+    );
+  });
+
+  it("locks the Quick Screen again when the lock button is clicked", () => {
+    mockFileContext.pageState.quickScreen = {
+      path: "wow.bob",
+      macros: {},
+      defaultProtocol: "ca"
+    };
+
+    const { getByRole } = renderComponent();
+
+    fireEvent.click(getByRole("button", { name: "Unlock Quick Screen" }));
+    fireEvent.click(getByRole("button", { name: "Lock Quick Screen" }));
+    expect(
+      getByRole("button", { name: "Unlock Quick Screen" })
+    ).toBeInTheDocument();
   });
 });
