@@ -88,6 +88,13 @@ export default function QuickScreenDisplay() {
     ? extractAncestorScreens(bobScreenUrlId)
     : [];
 
+  useEffect(() => {
+    if (!quickScreen) return;
+    const isSaved = hasSavedQuickScreen(quickScreen.path);
+    // new screen: unlocked. Saved screen: locked.
+    setQuickScreenEditable(!isSaved);
+  }, [quickScreen?.path]);
+
   function isQuickScreenSaved(
     quickScreen: { path?: string } | undefined,
     currentDescription: DisplayDescription | undefined
@@ -109,6 +116,11 @@ export default function QuickScreenDisplay() {
     } catch {
       return false;
     }
+  }
+
+  function hasSavedQuickScreen(path?: string): boolean {
+    if (!path) return false;
+    return localStorage.getItem(`quickScreens/${path}`) !== null;
   }
 
   const handleDisplayClose = (location: string) => {
