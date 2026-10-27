@@ -114,7 +114,7 @@ const DLSAppBar = (props: {
               width: "110px"
             }}
           >
-            <img src={config?.siteLogo ?? DiamondLogo} />
+            <img src={config?.siteLogo ?? DiamondLogo} width="100%" />
           </Box>
           <Box
             sx={{ pl: 1, display: "flex", flexDirection: "row", flexGrow: 1 }}
