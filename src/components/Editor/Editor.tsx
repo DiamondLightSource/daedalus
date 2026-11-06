@@ -11,17 +11,11 @@ import {
   EmbeddedDisplay,
   newRelativePosition
 } from "@diamondlightsource/cs-web-lib";
-import {
-  useWindowWidth,
-  APP_BAR_HEIGHT,
-  useWindowHeight,
-  PROPERTIES_MENU_WIDTH
-} from "../utils/helper";
+import { APP_BAR_HEIGHT, PROPERTIES_MENU_WIDTH } from "../../utils/helper";
 import UndoIcon from "@mui/icons-material/Undo";
 import RedoIcon from "@mui/icons-material/Redo";
 import FormatAlignCenterIcon from "@mui/icons-material/FormatAlignCenter";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import PropertiesSideBar from "./PropertiesSideBar";
 import ZoomInIcon from "@mui/icons-material/ZoomIn";
 import ZoomOutIcon from "@mui/icons-material/ZoomOut";
 import EditorPalette from "./EditorPalette";
@@ -36,11 +30,12 @@ export interface WidgetProps {
   };
 }
 
-const Paper = styled(MuiPaper)(({ theme }) => ({
-  height: `calc(${useWindowHeight()}px - 50px - ${theme.spacing(7)})`,
-  width: `calc(${useWindowWidth()}px - ${PROPERTIES_MENU_WIDTH}px - ${theme.spacing(7)})`,
-  margin: `calc(${APP_BAR_HEIGHT}px + 20px) ${PROPERTIES_MENU_WIDTH}px 5px 5px`
-}));
+const Paper = styled(MuiPaper)({
+  height: `calc(100dvh - ${APP_BAR_HEIGHT}px - 10px)`,
+  position: "absolute",
+  inset: 5,
+  overflow: "hidden"
+});
 
 export default function Editor() {
   const [widgetProperties, setWidgetProperties] = useState<WidgetProps>({
@@ -113,8 +108,7 @@ export default function Editor() {
       <IconButton
         color="inherit"
         sx={{
-          position: "absolute",
-          left: `calc(92% - ${PROPERTIES_MENU_WIDTH}px)`
+          position: "absolute"
         }}
       >
         <PlayArrowIcon />
@@ -150,7 +144,6 @@ export default function Editor() {
         </ClickAwayListener>
         <EditorPalette />
       </Paper>
-      <PropertiesSideBar properties={widgetProperties} />
     </>
   );
 }
