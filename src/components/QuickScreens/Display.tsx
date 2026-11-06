@@ -53,12 +53,12 @@ export const StorageContext = createContext<{
   restoreQuickScreenSession: () => {}
 });
 
-const Paper = styled(MuiPaper)(({ theme }) => ({
-  position: "relative",
-  height: `calc(${useWindowHeight()}px - ${APP_BAR_HEIGHT}px - 50px)`,
-  margin: `calc(${APP_BAR_HEIGHT}px + 15px) 5px 5px 5px`,
-  width: `calc(${useWindowWidth()}px - 10px - ${theme.spacing(7)} - 8px)`
-}));
+const Paper = styled(MuiPaper)({
+  height: `calc(100dvh - ${APP_BAR_HEIGHT}px - 10px)`,
+  position: "absolute",
+  inset: 5,
+  overflow: "hidden"
+});
 
 export default function QuickScreenDisplay() {
   const [bobDisplayUuid, setBobDisplayUuid] = useState<string>();

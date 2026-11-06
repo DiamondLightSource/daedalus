@@ -12,17 +12,14 @@ import { SynopticPage } from "./routes/SynopticPage";
 import { EditorPage } from "./routes/EditorPage";
 import { LandingPage } from "./routes/LandingPage";
 import { DataBrowserPage } from "./routes/DataBrowserPage";
-import { createContext, useEffect, useReducer, useState } from "react";
-import {
-  APPEND_BEAMLINES,
-  BeamlineTreeState,
-  initialState,
-  reducer
-} from "./store";
+import { useEffect, useMemo, useReducer, useState } from "react";
+import { APPEND_BEAMLINES, initialState, reducer } from "./store";
 import { DaedalusConfig, loadConfig } from "./config";
 import { Box, CircularProgress, Typography } from "@mui/material";
-import { diamondTheme } from "./theme";
 import { QuickScreensPage } from "./routes/QuickScreensPage";
+import { DiamondDSTheme } from "@diamondlightsource/sci-react-ui";
+import { AppLayout } from "./routes/AppLayout";
+import { BeamlineTreeStateContext } from "./contexts/BeamlineTreeStateContext";
 
 const INITIAL_SCREEN_STATE = {
   main: {
@@ -31,11 +28,6 @@ const INITIAL_SCREEN_STATE = {
     defaultProtocol: "ca"
   }
 };
-
-export const BeamlineTreeStateContext = createContext<{
-  state: BeamlineTreeState;
-  dispatch: React.Dispatch<any>;
-}>({ state: initialState, dispatch: () => null });
 
 const App = ({}) => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -51,7 +43,10 @@ const App = ({}) => {
     });
   }, []);
 
-  if (!config) {
+  const csStore = useMemo(() => (config ? store(config) : null), [config]);
+  const beamlineContext = useMemo(() => ({ state, dispatch }), [state]);
+
+  if (!config || !csStore) {
     return (
       <Box
         sx={{
@@ -69,9 +64,9 @@ const App = ({}) => {
   }
 
   return (
-    <Provider store={store(config)}>
-      <ThemeProvider theme={diamondTheme} defaultMode="light">
-        <BeamlineTreeStateContext.Provider value={{ state, dispatch }}>
+    <Provider store={csStore}>
+      <ThemeProvider theme={DiamondDSTheme} defaultMode="light">
+        <BeamlineTreeStateContext.Provider value={beamlineContext}>
           <FileProvider initialPageState={INITIAL_SCREEN_STATE}>
             <>
               <NotificationContainer />
@@ -89,19 +84,24 @@ export const appRouter = createBrowserRouter([
     path: "/",
     element: <App />,
     children: [
-      { path: "/demo", element: <DemoPage /> },
-      { path: "/data-browser", element: <DataBrowserPage /> },
-      { path: "/editor", element: <EditorPage /> },
       {
-        path: "/synoptic",
+        element: <AppLayout />,
         children: [
-          { index: true, element: <SynopticPage /> },
-          { path: ":beamline", element: <SynopticPage /> },
-          { path: ":beamline/*", element: <SynopticPage /> }
+          { path: "/demo", element: <DemoPage /> },
+          { path: "/data-browser", element: <DataBrowserPage /> },
+          { path: "/editor", element: <EditorPage /> },
+          {
+            path: "/synoptic",
+            children: [
+              { index: true, element: <SynopticPage /> },
+              { path: ":beamline", element: <SynopticPage /> },
+              { path: ":beamline/*", element: <SynopticPage /> }
+            ]
+          },
+          { path: "/quick-screens", element: <QuickScreensPage /> },
+          { index: true, element: <LandingPage /> }
         ]
-      },
-      { path: "/quick-screens", element: <QuickScreensPage /> },
-      { index: true, element: <LandingPage /> }
+      }
     ]
   }
 ]);

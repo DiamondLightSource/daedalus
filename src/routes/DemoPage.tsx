@@ -1,11 +1,10 @@
-import { Box, Typography, Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import * as React from "react";
 import { demoReducer, demoInitialState, FileState } from "../store";
 import { useWindowWidth, useWindowHeight } from "../utils/helper";
 import FileDisplay from "../components/FileDisplay";
 import FileNavigationBar from "../components/FileNavigationBar";
 import { createContext, useEffect } from "react";
-import DLSAppBar from "../components/AppBar";
 
 const FileStateContext = createContext<{
   state: FileState;
@@ -27,15 +26,6 @@ export function DemoPage() {
         id="DemoPage-Box"
         sx={{ display: "flex", height: "100dvh", width: "100%" }}
       >
-        <DLSAppBar fullScreen={true} open={false}>
-          <Typography
-            variant="h3"
-            component="div"
-            sx={{ flexGrow: 1, textAlign: "center" }}
-          >
-            Daedalus Demo
-          </Typography>
-        </DLSAppBar>
         <FileStateContext.Provider value={{ state, dispatch }}>
           <Stack
             id="DemoPage-stack"

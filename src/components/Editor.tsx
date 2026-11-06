@@ -25,7 +25,6 @@ import PropertiesSideBar from "./PropertiesSideBar";
 import ZoomInIcon from "@mui/icons-material/ZoomIn";
 import ZoomOutIcon from "@mui/icons-material/ZoomOut";
 import EditorPalette from "./EditorPalette";
-import DLSAppBar from "./AppBar";
 
 export interface WidgetProps {
   x: string;
@@ -96,32 +95,30 @@ export default function Editor() {
   return (
     <>
       <CssBaseline />
-      <DLSAppBar fullScreen={true} open={true}>
-        <IconButton color="inherit">
-          <UndoIcon />
-        </IconButton>
-        <IconButton color="inherit">
-          <RedoIcon />
-        </IconButton>
-        <IconButton color="inherit">
-          <FormatAlignCenterIcon />
-        </IconButton>
-        <IconButton color="inherit">
-          <ZoomInIcon />
-        </IconButton>
-        <IconButton color="inherit">
-          <ZoomOutIcon />
-        </IconButton>
-        <IconButton
-          color="inherit"
-          sx={{
-            position: "absolute",
-            left: `calc(92% - ${PROPERTIES_MENU_WIDTH}px)`
-          }}
-        >
-          <PlayArrowIcon />
-        </IconButton>
-      </DLSAppBar>
+      <IconButton color="inherit">
+        <UndoIcon />
+      </IconButton>
+      <IconButton color="inherit">
+        <RedoIcon />
+      </IconButton>
+      <IconButton color="inherit">
+        <FormatAlignCenterIcon />
+      </IconButton>
+      <IconButton color="inherit">
+        <ZoomInIcon />
+      </IconButton>
+      <IconButton color="inherit">
+        <ZoomOutIcon />
+      </IconButton>
+      <IconButton
+        color="inherit"
+        sx={{
+          position: "absolute",
+          left: `calc(92% - ${PROPERTIES_MENU_WIDTH}px)`
+        }}
+      >
+        <PlayArrowIcon />
+      </IconButton>
 
       <Paper elevation={12}>
         <ClickAwayListener onClickAway={handleClickAway}>

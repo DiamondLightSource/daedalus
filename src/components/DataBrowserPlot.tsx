@@ -54,6 +54,7 @@ const Paper = styled(MuiPaper, {
   ]
 }));
 
+
 export default function DataBrowserPlot() {
   const { menusOpen } = useContext(MenuContext);
   return (

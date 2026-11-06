@@ -2,11 +2,11 @@ import { RichTreeView } from "@mui/x-tree-view/RichTreeView";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { TreeViewBaseItem, TreeViewItemId } from "@mui/x-tree-view";
 import { FileContext } from "@diamondlightsource/cs-web-lib";
-import { BeamlineTreeStateContext } from "../App";
-import { MenuContext } from "../routes/SynopticPage";
 import { executeOpenPageActionWithFileGuid } from "../utils/csWebLibActions";
 import { FileIDs } from "../store";
 import { getTopLevelChildIds, getParentIds } from "./utils";
+import { BeamlineTreeStateContext } from "../contexts/BeamlineTreeStateContext";
+import { MenuContext } from "../contexts/MenuContext";
 
 export default function ScreenTreeView() {
   const { state } = useContext(BeamlineTreeStateContext);

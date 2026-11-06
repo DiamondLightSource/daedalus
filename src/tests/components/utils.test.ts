@@ -6,8 +6,6 @@ import {
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { TreeViewBaseItem } from "@mui/x-tree-view";
 
-const setExpandedScreens = vi.fn();
-
 describe("getTopLevelChildIds()", () => {
   beforeEach(() => {
     vi.clearAllMocks();

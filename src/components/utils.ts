@@ -1,5 +1,67 @@
 import { TreeViewItemId } from "@mui/x-tree-view";
-import { ScreenTreeViewBaseItem } from "../utils/parser";
+import {
+  ScreenTreeViewBaseItem,
+  selectFileMetadataByFilePathAndMacros
+} from "../utils/parser";
+import {
+  buildUrl,
+  FileContextType,
+  FileDescription
+} from "@diamondlightsource/cs-web-lib";
+import { BeamlineState } from "../store";
+
+export const FILE_DESCRIPTION_SEARCH_PARAMETER_NAME = "file_description";
+export const MACROS_SEARCH_PARAMETER_NAME = "macros";
+
+export const addTabCallbackAction =
+  (
+    beamlines: BeamlineState,
+    currentBeamline: string,
+    windowLocation: Location
+  ): FileContextType["addTab"] =>
+  (fileLocation: string, tabName: string, fileDesc: FileDescription) => {
+    void fileLocation; // unused, but required by the function interface.
+    void tabName; // unused, but required by the function interface.
+
+    // try and find a matching file entry in the JSON map
+    const displayedPath = fileDesc?.path?.replace(
+      beamlines[currentBeamline].host!,
+      ""
+    );
+
+    const matchingFileMetadata = selectFileMetadataByFilePathAndMacros(
+      beamlines[currentBeamline].filePathIds,
+      displayedPath,
+      fileDesc?.macros
+    );
+
+    // Build the URL for the new tab
+    let newURL = new URL(windowLocation.origin);
+    if (matchingFileMetadata?.urlId) {
+      // we have a file mapping
+      newURL.pathname = buildUrl(
+        "",
+        "synoptic",
+        currentBeamline,
+        matchingFileMetadata?.urlId
+      );
+
+      if (fileDesc?.macros) {
+        newURL.searchParams.append(
+          MACROS_SEARCH_PARAMETER_NAME,
+          JSON.stringify(fileDesc?.macros)
+        );
+      }
+    } else {
+      // No file mapping
+      newURL = new URL(windowLocation.href);
+      newURL.searchParams.append(
+        FILE_DESCRIPTION_SEARCH_PARAMETER_NAME,
+        JSON.stringify(fileDesc)
+      );
+    }
+    window.open(newURL, "_blank");
+  };
 
 /**
  * Sets the list of all tree items with children that should be expanded

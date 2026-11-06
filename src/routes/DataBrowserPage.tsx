@@ -2,7 +2,6 @@ import { Box } from "@mui/material";
 import ArchiverMenuBar from "../components/ArchiverMenuBar";
 import TracesPanel from "../components/TracesPanel";
 import DataBrowserPlot from "../components/DataBrowserPlot";
-import DLSAppBar from "../components/AppBar";
 import { createContext, useEffect, useState } from "react";
 
 export const MenuContext = createContext<{
@@ -28,7 +27,6 @@ export function DataBrowserPage() {
   return (
     <MenuContext.Provider value={{ menusOpen, setMenusOpen }}>
       <Box sx={{ display: "flex", width: "100%" }}>
-        <DLSAppBar fullScreen={false} open={menusOpen.archiver} />
         <ArchiverMenuBar />
         <TracesPanel />
         <DataBrowserPlot />

@@ -1,29 +1,20 @@
-import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
-import { Box, Paper } from "@mui/material";
+import { styled, Theme, CSSObject } from "@mui/material/styles";
+import { Box, Divider } from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
-import IconButton from "@mui/material/IconButton";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import { KeyboardDoubleArrowRight } from "@mui/icons-material";
-import BeamlineSelect from "./BeamlineSelect";
 import ScreenTreeView from "./ScreenTreeView";
-import { useContext, useRef } from "react";
-import { MenuContext } from "../routes/SynopticPage";
-import { DRAWER_MIN_WIDTH, DRAWER_MAX_WIDTH } from "../utils/helper";
+import { useContext } from "react";
+import { APP_BAR_HEIGHT, DRAWER_WIDTH } from "../utils/helper";
+import { MenuContext } from "../contexts/MenuContext";
+import PageNavigationList from "./PageNavigationList";
+import { BeamlineTreeStateContext } from "../contexts/BeamlineTreeStateContext";
 
-const openedMixin = (
-  theme: Theme,
-  width: number,
-  isResizing: boolean
-): CSSObject => ({
-  width: width,
-  transition: isResizing
-    ? "none"
-    : theme.transitions.create("width", {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen
-      }),
+const openedMixin = (theme: Theme): CSSObject => ({
+  width: DRAWER_WIDTH,
+  transition: theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen
+  }),
   overflowX: "hidden"
 });
 
@@ -39,147 +30,55 @@ const closedMixin = (theme: Theme): CSSObject => ({
   }
 });
 
-const MenuBarHeader = styled(Paper)(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "flex-end",
-  padding: theme.spacing(2, 1),
-  position: "sticky",
-  top: 0,
-  zIndex: 1,
-  elevation: 0,
+const MenuBar = styled(MuiDrawer, {
+  shouldForwardProp: prop => prop !== "open"
+})<{ open: boolean }>(({ theme }) => ({
   flexShrink: 0,
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar
+  whiteSpace: "nowrap",
+  boxSizing: "border-box",
+  variants: [
+    {
+      props: ({ open }) => open,
+      style: {
+        ...openedMixin(theme),
+        "& .MuiDrawer-paper": openedMixin(theme)
+      }
+    },
+    {
+      props: ({ open }) => !open,
+      style: {
+        ...closedMixin(theme),
+        "& .MuiDrawer-paper": closedMixin(theme)
+      }
+    }
+  ]
 }));
 
-const MenuBar = styled(MuiDrawer, {
-  shouldForwardProp: prop =>
-    prop !== "open" && prop !== "drawerWidth" && prop !== "isResizingDrawer"
-})<{ open: boolean; drawerWidth: number; isResizingDrawer: boolean }>(
-  ({ theme, drawerWidth, isResizingDrawer }) => ({
-    width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: "nowrap",
-    boxSizing: "border-box",
-    variants: [
-      {
-        props: ({ open }) => open,
-        style: {
-          ...openedMixin(theme, drawerWidth, isResizingDrawer),
-          "& .MuiDrawer-paper": openedMixin(
-            theme,
-            drawerWidth,
-            isResizingDrawer
-          )
-        }
-      },
-      {
-        props: ({ open }) => !open,
-        style: {
-          ...closedMixin(theme),
-          "& .MuiDrawer-paper": closedMixin(theme)
-        }
-      }
-    ]
-  })
-);
-
-export default function MiniMenuBar() {
-  const theme = useTheme();
-  const {
-    menuOpen,
-    setMenuOpen,
-    drawerWidth,
-    setDrawerWidth,
-    isResizingDrawer,
-    setIsResizingDrawer
-  } = useContext(MenuContext);
-  const isResizing = useRef(false);
-
-  const handleDrawerOpen = () => {
-    setMenuOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setMenuOpen(false);
-  };
-
-  const handleMouseDown = () => {
-    isResizing.current = true;
-    setIsResizingDrawer(true);
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseup", handleMouseUp);
-  };
-
-  const handleMouseMove = (e: MouseEvent) => {
-    if (!isResizing.current) return;
-    const newWidth = e.clientX;
-    if (newWidth >= DRAWER_MIN_WIDTH && newWidth <= DRAWER_MAX_WIDTH) {
-      setDrawerWidth(newWidth);
-    }
-  };
-
-  const handleMouseUp = () => {
-    isResizing.current = false;
-    setIsResizingDrawer(false);
-    document.removeEventListener("mousemove", handleMouseMove);
-    document.removeEventListener("mouseup", handleMouseUp);
-  };
+export default function MiniMenuBar({
+  synopticView
+}: {
+  synopticView: boolean;
+}) {
+  const { state } = useContext(BeamlineTreeStateContext);
+  const { menuOpen } = useContext(MenuContext);
 
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <Box sx={{ display: "flex", position: "relative" }}>
-        <MenuBar
-          variant="permanent"
-          open={menuOpen}
-          drawerWidth={drawerWidth}
-          isResizingDrawer={isResizingDrawer}
-        >
-          <MenuBarHeader elevation={0}>
-            {menuOpen ? (
-              <>
-                <BeamlineSelect />
-                <IconButton onClick={handleDrawerClose}>
-                  {theme.direction === "rtl" ? (
-                    <ChevronRightIcon />
-                  ) : (
-                    <ChevronLeftIcon />
-                  )}
-                </IconButton>
-              </>
-            ) : (
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                onClick={handleDrawerOpen}
-                edge="start"
-              >
-                <KeyboardDoubleArrowRight />
-              </IconButton>
-            )}
-          </MenuBarHeader>
-          <ScreenTreeView />
+        <MenuBar variant="permanent" open={menuOpen}>
+          <Box sx={{ height: APP_BAR_HEIGHT, flexShrink: 0 }} />
+          <PageNavigationList collapsed={!menuOpen} />
+          {synopticView && menuOpen && state.filesLoaded && (
+            <>
+              <Divider />
+              <Box sx={{ flex: 1, minHeight: 0, overflowY: "auto" }}>
+                <ScreenTreeView />
+              </Box>
+              <Divider />
+            </>
+          )}
         </MenuBar>
-        {menuOpen && (
-          <Box
-            onMouseDown={handleMouseDown}
-            sx={{
-              width: "5px",
-              cursor: "col-resize",
-              position: "absolute",
-              right: -2,
-              top: 0,
-              bottom: 0,
-              backgroundColor: "transparent",
-              "&:hover": {
-                backgroundColor: "primary.main",
-                opacity: 0.3
-              }
-            }}
-          />
-        )}
       </Box>
     </Box>
   );

@@ -1,166 +1,107 @@
-import React, { useEffect, useState } from "react";
-import { styled } from "@mui/material/styles";
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import CssBaseline from "@mui/material/CssBaseline";
+import { Theme } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
-import SettingsIcon from "@mui/icons-material/Settings";
-import { APP_BAR_HEIGHT, DRAWER_WIDTH } from "../utils/helper";
-import { Box, Tooltip } from "@mui/material";
-import DiamondLogo from "../assets/DiamondLogoWhite.svg";
-import { PageRouteInfo } from "../routes/PageRouteInfo";
-import { useLocation, useNavigate } from "react-router";
-import SettingsModal from "./SettingsModal";
-import { DaedalusConfig, loadConfig } from "../config";
+import { APP_BAR_HEIGHT } from "../utils/helper";
+import { Box, Divider, Typography } from "@mui/material";
+import { Navbar, Logo } from "@diamondlightsource/sci-react-ui";
+import { Link as RouterLink } from "react-router";
+import { Menu } from "lucide-react";
+import BeamlineSelect from "./BeamlineSelect";
 
-interface AppBarProps extends MuiAppBarProps {
-  fullscreen: number;
-  open?: boolean;
-  drawerWidth?: number;
-}
-
-export const StyledAppBar = styled(MuiAppBar, {
-  shouldForwardProp: prop => prop !== "open"
-})<AppBarProps>(({ theme }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(["width", "margin"], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen
-  }),
-  width: "100%",
-  variants: [
-    {
-      props: ({ open, fullscreen }) => open && !fullscreen,
-      style: {
-        marginLeft: DRAWER_WIDTH,
-        width: `calc(100% - ${DRAWER_WIDTH}px)`,
-        transition: theme.transitions.create(["width", "margin"], {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.enteringScreen
-        })
-      }
-    },
-    {
-      props: ({ open, fullscreen }) => !open && !fullscreen,
-      style: {
-        marginLeft: `calc(${theme.spacing(7)} + 1px)`,
-        width: `calc(100% - ${theme.spacing(7)} - 8px)`
-      }
-    }
-  ]
-}));
-
-const DLSAppBar = (props: {
-  fullScreen: boolean;
-  open?: boolean;
-  drawerWidth?: number;
-  isResizingDrawer?: boolean;
+type Props = {
+  title: string;
+  open: boolean;
+  synopticView: boolean;
+  setOpen: (open: boolean) => void;
   children?: React.ReactNode;
-}) => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const {
-    fullScreen,
-    open,
-    drawerWidth = DRAWER_WIDTH,
-    isResizingDrawer
-  } = props;
-  const [settingsOpen, setSettingsOpen] = useState(false);
-  const handleOpenSettings = () => {
-    setSettingsOpen(true);
-  };
-  const [config, setConfig] = useState<DaedalusConfig | null>(null);
+  showMenuButton?: boolean;
+};
 
-  useEffect(() => {
-    loadConfig().then(config => {
-      setConfig(config);
-    });
-  }, []);
-
+export function DLSAppBar({
+  title,
+  open,
+  setOpen,
+  synopticView = false,
+  children,
+  showMenuButton = true
+}: Props) {
   return (
-    <>
-      <CssBaseline />
-      <StyledAppBar
-        position="fixed"
-        open={open}
-        fullscreen={fullScreen ? 1 : 0}
-        sx={{
-          height: APP_BAR_HEIGHT,
-          ...(open &&
-            !fullScreen && {
-              marginLeft: `${drawerWidth}px`,
-              width: `calc(100% - ${drawerWidth}px)`,
-              transition: isResizingDrawer
-                ? "none"
-                : theme =>
-                    theme.transitions.create(["width", "margin"], {
-                      easing: theme.transitions.easing.sharp,
-                      duration: theme.transitions.duration.enteringScreen
-                    })
-            }),
-          ...(!open &&
-            !fullScreen && {
-              marginLeft: theme => `calc(${theme.spacing(7)} + 1px)`,
-              width: theme => `calc(100% - ${theme.spacing(7)} - 8px)`
-            })
-        }}
-      >
-        <Toolbar>
+    <Navbar
+      surface="surface"
+      variant="base"
+      containerWidth={false}
+      sx={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        height: APP_BAR_HEIGHT,
+        zIndex: (theme: Theme) => theme.zIndex.drawer + 1
+      }}
+      leftSlot={
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          {showMenuButton && (
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+              onClick={() => setOpen(!open)}
+            >
+              <Menu />
+            </IconButton>
+          )}
+          <Box
+            component={RouterLink}
+            to="/"
+            aria-label="Go to home page"
+            sx={{
+              mr: 2,
+              width: 100,
+              display: "flex",
+              alignItems: "center",
+              color: "inherit",
+              textDecoration: "none"
+            }}
+          >
+            <Logo />
+          </Box>
+
+          <Divider
+            orientation="vertical"
+            variant="middle"
+            flexItem
+            sx={{ borderColor: "currentColor", opacity: 0.3 }}
+          />
+          {title && (
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ ml: 1.5, mr: 1.25 }}
+            >
+              {title}
+            </Typography>
+          )}
+          {synopticView && (
+            <Box sx={{ ml: 1.5, mr: 1.5 }}>
+              <BeamlineSelect />
+            </Box>
+          )}
           <Box
             sx={{
               display: "flex",
-              flexDirection: "row",
-              justifyContent: "flex-start",
-              width: "110px"
+              alignItems: "center",
+              flexGrow: 1,
+              minWidth: 0
             }}
           >
-            <img src={config?.siteLogo ?? DiamondLogo} width="100%" />
+            {children}
           </Box>
-          <Box
-            sx={{ pl: 1, display: "flex", flexDirection: "row", flexGrow: 1 }}
-          >
-            {props.children}
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "flex-end",
-                flexGrow: 1
-              }}
-            >
-              {PageRouteInfo.map(page => {
-                return (
-                  <Tooltip key={`PageNavButton_${page.name}`} title={page.name}>
-                    <IconButton
-                      color="inherit"
-                      aria-label={page.ariaLabel}
-                      size="small"
-                      onClick={() =>
-                        navigate(page.route, { state: location.state })
-                      }
-                    >
-                      {page.icon}
-                    </IconButton>
-                  </Tooltip>
-                );
-              })}
-              <Tooltip title="Settings">
-                <IconButton
-                  color="inherit"
-                  aria-label="open settings"
-                  size="small"
-                  onClick={handleOpenSettings}
-                >
-                  <SettingsIcon />
-                </IconButton>
-              </Tooltip>
-            </Box>
-          </Box>
-        </Toolbar>
-      </StyledAppBar>
-      <SettingsModal open={settingsOpen} setOpen={setSettingsOpen} />
-    </>
+        </Box>
+      }
+    />
   );
-};
+}
 
 export default DLSAppBar;

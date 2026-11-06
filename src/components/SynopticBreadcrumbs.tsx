@@ -4,13 +4,13 @@ import { ReactNode, useContext } from "react";
 import { Breadcrumbs, Link } from "@mui/material";
 import { FileContext } from "@diamondlightsource/cs-web-lib";
 import { BeamlineStateProperties } from "../store";
-import { BeamlineTreeStateContext } from "../App";
 import { executeOpenPageActionWithUrlId } from "../utils/csWebLibActions";
 import {
   buildSynopticScreenPath,
   extractAncestorScreens,
   parseFullSynopticPath
 } from "../utils/screenUrlIdUtils";
+import { BeamlineTreeStateContext } from "../contexts/BeamlineTreeStateContext";
 
 export const SynopticBreadcrumbs = () => {
   const { state } = useContext(BeamlineTreeStateContext);
