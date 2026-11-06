@@ -3,13 +3,27 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import FileDisplayTabPanel from "./FileDisplayTabPanel";
-import { IconButton, Paper, Typography } from "@mui/material";
+import {
+  IconButton,
+  Paper as MuiPaper,
+  styled,
+  Typography
+} from "@mui/material";
 import FileStateContext from "../routes/DemoPage";
 import { useContext, useEffect, useState } from "react";
 import { Close } from "@mui/icons-material";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import { REMOVE_FILE } from "../store";
 import { refreshFile, store } from "@diamondlightsource/cs-web-lib";
+import { APP_BAR_HEIGHT } from "../utils/helper";
+import FileNavigationBar from "./FileNavigationBar";
+
+const Paper = styled(MuiPaper)({
+  height: `calc(100dvh - ${APP_BAR_HEIGHT}px - 10px)`,
+  position: "absolute",
+  inset: 5,
+  overflow: "hidden"
+});
 
 export default function FileDisplay() {
   const { state, dispatch } = useContext(FileStateContext);
@@ -49,10 +63,8 @@ export default function FileDisplay() {
   }, [state.files]);
 
   return (
-    <Paper
-      elevation={1}
-      sx={{ width: "95%", height: "85%", position: "relative" }}
-    >
+    <Paper>
+      <FileNavigationBar />
       {state.files.length === 0 ? (
         <Typography sx={{ justifyContent: "center", display: "flex" }}>
           No files currently displayed.

@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 vi.mock("@diamondlightsource/cs-web-lib", () => ({}));
 vi.mock("react-toastify", () => ({}));
 import { fireEvent, render, within } from "@testing-library/react";
-import ArchiverMenuBar from "../../components/ArchiverMenuBar";
+import ArchiverMenuBar from "../../components/DataBrowser/ArchiverSearchGrid";
 import { MenuContext } from "../../routes/DataBrowserPage";
 
 const mockContextValue = {

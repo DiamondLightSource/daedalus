@@ -8,6 +8,8 @@ import { APP_BAR_HEIGHT, DRAWER_WIDTH } from "../utils/helper";
 import { MenuContext } from "../contexts/MenuContext";
 import PageNavigationList from "./PageNavigationList";
 import { BeamlineTreeStateContext } from "../contexts/BeamlineTreeStateContext";
+import ArchiverSearchGrid from "./DataBrowser/ArchiverSearchGrid";
+import { useMatch } from "react-router";
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: DRAWER_WIDTH,
@@ -61,6 +63,7 @@ export default function MiniMenuBar({
 }) {
   const { state } = useContext(BeamlineTreeStateContext);
   const { menuOpen } = useContext(MenuContext);
+  const dataBrowserView = Boolean(useMatch("/data-browser"));
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -74,6 +77,15 @@ export default function MiniMenuBar({
               <Divider />
               <Box sx={{ flex: 1, minHeight: 0, overflowY: "auto" }}>
                 <ScreenTreeView />
+              </Box>
+              <Divider />
+            </>
+          )}
+          {dataBrowserView && menuOpen && (
+            <>
+              <Divider />
+              <Box sx={{ flex: 1, minHeight: 0, overflowY: "auto" }}>
+                <ArchiverSearchGrid />
               </Box>
               <Divider />
             </>

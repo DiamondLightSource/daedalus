@@ -9,6 +9,7 @@ import { FileContext } from "@diamondlightsource/cs-web-lib";
 import { BeamlineTreeStateContext } from "../contexts/BeamlineTreeStateContext";
 import { addTabCallbackAction } from "../components/utils";
 import { APP_BAR_HEIGHT } from "../utils/helper";
+import TracesPanel from "../components/DataBrowser/TracesPanel";
 
 export function AppLayout() {
   const { state } = useContext(BeamlineTreeStateContext);
@@ -19,6 +20,7 @@ export function AppLayout() {
   const showMenu = !isLanding;
 
   const [menuOpen, setMenuOpen] = useState(true);
+  const [tracesPanelOpen, setTracesPanelOpen] = useState(false);
 
   const addTab = useMemo(
     () =>
@@ -41,7 +43,10 @@ export function AppLayout() {
       ? synopticFileContext
       : baseFileContext;
 
-  const menuContext = useMemo(() => ({ menuOpen, setMenuOpen }), [menuOpen]);
+  const menuContext = useMemo(
+    () => ({ menuOpen, setMenuOpen, tracesPanelOpen, setTracesPanelOpen }),
+    [menuOpen, tracesPanelOpen]
+  );
 
   return (
     <FileContext.Provider value={fileContext}>
@@ -78,6 +83,7 @@ export function AppLayout() {
             >
               <Outlet />
             </Box>
+            <TracesPanel />
           </Box>
         </Box>
       </MenuContext.Provider>
