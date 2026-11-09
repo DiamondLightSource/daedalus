@@ -9,11 +9,11 @@ import {
 } from "@diamondlightsource/sci-react-ui";
 import { Link as RouterLink } from "react-router";
 import { Menu } from "lucide-react";
-import BeamlineSelect from "./BeamlineSelect";
 import { useEffect, useState } from "react";
 import { DaedalusConfig, loadConfig } from "../config";
 import { setCurrentClass } from "@diamondlightsource/cs-web-lib";
 import { useDispatch } from "react-redux";
+import BeamlineSelect from "./Synoptic/BeamlineSelect";
 
 type Props = {
   title: string;

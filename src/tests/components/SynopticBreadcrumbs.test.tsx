@@ -3,14 +3,14 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 vi.mock("react-toastify", () => ({}));
 
 import { render, screen, fireEvent } from "@testing-library/react";
-import { SynopticBreadcrumbs } from "../../components/SynopticBreadcrumbs";
+import { SynopticBreadcrumbs } from "../../components/Synoptic/SynopticBreadcrumbs";
 import { FileContext, executeAction } from "@diamondlightsource/cs-web-lib";
 import {
   BeamlineState,
   BeamlineStateProperties,
   BeamlineTreeState
 } from "../../store";
-import { BeamlineTreeStateContext } from "../../App";
+import { BeamlineTreeStateContext } from "../../contexts/BeamlineTreeStateContext";
 
 vi.mock("@diamondlightsource/cs-web-lib", async importOriginal => {
   const actual =

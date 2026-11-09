@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 import { MenuContext } from "../contexts/MenuContext";
 import DLSAppBar from "../components/AppBar";
 import SideBar from "../components/SideBar";
-import { SynopticBreadcrumbs } from "../components/SynopticBreadcrumbs";
+import { SynopticBreadcrumbs } from "../components/Synoptic/SynopticBreadcrumbs";
 import { FileContext } from "@diamondlightsource/cs-web-lib";
 import { BeamlineTreeStateContext } from "../contexts/BeamlineTreeStateContext";
 import { addTabCallbackAction } from "../components/utils";

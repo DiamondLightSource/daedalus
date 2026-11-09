@@ -19,8 +19,8 @@ vi.mock("@diamondlightsource/cs-web-lib", () => ({
 import { fireEvent, render, screen } from "@testing-library/react";
 import { FileContext, refreshFile } from "@diamondlightsource/cs-web-lib";
 import { FileState } from "../../store";
-import FileDisplay from "../../components/FileDisplay";
 import FileStateContext from "../../routes/DemoPage";
+import FileDisplay from "../../components/Demo/FileDisplay";
 
 describe("FileDisplay Component", () => {
   beforeEach(() => {

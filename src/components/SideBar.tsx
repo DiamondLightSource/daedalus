@@ -2,7 +2,7 @@ import { styled, Theme, CSSObject } from "@mui/material/styles";
 import { Box, Divider } from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
-import ScreenTreeView from "./ScreenTreeView";
+import ScreenTreeView from "./Synoptic/ScreenTreeView";
 import { useContext } from "react";
 import { APP_BAR_HEIGHT, DRAWER_WIDTH } from "../utils/helper";
 import { MenuContext } from "../contexts/MenuContext";

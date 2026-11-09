@@ -7,12 +7,12 @@ import {
   useNotification
 } from "@diamondlightsource/cs-web-lib";
 import { useLocation, useNavigate } from "react-router";
-import { selectFileMetadataByFilePathAndMacros } from "../utils/parser";
+import { selectFileMetadataByFilePathAndMacros } from "../../utils/parser";
 import RateReviewIcon from "@mui/icons-material/RateReview";
-import { FileMetadata } from "../store";
-import { executeOpenQuickScreen } from "../utils/csWebLibActions";
-import { BeamlineTreeStateContext } from "../contexts/BeamlineTreeStateContext";
-import { APP_BAR_HEIGHT } from "../utils/helper";
+import { FileMetadata } from "../../store";
+import { executeOpenQuickScreen } from "../../utils/csWebLibActions";
+import { BeamlineTreeStateContext } from "../../contexts/BeamlineTreeStateContext";
+import { APP_BAR_HEIGHT } from "../../utils/helper";
 
 const Paper = styled(MuiPaper)({
   height: `calc(100dvh - ${APP_BAR_HEIGHT}px - 10px)`,
