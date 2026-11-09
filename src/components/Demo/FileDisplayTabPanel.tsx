@@ -3,7 +3,7 @@ import {
   newRelativePosition
 } from "@diamondlightsource/cs-web-lib";
 import Box from "@mui/material/Box";
-import { MacroMap } from "../store";
+import { MacroMap } from "../../store";
 interface FileDisplayTabPanelProps {
   index: number;
   value: number;

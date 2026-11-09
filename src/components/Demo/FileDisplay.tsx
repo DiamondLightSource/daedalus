@@ -2,20 +2,20 @@ import * as React from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import FileDisplayTabPanel from "./FileDisplayTabPanel";
 import {
   IconButton,
   Paper as MuiPaper,
   styled,
   Typography
 } from "@mui/material";
-import FileStateContext from "../routes/DemoPage";
 import { useContext, useEffect, useState } from "react";
 import { Close } from "@mui/icons-material";
 import RefreshIcon from "@mui/icons-material/Refresh";
-import { REMOVE_FILE } from "../store";
 import { refreshFile, store } from "@diamondlightsource/cs-web-lib";
-import { APP_BAR_HEIGHT } from "../utils/helper";
+import FileStateContext from "../../routes/DemoPage";
+import { REMOVE_FILE } from "../../store";
+import { APP_BAR_HEIGHT } from "../../utils/helper";
+import FileDisplayTabPanel from "./FileDisplayTabPanel";
 import FileNavigationBar from "./FileNavigationBar";
 
 const Paper = styled(MuiPaper)({

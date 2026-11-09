@@ -2,8 +2,8 @@ import { Paper as MuiPaper, styled } from "@mui/material";
 import * as React from "react";
 import { demoReducer, demoInitialState, FileState } from "../store";
 import { APP_BAR_HEIGHT } from "../utils/helper";
-import FileDisplay from "../components/FileDisplay";
 import { createContext, useEffect } from "react";
+import FileDisplay from "../components/Demo/FileDisplay";
 
 const FileStateContext = createContext<{
   state: FileState;

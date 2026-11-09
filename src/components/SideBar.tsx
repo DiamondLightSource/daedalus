@@ -57,11 +57,7 @@ const MenuBar = styled(MuiDrawer, {
   ]
 }));
 
-export default function SideBar({
-  synopticView
-}: {
-  synopticView: boolean;
-}) {
+export default function SideBar({ synopticView }: { synopticView: boolean }) {
   const { state } = useContext(BeamlineTreeStateContext);
   const { menuOpen } = useContext(MenuContext);
   const dataBrowserView = Boolean(useMatch("/data-browser"));

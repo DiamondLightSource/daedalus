@@ -47,7 +47,7 @@ export default function EditorPalette() {
           sx={{
             width: "36px",
             height: "36px",
-            color: theme.palette.primary.main
+            color: "inherit"
           }}
         />
       </IconButton>

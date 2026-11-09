@@ -1,9 +1,9 @@
 import { useContext, useState } from "react";
-import FileStateContext from "../routes/DemoPage";
 import { Stack, Typography, TextField, Button } from "@mui/material";
-import { isValidHttpUrl } from "../utils/helper";
-import { LOAD_NEXT_FILE } from "../store";
 import { httpRequest } from "@diamondlightsource/cs-web-lib";
+import FileStateContext from "../../routes/DemoPage";
+import { LOAD_NEXT_FILE } from "../../store";
+import { isValidHttpUrl } from "../../utils/helper";
 
 export default function FileInput() {
   const { dispatch } = useContext(FileStateContext);

@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { useCallback, useContext, useEffect, useMemo } from "react";
+import { useCallback, useContext, useEffect } from "react";
 import { CHANGE_BEAMLINE, CHANGE_SCREEN, LOAD_SCREENS } from "../store";
 import ScreenDisplay from "../components/Synoptic/ScreenDisplay";
 import { parseScreenTree } from "../utils/parser";

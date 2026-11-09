@@ -11,7 +11,7 @@ import {
   EmbeddedDisplay,
   newRelativePosition
 } from "@diamondlightsource/cs-web-lib";
-import { APP_BAR_HEIGHT, PROPERTIES_MENU_WIDTH } from "../../utils/helper";
+import { APP_BAR_HEIGHT } from "../../utils/helper";
 import UndoIcon from "@mui/icons-material/Undo";
 import RedoIcon from "@mui/icons-material/Redo";
 import FormatAlignCenterIcon from "@mui/icons-material/FormatAlignCenter";

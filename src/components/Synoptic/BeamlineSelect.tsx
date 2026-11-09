@@ -7,11 +7,11 @@ import {
 } from "@mui/material";
 import { useContext, useState } from "react";
 import { FileContext } from "@diamondlightsource/cs-web-lib";
-import { CHANGE_BEAMLINE } from "../store";
 import { Tooltip } from "@mui/material";
-import { executeOpenPageActionWithFileGuid } from "../utils/csWebLibActions";
 import { ExpandMore } from "@mui/icons-material";
-import { BeamlineTreeStateContext } from "../contexts/BeamlineTreeStateContext";
+import { BeamlineTreeStateContext } from "../../contexts/BeamlineTreeStateContext";
+import { CHANGE_BEAMLINE } from "../../store";
+import { executeOpenPageActionWithFileGuid } from "../../utils/csWebLibActions";
 
 const MenuItem = styled(MuiMenuItem)({
   "&.Mui-disabled": {
