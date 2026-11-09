@@ -3,7 +3,7 @@ import { Outlet, useMatch } from "react-router";
 import { Box } from "@mui/material";
 import { MenuContext } from "../contexts/MenuContext";
 import DLSAppBar from "../components/AppBar";
-import MiniMenuBar from "../components/MenuBar";
+import SideBar from "../components/SideBar";
 import { SynopticBreadcrumbs } from "../components/SynopticBreadcrumbs";
 import { FileContext } from "@diamondlightsource/cs-web-lib";
 import { BeamlineTreeStateContext } from "../contexts/BeamlineTreeStateContext";
@@ -61,7 +61,7 @@ export function AppLayout() {
           >
             {synopticView && <SynopticBreadcrumbs />}
           </DLSAppBar>
-          {showMenu && <MiniMenuBar synopticView={synopticView} />}
+          {showMenu && <SideBar synopticView={synopticView} />}
           <Box
             component="main"
             sx={{

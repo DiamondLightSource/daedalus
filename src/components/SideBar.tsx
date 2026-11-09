@@ -57,7 +57,7 @@ const MenuBar = styled(MuiDrawer, {
   ]
 }));
 
-export default function MiniMenuBar({
+export default function SideBar({
   synopticView
 }: {
   synopticView: boolean;
