@@ -1,11 +1,19 @@
-import { Theme } from "@mui/material/styles";
+import { Theme, useColorScheme } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import { APP_BAR_HEIGHT } from "../utils/helper";
 import { Box, Divider, Typography } from "@mui/material";
-import { Navbar, Logo } from "@diamondlightsource/sci-react-ui";
+import {
+  Navbar,
+  Logo,
+  ColourSchemeButton
+} from "@diamondlightsource/sci-react-ui";
 import { Link as RouterLink } from "react-router";
 import { Menu } from "lucide-react";
 import BeamlineSelect from "./BeamlineSelect";
+import { useEffect, useState } from "react";
+import { DaedalusConfig, loadConfig } from "../config";
+import { setCurrentClass } from "@diamondlightsource/cs-web-lib";
+import { useDispatch } from "react-redux";
 
 type Props = {
   title: string;
@@ -24,6 +32,21 @@ export function DLSAppBar({
   children,
   showMenuButton = true
 }: Props) {
+  const [config, setConfig] = useState<DaedalusConfig | null>(null);
+  const dispatch = useDispatch();
+  const { mode } = useColorScheme();
+  const isDarkTheme = mode === "dark";
+
+  useEffect(() => {
+    loadConfig().then(config => {
+      setConfig(config);
+    });
+  }, []);
+
+  useEffect(() => {
+    dispatch(setCurrentClass(isDarkTheme ? "DARKMODE" : "DEFAULT"));
+  }, [isDarkTheme, dispatch]);
+
   return (
     <Navbar
       surface="surface"
@@ -64,9 +87,12 @@ export function DLSAppBar({
               textDecoration: "none"
             }}
           >
-            <Logo />
+            {config?.siteLogo ? (
+              <img src={config?.siteLogo} width="100%" />
+            ) : (
+              <Logo />
+            )}
           </Box>
-
           <Divider
             orientation="vertical"
             variant="middle"
@@ -100,6 +126,7 @@ export function DLSAppBar({
           </Box>
         </Box>
       }
+      rightSlot={<ColourSchemeButton />}
     />
   );
 }

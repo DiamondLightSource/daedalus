@@ -35,7 +35,7 @@ export const SynopticBreadcrumbs = () => {
         p: 2,
         paddingBottom: 0,
         textAlign: "left",
-        color: "#1f3d96",
+        color: "inherit",
         display: "flex",
         flexGrow: 1
       }}
@@ -82,14 +82,14 @@ const createBreadcrumbs = (
   screenAncestry.forEach((item, idx) => {
     breadcrumbs.push(
       idx === screenAncestry.length - 1 ? (
-        <Typography key="3" sx={{ color: "#1f3d96" }}>
+        <Typography key="3" sx={{ color: "inherit" }}>
           {item.displayName}
         </Typography>
       ) : (
         <Link
           underline="hover"
           key={idx}
-          color="#1f3d96"
+          color="inherit"
           href={buildSynopticScreenPath(beamline, item.path)}
         >
           {item.displayName}

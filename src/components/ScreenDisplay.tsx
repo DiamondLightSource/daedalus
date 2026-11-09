@@ -1,12 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import {
-  IconButton,
-  Paper as MuiPaper,
-  PaperProps as MuiPaperProps,
-  styled,
-  Tooltip,
-  useTheme
-} from "@mui/material";
+import { IconButton, Paper as MuiPaper, styled, Tooltip } from "@mui/material";
 import {
   DynamicPageWidget,
   FileContext,
@@ -29,7 +22,6 @@ const Paper = styled(MuiPaper)({
 });
 
 export default function ScreenDisplay() {
-  const theme = useTheme();
   const { state } = useContext(BeamlineTreeStateContext);
   const fileContext = useContext(FileContext);
   const navigate = useNavigate();
@@ -129,7 +121,7 @@ export default function ScreenDisplay() {
                   sx={{
                     width: "36px",
                     height: "36px",
-                    color: theme.palette.primary.main
+                    color: "inherit"
                   }}
                 />
               </IconButton>
