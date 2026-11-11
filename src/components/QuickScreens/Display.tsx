@@ -17,16 +17,11 @@ import {
   FileContext,
   useDisplayInstance
 } from "@diamondlightsource/cs-web-lib";
-import {
-  useWindowWidth,
-  APP_BAR_HEIGHT,
-  useWindowHeight
-} from "../../utils/helper";
+import { APP_BAR_HEIGHT } from "../../utils/helper";
 import { extractAncestorScreens } from "../../utils/screenUrlIdUtils";
 import { Breadcrumbs } from "@mui/material";
 import { NavigateNext, Lock, LockOpen } from "@mui/icons-material";
 import { createContext, useContext, useEffect, useState } from "react";
-import QuickScreenSettings from "./Settings";
 import { useLocation } from "react-router";
 import { executeOpenQuickScreen } from "../../utils/csWebLibActions";
 
@@ -209,8 +204,6 @@ export default function QuickScreenDisplay() {
             restoreQuickScreenSession
           }}
         >
-          <QuickScreenSettings />
-
           <Box
             sx={{
               flex: 1,

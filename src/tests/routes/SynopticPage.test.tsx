@@ -1,11 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
-import {
-  SynopticPage,
-  MenuContext,
-  addTabCallbackAction
-} from "../../routes/SynopticPage";
-import { BeamlineTreeStateContext } from "../../App";
+import { SynopticPage } from "../../routes/SynopticPage";
 import {
   FileContext,
   FileContextType,
@@ -21,6 +16,9 @@ import {
   LOAD_SCREENS
 } from "../../store";
 import { useContext } from "react";
+import { addTabCallbackAction } from "../../components/utils";
+import { BeamlineTreeStateContext } from "../../contexts/BeamlineTreeStateContext";
+import { MenuContext } from "../../contexts/MenuContext";
 
 // Mock dependencies
 vi.mock("../components/MenuBar", () => ({

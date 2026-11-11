@@ -8,12 +8,13 @@ import {
   ColourSchemeButton
 } from "@diamondlightsource/sci-react-ui";
 import { Link as RouterLink } from "react-router";
-import { Menu } from "lucide-react";
+import { Menu, Settings } from "lucide-react";
 import { useEffect, useState } from "react";
 import { DaedalusConfig, loadConfig } from "../config";
 import { setCurrentClass } from "@diamondlightsource/cs-web-lib";
 import { useDispatch } from "react-redux";
 import BeamlineSelect from "./Synoptic/BeamlineSelect";
+import SettingsModal from "./SettingsModal";
 
 type Props = {
   title: string;
@@ -33,6 +34,7 @@ export function DLSAppBar({
   showMenuButton = true
 }: Props) {
   const [config, setConfig] = useState<DaedalusConfig | null>(null);
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const dispatch = useDispatch();
   const { mode } = useColorScheme();
   const isDarkTheme = mode === "dark";
@@ -61,72 +63,85 @@ export function DLSAppBar({
         zIndex: (theme: Theme) => theme.zIndex.drawer + 1
       }}
       leftSlot={
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          {showMenuButton && (
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-              onClick={() => setOpen(!open)}
-            >
-              <Menu />
-            </IconButton>
-          )}
-          <Box
-            component={RouterLink}
-            to="/"
-            aria-label="Go to home page"
-            sx={{
-              mr: 2,
-              width: 100,
-              display: "flex",
-              alignItems: "center",
-              color: "inherit",
-              textDecoration: "none"
-            }}
-          >
-            {config?.siteLogo ? (
-              <img src={config?.siteLogo} width="100%" />
-            ) : (
-              <Logo />
+        <>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            {showMenuButton && (
+              <IconButton
+                size="large"
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+                sx={{ mr: 2 }}
+                onClick={() => setOpen(!open)}
+              >
+                <Menu />
+              </IconButton>
             )}
-          </Box>
-          <Divider
-            orientation="vertical"
-            variant="middle"
-            flexItem
-            sx={{ borderColor: "currentColor", opacity: 0.3 }}
-          />
-          {title && (
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ ml: 1.5, mr: 1.25 }}
+            <Box
+              component={RouterLink}
+              to="/"
+              aria-label="Go to home page"
+              sx={{
+                mr: 2,
+                width: 100,
+                display: "flex",
+                alignItems: "center",
+                color: "inherit",
+                textDecoration: "none"
+              }}
             >
-              {title}
-            </Typography>
-          )}
-          {synopticView && (
-            <Box sx={{ ml: 1.5, mr: 1.5 }}>
-              <BeamlineSelect />
+              {config?.siteLogo ? (
+                <img src={config?.siteLogo} width="100%" alt="Site logo" />
+              ) : (
+                <Logo />
+              )}
             </Box>
-          )}
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              flexGrow: 1,
-              minWidth: 0
-            }}
-          >
-            {children}
+            <Divider
+              orientation="vertical"
+              variant="middle"
+              flexItem
+              sx={{ borderColor: "currentColor", opacity: 0.3 }}
+            />
+            {title && (
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+                sx={{ ml: 1.5, mr: 1.25 }}
+              >
+                {title}
+              </Typography>
+            )}
+            {synopticView && (
+              <Box sx={{ ml: 1.5, mr: 1.5 }}>
+                <BeamlineSelect />
+              </Box>
+            )}
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                flexGrow: 1,
+                minWidth: 0
+              }}
+            >
+              {children}
+            </Box>
           </Box>
-        </Box>
+          <SettingsModal open={settingsOpen} setOpen={setSettingsOpen} />
+        </>
       }
-      rightSlot={<ColourSchemeButton />}
+      rightSlot={
+        <>
+          <IconButton
+            onClick={() => setSettingsOpen(true)}
+            aria-label="open settings"
+          >
+            <Settings />
+          </IconButton>
+          <ColourSchemeButton />
+        </>
+      }
     />
   );
 }

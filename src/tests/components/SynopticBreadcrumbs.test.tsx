@@ -197,7 +197,7 @@ describe("SynopticBreadcrumbs Component", () => {
 
     const breadcrumbsContainer = screen.getByLabelText("breadcrumb");
     expect(breadcrumbsContainer).toHaveStyle("margin-bottom: 10px");
-    expect(breadcrumbsContainer).toHaveStyle("color: rgb(255, 255, 255)");
+    expect(breadcrumbsContainer).toHaveStyle("color: rgb(0, 0, 0)");
     expect(breadcrumbsContainer).toHaveStyle("display: flex");
     expect(breadcrumbsContainer).toHaveStyle("text-align: left");
   });

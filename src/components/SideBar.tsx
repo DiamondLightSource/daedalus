@@ -11,6 +11,7 @@ import { BeamlineTreeStateContext } from "../contexts/BeamlineTreeStateContext";
 import ArchiverSearchGrid from "./DataBrowser/ArchiverSearchGrid";
 import { useMatch } from "react-router";
 import { PropertiesGrid } from "./Editor/WidgetPropertiesGrid";
+import QuickScreenSettings from "./QuickScreens/Settings";
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: DRAWER_WIDTH,
@@ -62,6 +63,7 @@ export default function SideBar({ synopticView }: { synopticView: boolean }) {
   const { menuOpen } = useContext(MenuContext);
   const dataBrowserView = Boolean(useMatch("/data-browser"));
   const editorView = Boolean(useMatch("/editor"));
+  const quickScreenView = Boolean(useMatch("/quick-screens"));
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -75,6 +77,15 @@ export default function SideBar({ synopticView }: { synopticView: boolean }) {
               <Divider />
               <Box sx={{ flex: 1, minHeight: 0, overflowY: "auto" }}>
                 <ScreenTreeView />
+              </Box>
+              <Divider />
+            </>
+          )}
+          {quickScreenView && (
+            <>
+              <Divider />
+              <Box sx={{ flex: 1, minHeight: 0, overflowY: "auto" }}>
+                <QuickScreenSettings />
               </Box>
               <Divider />
             </>
