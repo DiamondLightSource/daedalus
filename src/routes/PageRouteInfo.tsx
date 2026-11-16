@@ -1,27 +1,9 @@
-import HomeIcon from "@mui/icons-material/Home";
 import FlareIcon from "@mui/icons-material/Flare";
-import MonitorIcon from "@mui/icons-material/Monitor";
 import EditIcon from "@mui/icons-material/Edit";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
 import RateReviewIcon from "@mui/icons-material/RateReview";
 
 export const PageRouteInfo = [
-  {
-    name: "Home page",
-    ariaLabel: "open home page",
-    route: "/",
-    text: "",
-    icon: <HomeIcon />,
-    showCard: false
-  },
-  {
-    name: "Screen Demo",
-    ariaLabel: "open demo screen page",
-    route: "/demo",
-    text: "A page to test out the .bob screen display capabilities of Daedalus.\n\nPass in the URL to a file, add any macros you might need and see how the screen looks rendered with cs-web-lib.",
-    icon: <MonitorIcon />,
-    showCard: true
-  },
   {
     name: "Synoptic View",
     ariaLabel: "open the beamline synoptic screens",

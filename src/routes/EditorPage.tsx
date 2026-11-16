@@ -9,9 +9,9 @@ import {
 } from "../store";
 import { parseScreenTree } from "../utils/parser";
 import { FileContext } from "@diamondlightsource/cs-web-lib";
-import Editor from "../components/Editor";
 import { useParams } from "react-router";
 import { executeOpenPageActionWithUrlId } from "../utils/csWebLibActions";
+import Editor from "../components/Editor/Editor";
 
 /**
  * Displays a mock editor page with palette and Phoebus

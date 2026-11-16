@@ -3,14 +3,14 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { ReactNode, useContext } from "react";
 import { Breadcrumbs, Link } from "@mui/material";
 import { FileContext } from "@diamondlightsource/cs-web-lib";
-import { BeamlineStateProperties } from "../store";
-import { BeamlineTreeStateContext } from "../App";
-import { executeOpenPageActionWithUrlId } from "../utils/csWebLibActions";
+import { BeamlineStateProperties } from "../../store";
+import { executeOpenPageActionWithUrlId } from "../../utils/csWebLibActions";
 import {
   buildSynopticScreenPath,
   extractAncestorScreens,
   parseFullSynopticPath
-} from "../utils/screenUrlIdUtils";
+} from "../../utils/screenUrlIdUtils";
+import { BeamlineTreeStateContext } from "../../contexts/BeamlineTreeStateContext";
 
 export const SynopticBreadcrumbs = () => {
   const { state } = useContext(BeamlineTreeStateContext);
@@ -35,7 +35,7 @@ export const SynopticBreadcrumbs = () => {
         p: 2,
         paddingBottom: 0,
         textAlign: "left",
-        color: "white",
+        color: "inherit",
         display: "flex",
         flexGrow: 1
       }}
@@ -82,14 +82,14 @@ const createBreadcrumbs = (
   screenAncestry.forEach((item, idx) => {
     breadcrumbs.push(
       idx === screenAncestry.length - 1 ? (
-        <Typography key="3" sx={{ color: "white" }}>
+        <Typography key="3" sx={{ color: "inherit" }}>
           {item.displayName}
         </Typography>
       ) : (
         <Link
           underline="hover"
           key={idx}
-          color="white"
+          color="inherit"
           href={buildSynopticScreenPath(beamline, item.path)}
         >
           {item.displayName}

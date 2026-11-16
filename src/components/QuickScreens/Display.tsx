@@ -17,16 +17,11 @@ import {
   FileContext,
   useDisplayInstance
 } from "@diamondlightsource/cs-web-lib";
-import {
-  useWindowWidth,
-  APP_BAR_HEIGHT,
-  useWindowHeight
-} from "../../utils/helper";
+import { APP_BAR_HEIGHT } from "../../utils/helper";
 import { extractAncestorScreens } from "../../utils/screenUrlIdUtils";
 import { Breadcrumbs } from "@mui/material";
 import { NavigateNext, Lock, LockOpen } from "@mui/icons-material";
 import { createContext, useContext, useEffect, useState } from "react";
-import QuickScreenSettings from "./Settings";
 import { useLocation } from "react-router";
 import { executeOpenQuickScreen } from "../../utils/csWebLibActions";
 
@@ -53,12 +48,12 @@ export const StorageContext = createContext<{
   restoreQuickScreenSession: () => {}
 });
 
-const Paper = styled(MuiPaper)(({ theme }) => ({
-  position: "relative",
-  height: `calc(${useWindowHeight()}px - ${APP_BAR_HEIGHT}px - 50px)`,
-  margin: `calc(${APP_BAR_HEIGHT}px + 15px) 5px 5px 5px`,
-  width: `calc(${useWindowWidth()}px - 10px - ${theme.spacing(7)} - 8px)`
-}));
+const Paper = styled(MuiPaper)({
+  height: `calc(100dvh - ${APP_BAR_HEIGHT}px - 10px)`,
+  position: "absolute",
+  inset: 5,
+  overflow: "hidden"
+});
 
 export default function QuickScreenDisplay() {
   const [bobDisplayUuid, setBobDisplayUuid] = useState<string>();
@@ -209,8 +204,6 @@ export default function QuickScreenDisplay() {
             restoreQuickScreenSession
           }}
         >
-          <QuickScreenSettings />
-
           <Box
             sx={{
               flex: 1,

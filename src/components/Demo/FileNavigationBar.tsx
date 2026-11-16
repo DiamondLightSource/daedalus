@@ -1,10 +1,10 @@
-import MacrosModal from "./MacrosModal";
 import { Alert, AlertTitle, Button, Container, Stack } from "@mui/material";
+import { FileInput } from "lucide-react";
 import { useContext, useState } from "react";
-import { ADD_FILE } from "../store";
-import FileStateContext from "../routes/DemoPage";
+import FileStateContext from "../../routes/DemoPage";
+import { ADD_FILE } from "../../store";
+import MacrosModal from "./MacrosModal";
 import ProtocolButton from "./ProtocolButton";
-import FileInput from "./FileInput";
 
 const ALERT_MESSAGES: { [key: string]: string } = {
   success: "File was loaded successfully.",

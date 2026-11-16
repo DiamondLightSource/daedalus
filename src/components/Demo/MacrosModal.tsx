@@ -16,10 +16,10 @@ import {
   TableRow,
   TextField
 } from "@mui/material";
-import { useWindowWidth } from "../utils/helper";
 import { useContext, useState } from "react";
-import { ADD_MACROS } from "../store";
-import FileStateContext from "../routes/DemoPage";
+import FileStateContext from "../../routes/DemoPage";
+import { ADD_MACROS } from "../../store";
+import { useWindowWidth } from "../../utils/helper";
 
 export default function MacrosModal() {
   const { state, dispatch } = useContext(FileStateContext);

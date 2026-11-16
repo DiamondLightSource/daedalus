@@ -3,14 +3,14 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 vi.mock("react-toastify", () => ({}));
 
 import { render, screen, fireEvent } from "@testing-library/react";
-import { SynopticBreadcrumbs } from "../../components/SynopticBreadcrumbs";
+import { SynopticBreadcrumbs } from "../../components/Synoptic/SynopticBreadcrumbs";
 import { FileContext, executeAction } from "@diamondlightsource/cs-web-lib";
 import {
   BeamlineState,
   BeamlineStateProperties,
   BeamlineTreeState
 } from "../../store";
-import { BeamlineTreeStateContext } from "../../App";
+import { BeamlineTreeStateContext } from "../../contexts/BeamlineTreeStateContext";
 
 vi.mock("@diamondlightsource/cs-web-lib", async importOriginal => {
   const actual =
@@ -197,7 +197,7 @@ describe("SynopticBreadcrumbs Component", () => {
 
     const breadcrumbsContainer = screen.getByLabelText("breadcrumb");
     expect(breadcrumbsContainer).toHaveStyle("margin-bottom: 10px");
-    expect(breadcrumbsContainer).toHaveStyle("color: rgb(255, 255, 255)");
+    expect(breadcrumbsContainer).toHaveStyle("color: rgb(0, 0, 0)");
     expect(breadcrumbsContainer).toHaveStyle("display: flex");
     expect(breadcrumbsContainer).toHaveStyle("text-align: left");
   });

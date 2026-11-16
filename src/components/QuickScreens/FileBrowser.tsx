@@ -8,7 +8,6 @@ import {
 } from "@mui/x-tree-view";
 import FolderIcon from "@mui/icons-material/Folder";
 import FolderOpenIcon from "@mui/icons-material/FolderOpen";
-import { BeamlineTreeStateContext } from "../../App";
 import { Stack, Box, TextField, Button } from "@mui/material";
 import { findNodeById, getTopLevelChildIds } from "../utils";
 import {
@@ -21,6 +20,7 @@ import { parseScreenTree, ScreenTreeViewBaseItem } from "../../utils/parser";
 import { useDispatch } from "react-redux";
 import { executeOpenPageActionWithFileGuid } from "../../utils/csWebLibActions";
 import { StorageContext } from "./Display";
+import { BeamlineTreeStateContext } from "../../contexts/BeamlineTreeStateContext";
 
 /**
  * Custom Tree Item that lets us change icon

@@ -1,54 +1,28 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import {
-  IconButton,
-  Paper as MuiPaper,
-  PaperProps as MuiPaperProps,
-  styled,
-  Tooltip,
-  useTheme
-} from "@mui/material";
+import { IconButton, Paper as MuiPaper, styled, Tooltip } from "@mui/material";
 import {
   DynamicPageWidget,
   FileContext,
   newRelativePosition,
   useNotification
 } from "@diamondlightsource/cs-web-lib";
-import {
-  useWindowWidth,
-  useWindowHeight,
-  DRAWER_WIDTH,
-  APP_BAR_HEIGHT
-} from "../utils/helper";
-import { BeamlineTreeStateContext } from "../App";
-import { MenuContext } from "../routes/SynopticPage";
 import { useLocation, useNavigate } from "react-router";
-import { selectFileMetadataByFilePathAndMacros } from "../utils/parser";
+import { selectFileMetadataByFilePathAndMacros } from "../../utils/parser";
 import RateReviewIcon from "@mui/icons-material/RateReview";
-import { FileMetadata } from "../store";
-import { executeOpenQuickScreen } from "../utils/csWebLibActions";
+import { FileMetadata } from "../../store";
+import { executeOpenQuickScreen } from "../../utils/csWebLibActions";
+import { BeamlineTreeStateContext } from "../../contexts/BeamlineTreeStateContext";
+import { APP_BAR_HEIGHT } from "../../utils/helper";
 
-interface PaperProps extends MuiPaperProps {
-  open?: boolean;
-  drawerWidth?: number;
-}
-
-const Paper = styled(MuiPaper, {
-  shouldForwardProp: prop => prop !== "open" && prop !== "drawerWidth"
-})<PaperProps>(({ theme, open, drawerWidth = DRAWER_WIDTH }) => ({
-  height: `calc(${useWindowHeight()}px - ${APP_BAR_HEIGHT}px - 10px)`,
-  margin: `calc(${APP_BAR_HEIGHT}px + 5px) 5px 5px 5px`,
-  ...(open && {
-    width: `calc(${useWindowWidth()}px - 10px - ${drawerWidth}px)`
-  }),
-  ...(!open && {
-    width: `calc(${useWindowWidth()}px - 10px - ${theme.spacing(7)} - 8px)`
-  })
-}));
+const Paper = styled(MuiPaper)({
+  height: `calc(100dvh - ${APP_BAR_HEIGHT}px - 10px)`,
+  position: "absolute",
+  inset: 5,
+  overflow: "hidden"
+});
 
 export default function ScreenDisplay() {
-  const theme = useTheme();
   const { state } = useContext(BeamlineTreeStateContext);
-  const { menuOpen, drawerWidth } = useContext(MenuContext);
   const fileContext = useContext(FileContext);
   const navigate = useNavigate();
   const location = useLocation();
@@ -115,7 +89,7 @@ export default function ScreenDisplay() {
   };
 
   return (
-    <Paper component="main" open={menuOpen} drawerWidth={drawerWidth}>
+    <Paper>
       {state.currentBeamline && state.currentScreenUrlId ? (
         <>
           <DynamicPageWidget
@@ -147,7 +121,7 @@ export default function ScreenDisplay() {
                   sx={{
                     width: "36px",
                     height: "36px",
-                    color: theme.palette.primary.main
+                    color: "inherit"
                   }}
                 />
               </IconButton>

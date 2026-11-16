@@ -1,4 +1,4 @@
-import { styled, useTheme } from "@mui/material/styles";
+import { styled, Theme, useTheme } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -30,6 +30,7 @@ import {
   newRelativePosition,
   useDisplayInstance
 } from "@diamondlightsource/cs-web-lib";
+import { MenuContext } from "../../contexts/MenuContext";
 
 // Template for new quick scree
 // This might allow us to modify props in future
@@ -68,7 +69,7 @@ const Dialog = styled(MuiDialog)(({ theme }) => ({
 }));
 
 export default function QuickScreenSettings() {
-  const theme = useTheme();
+  const { menuOpen } = useContext(MenuContext);
   const fileContext = useContext(FileContext);
   const [storageModalOpen, setStorageModalOpen] = useState(false);
   const [bobModalOpen, setBobModalOpen] = useState(false);
@@ -82,9 +83,7 @@ export default function QuickScreenSettings() {
     setBobModalOpen(false);
   };
 
-  /**
-   * Loads a new blank quick screen
-   */
+  // Loads a new blank quick screen
   const onClickNew = () => {
     const macros = { LCID: id };
     // Add new display, use default width for now
@@ -94,32 +93,24 @@ export default function QuickScreenSettings() {
     executeOpenQuickScreen("", "quickScreen", macros, fileContext, "");
   };
 
-  /**
-   * Adds a new screen to the current view to draw components from
-   */
+  // Adds a new screen to the current view to draw components from
   const onClickAdd = () => {
     setBobModalOpen(true);
   };
 
-  /**
-   * Saves the current quick screen to local storage
-   */
+  // Saves the current quick screen to local storage
   const onClickSave = () => {
     setStorageModalOpen(true);
     quickScreenStorage.setBrowsingMode("Save");
   };
 
-  /**
-   * Loads a quick screen from local storage
-   */
+  // Loads a quick screen from local storage
   const onClickLoad = () => {
     setStorageModalOpen(true);
     quickScreenStorage.setBrowsingMode("Load");
   };
 
-  /**
-   * Reloads the latest autosaved quickscreen from local storage
-   */
+  // Reloads the latest autosaved quickscreen from local storage
   const onClickRestore = () => {
     quickScreenStorage.restoreQuickScreenSession();
   };
@@ -159,41 +150,55 @@ export default function QuickScreenSettings() {
 
   return (
     <>
-      <Drawer variant="permanent" open={true}>
-        <List>
-          {SETTINGS_LIST.map(item => (
-            <ListItem key={item.name} disablePadding sx={{ display: "block" }}>
-              <Tooltip title={item.text} placement="right">
-                <ListItemButton
+      <List sx={{ p: 1, overflow: "hidden" }}>
+        {SETTINGS_LIST.map(item => (
+          <ListItem key={item.name} disablePadding>
+            <Tooltip title={item.text} placement="right">
+              <ListItemButton
+                onClick={item.onClick}
+                sx={{
+                  p: 1,
+                  gap: 1.5,
+                  borderRadius: 2,
+                  minHeight: 48,
+                  flexDirection: "row",
+                  justifyContent: "flex-start",
+                  alignItems: "center"
+                }}
+              >
+                <ListItemIcon
                   sx={{
-                    minHeight: 48,
-                    flexDirection: "column"
+                    minWidth: 32,
+                    flexShrink: 0,
+                    width: 32,
+                    height: 32,
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    color: menuOpen ? "text.secondary" : "text.primary",
+                    m: 0
                   }}
-                  onClick={item.onClick}
                 >
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      justifyContent: "center",
-                      color: theme.palette.primary.main
-                    }}
-                  >
-                    {item.icon}
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={item.name}
-                    sx={{
-                      minWidth: 0,
-                      textAlign: "center",
-                      color: theme.palette.primary.main
-                    }}
-                  />
-                </ListItemButton>
-              </Tooltip>
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
+                  {item.icon}
+                </ListItemIcon>
+                <ListItemText
+                  primary={item.name}
+                  sx={{
+                    minWidth: 0,
+                    m: 0,
+                    textAlign: "left",
+                    opacity: menuOpen ? 1 : 0,
+                    transition: (theme: Theme) =>
+                      theme.transitions.create("opacity", {
+                        duration: theme.transitions.duration.shorter
+                      })
+                  }}
+                />
+              </ListItemButton>
+            </Tooltip>
+          </ListItem>
+        ))}
+      </List>
       <Dialog
         onClose={handleCloseModal}
         aria-labelledby="settings-menu-title"
@@ -221,12 +226,12 @@ export default function QuickScreenSettings() {
         <IconButton
           aria-label="close"
           onClick={handleCloseModal}
-          sx={theme => ({
+          sx={{
             position: "absolute",
             right: 8,
             top: 8,
-            color: theme.palette.primary.main
-          })}
+            color: "inherit"
+          }}
         >
           <CloseIcon />
         </IconButton>

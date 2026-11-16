@@ -1,10 +1,8 @@
-import { styled } from "@mui/material/styles";
-import Drawer, { DrawerProps as MuiDrawerProps } from "@mui/material/Drawer";
 import {
   Box,
   Button,
   Checkbox,
-  CSSObject,
+  Collapse,
   IconButton,
   MenuItem,
   Paper,
@@ -18,77 +16,19 @@ import {
   TableRow,
   Tabs,
   TextField,
-  Theme,
   Typography
 } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import CloseIcon from "@mui/icons-material/Close";
 import { useContext, useState } from "react";
 import { Color, ColorUtils } from "@diamondlightsource/cs-web-lib";
-import { DRAWER_WIDTH } from "../utils/helper";
-import { MenuContext } from "../routes/DataBrowserPage";
-
-interface DrawerProps extends MuiDrawerProps {
-  archiverMenuOpen?: boolean;
-}
+import { MenuContext } from "../../contexts/MenuContext";
 
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
   value: number;
 }
-
-const openedMixin = (theme: Theme, archiverMenuOpen?: boolean): CSSObject => ({
-  height: "300px",
-  overflowY: "hidden",
-  [theme.breakpoints.up("sm")]: {
-    width: archiverMenuOpen
-      ? `calc(100% - ${DRAWER_WIDTH}px - 6px)`
-      : `calc(100% - ${theme.spacing(8)} - 6px)`,
-    marginLeft: archiverMenuOpen
-      ? `calc(${DRAWER_WIDTH}px + 5px)`
-      : `calc(${theme.spacing(8)} + 6px)`
-  }
-});
-
-const closedMixin = (theme: Theme): CSSObject => ({
-  transition: theme.transitions.create("width", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen
-  }),
-  overflowX: "hidden",
-  [theme.breakpoints.up("sm")]: {
-    height: "0px"
-  }
-});
-
-const MenuBar = styled(Drawer, {
-  shouldForwardProp: prop => prop !== "open" && prop !== "archiverMenuOpen"
-})<DrawerProps>(({ theme, archiverMenuOpen }) => ({
-  flexShrink: 0,
-  whiteSpace: "nowrap",
-  boxSizing: "border-box",
-  variants: [
-    {
-      props: ({ open }) => open,
-      style: {
-        width: archiverMenuOpen
-          ? `calc(100% - ${DRAWER_WIDTH}px - 5px)`
-          : `calc(100% - ${theme.spacing(8)} + 6px)`,
-        ...openedMixin(theme, archiverMenuOpen),
-        "& .MuiDrawer-paper": openedMixin(theme, archiverMenuOpen)
-      }
-    },
-    {
-      props: ({ open }) => !open,
-      style: {
-        height: "0px",
-        ...closedMixin(theme),
-        "& .MuiDrawer-paper": closedMixin(theme)
-      }
-    }
-  ]
-}));
 
 function CustomTabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
@@ -105,57 +45,52 @@ function CustomTabPanel(props: TabPanelProps) {
     </div>
   );
 }
-
 export default function TracesPanel() {
-  const { menusOpen, setMenusOpen } = useContext(MenuContext);
-
+  const { tracesPanelOpen, setTracesPanelOpen } = useContext(MenuContext);
   const [tab, setTab] = useState(0);
 
   const handleTabChange = (_event: React.SyntheticEvent, value: number) => {
     setTab(value);
   };
-  const closeTracesPanel = () => {
-    setMenusOpen({
-      ...menusOpen,
-      trace: false
-    });
-  };
 
   return (
-    <MenuBar
-      archiverMenuOpen={menusOpen.archiver}
-      open={menusOpen.trace}
-      variant="permanent"
-      anchor="bottom"
-      sx={{ position: "absolute" }}
-      PaperProps={{ elevation: 8 }}
-    >
-      <IconButton
-        color="inherit"
-        aria-label="open drawer"
+    <Collapse in={tracesPanelOpen} unmountOnExit={false}>
+      <Paper
+        square
+        elevation={8}
         sx={{
-          position: "absolute",
-          left: "96%"
+          position: "relative",
+          height: 300,
+          overflowY: "auto",
+          flexShrink: 0
         }}
-        onClick={closeTracesPanel}
       >
-        <CloseIcon />
-      </IconButton>
-      <Tabs value={tab} onChange={handleTabChange} sx={{ width: "90%" }}>
-        <Tab label="Traces" />
-        <Tab label="Time Axis" />
-        <Tab label="Value Axes" />
-      </Tabs>
-      <CustomTabPanel value={tab} index={0}>
-        <TracesGrid />
-      </CustomTabPanel>
-      <CustomTabPanel value={tab} index={1}>
-        <TimeAxisGrid />
-      </CustomTabPanel>
-      <CustomTabPanel value={tab} index={2}>
-        <ValueAxesGrid />
-      </CustomTabPanel>
-    </MenuBar>
+        <IconButton
+          color="inherit"
+          aria-label="close traces panel"
+          sx={{ position: "absolute", top: 4, right: 8, zIndex: 1 }}
+          onClick={() => setTracesPanelOpen?.(false)}
+        >
+          <CloseIcon />
+        </IconButton>
+
+        <Tabs value={tab} onChange={handleTabChange} sx={{ width: "90%" }}>
+          <Tab label="Traces" />
+          <Tab label="Time Axis" />
+          <Tab label="Value Axes" />
+        </Tabs>
+
+        <CustomTabPanel value={tab} index={0}>
+          <TracesGrid />
+        </CustomTabPanel>
+        <CustomTabPanel value={tab} index={1}>
+          <TimeAxisGrid />
+        </CustomTabPanel>
+        <CustomTabPanel value={tab} index={2}>
+          <ValueAxesGrid />
+        </CustomTabPanel>
+      </Paper>
+    </Collapse>
   );
 }
 

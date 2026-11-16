@@ -1,28 +1,10 @@
-import { styled } from "@mui/material/styles";
-import MuiDrawer from "@mui/material/Drawer";
-import {
-  Box,
-  Button,
-  Checkbox,
-  CssBaseline,
-  TextField,
-  Typography
-} from "@mui/material";
+import { Box, Button, Checkbox, TextField, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import { APP_BAR_HEIGHT, PROPERTIES_MENU_WIDTH } from "../utils/helper";
-import { WidgetProps } from "./Editor";
 
-const MenuBarHeader = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "flex-end",
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar
-}));
-
-export default function PropertiesSideBar(props: { properties: WidgetProps }) {
-  const { properties } = props;
+/**
+ * Lists all properties of the component with editable values
+ */
+export function PropertiesGrid() {
   const positionPropList = [
     {
       label: "X Position",
@@ -35,7 +17,7 @@ export default function PropertiesSideBar(props: { properties: WidgetProps }) {
             padding: 0
           }}
           variant="outlined"
-          value={properties.x}
+          value={0}
         />
       )
     },
@@ -50,7 +32,7 @@ export default function PropertiesSideBar(props: { properties: WidgetProps }) {
             padding: 0
           }}
           variant="outlined"
-          value={properties.y}
+          value={0}
         />
       )
     },
@@ -65,7 +47,7 @@ export default function PropertiesSideBar(props: { properties: WidgetProps }) {
             padding: 0
           }}
           variant="outlined"
-          value={properties.w}
+          value={0}
         />
       )
     },
@@ -80,7 +62,7 @@ export default function PropertiesSideBar(props: { properties: WidgetProps }) {
             padding: 0
           }}
           variant="outlined"
-          value={properties.h}
+          value={0}
         />
       )
     }
@@ -88,11 +70,7 @@ export default function PropertiesSideBar(props: { properties: WidgetProps }) {
   const widgetPropList = [
     {
       label: "Type",
-      component: (
-        <Typography variant="body1">
-          {properties.display?.type ?? ""}
-        </Typography>
-      )
+      component: <Typography variant="body1">{""}</Typography>
     },
     {
       label: "Name",
@@ -144,42 +122,6 @@ export default function PropertiesSideBar(props: { properties: WidgetProps }) {
       )
     }
   ];
-
-  return (
-    <>
-      <CssBaseline />
-      <MuiDrawer
-        variant="permanent"
-        open
-        anchor="right"
-        PaperProps={{
-          sx: {
-            width: PROPERTIES_MENU_WIDTH,
-            height: "100%",
-            paddingTop: `${APP_BAR_HEIGHT}px`
-          },
-          elevation: 8
-        }}
-      >
-        <MenuBarHeader sx={{ textAlign: "center", justifyContent: "Center" }}>
-          <Typography variant="h4" sx={{ alignContent: "Center" }}>
-            Widget Properties
-          </Typography>
-        </MenuBarHeader>
-        <PropertiesGrid
-          positionProps={positionPropList}
-          widgetProps={widgetPropList}
-        />
-      </MuiDrawer>
-    </>
-  );
-}
-
-/**
- * Lists all properties of the component with editable values
- */
-function PropertiesGrid(props: { positionProps: any[]; widgetProps: any[] }) {
-  const { positionProps, widgetProps } = props;
 
   const displayPropList = [
     {
@@ -320,7 +262,7 @@ function PropertiesGrid(props: { positionProps: any[]; widgetProps: any[] }) {
           Widget
         </Typography>
         <Box>
-          {widgetProps.map(item => (
+          {widgetPropList.map(item => (
             <Grid
               key={`editor_menu_item_widget_${item.label}`}
               container
@@ -352,7 +294,7 @@ function PropertiesGrid(props: { positionProps: any[]; widgetProps: any[] }) {
           Position
         </Typography>
         <Box>
-          {positionProps.map(item => (
+          {positionPropList.map(item => (
             <Grid
               key={`editor_menu_item_position_${item.label}`}
               container
