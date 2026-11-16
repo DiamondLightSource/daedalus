@@ -1,8 +1,8 @@
 import { fireEvent, render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import QuickScreenSettings from "../../components/QuickScreens/Settings";
-import { StorageContext } from "../../components/QuickScreens/Display";
 import { FileContext } from "@diamondlightsource/cs-web-lib";
+import { StorageContext } from "../../contexts/LocalStorageContext";
 
 vi.mock("../../utils/csWebLibActions", () => ({
   executeOpenQuickScreen: vi.fn()

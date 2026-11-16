@@ -8,7 +8,6 @@ import {
 } from "@mui/x-tree-view";
 import { Box, Button, IconButton, Stack, TextField } from "@mui/material";
 import { useDisplayInstance } from "@diamondlightsource/cs-web-lib";
-import { StorageContext } from "./Display";
 import { findNodeById } from "../utils";
 import { useQuickScreens } from "../../hooks/useQuickScreens";
 import OverwriteDialog from "./OverwriteDialog";
@@ -16,6 +15,7 @@ import FolderIcon from "@mui/icons-material/Folder";
 import FolderOpenIcon from "@mui/icons-material/FolderOpen";
 import SubdirectoryArrowRightIcon from "@mui/icons-material/SubdirectoryArrowRight";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { StorageContext } from "../../contexts/LocalStorageContext";
 
 interface QuickScreenTreeItemProps extends TreeItem2Props {
   onDelete: (itemId: string) => void;

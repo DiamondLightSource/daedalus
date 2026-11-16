@@ -19,8 +19,8 @@ import { LOAD_SCREENS } from "../../store";
 import { parseScreenTree, ScreenTreeViewBaseItem } from "../../utils/parser";
 import { useDispatch } from "react-redux";
 import { executeOpenPageActionWithFileGuid } from "../../utils/csWebLibActions";
-import { StorageContext } from "./Display";
 import { BeamlineTreeStateContext } from "../../contexts/BeamlineTreeStateContext";
+import { StorageContext } from "../../contexts/LocalStorageContext";
 
 /**
  * Custom Tree Item that lets us change icon

@@ -1,5 +1,4 @@
-import { styled, Theme, useTheme } from "@mui/material/styles";
-import MuiDrawer from "@mui/material/Drawer";
+import { styled, Theme } from "@mui/material/styles";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -22,7 +21,6 @@ import {
 } from "@mui/material";
 import { useContext, useId, useState } from "react";
 import LocalStorageBrowser from "./StorageBrowser";
-import { StorageContext } from "./Display";
 import BobFileBrowser from "./FileBrowser";
 import { executeOpenQuickScreen } from "../../utils/csWebLibActions";
 import {
@@ -31,6 +29,7 @@ import {
   useDisplayInstance
 } from "@diamondlightsource/cs-web-lib";
 import { MenuContext } from "../../contexts/MenuContext";
+import { StorageContext } from "../../contexts/LocalStorageContext";
 
 // Template for new quick scree
 // This might allow us to modify props in future
@@ -48,16 +47,6 @@ const NEW_QUICK_SCREEN = {
   rules: [],
   scripts: []
 };
-
-const Drawer = styled(MuiDrawer)(() => ({
-  overflowX: "hidden",
-  width: "4%",
-  minWidth: "65px",
-  "& .MuiPaper-root": {
-    position: "relative",
-    overflowX: "hidden"
-  }
-}));
 
 const Dialog = styled(MuiDialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {

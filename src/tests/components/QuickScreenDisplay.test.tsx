@@ -50,6 +50,23 @@ const mockFileContext = vi.hoisted(() => ({
   updatePage: vi.fn()
 }));
 
+const mockStorageContext = vi.hoisted(() => ({
+  bobDisplayUuid: "",
+  setBobDisplayUuid: vi.fn(),
+  browsingMode: "Load",
+  setBrowsingMode: vi.fn(),
+  bobScreenUrlId: undefined as string | undefined,
+  setBobScreenUrlId: vi.fn(),
+  restoreQuickScreenSession: vi.fn()
+}));
+
+vi.mock("../../contexts/LocalStorageContext", async () => {
+  const { createContext } = await import("react");
+  return {
+    StorageContext: createContext(mockStorageContext)
+  };
+});
+
 const mockLocalStorage = {
   getItem: vi.fn(),
   setItem: vi.fn(),
@@ -74,6 +91,7 @@ beforeEach(() => {
 
   mockFileContext.pageState.bobQuickScreen = undefined;
   mockFileContext.pageState.quickScreen = undefined;
+  mockStorageContext.bobScreenUrlId = undefined;
 });
 
 vi.mock("react-router", async () => {
@@ -189,6 +207,9 @@ describe("<QuickScreens />", () => {
         }
       }
     });
+    {
+      mockStorageContext.bobScreenUrlId = "Page 1/Page 2/Motor X";
+    }
 
     const { getByText } = renderComponent();
 
