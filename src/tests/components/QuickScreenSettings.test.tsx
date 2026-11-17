@@ -31,13 +31,17 @@ vi.mock("react", async importOriginal => {
   };
 });
 
-const renderComponent = (restoreQuickScreenSession = vi.fn()) => {
+const renderComponent = (
+  restoreQuickScreenSession = vi.fn(),
+  setQuickScreenEditable = vi.fn()
+) => {
   return render(
     <StorageContext.Provider
       value={
         {
           setBrowsingMode: vi.fn(),
-          restoreQuickScreenSession
+          restoreQuickScreenSession,
+          setQuickScreenEditable
         } as any
       }
     >
@@ -65,7 +69,6 @@ describe("<QuickScreenSettings />", () => {
   it("loads a blank quick screen when new button clicked", () => {
     const { getByRole } = renderComponent();
     fireEvent.click(getByRole("button", { name: /new/i }));
-
     expect(executeOpenQuickScreen).toHaveBeenCalledTimes(1);
     expect(executeOpenQuickScreen).toHaveBeenCalledWith(
       "",

@@ -7,6 +7,8 @@ export const StorageContext = createContext<{
   setBrowsingMode: any;
   bobScreenUrlId?: string;
   setBobScreenUrlId: React.Dispatch<React.SetStateAction<string | undefined>>;
+  quickScreenEditable: boolean;
+  setQuickScreenEditable: React.Dispatch<React.SetStateAction<boolean>>;
   restoreQuickScreenSession: () => void;
 }>({
   bobDisplayUuid: "",
@@ -15,5 +17,7 @@ export const StorageContext = createContext<{
   setBrowsingMode: () => null,
   bobScreenUrlId: undefined,
   setBobScreenUrlId: () => null,
+  quickScreenEditable: false,
+  setQuickScreenEditable: () => null,
   restoreQuickScreenSession: () => {}
 });

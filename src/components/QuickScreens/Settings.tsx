@@ -75,6 +75,7 @@ export default function QuickScreenSettings() {
   // Loads a new blank quick screen
   const onClickNew = () => {
     const macros = { LCID: id };
+    quickScreenStorage.setQuickScreenEditable(true);
     // Add new display, use default width for now
     // Use empty string for name, so user has to name to save
     removeDisplayInstance("");

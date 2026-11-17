@@ -28,12 +28,15 @@ export function AppLayout() {
   const [menuOpen, setMenuOpen] = useState(true);
   const [tracesPanelOpen, setTracesPanelOpen] = useState(false);
 
+  const [quickScreenEditable, setQuickScreenEditable] = useState(false);
   const [bobDisplayUuid, setBobDisplayUuid] = useState<string>();
-  const [browsingMode, setBrowsingMode] = useState<string>("Load");
+  const [browsingMode, setBrowsingMode] = useState<string>();
   const [bobScreenUrlId, setBobScreenUrlId] = useState<string | undefined>(
     location.state?.pageState?.bobScreenUrlId
   );
-  const { addDisplayInstanceByDescription } = useDisplayInstance("");
+  const { addDisplayInstanceByDescription } = useDisplayInstance(
+    bobDisplayUuid ?? ""
+  );
 
   const addTab = useMemo(
     () =>
@@ -96,6 +99,8 @@ export function AppLayout() {
       setBrowsingMode,
       bobScreenUrlId,
       setBobScreenUrlId,
+      quickScreenEditable,
+      setQuickScreenEditable,
       restoreQuickScreenSession
     }),
     [
@@ -105,6 +110,8 @@ export function AppLayout() {
       setBrowsingMode,
       bobScreenUrlId,
       setBobScreenUrlId,
+      quickScreenEditable,
+      setQuickScreenEditable,
       restoreQuickScreenSession
     ]
   );

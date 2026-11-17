@@ -39,12 +39,11 @@ export default function QuickScreenDisplay() {
   const [pendingCloseLocation, setPendingCloseLocation] = useState<
     string | null
   >(null);
-  const [quickScreenEditable, setQuickScreenEditable] = useState(false);
   const fileContext = useContext(FileContext);
   const storage = useContext(StorageContext);
   const quickScreen = fileContext.pageState?.quickScreen;
   const bobQuickScreen = fileContext.pageState.bobQuickScreen;
-
+  const { quickScreenEditable, setQuickScreenEditable } = storage;
   const {
     displayInstance,
     addDisplayInstanceByDescription,
@@ -57,13 +56,6 @@ export default function QuickScreenDisplay() {
   const bobBreadcrumbs = storage.bobScreenUrlId
     ? extractAncestorScreens(storage.bobScreenUrlId)
     : [];
-
-  useEffect(() => {
-    if (!quickScreen) return;
-    const isSaved = hasSavedQuickScreen(quickScreen.path);
-    // new screen: unlocked. Saved screen: locked.
-    setQuickScreenEditable(!isSaved);
-  }, [quickScreen?.path]);
 
   function isQuickScreenSaved(
     quickScreen: { path?: string } | undefined,
@@ -86,11 +78,6 @@ export default function QuickScreenDisplay() {
     } catch {
       return false;
     }
-  }
-
-  function hasSavedQuickScreen(path?: string): boolean {
-    if (!path) return false;
-    return localStorage.getItem(`quickScreens/${path}`) !== null;
   }
 
   const handleDisplayClose = (location: string) => {
@@ -131,7 +118,7 @@ export default function QuickScreenDisplay() {
     } catch (error) {
       console.error("Failed to restore Quick Screen display instance", error);
     }
-  }, [quickScreen, addDisplayInstanceByDescription]);
+  }, [quickScreen?.path, addDisplayInstanceByDescription]);
 
   useEffect(() => {
     if (!displayInstance?.description) return;

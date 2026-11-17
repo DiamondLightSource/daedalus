@@ -4,6 +4,8 @@ import QuickScreens from "../../components/QuickScreens/Display";
 import { fireEvent } from "@testing-library/react";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
+import { useState } from "react";
+import { StorageContext } from "../../contexts/LocalStorageContext";
 
 const testStore = configureStore({
   reducer: {
@@ -26,9 +28,27 @@ let mockFileContent: any = {
 };
 
 const renderComponent = () => {
+  const TestStorageProvider = ({ children }: { children: React.ReactNode }) => {
+    const [quickScreenEditable, setQuickScreenEditable] = useState(false);
+
+    const storageValue = {
+      ...mockStorageContext,
+      quickScreenEditable,
+      setQuickScreenEditable
+    };
+
+    return (
+      <StorageContext.Provider value={storageValue}>
+        {children}
+      </StorageContext.Provider>
+    );
+  };
+
   return render(
     <Provider store={testStore}>
-      <QuickScreens />
+      <TestStorageProvider>
+        <QuickScreens />
+      </TestStorageProvider>
     </Provider>
   );
 };
@@ -57,7 +77,9 @@ const mockStorageContext = vi.hoisted(() => ({
   setBrowsingMode: vi.fn(),
   bobScreenUrlId: undefined as string | undefined,
   setBobScreenUrlId: vi.fn(),
-  restoreQuickScreenSession: vi.fn()
+  restoreQuickScreenSession: vi.fn(),
+  quickScreenEditable: false,
+  setQuickScreenEditable: vi.fn()
 }));
 
 vi.mock("../../contexts/LocalStorageContext", async () => {
@@ -83,7 +105,15 @@ Object.defineProperty(window, "localStorage", {
 
 beforeEach(() => {
   vi.clearAllMocks();
-  mockLocalStorage.clear();
+
+  mockUseLocation.mockReturnValue({
+    state: undefined
+  });
+  mockLocalStorage.getItem.mockReset();
+  mockLocalStorage.getItem.mockReturnValue(null);
+
+  mockLocalStorage.setItem.mockReset();
+  mockLocalStorage.removeItem.mockReset();
 
   mockUseLocation.mockReturnValue({
     state: undefined
@@ -218,12 +248,19 @@ describe("<QuickScreens />", () => {
     expect(getByText("Motor X")).toBeInTheDocument();
   });
 
-  it("renders the Quick Screen locked by default", () => {
+  it("renders an existing Quick Screen locked by default", () => {
     mockFileContext.pageState.quickScreen = {
       path: "wow.bob",
       macros: {},
       defaultProtocol: "ca"
     };
+    mockLocalStorage.getItem.mockReturnValue(
+      JSON.stringify({
+        description: {
+          gridLayout: []
+        }
+      })
+    );
 
     const { getByRole } = renderComponent();
 
