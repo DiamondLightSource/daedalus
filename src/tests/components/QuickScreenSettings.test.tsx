@@ -1,8 +1,8 @@
 import { fireEvent, render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import QuickScreenSettings from "../../components/QuickScreens/Settings";
-import { StorageContext } from "../../components/QuickScreens/Display";
 import { FileContext } from "@diamondlightsource/cs-web-lib";
+import { StorageContext } from "../../contexts/LocalStorageContext";
 
 vi.mock("../../utils/csWebLibActions", () => ({
   executeOpenQuickScreen: vi.fn()
@@ -31,13 +31,17 @@ vi.mock("react", async importOriginal => {
   };
 });
 
-const renderComponent = (restoreQuickScreenSession = vi.fn()) => {
+const renderComponent = (
+  restoreQuickScreenSession = vi.fn(),
+  setQuickScreenEditable = vi.fn()
+) => {
   return render(
     <StorageContext.Provider
       value={
         {
           setBrowsingMode: vi.fn(),
-          restoreQuickScreenSession
+          restoreQuickScreenSession,
+          setQuickScreenEditable
         } as any
       }
     >
@@ -65,7 +69,6 @@ describe("<QuickScreenSettings />", () => {
   it("loads a blank quick screen when new button clicked", () => {
     const { getByRole } = renderComponent();
     fireEvent.click(getByRole("button", { name: /new/i }));
-
     expect(executeOpenQuickScreen).toHaveBeenCalledTimes(1);
     expect(executeOpenQuickScreen).toHaveBeenCalledWith(
       "",

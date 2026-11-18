@@ -1,12 +1,12 @@
 import type { ContextType } from "react";
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { StorageContext } from "../../components/QuickScreens/Display";
 import LocalStorageBrowser from "../../components/QuickScreens/StorageBrowser";
 import { useQuickScreens } from "../../hooks/useQuickScreens";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router";
+import { StorageContext } from "../../contexts/LocalStorageContext";
 
 const mocks = vi.hoisted(() => ({
   setModalOpen: vi.fn(),

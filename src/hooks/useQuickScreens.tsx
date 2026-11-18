@@ -3,6 +3,7 @@ import { TreeViewBaseItem, TreeViewItemId } from "@mui/x-tree-view";
 import { FileContext, useNotification } from "@diamondlightsource/cs-web-lib";
 import { getTopLevelChildIds } from "../components/utils";
 import { executeCloseQuickScreen } from "../utils/csWebLibActions";
+import { StorageContext } from "../contexts/LocalStorageContext";
 
 interface UseQuickScreensProps {
   displayInstance?: any;
@@ -34,6 +35,7 @@ export function useQuickScreens({
   onCompleted
 }: UseQuickScreensProps) {
   const fileContext = useContext(FileContext);
+  const storage = useContext(StorageContext);
   const { showWarning, showError } = useNotification();
   const [tree, setTree] = useState<TreeViewBaseItem[]>([]);
   const [expanded, setExpanded] = useState<TreeViewItemId[]>([]);
@@ -133,6 +135,8 @@ export function useQuickScreens({
       const screen = JSON.parse(stored);
       removeDisplayInstance(name);
       const macros = structuredClone(screen.macros ?? {});
+      storage.setQuickScreenEditable(false);
+      addDisplayInstanceByDescription(name, macros, screen.description);
 
       fileContext.updatePage(
         "quickScreen",
@@ -144,7 +148,13 @@ export function useQuickScreens({
         true
       );
     },
-    [removeDisplayInstance, fileContext, showWarning]
+    [
+      addDisplayInstanceByDescription,
+      storage.setQuickScreenEditable,
+      removeDisplayInstance,
+      fileContext,
+      showWarning
+    ]
   );
 
   const requestDelete = useCallback((name: string) => {

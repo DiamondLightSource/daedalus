@@ -4,6 +4,8 @@ import QuickScreens from "../../components/QuickScreens/Display";
 import { fireEvent } from "@testing-library/react";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
+import { useState } from "react";
+import { StorageContext } from "../../contexts/LocalStorageContext";
 
 const testStore = configureStore({
   reducer: {
@@ -26,9 +28,27 @@ let mockFileContent: any = {
 };
 
 const renderComponent = () => {
+  const TestStorageProvider = ({ children }: { children: React.ReactNode }) => {
+    const [quickScreenEditable, setQuickScreenEditable] = useState(false);
+
+    const storageValue = {
+      ...mockStorageContext,
+      quickScreenEditable,
+      setQuickScreenEditable
+    };
+
+    return (
+      <StorageContext.Provider value={storageValue}>
+        {children}
+      </StorageContext.Provider>
+    );
+  };
+
   return render(
     <Provider store={testStore}>
-      <QuickScreens />
+      <TestStorageProvider>
+        <QuickScreens />
+      </TestStorageProvider>
     </Provider>
   );
 };
@@ -50,6 +70,25 @@ const mockFileContext = vi.hoisted(() => ({
   updatePage: vi.fn()
 }));
 
+const mockStorageContext = vi.hoisted(() => ({
+  bobDisplayUuid: "",
+  setBobDisplayUuid: vi.fn(),
+  browsingMode: "Load",
+  setBrowsingMode: vi.fn(),
+  bobScreenUrlId: undefined as string | undefined,
+  setBobScreenUrlId: vi.fn(),
+  restoreQuickScreenSession: vi.fn(),
+  quickScreenEditable: false,
+  setQuickScreenEditable: vi.fn()
+}));
+
+vi.mock("../../contexts/LocalStorageContext", async () => {
+  const { createContext } = await import("react");
+  return {
+    StorageContext: createContext(mockStorageContext)
+  };
+});
+
 const mockLocalStorage = {
   getItem: vi.fn(),
   setItem: vi.fn(),
@@ -66,7 +105,15 @@ Object.defineProperty(window, "localStorage", {
 
 beforeEach(() => {
   vi.clearAllMocks();
-  mockLocalStorage.clear();
+
+  mockUseLocation.mockReturnValue({
+    state: undefined
+  });
+  mockLocalStorage.getItem.mockReset();
+  mockLocalStorage.getItem.mockReturnValue(null);
+
+  mockLocalStorage.setItem.mockReset();
+  mockLocalStorage.removeItem.mockReset();
 
   mockUseLocation.mockReturnValue({
     state: undefined
@@ -74,6 +121,7 @@ beforeEach(() => {
 
   mockFileContext.pageState.bobQuickScreen = undefined;
   mockFileContext.pageState.quickScreen = undefined;
+  mockStorageContext.bobScreenUrlId = undefined;
 });
 
 vi.mock("react-router", async () => {
@@ -189,6 +237,9 @@ describe("<QuickScreens />", () => {
         }
       }
     });
+    {
+      mockStorageContext.bobScreenUrlId = "Page 1/Page 2/Motor X";
+    }
 
     const { getByText } = renderComponent();
 
@@ -197,12 +248,19 @@ describe("<QuickScreens />", () => {
     expect(getByText("Motor X")).toBeInTheDocument();
   });
 
-  it("renders the Quick Screen locked by default", () => {
+  it("renders an existing Quick Screen locked by default", () => {
     mockFileContext.pageState.quickScreen = {
       path: "wow.bob",
       macros: {},
       defaultProtocol: "ca"
     };
+    mockLocalStorage.getItem.mockReturnValue(
+      JSON.stringify({
+        description: {
+          gridLayout: []
+        }
+      })
+    );
 
     const { getByRole } = renderComponent();
 
